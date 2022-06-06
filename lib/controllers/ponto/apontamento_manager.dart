@@ -1,10 +1,11 @@
-import '../../helper/conn.dart';
-import '../../model/apontamento/apontamento.dart';
-import '../../services/usuario/users_manager.dart';
-import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import "package:http/http.dart" as http;
+
+import '../../helper/conn.dart';
+import '../../model/apontamento/apontamento.dart';
+import '../../services/ponto/users.dart';
+import '../../settintgs.dart';
 
 class ApontamentoManager extends ChangeNotifier {
   List<Apontamento> apontamento = [];
@@ -29,7 +30,7 @@ class ApontamentoManager extends ChangeNotifier {
     String _api = "api/apontamento/GetOutrosMeses";
     try{
       if(await _connectionStatus.checkConnection()){
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

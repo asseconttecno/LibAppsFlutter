@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 import '../../model/apontamento/apontamento.dart';
 import '../../settintgs.dart';
-import '../http/http.dart';
+import 'http/http.dart';
 
 
 
-class ApontamentoService {
+
+class VersaoAppService {
   HttpCli _http = HttpCli();
 
   Future<List<Apontamento>?> getPeriodo(Usuario user) async {
     String _api = "api/apontamento/GetOutrosMeses";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiUrl + _api,
+        url: Settings.apiHolerite + _api,
 
         body: {
           "User": {

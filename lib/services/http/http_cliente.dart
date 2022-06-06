@@ -12,11 +12,11 @@ import '../../helper/conn.dart';
 class HttpCli {
   ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
 
-  Future<HttpResponse> get(
+  Future<MyHttpResponse> get(
       {required String url, Map<String, String>? headers, bool decoder = true, bool bits = false,}) async {
 
       if(!connectionStatus.hasConnection){
-        return HttpResponse(
+        return MyHttpResponse(
           isSucess: false,
           httpError: HttpError.conection,
           data: 'Falha de conexão com internet'
@@ -33,7 +33,7 @@ class HttpCli {
       }).catchError((error, stackTrace) {
         debugPrint('onError ' + error.toString());
 
-        return HttpResponse(
+        return MyHttpResponse(
             isSucess: false,
             httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
             data: error == HttpError.timeout ?
@@ -44,7 +44,7 @@ class HttpCli {
       try{
         if(response.statusCode == 200){
           var result = bits ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
-          return HttpResponse(
+          return MyHttpResponse(
               isSucess: true,
               codigo: 200,
               data: result
@@ -56,7 +56,7 @@ class HttpCli {
       } catch(e){
         debugPrint('catch ' + e.toString());
         bool r = e == HttpError.statusCode;
-        return HttpResponse(
+        return MyHttpResponse(
             isSucess: false,
             httpError: r ? HttpError.statusCode : HttpError.unexpected,
             codigo: response.statusCode,
@@ -66,11 +66,11 @@ class HttpCli {
   }
 
 
-  Future<HttpResponse> post({required String url, Map<String, String>? headers,
+  Future<MyHttpResponse> post({required String url, Map<String, String>? headers,
       Map<String, dynamic>? body, bool decoder = true}) async {
 
     if(!connectionStatus.hasConnection){
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: HttpError.conection,
           data: 'Falha de conexão com internet'
@@ -89,7 +89,7 @@ class HttpCli {
     }).catchError((error, stackTrace) {
       debugPrint('onError ' + error.toString());
 
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
           data: error == HttpError.timeout ?
@@ -100,7 +100,7 @@ class HttpCli {
     try{
       if(response.statusCode == 200){
         final result =  decoder ? json.decode(response.body) : response.body;
-        return HttpResponse(
+        return MyHttpResponse(
             isSucess: true,
             codigo: 200,
             data: result
@@ -112,7 +112,7 @@ class HttpCli {
     } catch(e){
       debugPrint('catch ' + e.toString());
       bool r = e == HttpError.statusCode;
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: r ? HttpError.statusCode : HttpError.unexpected,
           codigo: response.statusCode,
@@ -121,10 +121,10 @@ class HttpCli {
     }
   }
 
-  Future<HttpResponse> put({required String url, Map<String, String>? headers,
+  Future<MyHttpResponse> put({required String url, Map<String, String>? headers,
         Map<String, dynamic>? body, bool decoder = true}) async {
     if(!connectionStatus.hasConnection){
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: HttpError.conection,
           data: 'Falha de conexão com internet'
@@ -143,7 +143,7 @@ class HttpCli {
     }).catchError((error, stackTrace) {
       debugPrint('onError ' + error.toString());
 
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
           data: error == HttpError.timeout ?
@@ -154,7 +154,7 @@ class HttpCli {
     try{
       if(response.statusCode == 200){
         final result = decoder ? json.decode(response.body) : response.body;
-        return HttpResponse(
+        return MyHttpResponse(
             isSucess: true,
             codigo: 200,
             data: result
@@ -166,7 +166,7 @@ class HttpCli {
     } catch(e){
       debugPrint('catch ' + e.toString());
       bool r = e == HttpError.statusCode;
-      return HttpResponse(
+      return MyHttpResponse(
           isSucess: false,
           httpError: r ? HttpError.statusCode : HttpError.unexpected,
           codigo: response.statusCode,

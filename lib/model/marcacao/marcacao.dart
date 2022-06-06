@@ -1,7 +1,8 @@
-
-import '../../services/registro/gps.dart';
 import 'package:intl/intl.dart';
+
 import 'resultado_apontamento.dart';
+import '../../services/localizacao.dart';
+
 
 class Marcacao {
   int? iduser;

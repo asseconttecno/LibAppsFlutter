@@ -2,7 +2,7 @@ import 'dart:async';
 import '../../helper/conn.dart';
 import '../../helper/db.dart';
 import '../../model/home/home_model.dart';
-import '../../services/usuario/users_manager.dart';
+import '../../services/ponto/users.dart';
 import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
@@ -30,7 +30,7 @@ class HomeManager extends ChangeNotifier {
     if(cone){
       if(UserManager().usuario?.userId != null && UserManager().usuario?.database != null){
         try{
-          final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+          final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
               headers: <String, String>{
                 'Content-Type': 'application/json',
               },

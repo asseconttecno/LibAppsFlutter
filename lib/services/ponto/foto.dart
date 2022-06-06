@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/usuario/users.dart';
 import '../../settintgs.dart';
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../http/http.dart';
 
 class FotoService {
   HttpCli _http = HttpCli();
@@ -15,7 +14,7 @@ class FotoService {
   Future<Uint8List?> getPhoto(Usuario user) async {
     String _api = "api/apontamento/GetHome";
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiUrl + _api,
         body: {
           "User": {
@@ -44,7 +43,7 @@ class FotoService {
 
   Future<bool> setPhoto(Usuario user, List<int> img, String? faceId) async {
     String _api = "api/funcionario/PostPhoto";
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiUrl + _api,
         decoder: false,
         body: {

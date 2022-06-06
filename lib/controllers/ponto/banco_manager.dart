@@ -1,6 +1,6 @@
 import '../../helper/conn.dart';
 import '../../model/banco_horas/banco_horas.dart';
-import '../../services/usuario/users_manager.dart';
+import '../../services/ponto/users.dart';
 import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -27,7 +27,7 @@ class BancoManager extends ChangeNotifier {
     List<BancoHoras> listaTemporaria = [];
     try{
       if(await _connectionStatus.checkConnection()){
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

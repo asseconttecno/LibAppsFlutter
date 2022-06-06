@@ -1,7 +1,7 @@
 import '../../helper/conn.dart';
 import '../../helper/db.dart';
 import '../../enums/bio_support_state.dart';
-import '../../services/usuario/users_manager.dart';
+import '../../services/ponto/users.dart';
 import '../../settintgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/auth_strings.dart';

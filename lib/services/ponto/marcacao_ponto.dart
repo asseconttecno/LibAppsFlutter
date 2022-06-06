@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 
 
 import '../../common/custom_snackbar.dart';
+import '../../controllers/ponto/users_manager.dart';
 import '../../helper/db.dart';
 import '../../model/marcacao/marcacao.dart';
 import '../../model/usuario/users.dart';
 import '../../settintgs.dart';
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../http/http.dart';
 import '../localizacao.dart';
+
+
+import 'dart:convert';
+import "package:http/http.dart" as http;
+
 
 class RegistroManger {
   HttpCli _http = HttpCli();
@@ -24,7 +30,7 @@ class RegistroManger {
       print('erro endereco ' + e.toString());
     }
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiUrl + _api,
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -74,15 +80,15 @@ class RegistroManger {
                     latitude: latitude, longitude: longitude,
                     datahora: DateTime.now()
                 ),
-                sucesso: (){
+                /*sucesso: (){
                   sucess();
                 },
                 erro: (){
                   error(false);
-                }
+                }*/
             );
           }else{
-            error(true);
+            //error(true);
           }
         }
       } catch (e){
@@ -96,7 +102,7 @@ class RegistroManger {
               ),
           );
         }else{
-          error(true);
+          //error(true);
         }
       }
   }
@@ -107,10 +113,10 @@ class RegistroManger {
 
     debugPrint(listOff.toString());
 
-    if(await connectionStatus.checkConnection() && UserManager().usuario?.database != null){
+    if(UserManager().usuario?.database != null){
       try{
         final http.Response response = await http.post(
-            Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+            Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

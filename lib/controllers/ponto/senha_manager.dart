@@ -1,6 +1,6 @@
 import 'dart:convert';
 import '../../helper/conn.dart';
-import '../../services/usuario/users_manager.dart';
+import '../../services/ponto/users.dart';
 import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
@@ -13,7 +13,7 @@ class SenhaManager extends ChangeNotifier {
     String _api = "api/database/SendPass";
     try{
       if(await _connectionStatus.checkConnection()){
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -45,7 +45,7 @@ class SenhaManager extends ChangeNotifier {
   alteracaoPass(String atual, String nova, {required Function onFail, required Function onSuccess}) async {
     String _api = "api/database/AlteracaoPass";
     try{
-      final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+      final http.Response response = await http.post(Uri.parse(Settings.apiUrl  + _api),
           headers: <String, String>{
             'Content-Type': 'application/json',
           },

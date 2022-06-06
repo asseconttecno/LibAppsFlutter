@@ -2,8 +2,8 @@
 import '../../common/actions/func_aponta.dart';
 import '../../common/actions/func_config.dart';
 import '../../common/actions/func_sair.dart';
+import '../../services/ponto/marcacao_ponto.dart';
 import '../../settintgs.dart';
-import '../../ui/smartphone/password/alterar_senha.dart';
 import 'package:flutter/material.dart';
 
 
@@ -62,7 +62,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             funcAponta(context);
             break;
           case 2 :
-            await AlterarSenhaModal(context);
+            //await AlterarSenhaModal(context);
             break;
           case 3 :
             funcConfig(context);

@@ -1,7 +1,13 @@
+
 import 'Dart:io';
 import 'Dart:async';
+
+
 import 'package:connectivity_plus/connectivity_plus.dart';
-import '../services/registro/registro_manager.dart';
+
+import '../settintgs.dart';
+import '../services/ponto/marcacao_ponto.dart';
+
 
 class ConnectionStatusSingleton {
   static final ConnectionStatusSingleton _singleton = ConnectionStatusSingleton._internal();
@@ -17,6 +23,7 @@ class ConnectionStatusSingleton {
   void initialize() {
     _connectivity.onConnectivityChanged.listen(_connectionChange);
     checkConnection();
+    if(Settings.nomeApp == 'ponto')
     Timer.periodic(Duration(minutes: 1), (T) async {
       if(hasConnection){
         await RegistroManger().enviarMarcacoes();
@@ -50,6 +57,7 @@ class ConnectionStatusSingleton {
     if (previousConnection != hasConnection ) {
       connectionChangeController.add(hasConnection);
       if(hasConnection){
+        if(Settings.nomeApp == 'ponto')
         await RegistroManger().enviarMarcacoes();
       }
     }

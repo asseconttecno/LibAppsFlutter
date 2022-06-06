@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../../model/banco_horas/banco_horas.dart';
 import '../../model/usuario/users.dart';
 import '../../settintgs.dart';
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../http/http.dart';
 
 
 class BancoHorasService {
@@ -13,7 +12,7 @@ class BancoHorasService {
   Future<List<BancoHoras>?> getFuncionarioHistorico(Usuario user) async {
     String _api = "api/bcohoras/GetFuncionarioHistorico";
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiUrl + _api,
         body: {
           "User": {

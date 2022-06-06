@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+
 import '../../common/custom_snackbar.dart';
 import '../../helper/conn.dart';
 import '../../helper/db.dart';
 import '../../model/marcacao/marcacao.dart';
-import '../../services/usuario/users_manager.dart';
+import '../../services/ponto/users.dart';
 import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
@@ -31,7 +32,7 @@ class RegistroManger {
         print('erro endereco ' + e.toString());
       }
       try{
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -180,7 +181,7 @@ class RegistroManger {
     if(await connectionStatus.checkConnection() && UserManager().usuario?.database != null){
       try{
         final http.Response response = await http.post(
-            Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+            Uri.parse(Settings.apiUrl  + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

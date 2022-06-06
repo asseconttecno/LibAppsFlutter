@@ -1,7 +1,7 @@
+import '../../controllers/ponto/home_manager.dart';
 import '../../helper/conn.dart';
 import '../../model/apontamento/apontamento.dart';
 import '../../model/usuario/users.dart';
-import '../home/home_manager.dart';
 import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -40,7 +40,7 @@ class UserManager extends ChangeNotifier {
     String _api = "api/database/GetDatabaseUserStatus";
     try{
       if(_connectionStatus.hasConnection){
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response response = await http.post(Uri.parse(Settings.apiUrl  + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -86,7 +86,7 @@ class UserManager extends ChangeNotifier {
     String _api = "api/database/GetDatabaseUser";
     try{
       if(_connectionStatus.hasConnection){
-        final http.Response? response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+        final http.Response? response = await http.post(Uri.parse(Settings.apiUrl + _api),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -133,7 +133,7 @@ class UserManager extends ChangeNotifier {
   getPeriodo(int database, {required Function onFail, required Function onSuccess}) async {
     String _api = "api/apontamento/GetPeriodo";
     try{
-      final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
+      final http.Response response = await http.post(Uri.parse(Settings.apiUrl + _api),
           headers: <String, String>{
             'Content-Type': 'application/json',
           },

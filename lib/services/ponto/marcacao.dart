@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../../model/marcacao/marcacao.dart';
 import '../../model/usuario/users.dart';
 import '../../settintgs.dart';
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../http/http.dart';
 
 
 class MarcacoesService  {
@@ -14,7 +13,7 @@ class MarcacoesService  {
   Future<List<Marcacao>?> getEspelho(Usuario user) async {
     String _api = "api/apontamento/GetEspelho";
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiUrl + _api,
         body: {
           "User": {

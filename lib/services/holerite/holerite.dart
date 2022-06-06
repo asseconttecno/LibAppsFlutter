@@ -8,8 +8,7 @@ import 'package:webcontent_converter/webcontent_converter.dart';
 import 'package:path_provider/path_provider.dart';
 
 
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../http/http.dart';
 import '../../model/holerite/model_holerite.dart';
 import '../../model/usuario/users.dart';
 import '../../settintgs.dart';
@@ -20,7 +19,7 @@ class HoleriteService  {
   Future<List<HoleriteModel>> resumoscreen(Usuario user, int mes, int ano) async {
     String _api = "holeriteresumo/resumoscreen";
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiHolerite + _api,
         body: {
           "cnpj": user.cnpj?.toString(), //'13369340000136',
@@ -50,7 +49,7 @@ class HoleriteService  {
   Future<List<CompetenciasModel>> competencias(Usuario user) async {
     String _api = "holeriteresumo/competencias";
 
-    final HttpResponse response = await _http.post(
+    final MyHttpResponse response = await _http.post(
         url: Settings.apiHolerite + _api,
         body: {
           "cnpj": user.cnpj.toString(),
@@ -74,7 +73,7 @@ class HoleriteService  {
   Future<File?> holeriteresumo(Usuario? user, int mes, int ano, int? tipo) async {
     String _api = "holeriteresumo";
     try{
-      final HttpResponse response = await _http.post(
+      final MyHttpResponse response = await _http.post(
           url: Settings.apiHolerite + _api, decoder: false,
           body: {
             "cnpj": user?.cnpj,

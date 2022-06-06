@@ -1,11 +1,11 @@
 
 import 'http_error.dart';
 
-class HttpResponse {
+class MyHttpResponse {
   final bool isSucess;
   var data;
   HttpError? httpError;
   int? codigo;
 
-  HttpResponse({required this.isSucess, this.httpError, this.data, this.codigo});
+  MyHttpResponse({required this.isSucess, this.httpError, this.data, this.codigo});
 }

@@ -14,7 +14,7 @@ class Settings extends ChangeNotifier{
 
   static String apiHolerite = "https://www.asseweb.com.br/AssecontAPI/";
   static String apiUrl = "https://www.asseponto.com.br/asseponto.api.v5/";
-  static String appStoreId = 'com.assecont.AssepontoMobile'; // ios '1490469231'
+  static String appStoreId = 'com.assecont.AssepontoMobile'; // ios \'1490469231'
   static String versao = '2.1.5';
   static final bool isIOS = Platform.isIOS;
   static final bool isWin = Platform.isWindows;
@@ -26,6 +26,7 @@ class Settings extends ChangeNotifier{
   static bool isJailBroken = true;
   static bool canMockLocation = true;
   static bool isRealDevice = true;
+  static String nomeApp = '';
   static BioSupportState bioState = BioSupportState.unknown;
 
   bool _darkTemas = false;
