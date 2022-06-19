@@ -1,12 +1,10 @@
 import 'dart:io';
-
-
 import 'package:flutter/material.dart';
 
+import '../../model/model.dart';
+import '../../services/services.dart';
 
-import '../../model/holerite/model_holerite.dart';
-import '../../model/usuario/users.dart';
-import '../../services/holerite/holerite.dart';
+
 
 class HoleriteManager extends ChangeNotifier {
   HoleriteService _service = HoleriteService();
@@ -18,12 +16,12 @@ class HoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<HoleriteModel>> resumoscreen(Usuario user, int mes, int ano) async {
+  Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
     List<HoleriteModel> result = await _service.resumoscreen(user, mes, ano);
     return result;
   }
 
-  Future<List<CompetenciasModel>> competencias(Usuario user) async {
+  Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
     List<CompetenciasModel> result = await _service.competencias(user);
     if(result.isNotEmpty){
       dropdowndata = result.first.descricao ?? 'Holerites';
@@ -32,7 +30,7 @@ class HoleriteManager extends ChangeNotifier {
 
   }
 
-  Future<File?> holeriteresumo(Usuario? user, int mes, int ano, int? tipo) async {
+  Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {
     File? result = await _service.holeriteresumo(user, mes, ano, tipo);
     return result;
   }

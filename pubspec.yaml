@@ -10,43 +10,38 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   provider: ^6.0.2
 
   flutter_awesome_alert_box: ^2.1.1
-  connectivity_plus: ^2.2.1
-  shared_preferences: ^2.0.13
+
+
   sqflite: ^2.0.2
   sqflite_common_ffi: ^2.1.0+2
 
   http: ^0.13.4
+
   intl: ^0.17.0
-  datetime_picker_formfield: ^2.0.0
+
   image_picker: ^0.8.4+9
-  file_picker: ^4.4.0
+  filesystem_picker: ^2.0.0
+
   google_maps_flutter: ^2.1.1
 
   local_auth: ^1.1.11
 
-
-  auto_animated: ^3.0.1
-  shimmer: ^2.0.0
   photo_view: ^0.13.0
 
   geocoding: ^2.0.2
   location: ^4.3.0
-  #  location:
-  #    path: ../
-  trust_location: ^2.0.13
+
 
   url_launcher: ^6.0.20
-  flutter_carousel_slider: ^1.0.8
-  modal_bottom_sheet: ^2.0.0
 
-  forceupdate:
-    git:
-      url: https://github.com/pretolio/custom_force_update.git
-      ref: web
+  flutter_carousel_slider: ^1.0.8
+
   flutter_calendar_week:
     git:
       url: https://github.com/PRETOLIO-DEV/calendario_semanal.git
@@ -57,27 +52,38 @@ dependencies:
       ref: main
 
 
-  charts_flutter: ^0.12.0
-  #flutter_html_to_pdf: ^0.7.0
   webcontent_converter: ^0.0.7+1
-
-  path_provider: ^2.0.9
-  share_extend: ^2.0.0
-  open_file: ^3.2.1
-  filesystem_picker: ^2.0.0
-  in_app_review: ^2.0.4
-
-
-  #android_path_provider: any
-  safe_device: ^1.1.0
-
+  flutter_html_to_pdf: ^0.7.0
   #syncfusion_flutter_pdfviewer: ^19.4.53-beta
   syncfusion_flutter_pdfviewer:
     git:
       url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
       ref: main
 
+  path_provider: ^2.0.9
+  shared_preferences: ^2.0.13
+  external_path: ^1.0.1
+
+  cpf_cnpj_validator: ^2.0.0
+
+  open_file: ^3.2.1
+
+  share_extend: ^2.0.0
+
+  connectivity_plus: ^2.2.1
+  package_info_plus: ^1.0.6
+  safe_device: ^1.1.0
+  trust_location: ^2.0.13
+
+  in_app_review: ^2.0.4
+  launch_review: ^3.0.1
+  store_launcher: ^1.0.1
+
+  schedulers: ^0.3.1
+
+
 dev_dependencies:
+  device_preview: 1.0.0
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
@@ -87,6 +93,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/imagens/
   # This section identifies this Flutter project as a plugin project.
   # The 'pluginClass' and Android 'package' identifiers should not ordinarily
   # be modified. They are used by the tooling to maintain consistency when

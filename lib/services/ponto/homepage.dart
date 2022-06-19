@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../model/home/home_model.dart';
-import '../../model/usuario/users.dart';
+import '../../model/model.dart';
 import '../../settintgs.dart';
 import '../http/http.dart';
 
@@ -11,11 +10,11 @@ class HomeService {
   HttpCli _http = HttpCli();
 
 
-  Future<HomeModel?> getHome(Usuario user) async {
+  Future<HomeModel?> getHome(UsuarioPonto user) async {
     String _api = "api/apontamento/GetHome";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.apiUrl + _api,
+          url: Settings.conf.apiAsseponto! + _api,
           body: {
             "User": {
               "UserId": user.userId.toString(),

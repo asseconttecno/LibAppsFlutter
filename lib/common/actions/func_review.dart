@@ -7,5 +7,5 @@ import '../../settintgs.dart';
 funcReview(BuildContext context){
   final InAppReview inAppReview = InAppReview.instance;
 
-  inAppReview.openStoreListing(appStoreId: Settings.appStoreId);
+  inAppReview.openStoreListing(appStoreId: Settings.isIOS ? Settings.conf.iosAppId : Settings.conf.androidAppId);
 }

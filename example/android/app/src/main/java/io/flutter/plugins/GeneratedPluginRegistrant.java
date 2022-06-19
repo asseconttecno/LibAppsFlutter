@@ -26,9 +26,14 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin connectivity_plus, dev.fluttercommunity.plus.connectivity.ConnectivityPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.mr.flutter.plugin.filepicker.FilePickerPlugin());
+      flutterEngine.getPlugins().add(new com.pinciat.external_path.ExternalPathPlugin());
     } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin file_picker, com.mr.flutter.plugin.filepicker.FilePickerPlugin", e);
+      Log.e(TAG, "Error registering plugin external_path, com.pinciat.external_path.ExternalPathPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.afur.flutter_html_to_pdf.FlutterHtmlToPdfPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_html_to_pdf, com.afur.flutter_html_to_pdf.FlutterHtmlToPdfPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin());
@@ -76,9 +81,9 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin open_file, com.crazecoder.openfile.OpenFilePlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new io.flutter.plugins.packageinfo.PackageInfoPlugin());
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin());
     } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin package_info, io.flutter.plugins.packageinfo.PackageInfoPlugin", e);
+      Log.e(TAG, "Error registering plugin package_info_plus, dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
@@ -106,9 +111,9 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin sqflite, com.tekartik.sqflite.SqflitePlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.danieldallos.storeredirect.StoreRedirectPlugin());
+      flutterEngine.getPlugins().add(new com.heqingbao.flutter.plugin.store_launcher.StoreLauncherPlugin());
     } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin store_redirect, com.danieldallos.storeredirect.StoreRedirectPlugin", e);
+      Log.e(TAG, "Error registering plugin store_launcher, com.heqingbao.flutter.plugin.store_launcher.StoreLauncherPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.syncfusion.flutter.pdfviewer.SyncfusionFlutterPdfViewerPlugin());

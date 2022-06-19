@@ -1,26 +1,24 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:path/path.dart';
 
+import 'package:path/path.dart';
 import 'package:webcontent_converter/webcontent_converter.dart';
 import 'package:path_provider/path_provider.dart';
 
 
 import '../http/http.dart';
-import '../../model/holerite/model_holerite.dart';
-import '../../model/usuario/users.dart';
+import '../../model/model.dart';
 import '../../settintgs.dart';
 
 class HoleriteService  {
   HttpCli _http = HttpCli();
 
-  Future<List<HoleriteModel>> resumoscreen(Usuario user, int mes, int ano) async {
+  Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
     String _api = "holeriteresumo/resumoscreen";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiHolerite + _api,
+        url: Settings.conf.apiHolerite! + _api,
         body: {
           "cnpj": user.cnpj?.toString(), //'13369340000136',
           "register": user.registro?.toString(),
@@ -46,11 +44,11 @@ class HoleriteService  {
 
   }
 
-  Future<List<CompetenciasModel>> competencias(Usuario user) async {
+  Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
     String _api = "holeriteresumo/competencias";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiHolerite + _api,
+        url: Settings.conf.apiHolerite! + _api,
         body: {
           "cnpj": user.cnpj.toString(),
           "register": user.registro.toString(),
@@ -70,15 +68,15 @@ class HoleriteService  {
     return [];
   }
 
-  Future<File?> holeriteresumo(Usuario? user, int mes, int ano, int? tipo) async {
+  Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {
     String _api = "holeriteresumo";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.apiHolerite + _api, decoder: false,
+          url: Settings.conf.apiHolerite! + _api, decoder: false,
           body: {
             "cnpj": user?.cnpj,
             "register": user?.registro,
-            "cpf": user?.funcionarioCpf,
+            "cpf": user?.cpf,
             "month": mes,
             "year": ano,
             "holeriteType": tipo

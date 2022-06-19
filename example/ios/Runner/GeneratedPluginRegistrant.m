@@ -18,10 +18,10 @@
 @import connectivity_plus;
 #endif
 
-#if __has_include(<file_picker/FilePickerPlugin.h>)
-#import <file_picker/FilePickerPlugin.h>
+#if __has_include(<flutter_html_to_pdf/FlutterHtmlToPdfPlugin.h>)
+#import <flutter_html_to_pdf/FlutterHtmlToPdfPlugin.h>
 #else
-@import file_picker;
+@import flutter_html_to_pdf;
 #endif
 
 #if __has_include(<geocoding/GeocodingPlugin.h>)
@@ -72,10 +72,10 @@
 @import open_file;
 #endif
 
-#if __has_include(<package_info/FLTPackageInfoPlugin.h>)
-#import <package_info/FLTPackageInfoPlugin.h>
+#if __has_include(<package_info_plus/FLTPackageInfoPlusPlugin.h>)
+#import <package_info_plus/FLTPackageInfoPlusPlugin.h>
 #else
-@import package_info;
+@import package_info_plus;
 #endif
 
 #if __has_include(<path_provider_ios/FLTPathProviderPlugin.h>)
@@ -108,10 +108,10 @@
 @import sqflite;
 #endif
 
-#if __has_include(<store_redirect/StoreRedirectPlugin.h>)
-#import <store_redirect/StoreRedirectPlugin.h>
+#if __has_include(<store_launcher/StoreLauncherPlugin.h>)
+#import <store_launcher/StoreLauncherPlugin.h>
 #else
-@import store_redirect;
+@import store_launcher;
 #endif
 
 #if __has_include(<syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>)
@@ -137,7 +137,7 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [AssecontservicesPlugin registerWithRegistrar:[registry registrarForPlugin:@"AssecontservicesPlugin"]];
   [ConnectivityPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"ConnectivityPlusPlugin"]];
-  [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
+  [FlutterHtmlToPdfPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterHtmlToPdfPlugin"]];
   [GeocodingPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeocodingPlugin"]];
   [FLTGoogleMapsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleMapsPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
@@ -146,13 +146,13 @@
   [FLTLocalAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTLocalAuthPlugin"]];
   [LocationPlugin registerWithRegistrar:[registry registrarForPlugin:@"LocationPlugin"]];
   [OpenFilePlugin registerWithRegistrar:[registry registrarForPlugin:@"OpenFilePlugin"]];
-  [FLTPackageInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlugin"]];
+  [FLTPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlusPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [SafeDevicePlugin registerWithRegistrar:[registry registrarForPlugin:@"SafeDevicePlugin"]];
   [ShareExtendPlugin registerWithRegistrar:[registry registrarForPlugin:@"ShareExtendPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
-  [StoreRedirectPlugin registerWithRegistrar:[registry registrarForPlugin:@"StoreRedirectPlugin"]];
+  [StoreLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"StoreLauncherPlugin"]];
   [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
   [WebcontentConverterPlugin registerWithRegistrar:[registry registrarForPlugin:@"WebcontentConverterPlugin"]];

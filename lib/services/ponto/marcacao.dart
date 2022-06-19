@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../model/marcacao/marcacao.dart';
-import '../../model/usuario/users.dart';
+import '../../model/model.dart';
 import '../../settintgs.dart';
 import '../http/http.dart';
 
@@ -10,19 +9,19 @@ class MarcacoesService  {
   HttpCli _http = HttpCli();
 
 
-  Future<List<Marcacao>?> getEspelho(Usuario user) async {
+  Future<List<Marcacao>> getEspelho(UsuarioPonto? user) async {
     String _api = "api/apontamento/GetEspelho";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiUrl + _api,
+        url: Settings.conf.apiAsseponto! + _api,
         body: {
           "User": {
-            "UserId": user.userId.toString(),
-            "Database": user.database.toString()
+            "UserId": user?.userId.toString(),
+            "Database": user?.database.toString()
           },
           "Periodo": {
-            "DataInicial": user.aponta?.datainicio,
-            "DataFinal": user.aponta?.datatermino
+            "DataInicial": user?.aponta?.datainicio,
+            "DataFinal": user?.aponta?.datatermino
           }
         }
     );
@@ -37,6 +36,7 @@ class MarcacoesService  {
     }catch(e){
       debugPrint("Erro Try ${e.toString()}");
     }
+    return [];
   }
 
 

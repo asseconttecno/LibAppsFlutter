@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
-import '../../model/usuario/users.dart';
+import '../../model/model.dart';
 import '../../settintgs.dart';
 import '../http/http.dart';
 
@@ -11,11 +11,11 @@ class FotoService {
   HttpCli _http = HttpCli();
 
 
-  Future<Uint8List?> getPhoto(Usuario user) async {
+  Future<Uint8List?> getPhoto(UsuarioPonto user) async {
     String _api = "api/apontamento/GetHome";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiUrl + _api,
+        url: Settings.conf.apiAsseponto! + _api,
         body: {
           "User": {
             "UserId": user.userId.toString(),
@@ -41,10 +41,10 @@ class FotoService {
     }
   }
 
-  Future<bool> setPhoto(Usuario user, List<int> img, String? faceId) async {
+  Future<bool> setPhoto(UsuarioPonto user, List<int> img, String? faceId) async {
     String _api = "api/funcionario/PostPhoto";
     final MyHttpResponse response = await _http.post(
-        url: Settings.apiUrl + _api,
+        url: Settings.conf.apiAsseponto! + _api,
         decoder: false,
         body: {
           "user":{

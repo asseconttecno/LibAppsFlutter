@@ -1,16 +1,14 @@
-
-import '../../common/actions/func_aponta.dart';
-import '../../common/actions/func_config.dart';
-import '../../common/actions/func_sair.dart';
-import '../../services/ponto/marcacao_ponto.dart';
-import '../../settintgs.dart';
 import 'package:flutter/material.dart';
 
-
+import '../../controllers/controllers.dart';
+import '../../settintgs.dart';
+import 'func_aponta.dart';
+import 'func_config.dart';
+import 'func_sair.dart';
 import 'func_review.dart';
 
-actions(BuildContext context, {bool aponta = false, bool registro = false, GlobalKey? keyMenu, GlobalKey? key1,
-     GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
+actions(BuildContext context, {bool aponta = false, bool registro = false, GlobalKey? keyMenu,
+    GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
   return Padding(
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
@@ -74,7 +72,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             funcSair(context);
             break;
           case 6 :
-            RegistroManger().enviarMarcacoesHistorico(context);
+            RegistroManger().enviarMarcacoesHistorico(context, UserPontoManager().usuario);
             break;
         }
       },

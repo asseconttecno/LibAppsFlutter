@@ -1,71 +1,79 @@
 import 'dart:io';
-import 'enums/bio_support_state.dart';
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:external_path/external_path.dart';
+
+import 'enums/enums.dart';
+import 'model/model.dart';
 
 
-class Settings extends ChangeNotifier{
-  Settings(){
-    load();
-  }
+class Settings extends ChangeNotifier {
+  Settings() {_init();}
+
+  static SettingsModel conf = SettingsModel();
+
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  static final String apiFaceId = "https://assepontofacial.cognitiveservices.azure.com/face/v1.0/";
-  static final String apiFaceIdKey = "99cdfd08672d4ba0aca3a494346e981a";
 
-  static String apiHolerite = "https://www.asseweb.com.br/AssecontAPI/";
-  static String apiUrl = "https://www.asseponto.com.br/asseponto.api.v5/";
-  static String appStoreId = 'com.assecont.AssepontoMobile'; // ios \'1490469231'
-  static String versao = '2.1.5';
   static final bool isIOS = Platform.isIOS;
   static final bool isWin = Platform.isWindows;
-  static String? senha;
+
+  static final Color corPribar = Color(0xff002450);
+  static final Color corPribar2 = Color(0xff27689e);
+  static final Color corPri = Color(0xffff8000);
+
+  static BioSupportState bioState = BioSupportState.unknown;
+
   static bool primeiroAcesso = true;
-  static Color corPribar = Color(0xff002450);
-  static Color corPribar2 = Color(0xff27689e);
-  static Color corPri = Color(0xffff8000);
   static bool isJailBroken = true;
   static bool canMockLocation = true;
   static bool isRealDevice = true;
-  static String nomeApp = '';
-  static BioSupportState bioState = BioSupportState.unknown;
+
+  static String versao = '0.0.0';
+  static String documentos = '';
+  static String? senha;
 
   bool _darkTemas = false;
   bool get darkTemas => _darkTemas;
   set darkTemas(bool v){
     _darkTemas = v;
-    memorizar();
+    _memorizar();
     notifyListeners();
-  }
-
-  memorizar() async {
-    try{
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("darkTemas", _darkTemas.toString());
-    }catch(e){
-      debugPrint(e.toString());
-    }
   }
 
   priacesso() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("priacesso", 'false');
+      await prefs.setBool("priacesso", false);
     }catch(e){
       debugPrint(e.toString());
     }
   }
 
-  load() async {
+  _memorizar() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      String? dark = prefs.getString("darkTemas");
-      String acesso = (prefs.getString("priacesso") ?? 'true') ;
-      primeiroAcesso =  acesso == 'true';
-      darkTemas = dark == "true";
+      await prefs.setBool("darkTemas", _darkTemas);
     }catch(e){
       debugPrint(e.toString());
     }
+  }
 
+  _init() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      final packageInfo = await PackageInfo.fromPlatform();
+      primeiroAcesso =  prefs.getBool("priacesso") ?? true;
+      darkTemas = prefs.getBool("darkTemas") ?? false;
+      versao = packageInfo.version;
+      documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
+      if(documentos == ''){
+        documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+      }
+    }catch(e){
+      debugPrint(e.toString());
+    }
   }
 }
 
