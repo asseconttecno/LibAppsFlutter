@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class UserHoleriteService {
@@ -18,7 +18,7 @@ class UserHoleriteService {
         email.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '') : email;
 
       MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiHoleriteEmail! + _metodo,
+          url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
             "Email": _email,
             "Senha": senha

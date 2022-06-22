@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -12,7 +12,7 @@ class BancoHorasService {
     String _api = "api/bcohoras/GetFuncionarioHistorico";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
             "UserId": user?.userId.toString(),

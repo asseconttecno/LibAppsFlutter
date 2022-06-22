@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -12,7 +12,7 @@ class PrimeiroAcessoHoleriteService {
     String _metodo = '/novo/verificar';
     try{
       MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiHoleriteEmail! + _metodo,
+          url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
             "Cnpj": cnpj,
             "Registro": registro
@@ -56,7 +56,7 @@ class PrimeiroAcessoHoleriteService {
     String _metodo = '/novo/recadastro';
     try{
       MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiHoleriteEmail! + _metodo,
+          url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
             "Cnpj": cnpj,
             "Registro": registro,
@@ -101,7 +101,7 @@ class PrimeiroAcessoHoleriteService {
     String _metodo = '/novo/cadastro';
     try{
       MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiHoleriteEmail! + _metodo,
+          url: Config.conf.apiHoleriteEmail! + _metodo,
           body: {
             "Id": id,
             "Email": email,

@@ -7,7 +7,7 @@ import 'package:share_extend/share_extend.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-import '../settintgs.dart';
+import '../config.dart';
 
 class FileHero extends StatefulWidget {
   final File img;
@@ -25,7 +25,7 @@ class _FileHeroState extends State<FileHero> {
 
   @override
   void initState() {
-    if(!Settings.isIOS){
+    if(!Config.isIOS){
       getExternalStorageDirectory()
           .then((directory) => setState(() => externalDirectory = directory));
     }
@@ -38,7 +38,7 @@ class _FileHeroState extends State<FileHero> {
     return Scaffold(
           appBar: AppBar(
             actions: [
-              if(!Settings.isIOS)
+              if(!Config.isIOS)
                 IconButton(icon: Icon(Icons.download_rounded, color: Colors.white,),
                   onPressed: () async {
                     String? appDocDir = await FilesystemPicker.open(
@@ -47,7 +47,7 @@ class _FileHeroState extends State<FileHero> {
                       rootDirectory: externalDirectory!,
                       fsType: FilesystemType.folder,
                       pickText: 'Salvar nesse local',
-                      folderIconColor: Settings.corPribar,
+                      folderIconColor: Config.corPribar,
                     );
                     if(appDocDir != null){
                       File down = await File((appDocDir + '/${widget.name}.pdf').replaceAll(' ', '-')).

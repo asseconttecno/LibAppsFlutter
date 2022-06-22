@@ -6,12 +6,12 @@ import '../../controllers/controllers.dart';
 import '../../enums/enums.dart';
 import '../../model/model.dart';
 import '../../helper/db.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
 class RegistroService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude) async {
     String _api = "api/apontamento/PostPontoMarcar";
@@ -24,7 +24,7 @@ class RegistroService {
     }
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
             "UserId": user.userId?.toString(),
@@ -95,7 +95,7 @@ class RegistroService {
     if(usuario?.database != null){
       try{
         final MyHttpResponse response = await _http.post(
-            url: Settings.conf.apiAsseponto! + _api,
+            url: Config.conf.apiAsseponto! + _api,
             body: {
               "Database": "${usuario?.database?.toString()}",
               "Marcacoes": listOff

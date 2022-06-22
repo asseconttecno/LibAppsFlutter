@@ -7,7 +7,7 @@ import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:trust_location/trust_location.dart';
 
-import '../../settintgs.dart';
+import '../../config.dart';
 
 class Gps extends ChangeNotifier {
   Location location = Location();
@@ -39,8 +39,8 @@ class Gps extends ChangeNotifier {
 
       if ((_permissionGranted == PermissionStatus.granted ||
           _permissionGranted == PermissionStatus.grantedLimited ) && _serviceEnabled) {
-        if(!Settings.isIOS) TrustLocation.start(5) ;
-        //location.changeSettings(accuracy: LocationAccuracy.balanced);
+        if(!Config.isIOS) TrustLocation.start(5) ;
+        //location.changeConfig(accuracy: LocationAccuracy.balanced);
         getLocalizacao();
       }else{
         //locationData = null;
@@ -54,7 +54,7 @@ class Gps extends ChangeNotifier {
 
   getLocalizacao() async {
     try{
-      if(Settings.isIOS){
+      if(Config.isIOS){
         locationData = await location.getLocation();
         cam = CameraPosition(
             target: LatLng(locationData!.latitude!, locationData!.longitude!),

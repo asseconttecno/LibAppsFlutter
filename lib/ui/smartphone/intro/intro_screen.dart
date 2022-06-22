@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../settintgs.dart';
+import '../../../../config.dart';
 import '../../../controllers/controllers.dart';
 
 
@@ -30,7 +30,7 @@ class _IntroScreenState extends State<IntroScreen> {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Settings.corPribar2,   Settings.corPribar]
+              colors: [Config.corPribar2,   Config.corPribar]
           )
       ),
       child: Column(

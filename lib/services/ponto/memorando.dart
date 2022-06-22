@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class MemorandosServices {
@@ -47,7 +47,7 @@ class MemorandosServices {
     if(body.isNotEmpty){
       try{
         final MyHttpResponse response = await _http.post(
-            url: Settings.conf.apiAsseponto! + _api,
+            url: Config.conf.apiAsseponto! + _api,
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -68,7 +68,7 @@ class MemorandosServices {
     String _api = "api/memorando/GetMemorandos";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAsseponto! + _api,
           body: {
             "User": {
               "UserId": usuario?.userId.toString(),

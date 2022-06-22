@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class FotoService {
@@ -15,7 +15,7 @@ class FotoService {
     String _api = "api/apontamento/GetHome";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
             "UserId": user.userId.toString(),
@@ -44,7 +44,7 @@ class FotoService {
   Future<bool> setPhoto(UsuarioPonto user, List<int> img, String? faceId) async {
     String _api = "api/funcionario/PostPhoto";
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         decoder: false,
         body: {
           "user":{
@@ -66,10 +66,10 @@ class FotoService {
     String api = "largepersongroups/assecont/persons/$personId/persistedfaces";
     try{
       final http.Response response = await http.post(
-          Uri.parse(Settings.apiFaceId+api),
+          Uri.parse(Config.apiFaceId+api),
           headers: <String, String>{
             'Content-Type': 'application/octet-stream',
-            "Ocp-Apim-Subscription-Key" : Settings.apiFaceIdKey
+            "Ocp-Apim-Subscription-Key" : Config.apiFaceIdKey
           },
           body: face
       ).catchError((onError){
@@ -103,9 +103,9 @@ class FotoService {
   deleteface(String personId, {required Function sucesso, required Function erro}) async {
     String api = "largepersongroups/assecont/persons/$personId";
     try{
-      final http.Response response = await http.delete(Uri.parse(Settings.apiFaceId+api),
+      final http.Response response = await http.delete(Uri.parse(Config.apiFaceId+api),
           headers: <String, String>{
-            "Ocp-Apim-Subscription-Key" : Settings.apiFaceIdKey
+            "Ocp-Apim-Subscription-Key" : Config.apiFaceIdKey
           },
       ).catchError((onError){
         debugPrint(onError.toString());
@@ -126,10 +126,10 @@ class FotoService {
   addperson(String nome, {required Function sucesso, required Function erro}) async {
     String api = "largepersongroups/assecont/persons";
     try{
-      final http.Response response = await http.post(Uri.parse(Settings.apiFaceId+api),
+      final http.Response response = await http.post(Uri.parse(Config.apiFaceId+api),
           headers: <String, String>{
             'Content-Type': 'application/json',
-            "Ocp-Apim-Subscription-Key" : Settings.apiFaceIdKey
+            "Ocp-Apim-Subscription-Key" : Config.apiFaceIdKey
           },
           body: jsonEncode(<String, dynamic>{
             "name": nome,

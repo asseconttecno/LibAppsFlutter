@@ -10,6 +10,7 @@ class UsuarioPonto {
   String? funcionarioCpf;
   String? cnpj;
   String? nome;
+  String? image;
   String? cargo;
   String? faceid;
   Apontamento? aponta;
@@ -26,6 +27,7 @@ class UsuarioPonto {
       this.faceid,
       this.cnpj,
       this.nome,
+      this.image,
       this.cargo,
       this.aponta,
       this.permitirMarcarPonto,
@@ -53,6 +55,7 @@ class UsuarioPonto {
           registro: registro ?? this.registro,
           master: master ?? this.master
       );
+
 
   UsuarioPonto.fromMap(Map map, bool sql, {Apontamento? aponta}){
     if(sql){
@@ -85,11 +88,38 @@ class UsuarioPonto {
     }
   }
 
+
+  UsuarioPonto.fromMapTab(Map map, String cod) {
+    print('ok from');
+    this.userId =  (int?.parse(map["Id"].toString()));
+    this.nome = map["Nome"];
+    this.cargo = map["Cargo"];
+    this.image = map["IdFoto"];
+    this.cnpj = map["Cnpj"];
+    this.registro = cod;
+  }
+
   UsuarioPonto.fromOff(UserPontoOffine user) {
     this.userId =  user.id!;
     this.nome = user.nome!;
     this.cargo = ' ';
     this.registro = user.registro!;
+  }
+
+  Map toMapTab() {
+    Map<String, dynamic> map = {
+      "nome": this.nome,
+      "img" : this.image,
+      "cargo" : this.cargo,
+      "codigo" : this.registro,
+      "cnpj" : this.cnpj
+    };
+
+    if (this.userId != null) {
+      map["id"] = this.userId;
+    }
+
+    return map;
   }
 
   Map<String, dynamic> toMap(){

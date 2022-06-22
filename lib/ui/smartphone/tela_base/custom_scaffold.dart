@@ -6,7 +6,7 @@ import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 
 import '../../../common/common.dart';
 import '../../../controllers/controllers.dart';
-import '../../../settintgs.dart';
+import '../../../config.dart';
 import 'custom_menu_item.dart';
 
 
@@ -16,7 +16,7 @@ class CustomScaffold {
   static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu,
     required BuildContext context, required Widget appbar, required Widget body}){
     return custom(
-      key: Settings.scaffoldKey,
+      key: Config.scaffoldKey,
       body: body,
       height: 200,
       appbar: appbar,
@@ -54,12 +54,12 @@ class CustomScaffold {
           minDate: context.watch<UserPontoManager>().usuario?.aponta?.datainicio,
           maxDate: context.watch<UserPontoManager>().usuario?.aponta?.datatermino,
           dateStyle: const TextStyle(color: Colors.white,),
-          dayOfWeekStyle: TextStyle(color: Settings.corPri),
+          dayOfWeekStyle: TextStyle(color: Config.corPri),
           todayDateStyle: const TextStyle(color: Colors.white,),
           monthStyle: const TextStyle(color: Colors.white),
           pressedDateBackgroundColor: Colors.white30,
           pressedDateStyle: const TextStyle(color: Colors.white),
-          weekendsStyle: TextStyle(color: Settings.corPri),
+          weekendsStyle: TextStyle(color: Config.corPri),
           onDatePressed: funcData,
           dayOfWeek: const [
             "Seg",
@@ -110,8 +110,8 @@ class CustomScaffold {
                   Container(
                       height: height, width: double.infinity,
                       decoration: BoxDecoration(
-                          color: context.watch<Settings>().darkTemas ?
-                          Theme.of(context).primaryColor : Settings.corPribar,
+                          color: context.watch<Config>().darkTemas ?
+                          Theme.of(context).primaryColor : Config.corPribar,
                           borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(45),
                             bottomLeft: Radius.circular(45),

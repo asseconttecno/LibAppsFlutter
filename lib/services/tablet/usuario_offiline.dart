@@ -4,17 +4,17 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../helper/db.dart';
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class UserPontoOffilineServices {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<List<UserPontoOffine>> getFuncionariosTablet(EmpresaPontoModel empresa) async {
     String _api = "/api/funcionario/GetFuncionariosTablet";
     try{
       final response = await _http.post(
-            url: Settings.conf.apiAsseponto! + _api,
+            url: Config.conf.apiAsseponto! + _api,
             body: {
               "database": empresa.database.toString(),
             }

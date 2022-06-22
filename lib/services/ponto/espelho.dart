@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -20,7 +20,7 @@ class EspelhoService {
 
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiEspelho! + _api,
+          url: Config.conf.apiEspelho! + _api,
           body: {
             "email": user?.email,
             "funcionarioId": user?.userId ,
@@ -45,7 +45,7 @@ class EspelhoService {
     String _api = "api/espelhoPonto";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiEspelho! + _api,
+          url: Config.conf.apiEspelho! + _api,
           headers: <String, String>{
             'Content-Type': 'application/json',
           },

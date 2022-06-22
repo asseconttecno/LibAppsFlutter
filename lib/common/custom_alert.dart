@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:provider/provider.dart';
 
-import '../settintgs.dart';
+import '../config.dart';
 
 class CustomAlert {
 
@@ -43,7 +43,7 @@ class CustomAlert {
         VoidCallback? funcSucess,
         VoidCallback? funcCancel}) async {
 
-    bool isDark = context.read<Settings>().darkTemas;
+    bool isDark = context.read<Config>().darkTemas;
     return await showDialog(
         context: context,
         builder: (context){

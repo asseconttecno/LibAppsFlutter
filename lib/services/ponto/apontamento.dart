@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -14,7 +14,7 @@ class ApontamentoService {
     String _api = "api/apontamento/GetOutrosMeses";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
             "UserId": user?.userId.toString(),

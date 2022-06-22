@@ -6,7 +6,7 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -18,7 +18,7 @@ class InformeService {
     String _api = "informeRendimentos/competencias";
       try{
         final MyHttpResponse response = await _http.post(
-            url: Settings.conf.apiHolerite! + _api,
+            url: Config.conf.apiHolerite! + _api,
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -46,7 +46,7 @@ class InformeService {
     String _api = "informeRendimentos";
       try{
         final MyHttpResponse response = await _http.post(
-            url: Settings.conf.apiHolerite! + _api,
+            url: Config.conf.apiHolerite! + _api,
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

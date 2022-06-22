@@ -1,7 +1,7 @@
 
 import '../enums/enums.dart';
 
-class SettingsModel {
+class ConfiguracoesModel {
   String? apiAsseweb;
   String? apiHolerite;
   String? apiHoleriteEmail;
@@ -13,7 +13,7 @@ class SettingsModel {
 
   VersaoApp? nomeApp;
 
-  SettingsModel(
+  ConfiguracoesModel(
       {this.apiAsseweb,
       this.apiHolerite,
       this.apiHoleriteEmail,

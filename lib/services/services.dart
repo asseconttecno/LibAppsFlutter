@@ -1,5 +1,4 @@
-export 'sendmail.dart';
-export 'update_app.dart';
+
 export 'ponto/apontamento.dart';
 export 'ponto/bancohoras.dart';
 export 'ponto/homepage.dart';
@@ -15,3 +14,8 @@ export 'holerite/primeiro_acesso.dart';
 export 'holerite/usuario.dart';
 export 'tablet/empresa.dart';
 export 'tablet/usuario_offiline.dart';
+export 'tablet/usuario_codigo.dart';
+
+export 'biometria.dart';
+export 'sendmail.dart';
+export 'update_app.dart';

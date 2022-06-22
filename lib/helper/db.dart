@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../enums/enums.dart';
-import '../settintgs.dart';
+import '../config.dart';
 
 
 class DbSQL{
@@ -17,7 +17,7 @@ class DbSQL{
   }
 
   DbSQL._internal() {
-    if(Settings.isWin) sqfliteFfiInit();
+    if(Config.isWin) sqfliteFfiInit();
     db;
   }
 
@@ -85,9 +85,9 @@ class DbSQL{
   }
 
   inicializarDB(int v) async {
-    final camilhodb = Settings.isWin ? await databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
-    final localdb = join(camilhodb, Settings.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp.db" : "pontotab.db");
-    if(Settings.isWin){
+    final camilhodb = Config.isWin ? await databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
+    final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp.db" : "pontotab.db");
+    if(Config.isWin){
       DatabaseFactory databaseFactory = databaseFactoryFfi;
       Database db = await databaseFactory.openDatabase(localdb,
           options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));

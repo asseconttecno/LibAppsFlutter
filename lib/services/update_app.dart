@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../settintgs.dart';
+import '../../config.dart';
 import 'http/http.dart';
 
 
@@ -12,11 +12,11 @@ class UpdateAppService {
 
     final MyHttpResponse response = await _http.post(
         decoder: false,
-        url: Settings.conf.apiEspelho! + _api,
+        url: Config.conf.apiEspelho! + _api,
         body: {
-          "App": Settings.conf.nomeApp.toString(),
-          "Versao": Settings.versao,
-          "IsAndroid": !Settings.isIOS,
+          "App": Config.conf.nomeApp.toString(),
+          "Versao": Config.versao,
+          "IsAndroid": !Config.isIOS,
         }
     );
 

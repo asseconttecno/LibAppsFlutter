@@ -9,7 +9,7 @@ import 'package:store_launcher/store_launcher.dart';
 
 import '../common/common.dart';
 import '../services/services.dart';
-import '../settintgs.dart';
+import '../config.dart';
 
 
 class UpdateAppManager {
@@ -17,9 +17,9 @@ class UpdateAppManager {
 
   checkVersion(BuildContext context) async {
     try{
-      if(Settings.isWin) throw 'executando no windowns';
+      if(Config.isWin) throw 'executando no windowns';
 
-      if(kReleaseMode && ((Settings.isIOS && Settings.isJailBroken) || (!Settings.isIOS && !Settings.isRealDevice))){
+      if(kReleaseMode && ((Config.isIOS && Config.isJailBroken) || (!Config.isIOS && !Config.isRealDevice))){
         CustomAlert.custom(
             context: context,
             titulo: 'Atenção!',
@@ -44,16 +44,16 @@ class UpdateAppManager {
                 txtBotaoCancel: 'Fechar',
                 funcCancel: _funcExit(),
                 funcSucess: () {
-                  Settings.isIOS ? StoreLauncher.openWithStore(Settings.conf.iosAppId).catchError((e) {
+                  Config.isIOS ? StoreLauncher.openWithStore(Config.conf.iosAppId).catchError((e) {
                     print('ERROR> $e');
                     LaunchReview.launch(
-                      androidAppId: Settings.conf.androidAppId,
-                      iOSAppId: Settings.conf.iosAppId,
+                      androidAppId: Config.conf.androidAppId,
+                      iOSAppId: Config.conf.iosAppId,
                     );
                   }) :
                   LaunchReview.launch(
-                    androidAppId: Settings.conf.androidAppId,
-                    iOSAppId: Settings.conf.iosAppId,
+                    androidAppId: Config.conf.androidAppId,
+                    iOSAppId: Config.conf.iosAppId,
                   );
                 }
             );
@@ -73,7 +73,7 @@ class UpdateAppManager {
 
 
   _funcExit(){
-    if (Settings.isIOS) {
+    if (Config.isIOS) {
       try {
         exit(0);
       } catch (e) {

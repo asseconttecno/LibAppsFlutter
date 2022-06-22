@@ -2,7 +2,7 @@
 import 'package:assecontservices/model/model.dart';
 import 'package:flutter/material.dart';
 
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class SenhaPontoService {
@@ -12,7 +12,7 @@ class SenhaPontoService {
   Future<bool> sendPass(String email) async {
     String _api = "api/database/SendPass";
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "Email": email.trim().replaceAll(' ', '')
         }
@@ -34,7 +34,7 @@ class SenhaPontoService {
   Future<bool> alteracaoPass(UsuarioPonto usuario, String atual, String nova, ) async {
     String _api = "api/database/AlteracaoPass";
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "Email": usuario.email.toString(),
           "SenhaAtual": atual.trim().replaceAll(' ', ''),

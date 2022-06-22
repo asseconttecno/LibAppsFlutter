@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../http/http.dart';
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 
 class HoleriteService  {
   HttpCli _http = HttpCli();
@@ -18,7 +18,7 @@ class HoleriteService  {
     String _api = "holeriteresumo/resumoscreen";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiHolerite! + _api,
+        url: Config.conf.apiHolerite! + _api,
         body: {
           "cnpj": user.cnpj?.toString(), //'13369340000136',
           "register": user.registro?.toString(),
@@ -48,7 +48,7 @@ class HoleriteService  {
     String _api = "holeriteresumo/competencias";
 
     final MyHttpResponse response = await _http.post(
-        url: Settings.conf.apiHolerite! + _api,
+        url: Config.conf.apiHolerite! + _api,
         body: {
           "cnpj": user.cnpj.toString(),
           "register": user.registro.toString(),
@@ -72,7 +72,7 @@ class HoleriteService  {
     String _api = "holeriteresumo";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiHolerite! + _api, decoder: false,
+          url: Config.conf.apiHolerite! + _api, decoder: false,
           body: {
             "cnpj": user?.cnpj,
             "register": user?.registro,

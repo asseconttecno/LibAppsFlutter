@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../settintgs.dart';
+import '../../../config.dart';
 
 
 class CustomMenuItem extends StatelessWidget {
@@ -24,7 +24,7 @@ class CustomMenuItem extends StatelessWidget {
               height: 70, width: 70,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Settings.corPri
+                  color: Config.corPri
               ),
               child: icon,
             ),

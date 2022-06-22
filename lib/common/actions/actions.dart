@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../controllers/controllers.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import 'func_aponta.dart';
 import 'func_config.dart';
 import 'func_sair.dart';
@@ -39,7 +39,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
           value: 3,
           child: Text("Configurações"),
         ),
-        if(!Settings.isWin && !registro)
+        if(!Config.isWin && !registro)
           PopupMenuItem(
             key: key4,
             value: 4,

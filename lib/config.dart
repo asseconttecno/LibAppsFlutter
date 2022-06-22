@@ -9,19 +9,19 @@ import 'enums/enums.dart';
 import 'model/model.dart';
 
 
-class Settings extends ChangeNotifier {
-  Settings() {_init();}
+class Config extends ChangeNotifier {
+  Config() {_init();}
 
-  static SettingsModel conf = SettingsModel();
+  static ConfiguracoesModel conf = ConfiguracoesModel();
 
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   static final bool isIOS = Platform.isIOS;
   static final bool isWin = Platform.isWindows;
 
-  static final Color corPribar = Color(0xff002450);
-  static final Color corPribar2 = Color(0xff27689e);
-  static final Color corPri = Color(0xffff8000);
+  static Color corPribar = const Color(0xff002450);
+  static Color corPribar2 = const Color(0xff27689e);
+  static Color corPri = const Color(0xffff8000);
 
   static BioSupportState bioState = BioSupportState.unknown;
 
@@ -75,6 +75,8 @@ class Settings extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
+
+
 }
 
 

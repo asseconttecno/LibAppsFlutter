@@ -15,4 +15,4 @@ export 'ponto/marcacao/marcacao.dart';
 export 'ponto/espelho/espelho_model.dart';
 export 'ponto/memorando/memorando.dart';
 export 'ponto/usuario/users.dart';
-export 'settings.dart';
+export 'configuracoes.dart';

@@ -7,7 +7,7 @@ import '../../enums/enums.dart';
 import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../controllers.dart';
 
 
@@ -105,8 +105,8 @@ class RegistroManger {
           );
           if(result == MarcacaoOffStatus.Sucess){
             debugPrint('sucess');
-            if(Settings.scaffoldKey.currentState != null)
-              CustomSnackbar.scaffoldKey(Settings.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
+            if(Config.scaffoldKey.currentState != null)
+              CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
             var _result = await bancoDados.delete("marcacao");
             debugPrint( _result.toString() );
           }
@@ -118,21 +118,23 @@ class RegistroManger {
   }
 
   deleteHistorico() async {
-    try{
-      var bancoDados = await DbSQL().db;
-      String sql = "SELECT * FROM historico";
-      List _select = await bancoDados.rawQuery(sql);
-      if(_select.isNotEmpty){
-        List<Marcacao> _listMarc = _select.map((e) => Marcacao.fromSql(e)).toList();
-        await bancoDados.delete('historico');
-        _listMarc.map((e) async {
-          if((e.datahora?.difference(DateTime.now()).inDays ?? 100) < 40){
-            await _service.salvarHisMarcacao(e);
-          }
-        }).toList();
+    if(Config.conf.nomeApp == VersaoApp.PontoApp){
+      try{
+        var bancoDados = await DbSQL().db;
+        String sql = "SELECT * FROM historico";
+        List _select = await bancoDados.rawQuery(sql);
+        if(_select.isNotEmpty){
+          List<Marcacao> _listMarc = _select.map((e) => Marcacao.fromSql(e)).toList();
+          await bancoDados.delete('historico');
+          _listMarc.map((e) async {
+            if((e.datahora?.difference(DateTime.now()).inDays ?? 100) < 40){
+              await _service.salvarHisMarcacao(e);
+            }
+          }).toList();
+        }
+      }catch(e){
+        debugPrint("erro deleteHistorico sql $e");
       }
-    }catch(e){
-      debugPrint("erro deleteHistorico sql $e");
     }
   }
 }

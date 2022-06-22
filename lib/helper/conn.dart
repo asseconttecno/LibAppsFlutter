@@ -5,7 +5,7 @@ import 'Dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../enums/enums.dart';
-import '../settintgs.dart';
+import '../config.dart';
 import '../controllers/controllers.dart';
 
 
@@ -24,7 +24,7 @@ class ConnectionStatusSingleton {
   void initialize() {
     _connectivity.onConnectivityChanged.listen(_connectionChange);
     checkConnection();
-    if(Settings.conf.nomeApp == VersaoApp.PontoApp || Settings.conf.nomeApp == VersaoApp.PontoTablet) {
+    if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {
       Timer.periodic(const Duration(minutes: 1, seconds: 30), (T) async {
         if(hasConnection){
           await RegistroManger().enviarMarcacoes();
@@ -59,7 +59,7 @@ class ConnectionStatusSingleton {
     if (previousConnection != hasConnection ) {
       connectionChangeController.add(hasConnection);
       if(hasConnection){
-        if(Settings.conf.nomeApp == VersaoApp.PontoApp || Settings.conf.nomeApp == VersaoApp.PontoTablet) {
+        if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {
           await RegistroManger().enviarMarcacoes();
         }
       }

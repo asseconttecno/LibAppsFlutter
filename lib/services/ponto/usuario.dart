@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 class UserPontoService {
@@ -15,7 +15,7 @@ class UserPontoService {
 
       try {
         final MyHttpResponse response = await _http.post(
-            url: Settings.conf.apiAsseponto! + _api,
+            url: Config.conf.apiAsseponto! + _api,
               headers: <String, String>{
                 'Content-Type': 'application/json',
               },
@@ -48,7 +48,7 @@ class UserPontoService {
     String _api = "api/database/GetDatabaseUser";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAsseponto! + _api,
           body:{
             "email": "${email.trim().replaceAll(' ', '')}",
             "pass": "${senha.trim().replaceAll(' ', '')}"
@@ -84,7 +84,7 @@ class UserPontoService {
     String _api = "api/apontamento/GetPeriodo";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Settings.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAsseponto! + _api,
           body: {
             "Database": database
           }

@@ -11,7 +11,7 @@ import '../../enums/enums.dart';
 import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../controllers.dart';
 
 
@@ -21,7 +21,7 @@ class ConfigPontoManager extends ChangeNotifier {
   SendMail _sendMail = SendMail();
 
   ConfigModel configMocel = ConfigModel(email: EmpresaPontoManager.empresa?.email ?? '',
-    status: ConfigBackup.Semanal, hora: '23:00', local: Settings.documentos);
+    status: ConfigBackup.Semanal, hora: '23:00', local: Config.documentos);
   Timer? timer;
 
   initConfig(EmpresaPontoModel empresa) async {

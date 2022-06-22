@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 
-import '../settintgs.dart';
+import '../config.dart';
 import 'http/http.dart';
 
 class SendMail {
@@ -38,7 +38,7 @@ class SendMail {
     //print(body);
     try{
       final response = await _http.post(
-        url: Settings.conf.apiHolerite! + _api, decoder: false,
+        url: Config.conf.apiHolerite! + _api, decoder: false,
         body: body,
         headers: <String, String>{
           'Content-Type': 'application/json',

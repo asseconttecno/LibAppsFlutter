@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../helper/db.dart';
 import '../../model/model.dart';
-import '../../settintgs.dart';
+import '../../config.dart';
 import '../http/http.dart';
 
 
@@ -26,7 +26,7 @@ class EmpresaPontoService {
     String _api = "/api/database/GetDatabaseGestor";
     try{
       final response = await _http.post(
-          url: Settings.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAsseponto! + _api,
           body: {
             "email": email,
             "pass": pass
