@@ -28,8 +28,9 @@ export 'config.dart';
 
 class Assecontservices {
 
-  static init({required ConfiguracoesModel config, required List<SingleChildWidget> providers,
-       required bool devicePreview, String? titulo, RouteFactory? rotas,  Widget? myApp}) async {
+  static init({required ConfiguracoesModel config, required RouteFactory rotas,
+      List<SingleChildWidget>? providers, bool devicePreview = false, String? titulo, Widget? myApp}) async {
+    
     HttpOverrides.global = MyHttpOverrides();
     ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
     connectionStatus.initialize();
@@ -149,7 +150,9 @@ class Assecontservices {
 
     ];
 
-    _providers.addAll(providers);
+    if(providers != null){
+      _providers.addAll(providers);
+    }
 
     runApp(
         MultiProvider(
