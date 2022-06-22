@@ -34,9 +34,9 @@ class CustomScaffold {
     );
   }
 
-  static calendario({GlobalKey<ScaffoldState>? key, Function(DateTime)? funcData,
-    required List<DecorationItem> listdecoration, String? appTitle,
-    required BuildContext context, required Widget appbar, required Widget body}){
+  static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
+    required List<DecorationItem> listdecoration, required String appTitle,
+    required BuildContext context, required Widget body}){
 
     final CalendarWeekController _controller = CalendarWeekController();
 
@@ -45,7 +45,6 @@ class CustomScaffold {
       body: body,
       appTitle: appTitle,
       height: 110,
-      expanAppbar: appbar,
       appbar: CalendarWeek(
           controller: _controller,
           height: 50,

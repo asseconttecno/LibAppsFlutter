@@ -16,9 +16,6 @@ class UserPontoService {
       try {
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAsseponto! + _api,
-              headers: <String, String>{
-                'Content-Type': 'application/json',
-              },
               body: {
                 "email": "${email.trim().replaceAll(' ', '')}",
                 "pass": "${senha.trim().replaceAll(' ', '')}"
@@ -28,7 +25,7 @@ class UserPontoService {
           if(response.isSucess){
             Map dadosJson = response.data;
             if(dadosJson.containsKey('Status') && dadosJson['Status'] == 0){
-              signIn(email: email, senha: senha);
+              return await signIn(email: email, senha: senha);
             }else if(dadosJson.containsKey('Descricao')){
               debugPrint('signInAuth ' + dadosJson.toString());
               throw dadosJson['Descricao'];
