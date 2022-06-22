@@ -1,27 +1,24 @@
-import 'package:assecontservices/model/usuario/users.dart';
 import 'package:flutter/material.dart';
 
 
-import '../../model/apontamento/apontamento.dart';
-import '../../settintgs.dart';
-import '../http/http_cliente.dart';
-import '../http/http_response.dart';
+import '../../model/model.dart';
+import '../../config.dart';
+import '../http/http.dart';
 
 
 
 class ApontamentoService {
   HttpCli _http = HttpCli();
 
-  Future<List<Apontamento>?> getPeriodo(Usuario user) async {
+  Future<List<Apontamento>?> getPeriodo(UsuarioPonto? user) async {
     String _api = "api/apontamento/GetOutrosMeses";
 
-    final HttpResponse response = await _http.post(
-        url: Settings.apiUrl + _api,
-
+    final MyHttpResponse response = await _http.post(
+        url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
-            "UserId": user.userId.toString(),
-            "Database": user.database.toString()
+            "UserId": user?.userId.toString(),
+            "Database": user?.database.toString()
           }
         }
     );

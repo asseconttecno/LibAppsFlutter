@@ -1,75 +1,56 @@
-import 'dart:convert';
-import '../../helper/conn.dart';
-import '../usuario/users_manager.dart';
-import '../../settintgs.dart';
+
+import 'package:assecontservices/model/model.dart';
 import 'package:flutter/material.dart';
-import "package:http/http.dart" as http;
 
-class SenhaManager extends ChangeNotifier {
-  ConnectionStatusSingleton _connectionStatus = ConnectionStatusSingleton.getInstance();
+import '../../config.dart';
+import '../http/http.dart';
+
+class SenhaPontoService {
+  HttpCli _http = HttpCli();
 
 
-  sendPass(String email, {required Function onFail, required Function onSuccess}) async {
+  Future<bool> sendPass(String email) async {
     String _api = "api/database/SendPass";
-    try{
-      if(await _connectionStatus.checkConnection()){
-        final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode(<String, dynamic>{
-              "Email": email.trim().replaceAll(' ', '')
-            })
-        );
-        if(response.statusCode == 200 && response.body != null
-            && response.body != 'null' && response.body != ''){
-          var dadosJson = json.decode( response.body );
-          if(dadosJson["IsSuccess"]){
-            onSuccess(dadosJson['Message']);
-          }else{
-            onFail(dadosJson["Message"]);
-          }
-        }else{
-          debugPrint(response.statusCode.toString());
-          onFail('Não foi possivel enviar sua senha, tente novamente!');
+    final MyHttpResponse response = await _http.post(
+        url: Config.conf.apiAsseponto! + _api,
+        body: {
+          "Email": email.trim().replaceAll(' ', '')
         }
+    );
+    if(response.isSucess){
+      var dadosJson = response.data;
+      if(dadosJson["IsSuccess"]){
+        print(dadosJson['Message']);
+        return true;
       }else{
-        onFail('Sem conexão com internet!');
+        throw dadosJson["Message"];
       }
-    }catch(e){
-      debugPrint("sendPass erro ${e.toString()}");
-      onFail('Não foi possivel enviar sua senha, tente novamente!');
+    }else{
+      debugPrint(response.codigo.toString());
+      throw 'Não foi possivel enviar sua senha, tente novamente!';
     }
   }
 
-  alteracaoPass(String atual, String nova, {required Function onFail, required Function onSuccess}) async {
+  Future<bool> alteracaoPass(UsuarioPonto usuario, String atual, String nova, ) async {
     String _api = "api/database/AlteracaoPass";
-    try{
-      final http.Response response = await http.post(Uri.parse(Settings.apiUrl + Settings.apiUrl2 + _api),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(<String, dynamic>{
-            "Email": "${UserManager().usuario?.email.toString()}",
-            "SenhaAtual": atual.trim().replaceAll(' ', ''),
-            "SenhaNova": nova.trim().replaceAll(' ', '')
-          })
-      );
-      if(response.statusCode == 200 && response.body != null
-          && response.body != 'null' && response.body != ''){
-        var dadosJson = json.decode( response.body );
-        if(dadosJson["IsSuccess"]){
-          onSuccess();
-        }else{
-          onFail(dadosJson["Message"]);
+    final MyHttpResponse response = await _http.post(
+        url: Config.conf.apiAsseponto! + _api,
+        body: {
+          "Email": usuario.email.toString(),
+          "SenhaAtual": atual.trim().replaceAll(' ', ''),
+          "SenhaNova": nova.trim().replaceAll(' ', '')
         }
+    );
+    if(response.isSucess){
+      var dadosJson = response.data;
+      if(dadosJson["IsSuccess"]){
+        return true;
       }else{
-        debugPrint(response.statusCode.toString());
-        onFail('Não foi possivel alterar sua senha, tente novamente!');
+        throw dadosJson["Message"];
       }
-    }catch(e){
-      debugPrint("alteracaoPass erro ${e.toString()}");
-      onFail('Não foi possivel alterar sua senha, tente novamente!');
+    }else{
+      debugPrint(response.codigo.toString());
+      throw 'Não foi possivel alterar sua senha, tente novamente!';
     }
   }
 }

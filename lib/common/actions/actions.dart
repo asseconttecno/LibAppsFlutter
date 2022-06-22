@@ -1,16 +1,14 @@
-
-import '../../common/actions/func_aponta.dart';
-import '../../common/actions/func_config.dart';
-import '../../common/actions/func_sair.dart';
-import '../../settintgs.dart';
-import '../../ui/smartphone/password/alterar_senha.dart';
 import 'package:flutter/material.dart';
 
-
+import '../../controllers/controllers.dart';
+import '../../config.dart';
+import 'func_aponta.dart';
+import 'func_config.dart';
+import 'func_sair.dart';
 import 'func_review.dart';
 
-actions(BuildContext context, {bool aponta = false, bool registro = false, GlobalKey? keyMenu, GlobalKey? key1,
-     GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
+actions(BuildContext context, {bool aponta = false, bool registro = false, GlobalKey? keyMenu,
+    GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
   return Padding(
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
@@ -41,7 +39,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
           value: 3,
           child: Text("Configurações"),
         ),
-        if(!Settings.isWin && !registro)
+        if(!Config.isWin && !registro)
           PopupMenuItem(
             key: key4,
             value: 4,
@@ -62,7 +60,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             funcAponta(context);
             break;
           case 2 :
-            await AlterarSenhaModal(context);
+            //await AlterarSenhaModal(context);
             break;
           case 3 :
             funcConfig(context);
@@ -74,7 +72,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             funcSair(context);
             break;
           case 6 :
-            RegistroManger().enviarMarcacoesHistorico(context);
+            RegistroManger().enviarMarcacoesHistorico(context, UserPontoManager().usuario);
             break;
         }
       },

@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'dart:io';
-import '../../../helper/conn.dart';
-import '../../../settintgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
-import 'package:forceupdate/forceupdate.dart';
-import 'package:safe_device/safe_device.dart';
+
+import '../../../../config.dart';
+import '../../../controllers/controllers.dart';
+
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -15,134 +12,26 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  ConnectionStatusSingleton _connectionStatus = ConnectionStatusSingleton.getInstance();
 
 
   @override
   void initState() {
     super.initState();
-     checkVersion();
+    Future.delayed(Duration(milliseconds: 500), (){
+      UpdateAppManager().checkVersion(context);
+    });
   }
-
-  checkVersion() async {
-    try{
-      if(Settings.isWin) throw 'executando no windowns';
-      final checkVersion = CheckVersion(context: context,
-          androidId: 'com.assecont.AssepontoMobile',
-          iOSId: 'com.assecont.assepontoweb'
-      );
-      if(Settings.isJailBroken && Settings.isRealDevice){
-        bool check = await _connectionStatus.checkConnection();
-        if(check){
-          final appStatus = await checkVersion.getVersionStatus().timeout(
-              Duration(seconds: 3), onTimeout: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-          }).catchError((onError){
-            debugPrint(onError.toString());
-            Future.delayed(
-                Duration(seconds: 3),
-                    () {
-                  if (this.mounted) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/login', (route) => false);
-                  }
-                }
-            );
-          });
-          debugPrint(appStatus?.appStoreUrl);
-          debugPrint(appStatus?.localVersion);
-          debugPrint(appStatus?.storeVersion);
-          debugPrint(appStatus?.canUpdate?.toString());
-
-          if (appStatus?.canUpdate ?? false) {
-            await checkVersion.showUpdateDialog(
-              "com.assecont.AssepontoMobile", "1490469231",
-              versionStatus: appStatus,
-              titleText: 'Exite uma nova versão',
-              message: '\nClique em update para atualizar!\n',
-              updateText: 'Update',
-              dismissText: 'Continuar',
-              dismissFunc: (){
-                Navigator.pop(context);
-                Future.delayed(
-                    Duration(seconds: 2),
-                        () {
-                      if (this.mounted) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login', (route) => false);
-                      }
-                    }
-                );
-              }
-            );
-          }
-          Future.delayed(
-              Duration(seconds: 2),
-                  () {
-                if (this.mounted) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/login', (route) => false);
-                }
-              }
-          );
-        }else{
-          Future.delayed(
-              Duration(seconds: 3),
-                  () {
-                if (this.mounted) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/login', (route) => false);
-                }
-              }
-          );
-        }
-      }else{
-        await DangerAlertBox(
-            context: context,
-            title: 'Desculpe',
-            messageText: 'Não é possivel executar este app neste dispositivo!',
-            buttonText: 'ok'
-        );
-        if (Settings.isIOS) {
-          try {
-            exit(0);
-          } catch (e) {
-            SystemNavigator.pop(); // for IOS, not true this, you can make comment this :)
-          }
-        } else {
-          try {
-            SystemNavigator.pop(); // sometimes it cant exit app
-          } catch (e) {
-            exit(0); // so i am giving crash to app ... sad :(
-          }
-        }
-      }
-    } on TimeoutException {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    }catch(e){
-      Future.delayed(
-          Duration(seconds: 2),
-              (){
-            if (this.mounted) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
-            }
-          }
-      );
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Settings.corPribar2,   Settings.corPribar]
-        )
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Config.corPribar2,   Config.corPribar]
+          )
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +41,7 @@ class _IntroScreenState extends State<IntroScreen> {
             child: Image.asset('assets/imagens/LOGO_ASSECONT.png', fit: BoxFit.fitWidth,),
           ),
           Container(
-            width: 50,
+              width: 50,
               child: LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
           )
         ],
