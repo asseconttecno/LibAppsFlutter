@@ -1,61 +1,64 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:assecontservices/assecontservices.dart';
 
+import 'routas.dart';
+
 void main() {
-  runApp(const MyApp());
+  Assecontservices.init(
+      config: ConfiguracoesModel(
+          apiAsseweb: '',
+          apiHolerite: '',
+          apiHoleriteEmail: '',
+          apiAsseponto: '',
+          apiEspelho: '',
+          androidAppId: '',
+          iosAppId: '',
+          iosAppIdNum: '',
+          nomeApp: VersaoApp.PontoApp
+      ),
+      rotas: RouteGenerator.generateRoute
+  );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class MyCustomApp extends StatefulWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      //platformVersion = await Assecontservices.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      //_platformVersion = platformVersion;
-    });
-  }
+class _MyAppState extends State<MyCustomApp> {
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+      title: 'Asseponto Mobile',
+      debugShowCheckedModeBanner: false,
+      theme: context.watch<Config>().darkTemas ?
+      ThemeData.dark().copyWith(
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: ThemeData.dark().primaryColor,
+          titleTextStyle: TextStyle(color: Config.corPri,),
+          toolbarTextStyle: TextStyle(color: Config.corPri,fontSize: 18),
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ) : ThemeData.light().copyWith(
+        primaryColor: Config.corPribar ,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          titleTextStyle: TextStyle(color: Config.corPri,),
+          toolbarTextStyle: TextStyle(color: Config.corPri,fontSize: 18),
+          elevation: 0,
+          color: Config.corPribar,
         ),
       ),
+      supportedLocales: [const Locale('pt', 'BR')],
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
