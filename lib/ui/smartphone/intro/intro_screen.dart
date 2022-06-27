@@ -38,7 +38,7 @@ class _IntroScreenState extends State<IntroScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
-            child: Image.asset('assets/imagens/LOGO_ASSECONT.png', fit: BoxFit.fitWidth,),
+            child: Image.asset('assecontservices/assets/imagens/LOGO_ASSECONT.png', fit: BoxFit.fitWidth,),
           ),
           Container(
               width: 50,

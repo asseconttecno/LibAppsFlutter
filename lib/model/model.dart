@@ -16,3 +16,5 @@ export 'ponto/espelho/espelho_model.dart';
 export 'ponto/memorando/memorando.dart';
 export 'ponto/usuario/users.dart';
 export 'configuracoes.dart';
+
+export 'asseweb/usuario/usuario.dart';
