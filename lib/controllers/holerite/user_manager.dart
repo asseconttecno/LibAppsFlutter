@@ -93,9 +93,4 @@ class UserHoleriteManager extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
-
-
-
-
-
 }

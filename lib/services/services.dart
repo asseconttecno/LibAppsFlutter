@@ -15,6 +15,7 @@ export 'holerite/usuario.dart';
 export 'tablet/empresa.dart';
 export 'tablet/usuario_offiline.dart';
 export 'tablet/usuario_codigo.dart';
+export 'asseweb/usuario.dart';
 
 export 'biometria.dart';
 export 'sendmail.dart';

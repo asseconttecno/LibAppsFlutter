@@ -5,13 +5,14 @@ import 'package:assecontservices/assecontservices.dart';
 import 'routas.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Assecontservices.init(
       config: ConfiguracoesModel(
           apiAsseweb: '',
           apiHolerite: '',
           apiHoleriteEmail: '',
           apiAsseponto: '',
-          apiEspelho: '',
+          apiEspelho: 'https://www.asseponto.com.br/ApiEspelho/',
           androidAppId: '',
           iosAppId: '',
           iosAppIdNum: '',

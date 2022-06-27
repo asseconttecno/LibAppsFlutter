@@ -25,7 +25,6 @@ export 'helper/helper.dart';
 export 'config.dart';
 
 
-
 class Assecontservices {
 
   static init({required ConfiguracoesModel config, required RouteFactory rotas,

@@ -111,11 +111,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin sqflite, com.tekartik.sqflite.SqflitePlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.heqingbao.flutter.plugin.store_launcher.StoreLauncherPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin store_launcher, com.heqingbao.flutter.plugin.store_launcher.StoreLauncherPlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new com.syncfusion.flutter.pdfviewer.SyncfusionFlutterPdfViewerPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin syncfusion_flutter_pdfviewer, com.syncfusion.flutter.pdfviewer.SyncfusionFlutterPdfViewerPlugin", e);

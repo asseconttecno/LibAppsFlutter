@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:launch_review/launch_review.dart';
-import 'package:store_launcher/store_launcher.dart';
 
 import '../common/common.dart';
 import '../services/services.dart';
@@ -44,13 +43,6 @@ class UpdateAppManager {
                 txtBotaoCancel: 'Fechar',
                 funcCancel: _funcExit(),
                 funcSucess: () {
-                  Config.isIOS ? StoreLauncher.openWithStore(Config.conf.iosAppId).catchError((e) {
-                    print('ERROR> $e');
-                    LaunchReview.launch(
-                      androidAppId: Config.conf.androidAppId,
-                      iOSAppId: Config.conf.iosAppId,
-                    );
-                  }) :
                   LaunchReview.launch(
                     androidAppId: Config.conf.androidAppId,
                     iOSAppId: Config.conf.iosAppId,

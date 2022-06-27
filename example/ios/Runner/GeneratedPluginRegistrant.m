@@ -108,12 +108,6 @@
 @import sqflite;
 #endif
 
-#if __has_include(<store_launcher/StoreLauncherPlugin.h>)
-#import <store_launcher/StoreLauncherPlugin.h>
-#else
-@import store_launcher;
-#endif
-
 #if __has_include(<syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>)
 #import <syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>
 #else
@@ -152,7 +146,6 @@
   [ShareExtendPlugin registerWithRegistrar:[registry registrarForPlugin:@"ShareExtendPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
-  [StoreLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"StoreLauncherPlugin"]];
   [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
   [WebcontentConverterPlugin registerWithRegistrar:[registry registrarForPlugin:@"WebcontentConverterPlugin"]];
