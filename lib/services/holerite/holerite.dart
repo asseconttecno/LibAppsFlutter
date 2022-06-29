@@ -15,7 +15,7 @@ class HoleriteService  {
   HttpCli _http = HttpCli();
 
   Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
-    String _api = "holeriteresumo/resumoscreen";
+    String _api = "/holeriteresumo/resumoscreen";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiHolerite! + _api,
@@ -45,7 +45,7 @@ class HoleriteService  {
   }
 
   Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
-    String _api = "holeriteresumo/competencias";
+    String _api = "/holeriteresumo/competencias";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiHolerite! + _api,
@@ -69,7 +69,7 @@ class HoleriteService  {
   }
 
   Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {
-    String _api = "holeriteresumo";
+    String _api = "/holeriteresumo";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiHolerite! + _api, decoder: false,

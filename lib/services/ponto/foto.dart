@@ -12,7 +12,7 @@ class FotoService {
 
 
   Future<Uint8List?> getPhoto(UsuarioPonto user) async {
-    String _api = "api/apontamento/GetHome";
+    String _api = "/api/apontamento/GetHome";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
@@ -42,7 +42,7 @@ class FotoService {
   }
 
   Future<bool> setPhoto(UsuarioPonto user, List<int> img, String? faceId) async {
-    String _api = "api/funcionario/PostPhoto";
+    String _api = "/api/funcionario/PostPhoto";
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
         decoder: false,

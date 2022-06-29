@@ -9,13 +9,13 @@ void main() {
   Assecontservices.init(
       config: ConfiguracoesModel(
           apiAsseweb: '',
-          apiHolerite: '',
+          apiHolerite: 'https://www.asseweb.com.br/AssecontAPI',
           apiHoleriteEmail: '',
-          apiAsseponto: '',
-          apiEspelho: 'https://www.asseponto.com.br/ApiEspelho/',
-          androidAppId: '',
-          iosAppId: '',
-          iosAppIdNum: '',
+          apiAsseponto: 'https://www.asseponto.com.br/asseponto.api.v5',
+          apiEspelho: 'https://www.asseponto.com.br/ApiEspelho',
+          androidAppId: 'com.assecont.AssepontoMobile',
+          iosAppId: 'com.assecont.assepontoweb',
+          iosAppIdNum: '1490469231',
           nomeApp: VersaoApp.PontoApp
       ),
       rotas: RouteGenerator.generateRoute

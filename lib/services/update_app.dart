@@ -8,7 +8,7 @@ class UpdateAppService {
   HttpCli _http = HttpCli();
 
   Future<bool> postUpdateApp() async {
-    String _api = "api/AppVersoes";
+    String _api = "/api/AppVersoes";
 
     Map<String, dynamic> bod = {
       "App": Config.conf.nomeApp.toString().replaceAll('VersaoApp.', ''),

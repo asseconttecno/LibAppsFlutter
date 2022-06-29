@@ -16,7 +16,7 @@ class EspelhoService {
 
 
   Future<bool> postEspelhoStatus(UsuarioPonto? user, Apontamento aponta, bool status) async {
-    String _api = "api/espelhoStatus";
+    String _api = "/api/espelhoStatus";
 
     try{
       final MyHttpResponse response = await _http.post(
@@ -42,7 +42,7 @@ class EspelhoService {
   }
 
   Future<EspelhoModel?> postEspelhoPontoPDF(UsuarioPonto? user, Apontamento aponta) async {
-    String _api = "api/espelhoPonto";
+    String _api = "/api/espelhoPonto";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiEspelho! + _api,

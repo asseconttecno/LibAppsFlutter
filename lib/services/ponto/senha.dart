@@ -10,7 +10,7 @@ class SenhaPontoService {
 
 
   Future<bool> sendPass(String email) async {
-    String _api = "api/database/SendPass";
+    String _api = "/api/database/SendPass";
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
         body: {
@@ -32,7 +32,7 @@ class SenhaPontoService {
   }
 
   Future<bool> alteracaoPass(UsuarioPonto usuario, String atual, String nova, ) async {
-    String _api = "api/database/AlteracaoPass";
+    String _api = "/api/database/AlteracaoPass";
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
         body: {

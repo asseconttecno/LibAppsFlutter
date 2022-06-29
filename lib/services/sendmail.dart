@@ -13,7 +13,7 @@ class SendMail {
   HttpCli _http = HttpCli();
 
   Future<bool> postSendMail(String email, String corpo, File? file) async {
-    String _api = 'email/sendMail';
+    String _api = '/email/sendMail';
 
     Map<String, dynamic> body = {
       "Email": email,

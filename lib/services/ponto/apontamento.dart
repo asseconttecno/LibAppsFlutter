@@ -11,7 +11,7 @@ class ApontamentoService {
   HttpCli _http = HttpCli();
 
   Future<List<Apontamento>?> getPeriodo(UsuarioPonto? user) async {
-    String _api = "api/apontamento/GetOutrosMeses";
+    String _api = "/api/apontamento/GetOutrosMeses";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
