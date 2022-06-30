@@ -15,7 +15,7 @@ class InformeService {
   HttpCli _http = HttpCli();
 
   Future<List<InformeRendimentosModel>> competencias(UsuarioHolerite? user) async {
-    String _api = "informeRendimentos/competencias";
+    String _api = "/informeRendimentos/competencias";
       try{
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiHolerite! + _api,
@@ -43,7 +43,7 @@ class InformeService {
   }
 
   Future<File?> informeRendimentosPDF(UsuarioHolerite user, int? ano) async {
-    String _api = "informeRendimentos";
+    String _api = "/informeRendimentos";
       try{
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiHolerite! + _api,

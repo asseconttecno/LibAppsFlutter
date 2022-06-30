@@ -13,7 +13,7 @@ class MemorandosServices {
 
   Future<bool> postMemorando(UsuarioPonto usuario, DateTime data, String texto,
       int tipo ,{File? img, List<String>? marcacao}) async {
-    String _api = "api/memorando/PostMemorando";
+    String _api = "/api/memorando/PostMemorando";
     Map<String,dynamic> body;
     if(tipo == 1){
       body = {
@@ -65,7 +65,7 @@ class MemorandosServices {
   }
 
   Future<List<Memorandos>> getMemorandos(UsuarioPonto? usuario, DateTime inicio, DateTime fim) async {
-    String _api = "api/memorando/GetMemorandos";
+    String _api = "/api/memorando/GetMemorandos";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,

@@ -8,14 +8,14 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Assecontservices.init(
       config: ConfiguracoesModel(
-          apiAsseweb: '',
-          apiHolerite: '',
-          apiHoleriteEmail: '',
-          apiAsseponto: '',
-          apiEspelho: 'https://www.asseponto.com.br/ApiEspelho/',
-          androidAppId: '',
-          iosAppId: '',
-          iosAppIdNum: '',
+          apiAsseweb: 'https://www.asseweb.com.br/ApiAsseweb',
+          apiHolerite: 'https://www.asseweb.com.br/AssecontAPI',
+          apiHoleriteEmail: 'https://www.asseweb.com.br/HoleriteApi',
+          apiAsseponto: 'https://www.asseponto.com.br/asseponto.api.v5',
+          apiEspelho: 'https://www.asseponto.com.br/ApiEspelho',
+          androidAppId: 'com.assecont.AssepontoMobile',
+          iosAppId: 'com.assecont.assepontoweb',
+          iosAppIdNum: '1490469231',
           nomeApp: VersaoApp.PontoApp
       ),
       rotas: RouteGenerator.generateRoute

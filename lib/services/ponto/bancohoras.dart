@@ -9,7 +9,7 @@ class BancoHorasService {
   HttpCli _http = HttpCli();
 
   Future<List<BancoHoras>> getFuncionarioHistorico(UsuarioPonto? user) async {
-    String _api = "api/bcohoras/GetFuncionarioHistorico";
+    String _api = "/api/bcohoras/GetFuncionarioHistorico";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,

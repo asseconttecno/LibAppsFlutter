@@ -120,12 +120,6 @@
 @import url_launcher_ios;
 #endif
 
-#if __has_include(<webcontent_converter/WebcontentConverterPlugin.h>)
-#import <webcontent_converter/WebcontentConverterPlugin.h>
-#else
-@import webcontent_converter;
-#endif
-
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
@@ -148,7 +142,6 @@
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
-  [WebcontentConverterPlugin registerWithRegistrar:[registry registrarForPlugin:@"WebcontentConverterPlugin"]];
 }
 
 @end

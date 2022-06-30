@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/assecontservices.iml" filepath="$PROJECT_DIR$/assecontservices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/assecontservices_android.iml" filepath="$PROJECT_DIR$/android/assecontservices_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LibraryAppFlutter.iml" filepath="$PROJECT_DIR$/.idea/LibraryAppFlutter.iml" />
     </modules>
   </component>
 </project>

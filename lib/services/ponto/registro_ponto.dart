@@ -14,7 +14,7 @@ class RegistroService {
   final HttpCli _http = HttpCli();
 
   Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude) async {
-    String _api = "api/apontamento/PostPontoMarcar";
+    String _api = "/api/apontamento/PostPontoMarcar";
 
     String? endereco;
     try {
@@ -90,7 +90,7 @@ class RegistroService {
 
   Future<MarcacaoOffStatus> postPontoMarcacoesOffline(UsuarioPonto? usuario,
       List<Map<String, dynamic>> listOff, {bool delete = false}) async {
-    String _api = "api/apontamento/PostPontoMarcacoesOffline";
+    String _api = "/api/apontamento/PostPontoMarcacoesOffline";
 
     if(usuario?.database != null){
       try{

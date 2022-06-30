@@ -11,7 +11,7 @@ class HomeService {
 
 
   Future<HomeModel?> getHome(UsuarioPonto user) async {
-    String _api = "api/apontamento/GetHome";
+    String _api = "/api/apontamento/GetHome";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,

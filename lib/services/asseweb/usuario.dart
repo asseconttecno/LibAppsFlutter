@@ -8,14 +8,14 @@ class UserAssewebService {
   HttpCli _http = HttpCli();
 
   Future<UsuarioAsseweb> signInAuth({required String email, required String senha}) async {
-    String _metodo = '/login';
+    String _metodo = '/api/ExternalLogin/login';
     try{
 
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseweb! + _metodo,
           body: <String, dynamic>{
-            "Email": email,
-            "Senha": senha
+            "email": email,
+            "password": senha
           }
       );
 

@@ -125,10 +125,5 @@ public final class GeneratedPluginRegistrant {
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin url_launcher_android, io.flutter.plugins.urllauncher.UrlLauncherPlugin", e);
     }
-    try {
-      flutterEngine.getPlugins().add(new app.mylekha.webcontent_converter.WebcontentConverterPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin webcontent_converter, app.mylekha.webcontent_converter.WebcontentConverterPlugin", e);
-    }
   }
 }

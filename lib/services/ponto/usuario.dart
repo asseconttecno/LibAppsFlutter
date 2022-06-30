@@ -11,7 +11,7 @@ class UserPontoService {
 
 
   Future<UsuarioPonto?> signInAuth({required String email,required String senha,}) async {
-    String _api = "api/database/GetDatabaseUserStatus";
+    String _api = "/api/database/GetDatabaseUserStatus";
 
       try {
         final MyHttpResponse response = await _http.post(
@@ -42,7 +42,7 @@ class UserPontoService {
   }
 
   Future<UsuarioPonto?> signIn({required String email, required String senha}) async {
-    String _api = "api/database/GetDatabaseUser";
+    String _api = "/api/database/GetDatabaseUser";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,
@@ -78,7 +78,7 @@ class UserPontoService {
   }
 
   Future<Apontamento?> getPeriodo(int database) async {
-    String _api = "api/apontamento/GetPeriodo";
+    String _api = "/api/apontamento/GetPeriodo";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,

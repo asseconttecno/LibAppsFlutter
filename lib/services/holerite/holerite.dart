@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:path/path.dart';
-import 'package:webcontent_converter/webcontent_converter.dart';
+import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -15,7 +14,7 @@ class HoleriteService  {
   HttpCli _http = HttpCli();
 
   Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
-    String _api = "holeriteresumo/resumoscreen";
+    String _api = "/holeriteresumo/resumoscreen";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiHolerite! + _api,
@@ -45,7 +44,7 @@ class HoleriteService  {
   }
 
   Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
-    String _api = "holeriteresumo/competencias";
+    String _api = "/holeriteresumo/competencias";
 
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiHolerite! + _api,
@@ -69,7 +68,7 @@ class HoleriteService  {
   }
 
   Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {
-    String _api = "holeriteresumo";
+    String _api = "/holeriteresumo";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiHolerite! + _api, decoder: false,
@@ -89,16 +88,14 @@ class HoleriteService  {
         <body>${response.data}</body>
         </html>
         ''';
+
         Directory tempDir = await getTemporaryDirectory();
-        var savedPath = join(tempDir.path, "holerite" + DateTime.now().microsecondsSinceEpoch.toString() + ".pdf");
-        await WebcontentConverter.contentToPDF(
-          content: htmlContent,
-          savedPath: savedPath,
-          format: PaperFormat.a4,
-          margins: PdfMargins.px(top: 35, bottom: 35, right: 35, left: 35),
+        String savedPath = "holerite" + DateTime.now().microsecondsSinceEpoch.toString();
+        File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
+            htmlContent, tempDir.path, savedPath
         );
-        File dadosJson = File(savedPath);
-        return dadosJson;
+
+        return file;
       }
     } catch(e){
       debugPrint(e.toString());

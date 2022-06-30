@@ -30,8 +30,9 @@ class UpdateAppManager {
       }else{
           final bool appStatus = await _service.postUpdateApp();
 
+          print(appStatus);
           if(appStatus) {
-            await CustomAlert.custom(
+            CustomAlert.custom(
                 context: context,
                 titulo: 'Exite uma nova versão',
                 corpo: Padding(
@@ -41,11 +42,13 @@ class UpdateAppManager {
                 ),
                 txtBotaoSucess: 'Atualizar',
                 txtBotaoCancel: 'Fechar',
-                funcCancel: _funcExit(),
+                funcCancel: (){
+                  _funcExit();
+                },
                 funcSucess: () {
                   LaunchReview.launch(
                     androidAppId: Config.conf.androidAppId,
-                    iOSAppId: Config.conf.iosAppId,
+                    iOSAppId: Config.conf.iosAppIdNum,
                   );
                 }
             );

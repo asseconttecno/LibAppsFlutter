@@ -34,7 +34,7 @@ dependencies:
 
   geocoding: ^2.0.2
   location: ^4.3.0
-
+  google_maps_flutter: ^2.1.8
 
   url_launcher: ^6.0.20
 
@@ -50,7 +50,7 @@ dependencies:
       ref: main
 
 
-  webcontent_converter: ^0.0.7+1
+  #webcontent_converter: ^0.0.7+1
   flutter_html_to_pdf: ^0.7.0
   #syncfusion_flutter_pdfviewer: ^19.4.53-beta
   syncfusion_flutter_pdfviewer:
