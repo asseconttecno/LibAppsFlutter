@@ -8,9 +8,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Assecontservices.init(
       config: ConfiguracoesModel(
-          apiAsseweb: '',
+          apiAsseweb: 'https://www.asseweb.com.br/ApiAsseweb',
           apiHolerite: 'https://www.asseweb.com.br/AssecontAPI',
-          apiHoleriteEmail: '',
+          apiHoleriteEmail: 'https://www.asseweb.com.br/HoleriteApi',
           apiAsseponto: 'https://www.asseponto.com.br/asseponto.api.v5',
           apiEspelho: 'https://www.asseponto.com.br/ApiEspelho',
           androidAppId: 'com.assecont.AssepontoMobile',

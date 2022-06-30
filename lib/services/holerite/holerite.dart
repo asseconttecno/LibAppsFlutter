@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:path/path.dart';
-import 'package:webcontent_converter/webcontent_converter.dart';
+import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -89,16 +88,14 @@ class HoleriteService  {
         <body>${response.data}</body>
         </html>
         ''';
+
         Directory tempDir = await getTemporaryDirectory();
-        var savedPath = join(tempDir.path, "holerite" + DateTime.now().microsecondsSinceEpoch.toString() + ".pdf");
-        await WebcontentConverter.contentToPDF(
-          content: htmlContent,
-          savedPath: savedPath,
-          format: PaperFormat.a4,
-          margins: PdfMargins.px(top: 35, bottom: 35, right: 35, left: 35),
+        String savedPath = "holerite" + DateTime.now().microsecondsSinceEpoch.toString();
+        File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
+            htmlContent, tempDir.path, savedPath
         );
-        File dadosJson = File(savedPath);
-        return dadosJson;
+
+        return file;
       }
     } catch(e){
       debugPrint(e.toString());
