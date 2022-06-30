@@ -42,9 +42,14 @@ class UpdateAppManager {
                 ),
                 txtBotaoSucess: 'Atualizar',
                 txtBotaoCancel: 'Fechar',
-                funcCancel: _funcExit(),
+                funcCancel: (){
+                  _funcExit();
+                },
                 funcSucess: () {
-
+                  LaunchReview.launch(
+                    androidAppId: Config.conf.androidAppId,
+                    iOSAppId: Config.conf.iosAppIdNum,
+                  );
                 }
             );
           }else{
