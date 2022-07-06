@@ -16,18 +16,19 @@ class HoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
+  Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite? user, int mes, int ano) async {
+    if(user == null ) return [];
     List<HoleriteModel> result = await _service.resumoscreen(user, mes, ano);
     return result;
   }
 
-  Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
+  Future<List<CompetenciasModel>> competencias(UsuarioHolerite? user) async {
+    if(user == null ) return [];
     List<CompetenciasModel> result = await _service.competencias(user);
     if(result.isNotEmpty){
       dropdowndata = result.first.descricao ?? 'Holerites';
     }
     return result;
-
   }
 
   Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {

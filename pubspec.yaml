@@ -49,6 +49,7 @@ dependencies:
       url: https://github.com/pretolio/tutorial.git
       ref: main
 
+  charts_flutter: ^0.12.0
 
   #webcontent_converter: ^0.0.7+1
   flutter_html_to_pdf: ^0.7.0
