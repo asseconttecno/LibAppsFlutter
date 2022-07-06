@@ -90,7 +90,7 @@ class CustomScaffold {
   }
 
   static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height,
-    required Widget appbar, required Widget body, Widget? expanAppbar, String? appTitle}){
+    Widget? appbar, required Widget body, Widget? expanAppbar, String? appTitle}){
     return Scaffold(
       key: key,
       appBar: appTitle == null ? null : AppBar(

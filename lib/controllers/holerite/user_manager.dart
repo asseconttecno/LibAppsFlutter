@@ -28,7 +28,6 @@ class UserHoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
-
   final TextEditingController email = TextEditingController();
   final TextEditingController cpf = TextEditingController();
   final TextEditingController senha = TextEditingController();

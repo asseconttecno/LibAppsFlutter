@@ -42,6 +42,7 @@ class Config extends ChangeNotifier {
     notifyListeners();
   }
 
+
   priacesso() async {
     try{
       final prefs = await SharedPreferences.getInstance();

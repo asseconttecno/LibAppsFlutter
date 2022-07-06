@@ -33,6 +33,9 @@
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
