@@ -1,3 +1,4 @@
+import 'package:assecontservices/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
@@ -36,6 +37,9 @@ class UserPontoManager extends ChangeNotifier {
   Future<void> signInAuth(BuildContext context, {required String email,required String senha}) async {
     try{
       usuario = await _service.signInAuth(email: email, senha: senha);
+      if(usuario?.master ?? false){
+        context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+      }
     }catch(e){
       debugPrint("Erro ${e.toString()}");
       CustomSnackbar.context(context, e.toString(), Colors.red);
