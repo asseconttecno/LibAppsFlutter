@@ -15,6 +15,8 @@ class UpdateAppService {
       "Versao": Config.versao,
       "IsAndroid": !Config.isIOS,
     };
+
+    debugPrint(bod.toString());
     final MyHttpResponse response = await _http.post(
         decoder: false,
         url: Config.conf.apiEspelho! + _api,
