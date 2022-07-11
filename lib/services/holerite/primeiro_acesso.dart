@@ -9,7 +9,7 @@ class PrimeiroAcessoHoleriteService {
   HttpCli _http = HttpCli();
 
   Future<PrimeiroAcessoHoleriteModel?> verificar({required String cnpj, required String registro, }) async {
-    String _metodo = '/novo/verificar';
+    String _metodo = '/holerite/novo/verificar';
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
@@ -53,7 +53,7 @@ class PrimeiroAcessoHoleriteService {
 
   Future<PrimeiroAcessoHoleriteModel?> esqueceuEmail(
       {required String cnpj, required String registro, required String cpf, }) async {
-    String _metodo = '/novo/recadastro';
+    String _metodo = '/holerite/novo/recadastro';
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
@@ -98,7 +98,7 @@ class PrimeiroAcessoHoleriteService {
 
   Future<bool> cadastrar({required int id, required String email, required String senha,
       required String cpf, String? cel,}) async {
-    String _metodo = '/novo/cadastro';
+    String _metodo = '/holerite/novo/cadastro';
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,

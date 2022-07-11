@@ -8,13 +8,17 @@ export 'ponto/senha.dart';
 export 'ponto/usuario.dart';
 export 'ponto/espelho.dart';
 export 'ponto/registro_ponto.dart';
+
 export 'holerite/holerite.dart';
 export 'holerite/informe.dart';
 export 'holerite/primeiro_acesso.dart';
 export 'holerite/usuario.dart';
+export 'holerite/senha.dart';
+
 export 'tablet/empresa.dart';
 export 'tablet/usuario_offiline.dart';
 export 'tablet/usuario_codigo.dart';
+
 export 'asseweb/usuario.dart';
 
 export 'biometria.dart';

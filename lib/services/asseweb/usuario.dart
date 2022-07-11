@@ -11,6 +11,8 @@ class UserAssewebService {
     String _metodo = '/api/ExternalLogin/login';
     try{
 
+      print(Config.conf.apiAsseweb! + _metodo);
+
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseweb! + _metodo,
           body: <String, dynamic>{
