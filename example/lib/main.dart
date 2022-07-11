@@ -13,10 +13,11 @@ void main() {
           apiHoleriteEmail: 'https://www.asseweb.com.br/HoleriteApi',
           apiAsseponto: 'https://www.asseponto.com.br/asseponto.api.v5',
           apiEspelho: 'https://www.asseponto.com.br/ApiEspelho',
-          androidAppId: 'com.assecont.AssepontoMobile',
-          iosAppId: 'com.assecont.assepontoweb',
+
+          androidAppId: 'com.assecont.holerite',
+          iosAppId: 'com.assecont.holerite',
           iosAppIdNum: '1490469231',
-          nomeApp: VersaoApp.PontoApp
+          nomeApp: VersaoApp.HoleriteApp
       ),
       rotas: RouteGenerator.generateRoute
   );

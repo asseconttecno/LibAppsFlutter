@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:assecontservices/assecontservices.dart';
-
 import '../../config.dart';
 import '../http/http.dart';
 
@@ -10,7 +8,7 @@ class SenhaHoleriteService {
   HttpCli _http = HttpCli();
 
   Future<String?> sendPass({String? email, String? cpf, }) async {
-    String _metodo = '/email/senha';
+    String _metodo = '/holerite/email/senha';
 
     try{
       String? _cpf = cpf != null ? cpf.replaceAll('.', '').replaceAll('-', '') : null;
@@ -40,7 +38,7 @@ class SenhaHoleriteService {
   }
 
   Future<bool?> alteracaoPass({required int id, required String senha, required String senhaNova,}) async {
-    String _metodo = '/email/senha';
+    String _metodo = '/holerite/email/senha';
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,

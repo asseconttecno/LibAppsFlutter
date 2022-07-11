@@ -67,7 +67,7 @@ class HttpCli {
 
 
   Future<MyHttpResponse> post({required String url, Map<String, String>? headers,
-      Map<String, dynamic>? body, bool decoder = true}) async {
+      Map<String, dynamic>? body, bool decoder = true, bool isbyte = false}) async {
 
     if(!connectionStatus.hasConnection){
       return MyHttpResponse(
@@ -99,7 +99,7 @@ class HttpCli {
 
     try{
       if(response.statusCode == 200){
-        final result =  decoder ? json.decode(response.body) : response.body;
+        final result =  isbyte ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
         return MyHttpResponse(
             isSucess: true,
             codigo: 200,

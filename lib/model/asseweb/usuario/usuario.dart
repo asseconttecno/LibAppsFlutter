@@ -2,8 +2,6 @@
 
 import 'dart:ffi';
 
-import 'package:assecontservices/assecontservices.dart';
-import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 
 class UsuarioAsseweb {
   int? id;

@@ -31,7 +31,7 @@ class UpdateAppManager {
           final bool appStatus = await _service.postUpdateApp();
 
           print(appStatus);
-          if(appStatus) {
+          if(appStatus && kReleaseMode) {
             CustomAlert.custom(
                 context: context,
                 titulo: 'Exite uma nova versão',

@@ -8,14 +8,16 @@ import '../../config.dart';
 import '../http/http.dart';
 
 class UserHoleriteService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
 
   Future<List<UsuarioHolerite>?> signInAuth({required String email, required String senha}) async {
-    String _metodo = '/login';
+    String _metodo = '/holerite/login';
     try{
       String _email = CPFValidator.isValid(email) ?
         email.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '') : email;
+
+      print(Config.conf.apiHoleriteEmail! + _metodo);
 
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
@@ -26,7 +28,8 @@ class UserHoleriteService {
       );
 
       if (response.isSucess) {
-        final List<UsuarioHolerite> _user = response.data.map((e) => UsuarioHolerite.fromMap(e)).toList();
+        List user = response.data;
+        final List<UsuarioHolerite> _user = user.map((e) => UsuarioHolerite.fromMap(e)).toList();
         return _user;
       }else{
         throw 404;
