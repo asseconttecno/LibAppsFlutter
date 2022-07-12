@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:external_path/external_path.dart';
 
 import 'enums/enums.dart';
@@ -64,10 +63,8 @@ class Config extends ChangeNotifier {
   _init() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      final packageInfo = await PackageInfo.fromPlatform();
       primeiroAcesso =  prefs.getBool("priacesso") ?? true;
       darkTemas = prefs.getBool("darkTemas") ?? false;
-      versao = packageInfo.version;
       documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
       if(documentos == ''){
         documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
