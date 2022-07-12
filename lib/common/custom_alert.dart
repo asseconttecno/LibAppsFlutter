@@ -35,16 +35,17 @@ class CustomAlert {
   }
 
   static custom({
-        required BuildContext context,
-        required String titulo,
-        required Widget corpo,
-        String? txtBotaoSucess,
-        String? txtBotaoCancel,
-        VoidCallback? funcSucess,
-        VoidCallback? funcCancel}) async {
+    required BuildContext context,
+    required Widget corpo,
+    String? titulo,
+    Widget? widgeTitulo,
+    String? txtBotaoSucess,
+    String? txtBotaoCancel,
+    VoidCallback? funcSucess,
+    VoidCallback? funcCancel}){
 
     bool isDark = context.read<Config>().darkTemas;
-    return await showDialog(
+    return showDialog(
         context: context,
         builder: (context){
           return  AlertDialog(
@@ -58,9 +59,10 @@ class CustomAlert {
                       icon: Icon(Icons.clear, color: isDark ? Colors.white60 : Colors.black54,)
                   ),
                 ),
+                widgeTitulo != null ? widgeTitulo :
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(titulo.toUpperCase(), style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+                  child: Text(titulo?.toUpperCase() ?? '', style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
                 ),
               ],
             ),
@@ -97,5 +99,6 @@ class CustomAlert {
         }
     );
   }
+
 
 }
