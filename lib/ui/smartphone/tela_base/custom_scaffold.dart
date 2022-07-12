@@ -13,23 +13,31 @@ import 'custom_menu_item.dart';
 
 class CustomScaffold {
 
-  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu,
-    required BuildContext context, required Widget appbar, required Widget body}){
+  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double height = 215,
+    required BuildContext context, required Widget appbar, required Widget body, bool isListView = true}){
+
+
     return custom(
       key: Config.scaffoldKey,
       body: body,
-      height: 200,
+      height: height,
       appbar: appbar,
       context: context,
       expanAppbar: Container(
         key: keyListMenu,
         margin: const EdgeInsets.only(top: 170),
-        height: 115,
+        height: 120,
         alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: listMenu,
-        ),
+        child: isListView ?
+          ListView(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            children: listMenu,
+          ) :
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: listMenu,
+          ),
       ),
     );
   }
