@@ -65,7 +65,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
               height: widget.constraints.maxHeight,
               width: width,
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
               child: FutureBuilder<List<HoleriteModel>?>(
                   future: dadosHolerite(),
                   builder: (_, snapshot){

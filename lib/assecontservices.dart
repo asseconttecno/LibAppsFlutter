@@ -210,6 +210,8 @@ class _MyAppState extends State<App> {
           backgroundColor: ThemeData.dark().primaryColor,
           titleTextStyle: TextStyle(color: Config.corPri,),
           toolbarTextStyle: TextStyle(color: Config.corPri,fontSize: 18),
+          iconTheme: IconThemeData(color: Colors.white),
+          actionsIconTheme: IconThemeData(color: Colors.white),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ) : ThemeData.light().copyWith(
@@ -223,6 +225,8 @@ class _MyAppState extends State<App> {
           titleTextStyle: TextStyle(color: Config.corPri,),
           toolbarTextStyle: TextStyle(color: Config.corPri, fontSize: 18),
           elevation: 0,
+          iconTheme: IconThemeData(color: Colors.white),
+          actionsIconTheme: IconThemeData(color: Colors.white),
           color: Config.corPribar,
         ),
       ),

@@ -13,19 +13,20 @@ import 'custom_menu_item.dart';
 
 class CustomScaffold {
 
-  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double height = 215,
+  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height,
     required BuildContext context, required Widget appbar, required Widget body, bool isListView = true}){
 
+    double h = 180 + MediaQuery.of(context).padding.top;
 
     return custom(
       key: Config.scaffoldKey,
       body: body,
-      height: height,
+      height: height ?? h,
       appbar: appbar,
       context: context,
       expanAppbar: Container(
         key: keyListMenu,
-        margin: const EdgeInsets.only(top: 170),
+        margin: EdgeInsets.only(top: (height ?? h) - 30),
         height: 120,
         alignment: Alignment.center,
         child: isListView ?
@@ -99,6 +100,7 @@ class CustomScaffold {
 
   static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height,
     Widget? appbar, required Widget body, Widget? expanAppbar, String? appTitle}){
+
     return Scaffold(
       key: key,
       appBar: appTitle == null ? null : AppBar(
@@ -110,12 +112,13 @@ class CustomScaffold {
       ),
       body: Container(
           constraints: const BoxConstraints.expand(),
+          //height: h,
           child: Column(
             children: [
               Stack(
                 children: [
                   Container(
-                      height: height, width: double.infinity,
+                      height: height, width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: context.watch<Config>().darkTemas ?
                           Theme.of(context).primaryColor : Config.corPribar,
@@ -130,7 +133,9 @@ class CustomScaffold {
                     expanAppbar
                 ],
               ),
-              body
+              Expanded(
+                  child: body
+              ),
             ],
           )
       ),
