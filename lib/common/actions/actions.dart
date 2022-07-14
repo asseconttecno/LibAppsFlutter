@@ -13,7 +13,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
       key: keyMenu,
-      child: Icon(Icons.more_vert),
+      child: Icon(Icons.more_vert, color: Colors.white,),
       itemBuilder: (context) => [
         if(aponta && !registro)
           PopupMenuItem(
