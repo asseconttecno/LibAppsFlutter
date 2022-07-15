@@ -14,6 +14,7 @@ export 'holerite/holerite_manager.dart';
 export 'holerite/informe_manager.dart';
 export 'holerite/user_manager.dart';
 export 'holerite/primeiro_acesso_manager.dart';
+export 'holerite/senha_manager.dart';
 export 'tablet/empresa_manager.dart';
 export 'tablet/config_manager.dart';
 export 'tablet/historico_manager.dart';

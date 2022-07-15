@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../controllers/controllers.dart';
 import '../../config.dart';
 import '../../enums/enums.dart';
+import '../alterar_senha.dart';
 import 'func_alter_user.dart';
 import 'func_aponta.dart';
 import 'func_config.dart';
@@ -29,7 +30,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             value: 1,
             child: Text("Apontamento"),
           ),
-        if(Config.conf.nomeApp == VersaoApp.PontoApp && !registro)
+        if(Config.conf.nomeApp != VersaoApp.PontoApp || !registro)
         PopupMenuItem(
           key: key2,
           value: 2,
@@ -43,19 +44,19 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
           ),
         if(!registro)
         PopupMenuItem(
-          key: Config.conf.nomeApp == VersaoApp.PontoApp ? key3 : key2,
+          key: key3 ,
           value: 3,
           child: Text("Configurações"),
         ),
         if(!Config.isWin && !registro)
           PopupMenuItem(
-            key: Config.conf.nomeApp == VersaoApp.PontoApp ? key4 : key3 ,
+            key:  key4  ,
             value: 4,
             child: Text("Avaliar App"),
           ),
         if(!registro)
         PopupMenuItem(
-          key: Config.conf.nomeApp == VersaoApp.PontoApp ? key5 : key4,
+          key:  key5 ,
           value: 5,
           child: Text("Sair"),
         ),
@@ -72,7 +73,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             funcAponta(context);
             break;
           case 2 :
-            //await AlterarSenhaModal(context);
+            await AlterarSenhaModal(context);
             break;
           case 3 :
             funcConfig(context);
