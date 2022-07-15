@@ -46,10 +46,7 @@ class InformeService {
     String _api = "/informeRendimentos";
       try{
         final MyHttpResponse response = await _http.post(
-            url: Config.conf.apiHolerite! + _api,
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
+            url: Config.conf.apiHolerite! + _api, decoder: false,
             body: {
               "cnpj": user.cnpj ,
               "register": user.registro  ,
@@ -75,7 +72,7 @@ class InformeService {
           return null;
         }
       } catch(e){
-        debugPrint(e.toString());
+        debugPrint('catch erro informeRendimentosPDF ' + e.toString());
         return null;
       }
   }

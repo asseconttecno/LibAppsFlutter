@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 
 
 import '../../common/common.dart';
+import '../../config.dart';
 import '../../controllers/controllers.dart';
+import '../../enums/enums.dart';
 
 
 funcSair(BuildContext context){
   carregar(context);
-  context.read<UserPontoManager>().signOut();
-  context.read<CameraManager>().img = null;
+
+  if(Config.conf.nomeApp == VersaoApp.HoleriteApp) {
+    context.read<UserHoleriteManager>().signOut();
+  } else if(Config.conf.nomeApp == VersaoApp.PontoApp) {
+    context.read<UserPontoManager>().signOut();
+    context.read<CameraManager>().img = null;
+  }
+
   Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
 }
