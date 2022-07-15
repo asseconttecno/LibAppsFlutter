@@ -28,7 +28,6 @@ class InformeManager extends ChangeNotifier {
     try{
       listcompetencias = await _service.competencias(user) ;
       competencia = listcompetencias.first;
-      dropdowndata = competencia?.anoReferencia ?? dropdowndata;
     } catch(e){
       debugPrint('catch ' + e.toString());
     }
@@ -42,13 +41,6 @@ class InformeManager extends ChangeNotifier {
         debugPrint(e.toString());
         return null;
       }
-  }
-
-  String _dropdowndata = "Selecione o Ano";
-  String get dropdowndata => _dropdowndata;
-  set dropdowndata(String v){
-    _dropdowndata = v;
-    notifyListeners();
   }
 
 }

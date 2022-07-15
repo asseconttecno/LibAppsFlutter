@@ -43,26 +43,25 @@ class _InformeRendmientoScreenState extends State<InformeRendimentoScreen> {
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.grey, width: 1)
                 ),
-                child: DropdownButton<String>(
+                child: DropdownButton<InformeRendimentosModel>(
                   isExpanded: true,
                   dropdownColor: Colors.white,
-                  value: informe.dropdowndata,
+                  value: informe.competencia,
                   iconSize: 20,
                   elevation: 0,
                   icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
                   style: TextStyle(color: Colors.black),
                   underline: Container(),
                   onChanged: ( newValue) {
-                    informe.dropdowndata = newValue!;
-                    informe.competencia = informe.listcompetencias.firstWhere((e) => e.anoReferencia == newValue);
+                    informe.competencia = newValue;
                   },
-                  items: informe.listcompetencias.map((e) => e.anoReferencia).
-                  toList().map<DropdownMenuItem<String>>(( value) {
-                    return DropdownMenuItem<String>(
+                  items: informe.listcompetencias.
+                   map<DropdownMenuItem<InformeRendimentosModel>>(( value) {
+                    return DropdownMenuItem<InformeRendimentosModel>(
                       value: value,
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(value ?? ''),
+                        child: Text(value.anoReferencia ?? ''),
                       ),
                     );
                   }).toList(),

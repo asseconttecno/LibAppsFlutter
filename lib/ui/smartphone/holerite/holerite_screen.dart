@@ -60,112 +60,94 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
               context: context,
               height: 70,
               appTitle: 'Meu Holerite',
+              appbar: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 40,
+                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.grey, width: 1)
+                    ),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      dropdownColor: Colors.white,
+                      value: holerite.dropdowndata,
+                      iconSize: 20,
+                      elevation: 0,
+                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black,),
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(),
+                      onChanged: ( newValue) {
+                        holerite.dropdowndata = newValue!;
+                        dadosHolerite();
+                      },
+                      items: holerite.listcompetencias.map((e) => e.descricao).
+                      toList().map<DropdownMenuItem<String>>(( value) {
+                        return DropdownMenuItem<String>(
+                          value: value ?? '',
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Text(value ?? ''),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
               body: Container(
-                child: Column(
-                  children: [
-                    Container(
-                        height: 70, width: width,
-                        decoration: BoxDecoration(
-                            color: context.watch<Config>().darkTemas ?
-                            Theme.of(context).primaryColor : Config.corPribar,
-                            borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(45),
-                              bottomLeft: Radius.circular(45),
-                            )
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 40,
-                              margin: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 5),
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(color: Colors.grey, width: 1)
-                              ),
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                dropdownColor: Colors.white,
-                                value: holerite.dropdowndata,
-                                iconSize: 20,
-                                elevation: 0,
-                                icon: const Icon(Icons.arrow_drop_down, color: Colors.black,),
-                                style: const TextStyle(color: Colors.black),
-                                underline: Container(),
-                                onChanged: ( newValue) {
-                                  holerite.dropdowndata = newValue!;
-                                  dadosHolerite();
-                                },
-                                items: holerite.listcompetencias.map((e) => e.descricao).
-                                toList().map<DropdownMenuItem<String>>(( value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8),
-                                      child: Text(value ?? ''),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
+                  //height: MediaQuery.of(context).size.height - 100 - AppBar().preferredSize.height  -MediaQuery.of(context).padding.top,
+                  child: !connectionStatus.hasConnection ?
+                  const Center(child: Text('Verifique sua Conexão com Internet')) :
+                  holerite.dropdowndata == 'Holerites' ?
+                  const Center(
+                    child: Text('Usuário não tem Holerites',
+                      style: TextStyle(fontSize: 20),),
+                  ) : FutureBuilder<List<HoleriteModel>?>(
+                    future: dadosHolerite(),
+                    builder: (context, snapshot){
+                      Widget resultado;
+                      switch( snapshot.connectionState ){
+                        case ConnectionState.none :
+                        case ConnectionState.waiting :
+                          resultado = Center(
+                            child: Container(
+                                width: 50,
+                                child: const LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
                             ),
-                          ],
-                        )
-                    ),
-                    Container(
-                        height: MediaQuery.of(context).size.height - 100 -
-                            AppBar().preferredSize.height  -MediaQuery.of(context).padding.top,
-                        child: !connectionStatus.hasConnection ?
-                        const Center(child: Text('Verifique sua Conexão com Internet')) :
-                        holerite.dropdowndata == 'Holerites' ?
-                        const Center(
-                          child: Text('Usuário não tem Holerites',
-                            style: TextStyle(fontSize: 20),),
-                        ) : FutureBuilder<List<HoleriteModel>?>(
-                          future: dadosHolerite(),
-                          builder: (context, snapshot){
-                            Widget resultado;
-                            switch( snapshot.connectionState ){
-                              case ConnectionState.none :
-                              case ConnectionState.waiting :
-                                resultado = Center(
-                                  child: Container(
-                                      width: 50,
-                                      child: const LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
-                                  ),
-                                );
-                                break;
-                              case ConnectionState.active :
-                              case ConnectionState.done :
-                                if( snapshot.hasError || !snapshot.hasData || snapshot.data == null){
-                                  resultado = GestureDetector(
-                                      child: Icon(Icons.autorenew_outlined,
-                                        color: Config.corPri, size: 70,),
-                                      onTap: (){
-                                        dadosHolerite();
-                                      }
-                                  );
-                                }else {
-                                  if(snapshot.data?.isNotEmpty ?? false){
-                                    resultado = Center(
-                                        child: DetalhesHolerite(
-                                            snapshot.data!.reversed.toList(), _comp!.mes!, _comp!.ano!
-                                        )
-                                    );
-                                  }else{
-                                    resultado = const Center(child: Text('Nenhum Holerite disponivel'));
-                                  }
+                          );
+                          break;
+                        case ConnectionState.active :
+                        case ConnectionState.done :
+                          if( snapshot.hasError || !snapshot.hasData || snapshot.data == null){
+                            resultado = GestureDetector(
+                                child: Icon(Icons.autorenew_outlined,
+                                  color: Config.corPri, size: 70,),
+                                onTap: (){
+                                  dadosHolerite();
                                 }
-                                break;
+                            );
+                          }else {
+                            if(snapshot.data?.isNotEmpty ?? false){
+                              resultado = Center(
+                                  child: DetalhesHolerite(
+                                      snapshot.data!.reversed.toList(), _comp!.mes!, _comp!.ano!
+                                  )
+                              );
+                            }else{
+                              resultado = const Center(child: Text('Nenhum Holerite disponivel'));
                             }
-                            return resultado;
-                          },
-                        )
-                    ),
-                  ],
-                ),
+                          }
+                          break;
+                      }
+                      return resultado;
+                    },
+                  )
               )
           );
         }
