@@ -43,19 +43,19 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
           ),
         if(!registro)
         PopupMenuItem(
-          key: key3,
+          key: Config.conf.nomeApp == VersaoApp.PontoApp ? key3 : key2,
           value: 3,
           child: Text("Configurações"),
         ),
         if(!Config.isWin && !registro)
           PopupMenuItem(
-            key: key4,
+            key: Config.conf.nomeApp == VersaoApp.PontoApp ? key4 : key3 ,
             value: 4,
             child: Text("Avaliar App"),
           ),
         if(!registro)
         PopupMenuItem(
-          key: key5,
+          key: Config.conf.nomeApp == VersaoApp.PontoApp ? key5 : key4,
           value: 5,
           child: Text("Sair"),
         ),
