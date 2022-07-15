@@ -72,7 +72,7 @@ class UserHoleriteManager extends ChangeNotifier {
 
   Future<bool> signInAuth({required String email, required String senha}) async {
     listuser = await _service.signInAuth(email: email, senha: senha);
-    user = listuser!.first;
+    user = listuser!.last;
     return true;
   }
 
