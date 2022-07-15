@@ -38,10 +38,11 @@ class SenhaHoleriteService {
   }
 
   Future<bool?> alteracaoPass({required int id, required String senha, required String senhaNova,}) async {
-    String _metodo = '/holerite/email/senha';
+    String _metodo = '/holerite/email/alterarSenha';
+    MyHttpResponse? response;
     try{
-      MyHttpResponse response = await _http.post(
-          url: Config.conf.apiHoleriteEmail! + _metodo,
+      response = await _http.post(
+          url: Config.conf.apiHoleriteEmail! + _metodo, decoder: false,
           body: <String, dynamic>{
             "id": id,
             "senha": senha,
@@ -57,8 +58,8 @@ class SenhaHoleriteService {
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
         case 404 :
-          throw 'Email ou Cpf não cadastrado!';
-        default:
+          throw response!.data;
+        default :
           throw 'Erro inesperado, tente novamente!';
       }
     }

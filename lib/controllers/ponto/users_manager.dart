@@ -1,5 +1,6 @@
 import 'package:assecontservices/controllers/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
 import '../../model/model.dart';
@@ -15,6 +16,18 @@ class UserPontoManager extends ChangeNotifier {
   }
   UserPontoManager._internal();
 
+  final TextEditingController email = TextEditingController();
+  final TextEditingController senha = TextEditingController();
+  String? uemail;
+  String? usenha;
+
+  bool _status = false;
+  bool get status => _status;
+  set status(bool v){
+    _status = v;
+    notifyListeners();
+  }
+
   UsuarioPonto? _usuario;
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
@@ -27,6 +40,17 @@ class UserPontoManager extends ChangeNotifier {
   set regButtom(bool valor){
     _regButtom = valor;
     notifyListeners();
+  }
+
+  memorizar() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("login", email.text);
+    await prefs.setString("usenha", senha.text);
+    if(status){
+      await prefs.setString("senha", senha.text);
+    }else if(email.text != uemail){
+      await prefs.setString("senha", '');
+    }
   }
 
   updateUser({String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta}){
