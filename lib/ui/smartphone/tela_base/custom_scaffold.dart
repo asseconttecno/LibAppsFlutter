@@ -45,7 +45,7 @@ class CustomScaffold {
 
   static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
     required List<DecorationItem> listdecoration, required String appTitle,
-    required BuildContext context, required Widget body}){
+    required BuildContext context, required Widget body, DateTime? dataMin, DateTime? dataMax}){
 
     final CalendarWeekController _controller = CalendarWeekController();
 
@@ -59,8 +59,8 @@ class CustomScaffold {
           height: 50,
           showMonth: true,
           backgroundColor: Colors.transparent,
-          minDate: context.watch<UserPontoManager>().usuario?.aponta?.datainicio,
-          maxDate: context.watch<UserPontoManager>().usuario?.aponta?.datatermino,
+          minDate: dataMin ?? DateTime(2000),
+          maxDate: dataMax ?? DateTime(DateTime.now().year + 1),
           dateStyle: const TextStyle(color: Colors.white,),
           dayOfWeekStyle: TextStyle(color: Config.corPri),
           todayDateStyle: const TextStyle(color: Colors.white,),
