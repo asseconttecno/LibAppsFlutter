@@ -1,5 +1,3 @@
-
-import 'package:assecontservices/model/model.dart';
 import 'package:flutter/material.dart';
 
 import '../../config.dart';
@@ -31,14 +29,14 @@ class SenhaPontoService {
     }
   }
 
-  Future<bool> alteracaoPass(UsuarioPonto usuario, String atual, String nova, ) async {
+  Future<bool> alteracaoPass(String email, String atual, String nova, ) async {
     String _api = "/api/database/AlteracaoPass";
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAsseponto! + _api,
         body: {
-          "Email": usuario.email.toString(),
-          "SenhaAtual": atual.trim().replaceAll(' ', ''),
-          "SenhaNova": nova.trim().replaceAll(' ', '')
+          "Email": email.trim(),
+          "SenhaAtual": atual.trim(),
+          "SenhaNova": nova.trim()
         }
     );
     if(response.isSucess){

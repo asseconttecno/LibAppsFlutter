@@ -12,7 +12,7 @@ import '../http/http.dart';
 
 
 class EspelhoService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
 
   Future<bool> postEspelhoStatus(UsuarioPonto? user, Apontamento aponta, bool status) async {
