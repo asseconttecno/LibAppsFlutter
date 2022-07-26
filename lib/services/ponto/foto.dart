@@ -7,8 +7,8 @@ import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
 
-class FotoService {
-  HttpCli _http = HttpCli();
+class CameraPontoService {
+  final HttpCli _http = HttpCli();
 
 
   Future<Uint8List?> getPhoto(UsuarioPonto user) async {

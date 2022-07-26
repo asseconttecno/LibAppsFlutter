@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
-import '../model/model.dart';
-import '../services/ponto/foto.dart';
+import '../../model/model.dart';
+import '../../services/ponto/foto.dart';
 
 
-class CameraManager extends ChangeNotifier {
-  FotoService _service = FotoService();
+class CameraPontoManager extends ChangeNotifier {
+  final CameraPontoService _service = CameraPontoService();
 
   List<int>? _img;
   List<int>? get img => _img;

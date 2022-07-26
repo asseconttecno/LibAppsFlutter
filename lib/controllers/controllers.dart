@@ -1,6 +1,7 @@
 
 export 'package:provider/provider.dart';
 
+export 'ponto/camera_manager.dart';
 export 'ponto/apontamento_manager.dart';
 export 'ponto/banco_manager.dart';
 export 'ponto/gps.dart';
@@ -20,7 +21,7 @@ export 'tablet/config_manager.dart';
 export 'tablet/historico_manager.dart';
 export 'tablet/user_manager_offiline.dart';
 
-export 'camera_manager.dart';
+
 export 'update_app_manager.dart';
 export 'page_manager.dart';
 export 'biometria_manager.dart';

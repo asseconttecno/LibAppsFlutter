@@ -148,7 +148,7 @@ class Assecontservices {
       if(ponto)
         ChangeNotifierProvider(
           lazy: false,
-          create: (_)=> CameraManager(),
+          create: (_)=> CameraPontoManager(),
         ),
       if(ponto)
         ChangeNotifierProvider(
