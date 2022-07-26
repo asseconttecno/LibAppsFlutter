@@ -29,7 +29,7 @@ class SenhaHoleriteManager extends ChangeNotifier {
     bool? result = await _service.alteracaoPass(
         id: context.read<UserHoleriteManager>().user!.id!, senha: senha, senhaNova: senhaNova);
     if(result ?? false){
-      Config.senha = senhaNova;
+      Config.usenha = senhaNova;
       context.read<UserHoleriteManager>().senha.text = senhaNova;
       context.read<UserHoleriteManager>().memorizar();
     }

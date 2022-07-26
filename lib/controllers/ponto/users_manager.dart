@@ -1,20 +1,23 @@
-import 'package:assecontservices/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
+import '../../config.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
+import '../controllers.dart';
 
 
 class UserPontoManager extends ChangeNotifier {
-  UserPontoService _service = UserPontoService();
+  final UserPontoService _service = UserPontoService();
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
   factory UserPontoManager() {
     return _userManager;
   }
-  UserPontoManager._internal();
+  UserPontoManager._internal(){
+    init();
+  }
 
   final TextEditingController email = TextEditingController();
   final TextEditingController senha = TextEditingController();
@@ -70,10 +73,18 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
-  carregaruser(Map<String, dynamic> map){
-    usuario = UsuarioPonto.fromMap(map, true);
+  init() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      uemail = prefs.getString("login") ?? '';
+      usenha = prefs.getString("usenha");
+      senha.text = prefs.getString("senha") ?? '';
+      email.text = uemail!;
+      Config.usenha = usenha;
+    } catch(e) {
+      debugPrint(e.toString());
+    }
   }
-
 
   signOut() {
     try{

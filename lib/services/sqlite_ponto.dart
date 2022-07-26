@@ -9,7 +9,15 @@ import '../model/model.dart';
 
 class SqlitePontoService {
 
-
+  salvarNovoUsuario(Map<String, dynamic> toMap) async {
+    try{
+      Database bancoDados = await DBPonto().db;
+      await bancoDados.delete("users");
+      await bancoDados.insert("users", toMap);
+    }catch(e){
+      debugPrint(e.toString());
+    }
+  }
 
   salvarUsers(List<UserPontoOffine> dados) async {
     try{

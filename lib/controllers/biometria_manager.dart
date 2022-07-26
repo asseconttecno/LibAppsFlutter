@@ -7,7 +7,7 @@ import '../services/services.dart';
 
 
 class BiometriaManager extends ChangeNotifier {
-  BiometriaServices _services = BiometriaServices();
+  final BiometriaServices _services = BiometriaServices();
 
   bool _perguntar = false;
   bool get perguntar => _perguntar;
