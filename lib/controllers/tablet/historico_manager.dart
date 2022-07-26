@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:sqflite/sqflite.dart';
-
-import '../../helper/db.dart';
 import '../../model/model.dart';
+import '../../services/services.dart';
 
 
 
 class HistoricoManager extends ChangeNotifier {
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
+
+
   List<HistoricoMarcacoesModel>? _list;
   List<HistoricoMarcacoesModel>? get list => _list;
   set list(List<HistoricoMarcacoesModel>? v){
@@ -17,14 +18,12 @@ class HistoricoManager extends ChangeNotifier {
 
 
   Future<List<HistoricoMarcacoesModel>> getMarcacoes() async {
-    List<HistoricoMarcacoesModel> retur;
+    List<HistoricoMarcacoesModel> result;
     try{
-      Database bancoDados = await DbSQL().db;
-      String sql = "SELECT * FROM historico";
-      List _select = await bancoDados.rawQuery(sql);
-      if(_select.isNotEmpty){
-        retur = _select.map((e) => HistoricoMarcacoesModel.fromMap(e)).toList();
-        return retur;
+      List? _select = await _sqlitePonto.getHistorico();
+      if(_select != null && _select.isNotEmpty){
+        result = _select.map((e) => HistoricoMarcacoesModel.fromMap(e)).toList();
+        return result;
       }
     }catch(e){
       debugPrint(e.toString());

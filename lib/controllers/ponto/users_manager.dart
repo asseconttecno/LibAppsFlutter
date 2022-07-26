@@ -1,20 +1,23 @@
-import 'package:assecontservices/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
+import '../../config.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
+import '../controllers.dart';
 
 
 class UserPontoManager extends ChangeNotifier {
-  UserPontoService _service = UserPontoService();
+  final UserPontoService _service = UserPontoService();
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
   factory UserPontoManager() {
     return _userManager;
   }
-  UserPontoManager._internal();
+  UserPontoManager._internal(){
+    init();
+  }
 
   final TextEditingController email = TextEditingController();
   final TextEditingController senha = TextEditingController();
@@ -58,22 +61,40 @@ class UserPontoManager extends ChangeNotifier {
         offline: offline, local: local, aponta: aponta);
   }
 
-  Future<void> signInAuth(BuildContext context, {required String email,required String senha}) async {
-    try{
-      usuario = await _service.signInAuth(email: email, senha: senha);
-      if(usuario?.master ?? false){
-        context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+  Future<bool> auth(BuildContext context , String email, String senha, bool bio) async {
+    if(bio){
+      bool result = await context.read<BiometriaManager>().verificarbiometria();
+      if(result){
+        signInAuth(context, email: email,  senha: senha);
+      }else{
+        throw 'Falha na autenticação por biometria, utilize sua senha!';
       }
-    }catch(e){
-      debugPrint("Erro ${e.toString()}");
-      CustomSnackbar.context(context, e.toString(), Colors.red);
+    }else{
+      signInAuth(context, email: email,  senha: senha);
+    }
+    return true;
+  }
+
+  Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
+    usuario = await _service.signInAuth(email: email, senha: senha);
+    if(usuario?.master ?? false){
+      context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+    }
+    return true;
+  }
+
+  init() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      uemail = prefs.getString("login") ?? '';
+      usenha = prefs.getString("usenha");
+      senha.text = prefs.getString("senha") ?? '';
+      email.text = uemail!;
+      Config.usenha = usenha;
+    } catch(e) {
+      debugPrint(e.toString());
     }
   }
-
-  carregaruser(Map<String, dynamic> map){
-    usuario = UsuarioPonto.fromMap(map, true);
-  }
-
 
   signOut() {
     try{

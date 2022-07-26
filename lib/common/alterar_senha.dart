@@ -54,7 +54,7 @@ class _AlertSenhaState extends State<AlertSenha> {
               validator: (value) {
                 if (value == null || value == '') {
                   return "Digite sua senha";
-                }else if(value != Config.senha){
+                }else if(value != Config.usenha){
                   return "Senha Inválida";
                 }
                 return null;

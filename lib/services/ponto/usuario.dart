@@ -5,40 +5,73 @@ import 'package:intl/intl.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
+import '../sqlite_ponto.dart';
 
 class UserPontoService {
-  HttpCli _http = HttpCli();
-
+  final HttpCli _http = HttpCli();
+  final SqlitePontoService _pontoService = SqlitePontoService();
 
   Future<UsuarioPonto?> signInAuth({required String email,required String senha,}) async {
     String _api = "/api/database/GetDatabaseUserStatus";
+    UsuarioPonto? _user;
+    try {
+      final MyHttpResponse response = await _http.post(
+          url: Config.conf.apiAsseponto! + _api,
+            body: {
+              "email": email.trim().replaceAll(' ', ''),
+              "pass": senha.trim().replaceAll(' ', '')
+            }
+        );
 
-      try {
-        final MyHttpResponse response = await _http.post(
-            url: Config.conf.apiAsseponto! + _api,
-              body: {
-                "email": "${email.trim().replaceAll(' ', '')}",
-                "pass": "${senha.trim().replaceAll(' ', '')}"
-              }
-          );
-
-          if(response.isSucess){
-            Map dadosJson = response.data;
-            if(dadosJson.containsKey('Status') && dadosJson['Status'] == 0){
-              return await signIn(email: email, senha: senha);
-            }else if(dadosJson.containsKey('Descricao')){
-              debugPrint('signInAuth ' + dadosJson.toString());
-              throw dadosJson['Descricao'];
-            }else{
+        if(response.isSucess){
+          Map dadosJson = response.data;
+          if(dadosJson.containsKey('Status') && dadosJson['Status'] == 0){
+            _user = await signIn(email: email, senha: senha);
+            return _user;
+          }else if(dadosJson.containsKey('Descricao')){
+            debugPrint('signInAuth ' + dadosJson.toString());
+            throw dadosJson['Descricao'];
+          }else{
+            _user = await authOffiline(email.trim(), senha.trim());
+            if(_user != null){
+              return _user;
+            }else {
+              debugPrint(response.codigo.toString() + '  signInAuth');
               throw "Login ou Senha Invalido";
             }
-          }else{
+          }
+        }else{
+          _user = await authOffiline(email.trim(), senha.trim());
+          if(_user != null){
+            return _user;
+          }else {
             debugPrint(response.codigo.toString() + '  signInAuth');
             throw "Login ou Senha Invalido";
           }
-      } on Exception catch (e) {
+        }
+    } on Exception catch (e) {
+      _user = await authOffiline(email.trim(), senha.trim());
+      if(_user != null){
+        return _user;
+      }else {
+        debugPrint(e.toString() + '  signInAuth');
         throw e;
       }
+    }
+  }
+
+  Future<UsuarioPonto?> authOffiline(String _email, String _senha) async {
+    try{
+      List? _user = await _pontoService.getUser();
+      if(_user != null && _user.isNotEmpty){
+        if(_user.first['email'] == _email && Config.usenha == _senha){
+          UsuarioPonto user = UsuarioPonto.fromMap(_user.first, true);
+          return user;
+        }
+      }
+    }catch(e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<UsuarioPonto?> signIn({required String email, required String senha}) async {
@@ -47,8 +80,8 @@ class UserPontoService {
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,
           body:{
-            "email": "${email.trim().replaceAll(' ', '')}",
-            "pass": "${senha.trim().replaceAll(' ', '')}"
+            "email": email.trim().replaceAll(' ', ''),
+            "pass": senha.trim().replaceAll(' ', '')
           }
         );
 

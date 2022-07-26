@@ -2,17 +2,17 @@
 
 import 'resultadoItem.dart';
 
-class HomeModel{
+class HomePontoModel{
   List<ResultadoItemList>? resultadoItemList;
   String? ultimoResgistro;
   HomeFuncionario? funcionario;
 
-  HomeModel({this.resultadoItemList, this.ultimoResgistro,this.funcionario,});
+  HomePontoModel({this.resultadoItemList, this.ultimoResgistro,this.funcionario,});
 
-  HomeModel.fromMap(Map map){
-    this.funcionario = HomeFuncionario.fromMap(map['Funcionario']);
-    this.resultadoItemList = map['ResultadoItemList'].map((e) => ResultadoItemList.fromMap(e)).toList();
-    this.ultimoResgistro = map['UltimaMarcacao'];
+  HomePontoModel.fromMap(Map map){
+    funcionario = HomeFuncionario.fromMap(map['Funcionario']);
+    resultadoItemList = map['ResultadoItemList'].map((e) => ResultadoItemList.fromMap(e)).toList();
+    ultimoResgistro = map['UltimaMarcacao'];
   }
 }
 
@@ -27,11 +27,11 @@ class HomeFuncionario {
     this.permitirMarcarPontoOffline, this.capturarGps});
 
   HomeFuncionario.fromMap(Map map){
-    this.nome = map['Nome'];
-    this.cargo = map['Cargo'];
-    this.permitirMarcarPonto = map['PermitirMarcarPonto'].toString() == 'true';
-    this.permitirMarcarPontoOffline = map['PermitirMarcarPontoOffline'].toString() == 'true';
-    this.capturarGps = map['CapturarGps'].toString() == 'true';
+    nome = map['Nome'];
+    cargo = map['Cargo'];
+    permitirMarcarPonto = map['PermitirMarcarPonto'].toString() == 'true';
+    permitirMarcarPontoOffline = map['PermitirMarcarPontoOffline'].toString() == 'true';
+    capturarGps = map['CapturarGps'].toString() == 'true';
   }
 
 }

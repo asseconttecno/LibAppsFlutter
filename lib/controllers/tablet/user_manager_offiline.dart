@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../controllers.dart';
 
 class UserPontoOffilineManager {
   UserPontoOffilineServices _services = UserPontoOffilineServices();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
   UserOffilineManager(){
     getUser(EmpresaPontoManager.empresa);
@@ -18,12 +17,9 @@ class UserPontoOffilineManager {
 
   getUser(EmpresaPontoModel? empresa) async {
     try{
-      Database bancoDados = await DbSQL().db;
-      String sql = "SELECT * FROM users";
+      List? users = await _sqlitePonto.getUser();
 
-      List users = await bancoDados.rawQuery(sql);
-
-      if(users.isNotEmpty && users.length > 0){
+      if(users != null && users.isNotEmpty){
         listUsers = users.map((e) => UserPontoOffine.fromSQL(e)).toList();
       }else{
         if(empresa != null){

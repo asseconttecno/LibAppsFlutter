@@ -14,7 +14,7 @@ funcSair(BuildContext context){
     context.read<UserHoleriteManager>().signOut();
   } else if(Config.conf.nomeApp == VersaoApp.PontoApp) {
     context.read<UserPontoManager>().signOut();
-    context.read<CameraManager>().img = null;
+    context.read<CameraPontoManager>().img = null;
   }
 
   Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);

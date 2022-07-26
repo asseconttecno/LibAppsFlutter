@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
 import '../../enums/enums.dart';
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../../config.dart';
@@ -13,6 +11,8 @@ import '../controllers.dart';
 
 class RegistroManger {
   RegistroService _service = RegistroService();
+  SqlitePontoService _sqlitePonto = SqlitePontoService();
+
 
   String? bytes;
   File? image;
@@ -60,11 +60,9 @@ class RegistroManger {
   enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
     try{
       if (usuario != null) {
-        var bancoDados = await DbSQL().db;
-        List resultsql = await bancoDados.query("historico");
-        List<Map<String, dynamic>> marcacao = resultsql.map( (e) => Marcacao.fromSql(e).toSql()  ).toList() ;
+        List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado() ;
 
-        if(marcacao.isNotEmpty){
+        if(marcacao != null && marcacao.isNotEmpty){
           debugPrint(marcacao.toString());
           postPontoMarcacoesOffline(context, usuario, marcacao, delete: false);
         }else{
@@ -90,26 +88,19 @@ class RegistroManger {
 
   enviarMarcacoes() async {
     try{
-      var bancoDados = await DbSQL().db;
-      List _sql = await bancoDados.query("marcacao");
-      if(_sql.isNotEmpty) {
-        List<Map<String, dynamic>> marcacao = await Future.wait(
-            _sql.map((e) => Marcacao().toSql2(e)).toList());
-        //List<Map<String, dynamic>> marcacao = resultsql.map( (e) => Marcacao.fromSql(e).toSql()  ).toList() ;
-
-        if(marcacao.isNotEmpty){
-          final result =  await _service.postPontoMarcacoesOffline(
-              UserPontoManager().usuario,
-              marcacao,
-              delete: true
-          );
-          if(result == MarcacaoOffStatus.Sucess){
-            debugPrint('sucess');
-            if(Config.scaffoldKey.currentState != null)
-              CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
-            var _result = await bancoDados.delete("marcacao");
-            debugPrint( _result.toString() );
-          }
+      List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getMarcacoes();
+      if(marcacao != null && marcacao.isNotEmpty) {
+        final result =  await _service.postPontoMarcacoesOffline(
+            UserPontoManager().usuario,
+            marcacao,
+            delete: true
+        );
+        if(result == MarcacaoOffStatus.Sucess){
+          debugPrint('sucess');
+          if(Config.scaffoldKey.currentState != null)
+            CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
+          int _result = await _sqlitePonto.deleteMarcacoes();
+          debugPrint( _result.toString() );
         }
       }
     }catch(e){
@@ -118,23 +109,6 @@ class RegistroManger {
   }
 
   deleteHistorico() async {
-    if(Config.conf.nomeApp == VersaoApp.PontoApp){
-      try{
-        var bancoDados = await DbSQL().db;
-        String sql = "SELECT * FROM historico";
-        List _select = await bancoDados.rawQuery(sql);
-        if(_select.isNotEmpty){
-          List<Marcacao> _listMarc = _select.map((e) => Marcacao.fromSql(e)).toList();
-          await bancoDados.delete('historico');
-          _listMarc.map((e) async {
-            if((e.datahora?.difference(DateTime.now()).inDays ?? 100) < 40){
-              await _service.salvarHisMarcacao(e);
-            }
-          }).toList();
-        }
-      }catch(e){
-        debugPrint("erro deleteHistorico sql $e");
-      }
-    }
+    _sqlitePonto.deleteHistorico();
   }
 }

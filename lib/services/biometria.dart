@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
+import 'package:local_auth_android/local_auth_android.dart';
 
 import '../enums/enums.dart';
 import '../config.dart';
@@ -63,10 +64,16 @@ class BiometriaServices {
 
             didAuthenticate = await localAuth.authenticate(
                 localizedReason: 'Por favor autentique-se para continuar',
-                useErrorDialogs :  true,
-                stickyAuth: true,
-                iOSAuthStrings : iosStrings,
-                androidAuthStrings: andStrings
+                authMessages: [
+                  iosStrings,
+                  andStrings,
+                ],
+                options: const AuthenticationOptions(
+                  useErrorDialogs: true,
+                  stickyAuth: true,
+                  sensitiveTransaction: false,
+                  biometricOnly: false,
+                ),
             );
           }
         }

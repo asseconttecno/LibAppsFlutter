@@ -1,18 +1,17 @@
-import 'package:sqflite/sqflite.dart';
 
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
+import '../sqlite_ponto.dart';
 
 
 class EmpresaPontoService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
   Future<bool> salvarEmpresa(EmpresaPontoModel dados) async {
     try{
-      Database bancoDados = await DbSQL().db;
-      int result = await bancoDados.insert("empresa", dados.toMap());
+      int result = await _sqlitePonto.insertEmpresa(dados.toMap());
       if(result > 0){
         return true;
       }

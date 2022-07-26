@@ -31,7 +31,7 @@ class Config extends ChangeNotifier {
 
   static String versao = '0.0.0';
   static String documentos = '';
-  static String? senha;
+  static String? usenha;
 
   bool _darkTemas = false;
   bool get darkTemas => _darkTemas;
