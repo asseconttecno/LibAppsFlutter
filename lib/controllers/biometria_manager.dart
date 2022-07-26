@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config.dart';
+import '../enums/enums.dart';
 import '../services/services.dart';
 
 
@@ -29,6 +31,18 @@ class BiometriaManager extends ChangeNotifier {
   set checkbio(bool v){
     _checkbio = v;
     notifyListeners();
+  }
+
+  Future<bool> verificarbiometria() async {
+    try{
+      if(Config.bioState == BioSupportState.supported) {
+        bool result = await _services.authbiometria();
+        return result;
+      }
+    }catch(e){
+      debugPrint(e.toString());
+    }
+    return false;
   }
 
   saveBiometria() async {

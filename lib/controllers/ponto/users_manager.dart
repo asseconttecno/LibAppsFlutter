@@ -61,16 +61,26 @@ class UserPontoManager extends ChangeNotifier {
         offline: offline, local: local, aponta: aponta);
   }
 
-  Future<void> signInAuth(BuildContext context, {required String email,required String senha}) async {
-    try{
-      usuario = await _service.signInAuth(email: email, senha: senha);
-      if(usuario?.master ?? false){
-        context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+  Future<bool> auth(BuildContext context , String email, String senha, bool bio) async {
+    if(bio){
+      bool result = await context.read<BiometriaManager>().verificarbiometria();
+      if(result){
+        signInAuth(context, email: email,  senha: senha);
+      }else{
+        throw 'Falha na autenticação por biometria, utilize sua senha!';
       }
-    }catch(e){
-      debugPrint("Erro ${e.toString()}");
-      CustomSnackbar.context(context, e.toString(), Colors.red);
+    }else{
+      signInAuth(context, email: email,  senha: senha);
     }
+    return true;
+  }
+
+  Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
+    usuario = await _service.signInAuth(email: email, senha: senha);
+    if(usuario?.master ?? false){
+      context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+    }
+    return true;
   }
 
   init() async {
