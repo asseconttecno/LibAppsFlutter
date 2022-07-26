@@ -25,7 +25,7 @@ export 'common/common.dart';
 export 'ui/ui.dart';
 export 'helper/helper.dart';
 export 'config.dart';
-
+export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 
 class Assecontservices {
 
