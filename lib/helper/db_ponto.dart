@@ -25,7 +25,6 @@ class DBPonto{
   int versao = 1;
 
   Future<Database> get db async {
-    if(versao == 1) versao = await _db!.getVersion();
     if(_db == null) {
       _db = await inicializarDB(versao);
     } else if(versao < versaoNew) {
