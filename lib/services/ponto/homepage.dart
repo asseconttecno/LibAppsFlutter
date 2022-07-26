@@ -6,11 +6,11 @@ import '../../config.dart';
 import '../http/http.dart';
 
 
-class HomeService {
-  HttpCli _http = HttpCli();
+class HomePontoService {
+  final HttpCli _http = HttpCli();
 
 
-  Future<HomeModel?> getHome(UsuarioPonto user) async {
+  Future<HomePontoModel?> getHome(UsuarioPonto user) async {
     String _api = "/api/apontamento/GetHome";
     try{
       final MyHttpResponse response = await _http.post(
@@ -29,7 +29,7 @@ class HomeService {
 
       if(response.isSucess){
         var dadosJson = response.data;
-        HomeModel homeModel = HomeModel.fromMap(dadosJson);
+        HomePontoModel homeModel = HomePontoModel.fromMap(dadosJson);
         return homeModel;
       }
     } catch(e){
