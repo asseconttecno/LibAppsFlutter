@@ -10,9 +10,10 @@ import '../controllers.dart';
 class SenhaPontoManager extends ChangeNotifier {
   SenhaPontoService _service = SenhaPontoService();
 
-  sendPass(BuildContext context, String email) async {
+  Future<bool> sendPass(BuildContext context, String email) async {
     try{
       bool result = await _service.sendPass(email);
+      return result;
       if(result){
         CustomAlert.sucess(
           context: context,
@@ -21,6 +22,7 @@ class SenhaPontoManager extends ChangeNotifier {
       }
     }catch(e){
       debugPrint("alteracaoPass erro ${e.toString()}");
+      return false;
       CustomAlert.erro(
         context: context,
         mensage: e.toString(),
