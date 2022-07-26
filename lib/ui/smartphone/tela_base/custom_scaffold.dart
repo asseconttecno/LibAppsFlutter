@@ -13,7 +13,7 @@ import 'custom_menu_item.dart';
 
 class CustomScaffold {
 
-  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height,
+  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height, Widget? buttom,
     required BuildContext context, required Widget appbar, required Widget body, bool isListView = true}){
 
     double h = 180 + MediaQuery.of(context).padding.top;
@@ -24,6 +24,7 @@ class CustomScaffold {
       height: height ?? h,
       appbar: appbar,
       context: context,
+      buttom: buttom,
       expanAppbar: Container(
         key: keyListMenu,
         margin: EdgeInsets.only(top: (height ?? h) - 30),
@@ -44,7 +45,7 @@ class CustomScaffold {
   }
 
   static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
-    required List<DecorationItem> listdecoration, required String appTitle,
+    required List<DecorationItem> listdecoration, required String appTitle, Widget? buttom,
     required BuildContext context, required Widget body, DateTime? dataMin, DateTime? dataMax}){
 
     final CalendarWeekController _controller = CalendarWeekController();
@@ -54,6 +55,7 @@ class CustomScaffold {
       body: body,
       appTitle: appTitle,
       height: 110,
+      buttom: buttom,
       appbar: CalendarWeek(
           controller: _controller,
           height: 50,
@@ -99,7 +101,7 @@ class CustomScaffold {
   }
 
   static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height,
-    Widget? appbar, required Widget body, Widget? expanAppbar, String? appTitle}){
+    Widget? appbar, required Widget body, Widget? expanAppbar, String? appTitle, Widget? buttom}){
 
     return Scaffold(
       key: key,
@@ -139,6 +141,8 @@ class CustomScaffold {
             ],
           )
       ),
+      floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: buttom
     );
   }
 }
