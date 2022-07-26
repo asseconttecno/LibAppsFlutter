@@ -19,7 +19,7 @@ class SqlitePontoService {
           dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')  );
       String sql = "SELECT * FROM users";
       List _emp = await bancoDados.rawQuery(sql);
-      if(_emp.isNotEmpty && _emp.length > 0){
+      if(_emp.isNotEmpty){
         debugPrint('sucess users');
       }else{
         debugPrint(_emp.toString());

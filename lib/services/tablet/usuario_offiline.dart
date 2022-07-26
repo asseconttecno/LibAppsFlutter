@@ -20,8 +20,7 @@ class UserPontoOffilineServices {
         );
         if (response.isSucess) {
           List<dynamic> dadosJson = response.data;
-          if (dadosJson.isNotEmpty && dadosJson.length > 0 &&
-              dadosJson.first.containsKey('Id')) {
+          if (dadosJson.isNotEmpty && dadosJson.first.containsKey('Id')) {
             List<UserPontoOffine> listUsers = dadosJson.map((e) => UserPontoOffine.fromMap(e)).toList();
             _sqlitePonto.salvarUsers(listUsers);
             return listUsers;

@@ -13,32 +13,32 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  provider: ^6.0.2
+  provider: ^6.0.3
 
   flutter_awesome_alert_box: ^2.1.1
 
 
-  sqflite: ^2.0.2
-  sqflite_common_ffi: ^2.1.0+2
+  sqflite: ^2.0.2 #^2.0.2
+  sqflite_common_ffi: ^2.1.1+1
 
   http: ^0.13.4
 
   intl: ^0.17.0
 
-  image_picker: ^0.8.4+9
-  filesystem_picker: ^2.0.0
+  image_picker: ^0.8.5+3
+  filesystem_picker: ^2.0.0 #^2.0.2
 
-  local_auth: ^1.1.11
+  local_auth: ^2.1.0
 
-  photo_view: ^0.13.0
+  photo_view: ^0.14.0
 
-  geocoding: ^2.0.2
-  location: ^4.3.0
-  google_maps_flutter: ^2.1.8
+  geocoding: ^2.0.4
+  location: ^4.4.0
+  google_maps_flutter: ^2.1.9
 
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.5
 
-  flutter_carousel_slider: ^1.0.8
+  flutter_carousel_slider: ^1.0.9
 
   flutter_calendar_week:
     git:
@@ -59,8 +59,8 @@ dependencies:
       url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
       ref: main
 
-  path_provider: ^2.0.9
-  shared_preferences: ^2.0.13
+  path_provider: ^2.0.11
+  shared_preferences: ^2.0.15
   external_path: ^1.0.1
 
   cpf_cnpj_validator: ^2.0.0
@@ -69,9 +69,9 @@ dependencies:
 
   share_extend: ^2.0.0
 
-  connectivity_plus: ^2.2.1
-  package_info_plus: ^1.0.6
-  safe_device: ^1.1.0
+  connectivity_plus: ^2.3.6
+  package_info_plus: ^1.4.2 #^1.4.2
+  safe_device: ^1.1.1
   trust_location: ^2.0.13
 
   in_app_review: ^2.0.4
@@ -81,13 +81,13 @@ dependencies:
 
   schedulers: ^0.3.1
 
-  device_preview: 1.0.0
+  device_preview: ^1.1.0
 
 dev_dependencies:
 
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
