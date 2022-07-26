@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
+import '../sqlite_ponto.dart';
 
 class UserPontoOffilineServices {
   final HttpCli _http = HttpCli();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
   Future<List<UserPontoOffine>> getFuncionariosTablet(EmpresaPontoModel empresa) async {
     String _api = "/api/funcionario/GetFuncionariosTablet";
@@ -24,7 +23,7 @@ class UserPontoOffilineServices {
           if (dadosJson.isNotEmpty && dadosJson.length > 0 &&
               dadosJson.first.containsKey('Id')) {
             List<UserPontoOffine> listUsers = dadosJson.map((e) => UserPontoOffine.fromMap(e)).toList();
-            salvarUsers(listUsers);
+            _sqlitePonto.salvarUsers(listUsers);
             return listUsers;
           }
         } else {
@@ -38,21 +37,5 @@ class UserPontoOffilineServices {
     return [];
   }
 
-  salvarUsers(List<UserPontoOffine> dados) async {
-    try{
-      Database bancoDados = await DbSQL().db;
-      await bancoDados.delete('users');
-      await bancoDados.execute('INSERT INTO users(iduser, nome, pis, registro) VALUES ' +
-          dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')  );
-      String sql = "SELECT * FROM users";
-      List _emp = await bancoDados.rawQuery(sql);
-      if(_emp.isNotEmpty && _emp.length > 0){
-        debugPrint('sucess users');
-      }else{
-        debugPrint(_emp.toString());
-      }
-    }catch(e){
-      print("erro salvar users sql $e");
-    }
-  }
+
 }

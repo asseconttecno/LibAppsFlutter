@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import '../../controllers/controllers.dart';
 import '../../enums/enums.dart';
 import '../../model/model.dart';
-import '../../helper/db.dart';
 import '../../config.dart';
 import '../http/http.dart';
+import '../sqlite_ponto.dart';
 
 
 class RegistroService {
   final HttpCli _http = HttpCli();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
+
 
   Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude) async {
     String _api = "/api/apontamento/PostPontoMarcar";
@@ -40,7 +42,7 @@ class RegistroService {
         if(response.isSucess){
           Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
-            await  salvarHisMarcacao(
+            await  _sqlitePonto.salvarHisMarcacao(
               Marcacao(
                   iduser: user.userId,
                   latitude: latitude, longitude: longitude,
@@ -50,7 +52,7 @@ class RegistroService {
             return true;
           }else{
             if(user.permitirMarcarPontoOffline ?? false){
-              bool result = await salvarMarcacao(
+              bool result = await _sqlitePonto.salvarMarcacao(
                   Marcacao(
                       iduser: user.userId,
                       latitude: latitude, longitude: longitude,
@@ -62,7 +64,7 @@ class RegistroService {
           }
         }else{
           if(user.permitirMarcarPontoOffline ?? false){
-            bool result = await salvarMarcacao(
+            bool result = await _sqlitePonto.salvarMarcacao(
               Marcacao(
                   iduser: user.userId,
                   latitude: latitude, longitude: longitude,
@@ -75,7 +77,7 @@ class RegistroService {
       } catch (e){
         debugPrint("Erro Try ${e.toString()}");
         if(user.permitirMarcarPontoOffline ?? false){
-          bool result = await salvarMarcacao(
+          bool result = await _sqlitePonto.salvarMarcacao(
             Marcacao(
                 iduser: user.userId,
                 latitude: latitude, longitude: longitude,
@@ -114,11 +116,7 @@ class RegistroService {
 
             final del = listOff.map((e) => Marcacao.fromReSql(e)).toList();
             if(delete){
-              var bancoDados = await DbSQL().db;
-              await bancoDados.delete("marcacao");
-              await del.map((e) async {
-                await salvarMarcacao(e);
-              });
+              _sqlitePonto.deleteSalvarMarcacoes(del);
             }
             return MarcacaoOffStatus.Delete;
           }
@@ -133,34 +131,9 @@ class RegistroService {
 
 
 
-  Future<bool> salvarMarcacao(Marcacao dados, {bool hist = true}) async {
-    try{
-      var bancoDados = await DbSQL().db;
-      int result = await bancoDados.insert("marcacao", dados.toMap());
 
-      try {
-        if(hist) await bancoDados.insert("historico", dados.toHistMap());
-      } on Exception catch (e) {
-        debugPrint("erro salvar marca sql ${e.toString()}");
-      }
 
-      return result > 0;
-    }catch(e){
-      debugPrint("erro salvar marca sql ${e.toString()}");
-      return false;
-    }
-  }
 
-  Future<bool> salvarHisMarcacao(Marcacao dados) async {
-    try{
-      var bancoDados = await DbSQL().db;
-      int result = await bancoDados.insert("historico", dados.toHistMap());
-      return result > 0;
-    }catch(e){
-      debugPrint("erro salvar marca sql $e");
-      return false;
-    }
-  }
 
 
 }

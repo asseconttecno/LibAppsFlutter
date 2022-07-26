@@ -5,10 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schedulers/schedulers.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../enums/enums.dart';
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../../config.dart';
@@ -18,22 +16,21 @@ import '../controllers.dart';
 
 
 class ConfigPontoManager extends ChangeNotifier {
-  SendMail _sendMail = SendMail();
+  final SendMail _sendMail = SendMail();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
-  ConfigModel configMocel = ConfigModel(email: EmpresaPontoManager.empresa?.email ?? '',
+  ConfigModel configModel = ConfigModel(email: EmpresaPontoManager.empresa?.email ?? '',
     status: ConfigBackup.Semanal, hora: '23:00', local: Config.documentos);
   Timer? timer;
 
   initConfig(EmpresaPontoModel empresa) async {
     try{
-      Database bancoDados = await DbSQL().db;
-      String sql = "SELECT * FROM config";
-      List config = await bancoDados.rawQuery(sql);
+      List? config = await _sqlitePonto.initConfig();
       difeDiaSemana(DateTime.now());
-      if(config.length <= 0){
-        await bancoDados.insert("config", configMocel.toMap());
+      if(config == null || config.isEmpty){
+        await _sqlitePonto.insertConfig( configModel.toMap());
       }else{
-        configMocel = ConfigModel.fromSql(config.first);
+        configModel = ConfigModel.fromSql(config.first);
         notifyListeners();
       }
       autoBackup(empresa);
@@ -44,7 +41,7 @@ class ConfigPontoManager extends ChangeNotifier {
 
   Future<bool> saveConfig({required EmpresaPontoModel empresa, String? email,
         int? status, String? hora, String? local}) async {
-    ConfigModel _configMocel = configMocel;
+    ConfigModel _configModel = configModel;
     try{
       updateConfig(
           email: email,
@@ -52,16 +49,13 @@ class ConfigPontoManager extends ChangeNotifier {
           hora: hora,
           local: local
       );
-      Database bancoDados = await DbSQL().db;
-      int result = await bancoDados.update("config", configMocel.toMap());
-      String sql = "SELECT * FROM config";
-      List config = await bancoDados.rawQuery(sql);
-      debugPrint('result: $result\n' + config.toString());
+      int result = await _sqlitePonto.updateConfig( configModel.toMap());
+      debugPrint(result.toString());
       autoBackup(empresa);
       return true;
     }catch(e){
       debugPrint("erro saveConfig sql $e");
-      configMocel = _configMocel;
+      configModel = _configModel;
       notifyListeners();
       return false;
     }
@@ -69,7 +63,7 @@ class ConfigPontoManager extends ChangeNotifier {
 
   updateConfig({String? email, int? status, String? hora, String? local}) async {
     try{
-      configMocel = configMocel.copyWith(
+      configModel = configModel.copyWith(
           email: email,
           status: status,
           hora: hora,
@@ -111,11 +105,11 @@ class ConfigPontoManager extends ChangeNotifier {
 
   autoBackup(EmpresaPontoModel empresa){
     final scheduler = TimeScheduler();
-    int hora = int.parse(configMocel.hora!.split(':').first);
-    int min = int.parse(configMocel.hora!.split(':').last);
+    int hora = int.parse(configModel.hora!.split(':').first);
+    int min = int.parse(configModel.hora!.split(':').last);
 
     try {
-      if(configMocel.status == ConfigBackup.Mensal){
+      if(configModel.status == ConfigBackup.Mensal){
         timer = Timer.periodic(Duration(days: 30), (timer) {
           int mes = DateTime.now().month + 1;
           int ano = mes > 12 ? DateTime.now().year + 1 : DateTime.now().year;
@@ -125,7 +119,7 @@ class ConfigPontoManager extends ChangeNotifier {
             backup(empresa);
           }, _data);
         });
-      }else if(configMocel.status == ConfigBackup.Semanal){
+      }else if(configModel.status == ConfigBackup.Semanal){
         timer = Timer.periodic(Duration(days: 7), (timer) {
           int difeDias = difeDiaSemana(DateTime.now());
           int mes = DateTime.now().add(Duration(days: difeDias)).month;
@@ -163,14 +157,13 @@ class ConfigPontoManager extends ChangeNotifier {
 
   Future<bool> backup(EmpresaPontoModel empresa,) async {
     try {
-      Database bancoDados = await DbSQL().db;
-      List resultsql = await bancoDados.query("historico");
-      if(resultsql.length > 0){
+      List? resultsql = await _sqlitePonto.getHistorico();
+      if(resultsql != null && resultsql.isNotEmpty){
         DateTime inicio = DateTime.parse(resultsql.first["datahora"]);
         DateTime terminmo = DateTime.parse(resultsql.last["datahora"]);
         File? _file = await afd(empresa, inicio,terminmo,resultsql);
         if(_file != null){
-          bool rest = await _sendMail.postSendMail(configMocel.email!,
+          bool rest = await _sendMail.postSendMail(configModel.email!,
               'Segue anexo do AFD ate data ${DateFormat("dd/MM/yyyy", 'pt_BR').format(DateTime.now())}' , _file);
           return rest;
         }
@@ -184,7 +177,7 @@ class ConfigPontoManager extends ChangeNotifier {
   Future<File?> afd(EmpresaPontoModel empresa, DateTime inicio, DateTime fim, List marcacoes) async {
     try {
       String _data = '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
-      File file = File('${configMocel.local}/afd-${_data}.txt');
+      File file = File('${configModel.local}/afd-${_data}.txt');
       int identCnpj = 1;
       if((empresa.cnpj?.replaceAll("/", "").replaceAll(".", "").replaceAll("-", "").length ?? 0) == 11){
         identCnpj = 2;

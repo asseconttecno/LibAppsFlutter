@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
-import '../../helper/db.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../controllers.dart';
 
 
 class EmpresaPontoManager extends ChangeNotifier {
-  EmpresaPontoService _service = EmpresaPontoService();
+  final EmpresaPontoService _service = EmpresaPontoService();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
   static EmpresaPontoModel? empresa;
   static bool autologin = false;
@@ -25,12 +24,9 @@ class EmpresaPontoManager extends ChangeNotifier {
 
   verificarlogin() async {
     try{
-      Database bancoDados = await DbSQL().db;
-      String sql = "SELECT * FROM empresa";
+      List? emp = await _sqlitePonto.getEmpresa();
 
-      List emp = await bancoDados.rawQuery(sql);
-
-      if(emp.isNotEmpty){
+      if(emp != null && emp.isNotEmpty){
         empresa = EmpresaPontoModel.fromSql(emp.first);
         email.text = empresa?.email ?? email.text;
         if(empresa != null){
