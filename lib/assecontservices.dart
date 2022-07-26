@@ -26,6 +26,7 @@ export 'ui/ui.dart';
 export 'helper/helper.dart';
 export 'config.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
+export 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Assecontservices {
 
