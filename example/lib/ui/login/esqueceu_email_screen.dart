@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:assecontservices/assecontservices.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 
-import '../../controllers/primeiro_acesso/primeiro_acesso_manager.dart';
-
 
 class EsqueceuEmailScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -220,7 +218,7 @@ class _RecadastroScreenState extends State<EsqueceuEmailScreen> {
   _clickLogin(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       carregar(context,);
-      await context.read<PrimeiroAcessoManager>().esqueceuEmail(context,
+      await context.read<PrimeiroAcessoHoleriteManager>().esqueceuEmail(context,
         registro: registro.text, cnpj: cnpj.text, cpf: cpf.text
       ).then((bool? v) {
         if (v != null) {

@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:assecontservices/assecontservices.dart';
 
-import '../../controllers/senha/senha_manager.dart';
 
 class EsqueciSenhaScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -39,7 +38,8 @@ class _EsqueciSenhaScreenState extends State<EsqueciSenhaScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Utilizar CPF para recuperar senha', style: TextStyle(fontSize: 18,color: Colors.white),),
+                        Text('Utilizar CPF para recuperar senha',
+                          style: TextStyle(fontSize: 16,color: Colors.white),),
                         Switch(
                           activeColor: Colors.red,
                           hoverColor: Colors.white,
@@ -190,13 +190,13 @@ class _EsqueciSenhaScreenState extends State<EsqueciSenhaScreen> {
   _cliqueEnviarSenha(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       carregar(context,);
-      await context.read<SenhaManager>().sendPass(
+      await context.read<SenhaHoleriteManager>().sendPass(
         email: isCpf ? null : context.read<UserHoleriteManager>().email.text,
         cpf: isCpf ? context.read<UserHoleriteManager>().cpf.text :  null,
       ).then((String? v) {
         if(v != null){
           Navigator.pop(context);
-          String e = context.read<SenhaManager>().ofuscarEmail(v);
+          String e = context.read<SenhaHoleriteManager>().ofuscarEmail(v);
           CustomAlert.sucess(
               context: context,
               mensage: 'Enviamos para $e a nova senha de acesso',

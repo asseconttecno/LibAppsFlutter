@@ -6,7 +6,7 @@ import '../http/http.dart';
 
 
 class PrimeiroAcessoHoleriteService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<PrimeiroAcessoHoleriteModel?> verificar({required String cnpj, required String registro, }) async {
     String _metodo = '/holerite/novo/verificar';
@@ -97,20 +97,25 @@ class PrimeiroAcessoHoleriteService {
   }
 
   Future<bool> cadastrar({required int id, required String email, required String senha,
-      required String cpf, String? cel,}) async {
+      required String cpf, required String? cel,}) async {
     String _metodo = '/holerite/novo/cadastro';
+    Map<String, dynamic> body = {
+      "Id": id,
+      "Email": email,
+      "Senha": senha,
+      "Cel": cel,
+      "Cpf": cpf.replaceAll(".", "").replaceAll("-", "")
+    };
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
-          body: {
-            "Id": id,
-            "Email": email,
-            "Senha": senha,
-            "Cel": cel,
-            "Cpf": cpf.replaceAll(".", "").replaceAll("-", "")
-          }
+          body: body
       );
-      return response.isSucess;
+      if(response.isSucess) {
+        return response.isSucess;
+      }
+
+      throw response.codigo.toString();
     } catch (e){
       debugPrint(e.toString());
       switch(e){
