@@ -5,7 +5,7 @@ import '../http/http.dart';
 
 
 class SenhaHoleriteService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<String?> sendPass({String? email, String? cpf, }) async {
     String _metodo = '/holerite/email/senha';
