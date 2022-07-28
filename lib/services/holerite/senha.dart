@@ -12,16 +12,20 @@ class SenhaHoleriteService {
 
     try{
       String? _cpf = cpf != null ? cpf.replaceAll('.', '').replaceAll('-', '') : null;
+      Map<String, dynamic> body = {
+        "Email": email,
+        "Cpf": _cpf
+      };
+      print(body);
+      print(Config.conf.apiHoleriteEmail! + _metodo);
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
-          body: <String, dynamic>{
-            "Email": email,
-            "Cpf": _cpf
-          }
+          body: body
       );
       if(response.isSucess){
         return response.data['email'];
       }
+      throw response.codigo.toString();
     } catch (e){
       debugPrint(e.toString());
       switch(e){

@@ -13,7 +13,7 @@ class Gps extends ChangeNotifier {
   Location location = Location();
   LocationData? locationData;
 
-  CameraPosition _cam = CameraPosition(target: LatLng(-23.5505199, -46.6333094), zoom: 18);
+  CameraPosition _cam = const CameraPosition(target: LatLng(-23.5505199, -46.6333094), zoom: 18);
   CameraPosition  get cam => _cam;
   set cam(CameraPosition c){
     _cam = c;

@@ -66,7 +66,7 @@ class Assecontservices {
         ),
       if(Config.conf.nomeApp != VersaoApp.PontoTablet)
         ChangeNotifierProvider(
-          lazy: true,
+          lazy: false,
           create: (_)=> BiometriaManager(),
         ),
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
@@ -84,10 +84,15 @@ class Assecontservices {
           lazy: true,
           create: (_)=> PrimeiroAcessoHoleriteManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
+      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
           lazy: true,
-          create: (_)=> ConfigPontoManager(),
+          create: (_)=> SenhaHoleriteManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
+        ChangeNotifierProvider(
+          lazy: false,
+          create: (_)=> ConfigTabletManager(),
         ),
       if(Config.conf.nomeApp == VersaoApp.PontoTablet)
         ChangeNotifierProvider(

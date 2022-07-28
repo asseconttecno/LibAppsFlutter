@@ -15,7 +15,7 @@ import '../controllers.dart';
 
 
 
-class ConfigPontoManager extends ChangeNotifier {
+class ConfigTabletManager extends ChangeNotifier {
   final SendMail _sendMail = SendMail();
   final SqlitePontoService _sqlitePonto = SqlitePontoService();
 

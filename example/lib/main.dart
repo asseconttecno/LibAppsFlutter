@@ -28,10 +28,6 @@ void main() {
       rotas: RouteGenerator.generateRoute,
       devicePreview: false,
       providers: [
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_)=> InformeManager(),
-        ),
       ]
   );
 }
