@@ -311,7 +311,7 @@ class _LoginScreenState extends State<LoginScreen> {
       bool? result = await context.read<UserHoleriteManager>().auth(context , email, senha, false,);
 
       if(result ?? false){
-        Config.senha = senha;
+        Config.usenha = senha;
         context.read<UserHoleriteManager>().memorizar();
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
@@ -326,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context, email, context.read<UserHoleriteManager>().senha.text, true,);
 
           if(result ?? false){
-            Config.senha = context.read<UserHoleriteManager>().senha.text;
+            Config.usenha = context.read<UserHoleriteManager>().senha.text;
             Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
           }else{
             setState(() {

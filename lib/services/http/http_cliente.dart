@@ -106,6 +106,7 @@ class HttpCli {
             data: result
         );
       } else {
+        debugPrint(response.body);
         throw HttpError.statusCode;
       }
 

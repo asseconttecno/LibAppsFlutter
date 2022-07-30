@@ -7,7 +7,7 @@ import '../../services/services.dart';
 
 
 class HoleriteManager extends ChangeNotifier {
-  HoleriteService _service = HoleriteService();
+  final HoleriteService _service = HoleriteService();
 
   List<CompetenciasModel> _listcompetencias = [];
   List<CompetenciasModel> get listcompetencias => _listcompetencias;

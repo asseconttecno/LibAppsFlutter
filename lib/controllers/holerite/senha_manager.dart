@@ -4,7 +4,7 @@ import 'package:assecontservices/assecontservices.dart';
 
 
 class SenhaHoleriteManager extends ChangeNotifier {
-  SenhaHoleriteService _service = SenhaHoleriteService();
+  final SenhaHoleriteService _service = SenhaHoleriteService();
 
   bool _showSenhaAtual = true;
   bool get showSenhaAtual => _showSenhaAtual;

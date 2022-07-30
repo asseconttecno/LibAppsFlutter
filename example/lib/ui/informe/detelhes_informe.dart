@@ -57,8 +57,10 @@ class _DetalhesInformesState extends State<DetalhesInformes> {
                     case ConnectionState.done :
                       if( snapshot.hasError || !snapshot.hasData || snapshot.data == null){
                         resultado = GestureDetector(
-                            child: Icon(Icons.autorenew_outlined,
-                              color: Config.corPri, size: 70,),
+                            child: Center(
+                              child: Icon(Icons.autorenew_outlined,
+                                color: Config.corPri, size: 70,),
+                            ),
                             onTap: (){
                               informe.informeRendimentosPDF(
                                   context.read<UserHoleriteManager>().user!,

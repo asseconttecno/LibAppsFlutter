@@ -1,11 +1,9 @@
-import 'package:assecontservices/common/biometria_alert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:tutorial/tutorial.dart';
 import 'package:assecontservices/assecontservices.dart';
-import 'package:assecontservices/ui/smartphone/holerite/detelhes_holerite_pdf.dart';
 
 
 import '../alter_user/alterar_user.dart';
@@ -29,21 +27,22 @@ class _HomePageState extends State<HomeScreen> {
   final keyMenu2 = GlobalKey();
   final keyMenu3 = GlobalKey();
   final keyMenu4 = GlobalKey();
+  final keyMenu5 = GlobalKey();
   final keyResumo = GlobalKey();
   final keyListMenu = GlobalKey();
 
   keyStatus() async {
-    Future.delayed(Duration(microseconds: 200)).then((value) async {
+    Future.delayed(const Duration(microseconds: 200)).then((value) async {
       keyMenu.currentState?.showButtonMenu();
-      Future.delayed(Duration(seconds: 1)).then((value) async {
+      Future.delayed(const Duration(seconds: 1)).then((value) async {
         Tutorial.showTutorial(
             context, itens, (v)  {
-              if(v == (Config.isWin ? 2:  3) && (keyMenu.currentState?.mounted ?? false)){
+              if(v == (Config.isWin ? 3:  4) && (keyMenu.currentState?.mounted ?? false)){
                 //keyMenu.currentState!.showButtonMenu();
                 Navigator.pop(keyMenu.currentState!.context,);
-              }else if(v == (Config.isWin ? 4 : 5)){
-                Config().priacesso();
               }else if(v == (Config.isWin ? 5 : 6)){
+                Config().priacesso();
+              }else if(v == (Config.isWin ? 6 : 7)){
                 initial();
               }
             }
@@ -55,7 +54,7 @@ class _HomePageState extends State<HomeScreen> {
 
   initial() {
     BiometriaAlert(context);
-    Future.delayed(Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       if((context.read<UserHoleriteManager>().listuser?.length ?? 0) > 1){
         AlterUser(context);
       }
@@ -66,7 +65,7 @@ class _HomePageState extends State<HomeScreen> {
   void initState() {
     context.read<HoleriteManager>().competencias(context.read<UserHoleriteManager>().user);
 
-    Future.delayed(Duration(seconds: 1)).then((value) {
+    Future.delayed(const Duration(seconds: 1)).then((value) {
       setState(() {
         loadpage = false;
       });
@@ -81,15 +80,15 @@ class _HomePageState extends State<HomeScreen> {
             right: 180,
             children: [
               Container(color: Colors.black54,
-                child: Text(
+                child: const Text(
                   "Nesse menu é possível alterar o usuario",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 50,)
+              const SizedBox(height: 50,)
             ],
             widgetNext: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               color: Colors.black12,
               child: Text("Continuar",
                 style: TextStyle(
@@ -103,20 +102,47 @@ class _HomePageState extends State<HomeScreen> {
         TutorialItens(
             globalKey: keyMenu2,
             touchScreen: true,
+            top: WidgetsBinding.instance?.window.padding.top,
+            left: 10,
+            right: 180,
+            children: [
+              Container(color: Colors.black54,
+                child: const Text(
+                  "Nesse menu é possível alterar a senha do usuario",
+                  style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 50,)
+            ],
+            widgetNext: Container(
+              padding: const EdgeInsets.all(5),
+              color: Colors.black12,
+              child: Text("Continuar",
+                style: TextStyle(
+                  color: Config.corPri,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            shapeFocus: ShapeFocus.square
+        ),
+        TutorialItens(
+            globalKey: keyMenu3,
+            touchScreen: true,
             top: 30 + (WidgetsBinding.instance?.window.padding.top ?? 0),
             left: 10,
             right: 180,
             children: [
               Container(color: Colors.black54,
-                child: Text(
+                child: const Text(
                   "Nesse menu é possível verificar versão do app, alterar modo escuro e autenticação.",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 50,)
+              const SizedBox(height: 50,)
             ],
             widgetNext: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               color: Colors.black12,
               child: Text("Continuar",
                 style: TextStyle(
@@ -128,22 +154,22 @@ class _HomePageState extends State<HomeScreen> {
             shapeFocus: ShapeFocus.square),
         if(!Config.isWin)
         TutorialItens(
-            globalKey: keyMenu3,
+            globalKey: keyMenu4,
             touchScreen: true,
             top: 60 + (WidgetsBinding.instance?.window.padding.top ?? 0) ,
             left: 10,
             right: 180,
             children: [
               Container(color: Colors.black54,
-                child: Text(
+                child: const Text(
                   "Nesse menu é possível avaliar o app na loja.",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 50,)
+              const SizedBox(height: 50,)
             ],
             widgetNext: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               color: Colors.black12,
               child: Text(
                 "Continuar",
@@ -156,22 +182,22 @@ class _HomePageState extends State<HomeScreen> {
             shapeFocus: ShapeFocus.square),
 
         TutorialItens(
-            globalKey: keyMenu4,
+            globalKey: keyMenu5,
             touchScreen: true,
             top: 120 + (WidgetsBinding.instance?.window.padding.top ?? 0),
             left: 10,
             right: 180,
             children: [
               Container(color: Colors.black54,
-                child: Text(
+                child: const Text(
                   "Nesse menu é possível deslogar do usuário atual.",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 50,)
+              const SizedBox(height: 50,)
             ],
             widgetNext: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               color: Colors.black12,
               child: Text(
                 "Continuar",
@@ -189,18 +215,18 @@ class _HomePageState extends State<HomeScreen> {
           right: 0, left: 0,
           children: [
             Container(color: Colors.black54,
-                padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
-              child: Center(
+                padding: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
+              child: const Center(
                 child: Text(
                   "Lista de menu deslizável na horizontal.",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
             ),
-            SizedBox(height: 50,)
+            const SizedBox(height: 50,)
           ],
           widgetNext: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               //margin: EdgeInsets.only(right: 30),
               color: Colors.black12,
               child: Text(
@@ -220,18 +246,18 @@ class _HomePageState extends State<HomeScreen> {
           right: 0, left: 0,
           children: [
             Container(color: Colors.black54,
-              padding: EdgeInsets.only(top: 20, bottom: 20,),
-              child: Center(
+              padding: const EdgeInsets.only(top: 20, bottom: 20,),
+              child: const Center(
                 child: Text(
                   "Visualização do ultimo holerite disponivel",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
             ),
-            SizedBox(height: 30,)
+            const SizedBox(height: 30,)
           ],
           widgetNext: Container(
-              padding: EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
+              padding: const EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
               color: Colors.black12,
               child: Text(
                 "Sair",
@@ -269,22 +295,23 @@ class _HomePageState extends State<HomeScreen> {
               appbar: SafeArea(
                 child: Column(
                   children: [
+                    const SizedBox(height: 15,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 35,),
+                        const SizedBox(width: 20,),
                         Text('Holerite Eletronico', style: TextStyle(color: Config.corPri,fontSize: 18),),
                         actions(context, aponta: true, keyMenu: keyMenu, key1: keyMenu1,
-                          key2: keyMenu2, key3: keyMenu3, key4: keyMenu4,),
+                          key2: keyMenu2, key3: keyMenu3, key4: keyMenu4, key5: keyMenu5),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 10,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
                           width: width - 40,
-                          padding: EdgeInsets.only(left: 15, right: 5),
+                          padding: const EdgeInsets.only(left: 15, right: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -298,7 +325,7 @@ class _HomePageState extends State<HomeScreen> {
                                     color: Config.corPri
                                 ),
                               ),
-                              SizedBox(height: 12,),
+                              const SizedBox(height: 12,),
                               Text(user.user?.empresa ?? '',
                                 maxLines: 1,
                                 style: TextStyle(
@@ -307,7 +334,7 @@ class _HomePageState extends State<HomeScreen> {
                                   letterSpacing: 1,
                                 ),
                               ),
-                              SizedBox(height: 8,),
+                              const SizedBox(height: 8,),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Text('Registro: ' + (user.user?.registro ?? ''),
@@ -318,7 +345,6 @@ class _HomePageState extends State<HomeScreen> {
                                       letterSpacing: 1,
                                     ),
                                   ),
-                                  SizedBox(width: 5,),
                                   Text('Celular: ' + (user.user?.ddd ?? '') + (user.user?.celular ?? ''),
                                     maxLines: 1,
                                     style: TextStyle(
@@ -339,14 +365,14 @@ class _HomePageState extends State<HomeScreen> {
               ),
               listMenu: [
                 CustomMenuItem(
-                  Icon(Icons.monetization_on_outlined, color: Colors.white, size: 40),
+                  const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 40),
                   'Holerites',
                       () {
                     Navigator.pushNamed(context, '/holerites');
                   },
                 ),
                 CustomMenuItem(
-                  Icon(Icons.receipt_long, color: Colors.white, size: 40),
+                  const Icon(Icons.receipt_long, color: Colors.white, size: 40),
                   'Informe Rendimento',
                       () {
                     Navigator.pushNamed(context, '/infomes');
@@ -354,6 +380,7 @@ class _HomePageState extends State<HomeScreen> {
                 ),
               ],
               body: Container(
+                constraints: const BoxConstraints.expand(),
                 child: Column(
                   children: [
                     Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -361,7 +388,7 @@ class _HomePageState extends State<HomeScreen> {
                         Text('Ultimo Holerite: ' +
                             (context.watch<HoleriteManager>().listcompetencias.isNotEmpty ?
                             context.read<HoleriteManager>().listcompetencias.first.descricao! : ''),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14 ,
                           ),
                         ),
@@ -376,6 +403,7 @@ class _HomePageState extends State<HomeScreen> {
                         }
                       ),
                     ),
+
                   ],
                 )
               ),

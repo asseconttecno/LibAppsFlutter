@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:assecontservices/assecontservices.dart';
 
 
-import 'controllers/primeiro_acesso/primeiro_acesso_manager.dart';
 import 'route_generator.dart';
 
 //42585327892 1983
@@ -22,20 +21,13 @@ void main() {
 
           androidAppId: 'com.assecont.holerite',
           iosAppId: 'com.assecont.holerite',
-          iosAppIdNum: '1490469231',
+          iosAppIdNum: '1601264668',
           nomeApp: VersaoApp.HoleriteApp
       ),
-      titulo: 'Asseponto Holerite',
+      titulo: 'Assecont Holerite',
       rotas: RouteGenerator.generateRoute,
+      devicePreview: false,
       providers: [
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_)=> InformeManager(),
-        ),
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_)=> PrimeiroAcessoManager(),
-        ),
       ]
   );
 }
