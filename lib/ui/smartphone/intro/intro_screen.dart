@@ -17,8 +17,10 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), (){
-      UpdateAppManager().checkVersion(context);
+    Future.delayed(Duration(milliseconds: 800), (){
+      if(mounted){
+        UpdateAppManager().checkVersion(context);
+      }
     });
   }
 
