@@ -11,7 +11,7 @@ import '../../model/model.dart';
 import '../../config.dart';
 
 class HoleriteService  {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite user, int mes, int ano) async {
     String _api = "/holeriteresumo/resumoscreen";

@@ -32,7 +32,7 @@ class UserHoleriteService {
         final List<UsuarioHolerite> _user = user.map((e) => UsuarioHolerite.fromMap(e)).toList();
         return _user;
       }else{
-        throw 404;
+        throw response.codigo.toString();
       }
     } catch (e){
       debugPrint(e.toString());

@@ -33,7 +33,8 @@ class PrimeiroAcessoHoleriteService {
           }
         }
       }
-      throw HttpError.unexpected;
+      throw response.codigo.toString();
+
     } catch (e){
       debugPrint(e.toString());
       switch(e){
@@ -78,7 +79,8 @@ class PrimeiroAcessoHoleriteService {
           }
         }
       }
-      throw HttpError.unexpected;
+      throw response.codigo.toString();
+
     } catch (e){
       debugPrint(e.toString());
       switch(e){

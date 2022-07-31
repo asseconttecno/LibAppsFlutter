@@ -53,7 +53,10 @@ class SenhaHoleriteService {
             "senhaNova": senhaNova
           }
       );
-      return response.isSucess;
+      if(response.isSucess){
+        return response.isSucess;
+      }
+      throw response.codigo.toString();
     } catch (e){
       debugPrint(e.toString());
       switch(e){
