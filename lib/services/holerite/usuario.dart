@@ -41,7 +41,7 @@ class UserHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Usuário ou senha inválidos!';
         default:
           throw 'Erro inesperado, tente novamente!';

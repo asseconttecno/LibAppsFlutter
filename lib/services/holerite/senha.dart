@@ -33,7 +33,7 @@ class SenhaHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Email ou Cpf não cadastrado!';
         default:
           throw 'Erro inesperado, tente novamente!';
@@ -64,7 +64,7 @@ class SenhaHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw response!.data;
         default :
           throw 'Erro inesperado, tente novamente!';

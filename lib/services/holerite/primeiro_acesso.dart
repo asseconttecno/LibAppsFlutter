@@ -27,9 +27,9 @@ class PrimeiroAcessoHoleriteService {
         }
         if(result.containsKey('iscliente')){
           if(result['iscliente']){
-            throw 404;
+            throw "404";
           }else{
-            throw 205;
+            throw "205";
           }
         }
       }
@@ -42,9 +42,9 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
-        case 205 :
+        case "205" :
           throw 'Empresa não cadastrada!';
         default:
           throw 'Erro inesperado, tente novamente!';
@@ -73,9 +73,9 @@ class PrimeiroAcessoHoleriteService {
         }
         if(result.containsKey('iscliente')){
           if(result['iscliente']){
-            throw 404;
+            throw "404";
           }else{
-            throw 205;
+            throw "205";
           }
         }
       }
@@ -88,9 +88,9 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
-        case 205 :
+        case "205" :
           throw 'Empresa não cadastrada!';
         default:
           throw 'Erro inesperado, tente novamente!';
@@ -125,7 +125,7 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
         default:
           throw 'Erro inesperado, tente novamente!';
