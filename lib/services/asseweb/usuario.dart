@@ -5,7 +5,7 @@ import '../../config.dart';
 import '../http/http.dart';
 
 class UserAssewebService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<UsuarioAsseweb> signInAuth({required String email, required String senha}) async {
     String _metodo = '/api/ExternalLogin/login';
@@ -21,7 +21,7 @@ class UserAssewebService {
       );
 
       if (response.isSucess) {
-        Map map = response.data;
+        Map<String, dynamic> map = response.data;
         final UsuarioAsseweb _user = UsuarioAsseweb.fromMap(map);
         return _user;
       }else{
