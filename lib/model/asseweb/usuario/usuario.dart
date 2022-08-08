@@ -1,9 +1,43 @@
+// To parse this JSON data, do
+//
+//     final usuarioAsseweb = usuarioAssewebFromMap(jsonString);
 
-
-import 'dart:ffi';
-
+import 'dart:convert';
 
 class UsuarioAsseweb {
+  UsuarioAsseweb({
+    this.login,
+    this.token,
+  });
+
+  Login? login;
+  String? token;
+
+  factory UsuarioAsseweb.fromJson(String str) => UsuarioAsseweb.fromMap(json.decode(str));
+
+  factory UsuarioAsseweb.fromMap(Map<String, dynamic> json) => UsuarioAsseweb(
+    login: Login.fromMap(json["login"]),
+    token: json["token"],
+  );
+}
+
+class Login {
+  Login({
+    this.id,
+    this.name,
+    this.email,
+    this.phoneNumber,
+    this.ddd,
+    this.password,
+    this.lastAcess,
+    this.birthday,
+    this.version,
+    this.resignation,
+    this.uid,
+    this.master,
+    this.companies,
+  });
+
   int? id;
   String? name;
   String? email;
@@ -13,104 +47,67 @@ class UsuarioAsseweb {
   DateTime? lastAcess;
   DateTime? birthday;
   String? version;
-  DateTime? resignation;
+  dynamic resignation;
   String? uid;
-  Bool? master;
-  List<Companies>? companies;
+  bool? master;
+  List<Company>? companies;
 
-  UsuarioAsseweb({this.id, this.name, this.email, this.phoneNumber, this.ddd, this.password, this.lastAcess, this.birthday, this.version,
-    this.resignation, this.uid, this.master, this.companies});
+  factory Login.fromJson(String str) => Login.fromMap(json.decode(str));
 
-    UsuarioAsseweb copyWith({
-
-    int? id, String? name, String? email, String? phoneNumber, String? ddd, String? password, DateTime? lastAcess, DateTime? birthday,
-      String? version, DateTime? resignation, String? uid, Bool? master, List<Companies>? companies
-
-  }) => UsuarioAsseweb(
-
-                id: id ?? this.id,
-                name: name ?? this.name,
-                email: email ?? this.email,
-                phoneNumber: phoneNumber ?? this.phoneNumber ,
-                ddd: ddd ?? this.ddd ,
-                password: password ?? this.password,
-                lastAcess: lastAcess ?? this.lastAcess,
-                birthday: birthday ?? this.birthday,
-                version: version ?? this.version,
-                resignation: resignation ?? this.resignation,
-                uid: uid ?? this.uid,
-                master: master ?? this.master,
-                companies: companies ?? this.companies
-
-
+  factory Login.fromMap(Map<String, dynamic> json) => Login(
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    phoneNumber: json["phoneNumber"],
+    ddd: json["ddd"],
+    password: json["password"],
+    lastAcess: DateTime.parse(json["lastAcess"]),
+    birthday: json["birthday"],
+    version: json["version"],
+    resignation: json["resignation"],
+    uid: json["uid"],
+    master: json["master"],
+    companies: List<Company>.from(json["companies"].map((x) => Company.fromMap(x))),
   );
 
-
-
-  UsuarioAsseweb.fromMap(Map map){
-    this.id =   map["id"] == null ? null : map["id"];
-    this.name = map["name"] == null ? null : map["name"];
-    this.email = map["email"] == null ? null : map["email"];
-    this.phoneNumber = map["phoneNumber"] == null ? null : map["phoneNumber"];
-    this.ddd = map["ddd"] == null ? null : map["ddd"];
-    this.password = map["password"] == null ? null : map["password"];
-    this.lastAcess = map["lastAcess"] == null ? null : map["lastAcess"];
-    this.birthday = map["birthday"] == null ? null : map["birthday"];
-    this.version = map["version"] == null ? null : map["version"];
-    this.resignation = map["resignation"] == null ? null : map["resignation"];
-    this.uid = map["uid"] == null ? null : map["uid"];
-    this.master = map["master"] == null ? null : map["master"];
-    this.companies = map["companies"] == null ? null : map["companies"].map((e) => Companies.fromMap(e)).toList();
-
-  }
-
-  Map<String, dynamic> toMap(){
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phoneNumber': phoneNumber,
-      'ddd': ddd,
-      'password': password,
-      'lastAcess': lastAcess,
-      'birthday': birthday,
-      'version': version,
-      'resignation': resignation,
-      'uid': uid,
-      'master': master,
-      'companies': companies,
-
-    };
-  }
 }
 
-class Companies{
+class Company {
+  Company({
+    this.id,
+    this.number,
+    this.name,
+    this.fantasyName,
+    this.cnpj,
+    this.conntacts,
+  });
+
   int? id;
-  String? number;
+  int? number;
   String? name;
   String? fantasyName;
   String? cnpj;
+  dynamic conntacts;
 
-  Companies({this.id, this.number, this.name, this.fantasyName, this.cnpj});
+  factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
 
-  Companies copyWith({
-    int? id, String? number, String? name, String? fantasyName, String? cnpj
-  }) => Companies(
+  String toJson() => json.encode(toMap());
 
-        id: id ?? this.id,
-        number: number ?? this.number,
-        name: name ?? this.name,
-        fantasyName: fantasyName ?? this.fantasyName,
-        cnpj: cnpj ?? cnpj ?? this.cnpj,
+  factory Company.fromMap(Map<String, dynamic> json) => Company(
+    id: json["id"],
+    number: json["number"],
+    name: json["name"],
+    fantasyName: json["fantasyName"],
+    cnpj: json["cnpj"],
+    conntacts: json["conntacts"],
   );
 
-  Companies.fromMap(Map map){
-
-    this.id = map["id"] == null ? null : map["id"];
-    this.number = map["number"] == null ? null : map["number"];
-    this.name = map["name"] == null ? null : map["name"];
-    this.fantasyName = map["fantasyName"] == null ? null : map["fantasyName"];
-    this.cnpj = map["cnpj"] == null ? null : map["cnpj"];
-
-  }
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "number": number,
+    "name": name,
+    "fantasyName": fantasyName,
+    "cnpj": cnpj,
+    "conntacts": conntacts,
+  };
 }
