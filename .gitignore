@@ -21,3 +21,4 @@ doc/api/
 *.js.map
 .idea/libraries/Dart_SDK.xml
 .idea/libraries/Flutter_Plugins.xml
+.idea/libraries/Flutter_Plugins.xml

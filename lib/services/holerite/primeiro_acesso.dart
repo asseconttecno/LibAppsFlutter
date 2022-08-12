@@ -6,7 +6,7 @@ import '../http/http.dart';
 
 
 class PrimeiroAcessoHoleriteService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<PrimeiroAcessoHoleriteModel?> verificar({required String cnpj, required String registro, }) async {
     String _metodo = '/holerite/novo/verificar';
@@ -27,13 +27,14 @@ class PrimeiroAcessoHoleriteService {
         }
         if(result.containsKey('iscliente')){
           if(result['iscliente']){
-            throw 404;
+            throw "404";
           }else{
-            throw 205;
+            throw "205";
           }
         }
       }
-      throw HttpError.unexpected;
+      throw response.codigo.toString();
+
     } catch (e){
       debugPrint(e.toString());
       switch(e){
@@ -41,9 +42,9 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
-        case 205 :
+        case "205" :
           throw 'Empresa não cadastrada!';
         default:
           throw 'Erro inesperado, tente novamente!';
@@ -72,13 +73,14 @@ class PrimeiroAcessoHoleriteService {
         }
         if(result.containsKey('iscliente')){
           if(result['iscliente']){
-            throw 404;
+            throw "404";
           }else{
-            throw 205;
+            throw "205";
           }
         }
       }
-      throw HttpError.unexpected;
+      throw response.codigo.toString();
+
     } catch (e){
       debugPrint(e.toString());
       switch(e){
@@ -86,9 +88,9 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
-        case 205 :
+        case "205" :
           throw 'Empresa não cadastrada!';
         default:
           throw 'Erro inesperado, tente novamente!';
@@ -97,20 +99,25 @@ class PrimeiroAcessoHoleriteService {
   }
 
   Future<bool> cadastrar({required int id, required String email, required String senha,
-      required String cpf, String? cel,}) async {
+      required String cpf, required String? cel,}) async {
     String _metodo = '/holerite/novo/cadastro';
+    Map<String, dynamic> body = {
+      "Id": id,
+      "Email": email,
+      "Senha": senha,
+      "Cel": cel,
+      "Cpf": cpf.replaceAll(".", "").replaceAll("-", "")
+    };
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
-          body: {
-            "Id": id,
-            "Email": email,
-            "Senha": senha,
-            "Cel": cel,
-            "Cpf": cpf.replaceAll(".", "").replaceAll("-", "")
-          }
+          body: body
       );
-      return response.isSucess;
+      if(response.isSucess) {
+        return response.isSucess;
+      }
+
+      throw response.codigo.toString();
     } catch (e){
       debugPrint(e.toString());
       switch(e){
@@ -118,7 +125,7 @@ class PrimeiroAcessoHoleriteService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Funcionario não cadastrado, verifique os dados e tente novamente!';
         default:
           throw 'Erro inesperado, tente novamente!';

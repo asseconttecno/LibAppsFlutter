@@ -6,9 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:assecontservices/assecontservices.dart';
 
-import '../../controllers/primeiro_acesso/primeiro_acesso_manager.dart';
-
-
 
 class PrimeiroAcessoScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -180,7 +177,7 @@ class _PrimeiroAcessoScreenState extends State<PrimeiroAcessoScreen> {
   _clickLogin(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       carregar(context,);
-      await context.read<PrimeiroAcessoManager>().verificar(context,
+      await context.read<PrimeiroAcessoHoleriteManager>().verificar(context,
         registro: registro.text,
         cnpj: cnpj.text,
       ).then((bool? v) {

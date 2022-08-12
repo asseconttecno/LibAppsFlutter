@@ -130,7 +130,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            width: 108,
+                            width: 105,
                             padding: EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.blue[900],
@@ -144,7 +144,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           ),
                           SizedBox(height: 10,),
                           Container(
-                            width: 108,
+                            width: 105,
                             padding: EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.red[900],
@@ -158,7 +158,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           ),
                           SizedBox(height: 10,),
                           Container(
-                            width: 108,
+                            width: 105,
                             padding: EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.orange,

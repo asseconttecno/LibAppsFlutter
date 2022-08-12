@@ -12,7 +12,7 @@ import '../http/http.dart';
 
 
 class InformeService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<List<InformeRendimentosModel>> competencias(UsuarioHolerite? user) async {
     String _api = "/informeRendimentos/competencias";

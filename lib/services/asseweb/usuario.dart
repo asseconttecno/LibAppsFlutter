@@ -5,12 +5,11 @@ import '../../config.dart';
 import '../http/http.dart';
 
 class UserAssewebService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<UsuarioAsseweb> signInAuth({required String email, required String senha}) async {
     String _metodo = '/api/ExternalLogin/login';
     try{
-
       print(Config.conf.apiAsseweb! + _metodo);
 
       MyHttpResponse response = await _http.post(
@@ -22,11 +21,11 @@ class UserAssewebService {
       );
 
       if (response.isSucess) {
-        Map map = response.data;
+        Map<String, dynamic> map = response.data;
         final UsuarioAsseweb _user = UsuarioAsseweb.fromMap(map);
         return _user;
       }else{
-        throw 404;
+        throw response.codigo.toString();
       }
     } catch (e){
       debugPrint(e.toString());
@@ -35,7 +34,7 @@ class UserAssewebService {
           throw 'Erro inesperado, tente novamente!';
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
-        case 404 :
+        case "404" :
           throw 'Usuário ou senha inválidos!';
         default:
           throw 'Erro inesperado, tente novamente!';

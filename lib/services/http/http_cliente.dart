@@ -27,7 +27,7 @@ class HttpCli {
         headers: headers ?? <String, String>{
           'Content-Type': 'application/json',
         }
-      ).timeout(const Duration(seconds: 10), onTimeout : () {
+      ).timeout(const Duration(seconds: 15), onTimeout : () {
         debugPrint('get timeout');
         throw HttpError.timeout;
       }).catchError((error, stackTrace) {
@@ -83,7 +83,7 @@ class HttpCli {
         'Content-Type': 'application/json',
       },
       body: jsonEncode(body)
-    ).timeout(const Duration(seconds: 10), onTimeout : () {
+    ).timeout(const Duration(seconds: 15), onTimeout : () {
       debugPrint('post timeout');
       throw HttpError.timeout;
     }).catchError((error, stackTrace) {
@@ -106,6 +106,7 @@ class HttpCli {
             data: result
         );
       } else {
+        debugPrint(response.body);
         throw HttpError.statusCode;
       }
 
@@ -137,7 +138,7 @@ class HttpCli {
           'Content-Type': 'application/json',
         },
         body: jsonEncode(body)
-    ).timeout(const Duration(seconds: 10), onTimeout : () {
+    ).timeout(const Duration(seconds: 15), onTimeout : () {
       debugPrint('get timeout');
       throw HttpError.timeout;
     }).catchError((error, stackTrace) {

@@ -6,9 +6,6 @@ import 'package:assecontservices/assecontservices.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 
 
-import '../../controllers/primeiro_acesso/primeiro_acesso_manager.dart';
-
-
 class CadastroScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   CadastroScreen(this.scaffoldKey);
@@ -298,7 +295,7 @@ class _CadastroScreenScreenState extends State<CadastroScreen> {
   _clickLogin(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       carregar(context,);
-      await context.read<PrimeiroAcessoManager>().cadastrar(context,
+      await context.read<PrimeiroAcessoHoleriteManager>().cadastrar(context,
         email: email.text, cpf: cpf.text, senha: senha.text, cel: cel.text,
       ).then((bool? v) {
         if (v ?? false) {
