@@ -1,36 +1,78 @@
+import 'package:flutter/material.dart';
 import '../../config.dart';
 import '../http/http.dart';
+
 
 class SenhaAssewebService {
   HttpCli _http = HttpCli();
 
+  Future<String?> sendPass({String? email,}) async {
+    String _metodo = '/api/ExternalLogin/passwordrecover';
 
-  Future<bool> passwordrecover(String email,String senha) async {
-    String _api = "/api/ExternalLogin/passwordrecover";
-    final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
-        body: {
-          "email": email.trim().replaceAll(' ', ''),
-          "password": senha
-        }
-    );
+    try{
 
-    return response.isSucess;
+      MyHttpResponse response = await _http.post(
+          url: Config.conf.apiAsseweb! + _metodo,
+          decoder: false,
+          body: <String, dynamic>{
+            "Email": email,
+            "password": null
+          }
+      );
+      if(response.isSucess){
+        return 'Sua senha foi enviada para seu e-mail!';
+      }
+      throw response.codigo.toString();
+    } catch (e){
+      debugPrint(e.toString());
+      switch(e){
+        case HttpError.unexpected :
+          throw 'Erro inesperado, tente novamente!';
+        case HttpError.timeout :
+          throw 'Tempo limite de login excedido, verifique sua internet!';
+        case '404' :
+          throw 'Email não cadastrado!';
+        default:
+          throw 'Erro inesperado, tente novamente!';
+      }
+    }
   }
 
-  Future<bool> alteracaoPass(String token, String email,String senha) async {
-    String _api = "/api/ExternalLogin/changepassword";
-    final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: {
-          "email": email.trim().replaceAll(' ', ''),
-          "password": senha
-        }
-    );
-    return response.isSucess;
+  Future<bool?> alteracaoPass({required String email, required String senha, required String token}) async {
+    String _metodo = '/api/ExternalLogin/changepassword';
+    MyHttpResponse? response;
+
+    try{
+      response = await _http.post(
+          url: Config.conf.apiAsseweb! + _metodo,
+          decoder: false,
+          headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + token
+
+          },
+          body: <String, dynamic>{
+            "email": email,
+            "password": senha,
+
+          }
+      );
+      if(response.isSucess){
+        return true;
+      }
+      throw response.codigo.toString();
+    } catch (e){
+      debugPrint(e.toString());
+      switch(e){
+        case HttpError.unexpected :
+          throw 'Erro inesperado, tente novamente!';
+        case HttpError.timeout :
+          throw 'Tempo limite de login excedido, verifique sua internet!';
+        case '404' :
+          throw response!.data;
+        default :
+          throw 'Erro inesperado, tente novamente!';
+      }
+    }
   }
 }
