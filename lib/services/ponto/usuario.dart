@@ -40,16 +40,15 @@ class UserPontoService {
               throw "Login ou Senha Invalido";
             }
           }
-        }else{
+        }else {
           _user = await authOffiline(email.trim(), senha.trim());
-          if(_user != null){
+          if (_user != null) {
             return _user;
-          }else {
-            debugPrint(response.codigo.toString() + '  signInAuth');
-            throw "Login ou Senha Invalido";
           }
         }
-    } on Exception catch (e) {
+      debugPrint(response.codigo.toString() + '  signInAuth');
+      throw "Login ou Senha Invalido";
+    } catch (e) {
       _user = await authOffiline(email.trim(), senha.trim());
       if(_user != null){
         return _user;
@@ -99,18 +98,18 @@ class UserPontoService {
             debugPrint('signIn ' + dadosJson.toString());
             throw "Falaha ao carregar seu dados, entre em contato com suporte";
           }
-        }else{
-          debugPrint(response.codigo.toString());
-          debugPrint(response.data.toString());
-          throw "Login ou Senha Invalido";
         }
+        debugPrint(response.codigo.toString());
+        debugPrint(response.data.toString());
+        throw "Login ou Senha Invalido";
+
     }catch(e){
       debugPrint("Erro ${e.toString()}");
       throw e;
     }
   }
 
-  Future<Apontamento?> getPeriodo(int database) async {
+  Future<Apontamento> getPeriodo(int database) async {
     String _api = "/api/apontamento/GetPeriodo";
     try{
       final MyHttpResponse response = await _http.post(
@@ -132,6 +131,7 @@ class UserPontoService {
       return aponta;
     }catch(e){
       debugPrint("Erro ${e.toString()}");
+      throw e;
     }
   }
 
