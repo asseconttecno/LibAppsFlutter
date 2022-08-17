@@ -112,34 +112,40 @@ class CustomScaffold {
           actions(context),
         ],
       ),
-      body: Container(
-          constraints: const BoxConstraints.expand(),
-          //height: h,
-          child: Column(
-            children: [
-              Stack(
+      body: LayoutBuilder(
+        builder: (c, constraints) {
+          double h = MediaQuery.of(c).size.height;
+          return Container(
+              //constraints: constraints,
+              height: h,
+              child: Column(
                 children: [
-                  Container(
-                      height: height, width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: context.watch<Config>().darkTemas ?
-                          Theme.of(context).primaryColor : Config.corPribar,
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(45),
-                            bottomLeft: Radius.circular(45),
-                          )
+                  Stack(
+                    children: [
+                      Container(
+                          height: height,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: context.watch<Config>().darkTemas ?
+                              Theme.of(context).primaryColor : Config.corPribar,
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(45),
+                                bottomLeft: Radius.circular(45),
+                              )
+                          ),
+                          child: appbar
                       ),
-                      child: appbar
+                      if(expanAppbar != null)
+                        expanAppbar
+                    ],
                   ),
-                  if(expanAppbar != null)
-                    expanAppbar
+                  Expanded(
+                      child: body
+                  ),
                 ],
-              ),
-              Expanded(
-                  child: body
-              ),
-            ],
-          )
+              )
+          );
+        }
       ),
       floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
       floatingActionButton: buttom

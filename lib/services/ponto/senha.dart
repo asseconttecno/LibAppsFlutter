@@ -4,7 +4,7 @@ import '../../config.dart';
 import '../http/http.dart';
 
 class SenhaPontoService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
 
   Future<bool> sendPass(String email) async {

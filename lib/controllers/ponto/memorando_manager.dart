@@ -94,7 +94,7 @@ class MemorandosManager extends ChangeNotifier {
       memorandos = await _services.getMemorandos(usuario, inicio, fim);
       notifyListeners();
     }catch(e){
-      debugPrint("Erro Try ${e.toString()}");
+      debugPrint("MemorandosManager getMemorandos Erro Try ${e.toString()}");
     }
   }
 }

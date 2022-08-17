@@ -32,6 +32,7 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   UsuarioPonto? _usuario;
+
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
     _usuario = valor;
@@ -61,7 +62,7 @@ class UserPontoManager extends ChangeNotifier {
         offline: offline, local: local, aponta: aponta);
   }
 
-  Future<bool> auth(BuildContext context , String email, String senha, bool bio) async {
+  Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
     bool result = false;
     try {
       if(bio){

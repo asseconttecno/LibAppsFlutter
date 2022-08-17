@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/model.dart';
 import '../../config.dart';
@@ -21,19 +22,19 @@ class HomePontoService {
               "Database": user.database.toString()
             },
             "Periodo": {
-              "DataInicial": user.aponta?.datainicio,
-              "DataFinal": user.aponta?.datatermino,
+              "DataInicial": DateFormat('yyyy-MM-dd').format(user.aponta!.datainicio),
+              "DataFinal": DateFormat('yyyy-MM-dd').format(user.aponta!.datatermino)
             }
           }
       );
 
       if(response.isSucess){
-        var dadosJson = response.data;
+        Map dadosJson = response.data;
         HomePontoModel homeModel = HomePontoModel.fromMap(dadosJson);
         return homeModel;
       }
     } catch(e){
-      debugPrint("Home erro ${e.toString()}");
+      debugPrint("HomePontoService getHome erro ${e.toString()}");
     }
   }
 }

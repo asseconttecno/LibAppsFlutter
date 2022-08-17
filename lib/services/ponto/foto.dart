@@ -37,7 +37,7 @@ class CameraPontoService {
         }
       }
     } catch(e){
-      debugPrint("Home photo ${e.toString()}");
+      debugPrint("CameraPontoService getPhoto erro ${e.toString()}");
     }
   }
 
@@ -55,7 +55,7 @@ class CameraPontoService {
           "Array": img
         }
     );
-    if(response.isSucess && response.data.toString() == '\"Ok\"'){
+    if(response.isSucess && response.data.toString().contains("Ok")){
       //UserManager().usuario?.faceid = faceId;
       return true;
     }

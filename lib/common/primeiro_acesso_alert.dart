@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-PrimeiroAcessoAlert(BuildContext context) {
+PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -14,7 +14,8 @@ PrimeiroAcessoAlert(BuildContext context) {
               child: Column(
                 mainAxisSize: MainAxisSize.min ,
                 children: [
-                  Row(
+                  SizedBox(height: 10,),
+                  isCnpj ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -31,11 +32,15 @@ PrimeiroAcessoAlert(BuildContext context) {
                         ),
                       ),
                     ],
+                  ) : Flexible(
+                      child: Text('PRIMEIRO ACESSO',
+                      style: TextStyle( fontWeight: FontWeight.w600,fontSize: 18),
+                    ),
                   ),
                   SizedBox(height: 10,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal:10),
-                    child: Text('Entre em contato com nosso comercial para acesso!',
+                    child: Text('Entre em contato com nosso comercial!',
                       style: TextStyle(fontSize: 14),
                       textAlign: TextAlign.center,
                     ),

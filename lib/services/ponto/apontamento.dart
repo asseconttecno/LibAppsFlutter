@@ -8,9 +8,9 @@ import '../http/http.dart';
 
 
 class ApontamentoService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
-  Future<List<Apontamento>?> getPeriodo(UsuarioPonto? user) async {
+  Future<List<Apontamento>> getPeriodo(UsuarioPonto? user) async {
     String _api = "/api/apontamento/GetOutrosMeses";
 
     final MyHttpResponse response = await _http.post(
@@ -25,15 +25,18 @@ class ApontamentoService {
 
     try{
       if(response.isSucess){
-        var dadosJson = response.data;
-        if(dadosJson["Apontamentos"].length > 0){
-          List<Apontamento> listaTemporaria = [];
-          listaTemporaria = dadosJson["Apontamentos"].map((e) => Apontamento.fromMap(e)).toList();
-          return listaTemporaria;
+        Map dadosJson = response.data;
+        if(dadosJson.containsKey("Apontamentos") && dadosJson["Apontamentos"].length > 0){
+          List temp = dadosJson["Apontamentos"];
+          if(temp.isNotEmpty){
+            List<Apontamento> listaTemporaria = temp.map((e) => Apontamento.fromMap(e)).toList();
+            return listaTemporaria;
+          }
         }
       }
     }catch(e){
-      debugPrint("aponta erro ${e.toString()}");
+      debugPrint("ApontamentoService getPeriodo erro ${e.toString()}");
     }
+    return [];
   }
 }
