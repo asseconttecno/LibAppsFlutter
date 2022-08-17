@@ -80,11 +80,15 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
-    usuario = await _service.signInAuth(email: email, senha: senha);
-    if(usuario?.master ?? false){
-      context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+    try{
+      usuario = await _service.signInAuth(email: email, senha: senha);
+      if(usuario?.master ?? false){
+        context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+      }
+      return true;
+    } catch (e){
+      throw e;
     }
-    return true;
   }
 
   init() async {
