@@ -62,21 +62,22 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   Future<bool> auth(BuildContext context , String email, String senha, bool bio) async {
+    bool result = false;
     try {
       if(bio){
         bool result = await context.read<BiometriaManager>().verificarbiometria();
         if(result){
-          signInAuth(context, email: email,  senha: senha);
+          result = await signInAuth(context, email: email,  senha: senha);
         }else{
           throw 'Falha na autenticação por biometria, utilize sua senha!';
         }
       }else{
-        signInAuth(context, email: email,  senha: senha);
+        result = await signInAuth(context, email: email,  senha: senha);
       }
     } catch(e) {
       throw e;
     }
-    return true;
+    return result;
   }
 
   Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
