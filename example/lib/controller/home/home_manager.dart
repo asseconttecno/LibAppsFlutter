@@ -22,18 +22,22 @@ class HomeManager extends ChangeNotifier {
     try {
       BuildContext? context = Config.scaffoldKey.currentContext;
       UsuarioPonto? user = context?.read<UserPontoManager>().usuario;
+      print('getHome');print(context);
       if(context != null && user != null){
         HomePontoModel? _home = await _service.getHome(user);
         homeModel = _home;
-        await context.read<UserPontoManager>().updateUser(
-            nome: homeModel!.funcionario?.nome,
-            cargo: homeModel!.funcionario?.cargo,
-            perm: homeModel!.funcionario?.permitirMarcarPonto,
-            offline: homeModel!.funcionario?.permitirMarcarPontoOffline,
-            local: homeModel!.funcionario?.capturarGps
-        );
-        _pontoService.salvarNovoUsuario( user.toMap() );
-        notifyListeners();
+        if(_home != null){
+          print(_home.funcionario?.nome);
+          await context.read<UserPontoManager>().updateUser(
+              nome: _home.funcionario?.nome,
+              cargo: _home.funcionario?.cargo,
+              perm: _home.funcionario?.permitirMarcarPonto,
+              offline: _home.funcionario?.permitirMarcarPontoOffline,
+              local: _home.funcionario?.capturarGps
+          );
+          _pontoService.salvarNovoUsuario( user.toMap() );
+          notifyListeners();
+        }
       }
     } on Exception catch (e) {
       debugPrint('try erro getHome ' + e.toString());

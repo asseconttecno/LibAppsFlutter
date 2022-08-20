@@ -18,6 +18,7 @@ class _MarcacoesState extends State<MarcacoesPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
   List<DecorationItem> listdecoration = [];
+  final CalendarWeekController _controller = CalendarWeekController();
 
   Marcacao? _marcacao;
   DateTime _data = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -85,49 +86,48 @@ class _MarcacoesState extends State<MarcacoesPage> {
           //}
 
             return CustomScaffold.calendario(
-                key: _scaffoldKey,
-                context: context,
-                appTitle:'Marcações',
-                funcData: (DateTime datetime) {
-                  setState(() {
-                    _data = datetime;
-                    myFuture = getFuture();
-                  });
-                },
-                listdecoration: listdecoration,
-              body: Expanded(
-                child: Center(
-                    child: !connectionStatus.hasConnection ? Text('Verifique sua Conexão com Internet') :
-                    FutureBuilder<Marcacao?>(
-                      future: myFuture,
-                      builder: (context, snapshot){
-                        Widget resultado;
-                        switch( snapshot.connectionState ){
-                          case ConnectionState.none :
-                          case ConnectionState.waiting :
-                            resultado = CircularProgressIndicator();
-                            break;
-                          case ConnectionState.active :
-                          case ConnectionState.done :
-                            if( snapshot.hasError ){
-                              resultado = GestureDetector(
-                                  child: Icon(Icons.autorenew_outlined,
-                                    color: Config.corPri, size: 70,),
-                                  onTap: (){
-                                    setState(() {
-                                      myFuture = getFuture();
-                                    });
-                                  }
-                              );
-                            }else {
-                              resultado = DetalhesMarcacao(snapshot.data, _data);
-                            }
-                            break;
-                        }
-                        return resultado;
-                      },
-                    )
-                ),
+              key: _scaffoldKey,
+              context: context,
+              appTitle:'Marcações',
+              funcData: (DateTime datetime) {
+                setState(() {
+                  _data = datetime;
+                  myFuture = getFuture();
+                });
+              },
+              listdecoration: listdecoration,
+              controller: _controller,
+              body: Center(
+                  child: !connectionStatus.hasConnection ? Text('Verifique sua Conexão com Internet') :
+                  FutureBuilder<Marcacao?>(
+                    future: myFuture,
+                    builder: (context, snapshot){
+                      Widget resultado;
+                      switch( snapshot.connectionState ){
+                        case ConnectionState.none :
+                        case ConnectionState.waiting :
+                          resultado = CircularProgressIndicator();
+                          break;
+                        case ConnectionState.active :
+                        case ConnectionState.done :
+                          if( snapshot.hasError ){
+                            resultado = GestureDetector(
+                                child: Icon(Icons.autorenew_outlined,
+                                  color: Config.corPri, size: 70,),
+                                onTap: (){
+                                  setState(() {
+                                    myFuture = getFuture();
+                                  });
+                                }
+                            );
+                          }else {
+                            resultado = DetalhesMarcacao(snapshot.data, _data);
+                          }
+                          break;
+                      }
+                      return resultado;
+                    },
+                  )
               )
           );
         }

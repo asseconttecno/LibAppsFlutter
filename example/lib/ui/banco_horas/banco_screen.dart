@@ -13,6 +13,7 @@ class BancoHorasScreen extends StatefulWidget {
 class _BancoHorasScreenState extends State<BancoHorasScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<DecorationItem> listdecoration = [];
+  final CalendarWeekController _controller = CalendarWeekController();
 
   BancoHoras? _bancoHoras;
   DateTime _data = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -96,40 +97,39 @@ class _BancoHorasScreenState extends State<BancoHorasScreen> {
                 });
               },
               listdecoration: listdecoration,
-              body: Expanded(
-                child: Center(
-                    child:  !connectionStatus.hasConnection ? const Text('Verifique sua Conexão com Internet') :
-                    FutureBuilder<BancoHoras?>(
-                      future: myFuture,
-                      builder: (context, snapshot){
-                        Widget resultado;
-                        String? _saldo = saldoAnteror();
-                        switch( snapshot.connectionState ){
-                          case ConnectionState.none :
-                          case ConnectionState.waiting :
-                            resultado = const Center(child: CircularProgressIndicator());
-                            break;
-                          case ConnectionState.active :
-                          case ConnectionState.done :
-                            if( snapshot.hasError ){
-                              resultado = GestureDetector(
-                                  child: Icon(Icons.autorenew_outlined,
-                                    color: Config.corPri, size: 70,),
-                                  onTap: (){
-                                    setState(() {
-                                      myFuture = dadosdia();
-                                    });
-                                  }
-                              );
-                            }else {
-                              resultado = DetalhesBanco(snapshot.data, _data, _saldo);
-                            }
-                            break;
-                        }
-                        return resultado;
-                      },
-                    )
-                ),
+              controller: _controller,
+              body: Center(
+                  child:  !connectionStatus.hasConnection ? const Text('Verifique sua Conexão com Internet') :
+                  FutureBuilder<BancoHoras?>(
+                    future: myFuture,
+                    builder: (context, snapshot){
+                      Widget resultado;
+                      String? _saldo = saldoAnteror();
+                      switch( snapshot.connectionState ){
+                        case ConnectionState.none :
+                        case ConnectionState.waiting :
+                          resultado = const Center(child: CircularProgressIndicator());
+                          break;
+                        case ConnectionState.active :
+                        case ConnectionState.done :
+                          if( snapshot.hasError ){
+                            resultado = GestureDetector(
+                                child: Icon(Icons.autorenew_outlined,
+                                  color: Config.corPri, size: 70,),
+                                onTap: (){
+                                  setState(() {
+                                    myFuture = dadosdia();
+                                  });
+                                }
+                            );
+                          }else {
+                            resultado = DetalhesBanco(snapshot.data, _data, _saldo);
+                          }
+                          break;
+                      }
+                      return resultado;
+                    },
+                  )
               ), 
           );
         }

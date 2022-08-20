@@ -74,7 +74,7 @@ class _EspelhoScreenState extends State<EspelhoScreen> {
                   ),
                 ],
               ),
-              body: Expanded(
+              body: Container(
                   child: !connectionStatus.hasConnection ?
                   const Center(child: Text('Verifique sua Conexão com Internet')) :
                   espelho.apontamento == null ?

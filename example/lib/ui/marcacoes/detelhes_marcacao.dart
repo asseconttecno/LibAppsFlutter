@@ -39,6 +39,7 @@ class _DetalhesMarcacaoState extends State<DetalhesMarcacao> {
             decoration: (UserPontoManager().usuario?.master ?? false) ? BoxDecoration(
                 border: Border(bottom: BorderSide(width: 80, color: Theme.of(context).scaffoldBackgroundColor))
             ) : null,
+            height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(crossAxisAlignment: CrossAxisAlignment.start,

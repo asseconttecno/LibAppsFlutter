@@ -45,10 +45,10 @@ class CustomScaffold {
   }
 
   static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
+    required CalendarWeekController controller,
     required List<DecorationItem> listdecoration, required String appTitle, Widget? buttom,
     required BuildContext context, required Widget body, DateTime? dataMin, DateTime? dataMax}){
 
-    final CalendarWeekController _controller = CalendarWeekController();
 
     return custom(
       key: key,
@@ -57,7 +57,7 @@ class CustomScaffold {
       height: 110,
       buttom: buttom,
       appbar: CalendarWeek(
-          controller: _controller,
+          controller: controller,
           height: 50,
           showMonth: true,
           backgroundColor: Colors.transparent,
@@ -112,40 +112,35 @@ class CustomScaffold {
           actions(context),
         ],
       ),
-      body: LayoutBuilder(
-        builder: (c, constraints) {
-          double h = MediaQuery.of(c).size.height;
-          return Container(
-              //constraints: constraints,
-              height: h,
-              child: Column(
+      body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                          height: height,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: context.watch<Config>().darkTemas ?
-                              Theme.of(context).primaryColor : Config.corPribar,
-                              borderRadius: const BorderRadius.only(
-                                bottomRight: Radius.circular(45),
-                                bottomLeft: Radius.circular(45),
-                              )
-                          ),
-                          child: appbar
+                  Container(
+                      height: height,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: context.watch<Config>().darkTemas ?
+                          Theme.of(context).primaryColor : Config.corPribar,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(45),
+                            bottomLeft: Radius.circular(45),
+                          )
                       ),
-                      if(expanAppbar != null)
-                        expanAppbar
-                    ],
+                      child: appbar
                   ),
-                  Expanded(
-                      child: body
-                  ),
+                  if(expanAppbar != null)
+                    expanAppbar
                 ],
-              )
-          );
-        }
+              ),
+              Expanded(
+                  child: body
+              ),
+            ],
+          )
       ),
       floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
       floatingActionButton: buttom

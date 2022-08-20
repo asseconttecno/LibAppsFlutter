@@ -18,6 +18,7 @@ class DetalhesBanco extends StatefulWidget {
 
 class _DetalhesMarcacaoState extends State<DetalhesBanco> {
   final ScrollController scrollController = ScrollController();
+
   Widget card(String menu, String valor){
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 35),
@@ -39,6 +40,7 @@ class _DetalhesMarcacaoState extends State<DetalhesBanco> {
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(width: 80, color: Theme.of(context).scaffoldBackgroundColor))
             ),
+            //height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(crossAxisAlignment: CrossAxisAlignment.start,

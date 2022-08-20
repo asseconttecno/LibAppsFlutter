@@ -61,8 +61,9 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   updateUser({String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta}){
-    usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm,
-        offline: offline, local: local, aponta: aponta);
+    usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm, offline: offline, local: local, aponta: aponta);
+    print(nome);
+    print(usuario?.nome);
   }
 
   Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
