@@ -36,6 +36,8 @@ class UserPontoManager extends ChangeNotifier {
 
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
+    print(valor);
+    print(valor?.nome);
     _usuario = valor;
     notifyListeners();
   }
