@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:assecontservices/assecontservices.dart';
 
 
-import 'route_generator.dart';
-
-//42585327892 1983
+import '../route_generator.dart';
+import 'controller/home/home_manager.dart';
+import 'controller/hora/gethora.dart';
 
 
 void main() {
@@ -19,15 +19,20 @@ void main() {
           apiAsseponto: 'https://www.asseponto.com.br/asseponto.api.v5',
           apiEspelho: 'https://www.asseponto.com.br/ApiEspelho',
 
-          androidAppId: 'com.assecont.holerite',
-          iosAppId: 'com.assecont.holerite',
-          iosAppIdNum: '1601264668',
-          nomeApp: VersaoApp.HoleriteApp
+          androidAppId: 'com.assecont.AssepontoMobile',
+          iosAppId: 'com.assecont.assepontoweb',
+          iosAppIdNum: '1490469231',
+          nomeApp: VersaoApp.PontoApp
       ),
-      titulo: 'Assecont Holerite',
+      titulo: 'Asseponto App',
       rotas: RouteGenerator.generateRoute,
-      devicePreview: false,
       providers: [
+        ChangeNotifierProvider(
+          create: (_)=> GetHora(),
+        ),
+        ChangeNotifierProvider(
+          create: (_)=> HomeManager(),
+        ),
       ]
   );
 }

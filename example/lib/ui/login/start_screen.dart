@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:assecontservices/assecontservices.dart';
 
-import 'cadastro_screen.dart';
-import 'esqueceu_email_screen.dart';
 import 'esqueci_senha_screen.dart';
 import 'login_screen.dart';
-import 'primeiro_acesso_screen.dart';
 
 class StartScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,7 +43,7 @@ class StartScreen extends StatelessWidget {
                               padding: EdgeInsets.only(
                                 left: height * 0.050, right: height * 0.050, //top: height * 0.050
                               ),
-                              child: Image.asset("assets/imagens/HOLERITE_ELETRONICO_2.png",
+                              child: Image.asset("assets/imagens/logo-assepontoweb.png",
                                 fit: BoxFit.fitWidth,
                               )
                           ),
@@ -62,10 +59,7 @@ class StartScreen extends StatelessWidget {
                               physics:  const NeverScrollableScrollPhysics(),
                               children: <Widget>[
                                 LoginScreen(_scaffoldKey),
-                                EsqueciSenhaScreen(_scaffoldKey),
-                                EsqueceuEmailScreen(_scaffoldKey),
-                                PrimeiroAcessoScreen(_scaffoldKey),
-                                CadastroScreen(_scaffoldKey)
+                                EsqueciSenhaScreen(_scaffoldKey)
                             ]),
                           ),
                         ),

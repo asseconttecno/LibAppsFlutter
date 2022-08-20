@@ -10,6 +10,7 @@ import '../controllers.dart';
 
 class UserPontoManager extends ChangeNotifier {
   final UserPontoService _service = UserPontoService();
+  final BiometriaServices _serviceBio = BiometriaServices();
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
   factory UserPontoManager() {
@@ -66,31 +67,26 @@ class UserPontoManager extends ChangeNotifier {
     bool result = false;
     try {
       if(bio){
-        bool result = await context.read<BiometriaManager>().verificarbiometria();
-        if(result){
+        bool _resultBio = await _serviceBio.authbiometria();
+        if(_resultBio){
           result = await signInAuth(context, email: email,  senha: senha);
-        }else{
-          throw 'Falha na autenticação por biometria, utilize sua senha!';
         }
       }else{
         result = await signInAuth(context, email: email,  senha: senha);
       }
+      return result;
     } catch(e) {
-      throw e;
+      debugPrint(e.toString());
+      CustomSnackbar.context(context, e.toString(), Colors.black87);
     }
-    return result;
   }
 
   Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
-    try{
-      usuario = await _service.signInAuth(email: email, senha: senha);
-      if(usuario?.master ?? false){
-        context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
-      }
-      return true;
-    } catch (e){
-      throw e;
+    usuario = await _service.signInAuth(email: email, senha: senha);
+    if(usuario?.master ?? false){
+      context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
     }
+    return true;
   }
 
   init() async {
