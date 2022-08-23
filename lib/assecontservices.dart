@@ -111,6 +111,11 @@ class Assecontservices {
           lazy: true,
           create: (_)=> HistoricoManager(),
         ),
+      if(Config.conf.nomeApp == VersaoApp.PontoApp)
+        ChangeNotifierProvider(
+          lazy: true,
+          create: (_)=> HomePontoManager(),
+        ),
       ///-------------------------///
       if(ponto)
         ChangeNotifierProvider(
