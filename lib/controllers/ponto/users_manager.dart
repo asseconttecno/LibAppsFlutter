@@ -10,6 +10,7 @@ import '../controllers.dart';
 
 class UserPontoManager extends ChangeNotifier {
   final UserPontoService _service = UserPontoService();
+  final BiometriaServices _serviceBio = BiometriaServices();
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
   factory UserPontoManager() {
@@ -32,8 +33,11 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   UsuarioPonto? _usuario;
+
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
+    print(valor);
+    print(valor?.nome);
     _usuario = valor;
     notifyListeners();
   }
@@ -57,22 +61,27 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   updateUser({String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta}){
-    usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm,
-        offline: offline, local: local, aponta: aponta);
+    usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm, offline: offline, local: local, aponta: aponta);
+    print(nome);
+    print(usuario?.nome);
   }
 
-  Future<bool> auth(BuildContext context , String email, String senha, bool bio) async {
-    if(bio){
-      bool result = await context.read<BiometriaManager>().verificarbiometria();
-      if(result){
-        signInAuth(context, email: email,  senha: senha);
+  Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
+    bool result = false;
+    try {
+      if(bio){
+        bool _resultBio = await _serviceBio.authbiometria();
+        if(_resultBio){
+          result = await signInAuth(context, email: email,  senha: senha);
+        }
       }else{
-        throw 'Falha na autenticação por biometria, utilize sua senha!';
+        result = await signInAuth(context, email: email,  senha: senha);
       }
-    }else{
-      signInAuth(context, email: email,  senha: senha);
+      return result;
+    } catch(e) {
+      debugPrint(e.toString());
+      CustomSnackbar.context(context, e.toString(), Colors.black87);
     }
-    return true;
   }
 
   Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {

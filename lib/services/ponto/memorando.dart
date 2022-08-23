@@ -9,7 +9,7 @@ import '../../config.dart';
 import '../http/http.dart';
 
 class MemorandosServices {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<bool> postMemorando(UsuarioPonto usuario, DateTime data, String texto,
       int tipo ,{File? img, List<String>? marcacao}) async {
@@ -58,7 +58,7 @@ class MemorandosServices {
           return dadosJson.containsKey("IsSuccess");
         }
       }catch(e){
-        debugPrint("Erro Try ${e.toString()}");
+        debugPrint("MemorandosServices postMemorando Erro Try ${e.toString()}");
       }
     }
     return false;
@@ -75,23 +75,27 @@ class MemorandosServices {
               "Database": usuario?.database.toString()
             },
             "Periodo": {
-              "DataInicial": "${inicio}",
-              "DataFinal": "${fim}"
+              "DataInicial": DateFormat('yyyy-MM-dd').format(inicio),
+              "DataFinal": DateFormat('yyyy-MM-dd').format(fim)
             }
           }
       );
       if(response.isSucess){
         Map dadosJson = response.data ;
         if(dadosJson.containsKey("IsSuccess")){
-          List<Memorandos> listaTemporaria;
-          listaTemporaria = dadosJson["Result"]["Memorandos"].map((e) => Memorandos.fromMap(e)).toList();
-          return listaTemporaria;
+          print(dadosJson);
+          List temp = dadosJson["Result"]["Memorandos"];
+          if(temp.isNotEmpty){
+            List<Memorandos> listaTemporaria;
+            listaTemporaria = temp.map((e) => Memorandos.fromMap(e)).toList();
+            return listaTemporaria;
+          }
         }
       }else{
         debugPrint(response.codigo.toString());
       }
     }catch(e){
-      debugPrint("Erro Try ${e.toString()}");
+      debugPrint("MemorandosServices getMemorandos Erro Try ${e.toString()}");
     }
     return [];
   }

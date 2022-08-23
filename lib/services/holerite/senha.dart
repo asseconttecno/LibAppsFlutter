@@ -45,7 +45,7 @@ class SenhaHoleriteService {
     MyHttpResponse? response;
     try{
       response = await _http.post(
-          url: Config.conf.apiHoleriteEmail! + _metodo, decoder: false,
+          url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
             "id": id,
             "senha": senha,

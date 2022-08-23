@@ -98,10 +98,12 @@ class Gps extends ChangeNotifier {
   static Future<String?> getEndereco(double? latitude, double? longitude) async {
     if(latitude == null || longitude == null) return null;
     List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(latitude, longitude, localeIdentifier: 'pt_BR');
-    geo.Placemark place = placemarks.first;
+    if(placemarks.isNotEmpty){
+      geo.Placemark place = placemarks.first;
 
-    String endereco = '${place.street}, ${place.subThoroughfare} - ${place.subLocality}, ${place.subAdministrativeArea} - ${place.country}';
-    print(endereco);
-    return endereco;
+      String endereco = '${place.street}, ${place.subThoroughfare} - ${place.subLocality}, ${place.subAdministrativeArea} - ${place.country}';
+      print(endereco);
+      return endereco;
+    }
   }
 }

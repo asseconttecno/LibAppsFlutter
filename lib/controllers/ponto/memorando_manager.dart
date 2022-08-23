@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -77,15 +78,9 @@ class MemorandosManager extends ChangeNotifier {
     if(result){
       await Future.delayed(Duration(milliseconds: 100));
       memorandosUpdate();
-      CustomAlert.sucess(
-        context: context,
-        mensage: 'Solicitação realizada!',
-      );
+      CustomSnackbar.context(context, 'Solicitação realizada!', Colors.green);
     } else {
-      CustomAlert.erro(
-        context: context,
-        mensage: 'Não foi possivel realizar a solicitação!',
-      );
+      CustomSnackbar.context(context, 'Não foi possivel realizar a solicitação!', Colors.red);
     }
   }
 
@@ -94,7 +89,7 @@ class MemorandosManager extends ChangeNotifier {
       memorandos = await _services.getMemorandos(usuario, inicio, fim);
       notifyListeners();
     }catch(e){
-      debugPrint("Erro Try ${e.toString()}");
+      debugPrint("MemorandosManager getMemorandos Erro Try ${e.toString()}");
     }
   }
 }

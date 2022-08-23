@@ -97,9 +97,17 @@ class DBPonto{
       }catch(e){
         debugPrint(e.toString());
       }
-      String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR, cargo VARCHAR;";
+      String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR;";
       try{
         db.execute(sql_update2).onError((error, stackTrace) {
+          print(error);
+        });
+      }catch(e){
+        debugPrint(e.toString());
+      }
+      String sql_update3 = "ALTER TABLE historico ADD COLUMN cargo VARCHAR;";
+      try{
+        db.execute(sql_update3).onError((error, stackTrace) {
           print(error);
         });
       }catch(e){

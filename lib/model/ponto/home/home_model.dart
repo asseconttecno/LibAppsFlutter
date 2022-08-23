@@ -11,7 +11,8 @@ class HomePontoModel{
 
   HomePontoModel.fromMap(Map map){
     funcionario = HomeFuncionario.fromMap(map['Funcionario']);
-    resultadoItemList = map['ResultadoItemList'].map((e) => ResultadoItemList.fromMap(e)).toList();
+    List items = map['ResultadoItemList'];
+    resultadoItemList = items.map((e) => ResultadoItemList.fromMap(e)).toList();
     ultimoResgistro = map['UltimaMarcacao'];
   }
 }

@@ -59,26 +59,28 @@ class Assecontservices {
         lazy: false,
         create: (_)=> Config(),
       ),
-      if(Config.conf.nomeApp != VersaoApp.AssewebApp)
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_)=> HoleriteManager(),
-        ),
       if(Config.conf.nomeApp != VersaoApp.PontoTablet)
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> BiometriaManager(),
         ),
+      if(Config.conf.nomeApp != VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: true,
+          create: (_)=> HoleriteManager(),
+        ),
+      if(Config.conf.nomeApp != VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: false,
+          create: (_)=> UserHoleriteManager(),
+        ),
+
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> InformeManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-        ChangeNotifierProvider(
-          lazy: false,
-          create: (_)=> UserHoleriteManager(),
-        ),
+
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
           lazy: true,
@@ -108,6 +110,11 @@ class Assecontservices {
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> HistoricoManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.PontoApp)
+        ChangeNotifierProvider(
+          lazy: true,
+          create: (_)=> HomePontoManager(),
         ),
       ///-------------------------///
       if(ponto)

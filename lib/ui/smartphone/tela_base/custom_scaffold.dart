@@ -45,10 +45,10 @@ class CustomScaffold {
   }
 
   static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
+    required CalendarWeekController controller,
     required List<DecorationItem> listdecoration, required String appTitle, Widget? buttom,
     required BuildContext context, required Widget body, DateTime? dataMin, DateTime? dataMax}){
 
-    final CalendarWeekController _controller = CalendarWeekController();
 
     return custom(
       key: key,
@@ -57,7 +57,7 @@ class CustomScaffold {
       height: 110,
       buttom: buttom,
       appbar: CalendarWeek(
-          controller: _controller,
+          controller: controller,
           height: 50,
           showMonth: true,
           backgroundColor: Colors.transparent,
@@ -112,15 +112,16 @@ class CustomScaffold {
           actions(context),
         ],
       ),
-      body: Container(
-          constraints: const BoxConstraints.expand(),
-          //height: h,
+      body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
           child: Column(
             children: [
               Stack(
                 children: [
                   Container(
-                      height: height, width: MediaQuery.of(context).size.width,
+                      height: height,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: context.watch<Config>().darkTemas ?
                           Theme.of(context).primaryColor : Config.corPribar,

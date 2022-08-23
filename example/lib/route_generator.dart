@@ -1,17 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:assecontservices/assecontservices.dart';
 
-import 'ui/home/home_screen.dart';
-import 'ui/informe/informe_screen.dart';
-import 'ui/login/start_screen.dart';
+import '../ui/espelho/espelho_screen.dart';
+import '../ui/home/home.dart';
+import '../ui/login/start_screen.dart';
+import '../ui/registro/screen_registro.dart';
+import '../ui/banco_horas/banco_screen.dart';
+import '../ui/marcacoes/Marcacoes.dart';
+import '../ui/solicitacoes/solicitacoes_screen.dart';
 
 
 class RouteGenerator {
-  static Route<dynamic> generateRoute(RouteSettings Config){
-      switch (Config.name) {
+  static Route<dynamic> generateRoute(RouteSettings settings){
+
+      switch (settings.name) {
         case '/':
           return MaterialPageRoute(
               builder: (_) => IntroScreen()
@@ -20,17 +24,33 @@ class RouteGenerator {
           return MaterialPageRoute(
               builder: (_) => StartScreen()
           );
-        case '/home':
-          return MaterialPageRoute(
-              builder: (_) => HomeScreen()
-          );
         case '/holerites':
           return MaterialPageRoute(
               builder: (_) => HoleriteScreen()
           );
-        case '/infomes':
+        case '/espelho':
           return MaterialPageRoute(
-              builder: (_) => InformeRendimentoScreen()
+              builder: (_) => EspelhoScreen()
+          );
+        case '/registro':
+          return MaterialPageRoute(
+              builder: (_) => RegistroScreen()
+          );
+        case '/home':
+          return MaterialPageRoute(
+              builder: (_) => Home()
+          );
+        case '/banco':
+          return MaterialPageRoute(
+              builder: (_) => BancoHorasScreen()
+          );
+        case '/marcacoes':
+          return MaterialPageRoute(
+              builder: (_) => MarcacoesPage(filtro: settings.arguments as int?,)
+          );
+        case '/solicitacoes':
+          return MaterialPageRoute(
+              builder: (_) => Solicitacoes()
           );
         case '/configuracoes':
           return MaterialPageRoute(

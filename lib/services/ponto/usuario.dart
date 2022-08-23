@@ -25,6 +25,7 @@ class UserPontoService {
 
         if(response.isSucess){
           Map dadosJson = response.data;
+
           if(dadosJson.containsKey('Status') && dadosJson['Status'] == 0){
             _user = await signIn(email: email, senha: senha);
             return _user;
@@ -40,16 +41,15 @@ class UserPontoService {
               throw "Login ou Senha Invalido";
             }
           }
-        }else{
+        }else {
           _user = await authOffiline(email.trim(), senha.trim());
-          if(_user != null){
+          if (_user != null) {
             return _user;
-          }else {
-            debugPrint(response.codigo.toString() + '  signInAuth');
-            throw "Login ou Senha Invalido";
           }
         }
-    } on Exception catch (e) {
+      debugPrint(response.codigo.toString() + '  signInAuth');
+      throw "Login ou Senha Invalido";
+    } catch (e) {
       _user = await authOffiline(email.trim(), senha.trim());
       if(_user != null){
         return _user;
@@ -87,31 +87,31 @@ class UserPontoService {
 
         if(response.isSucess){
           Map dadosJson = response.data;
+          print(dadosJson);
           if(dadosJson.containsKey('UserId') && dadosJson['UserId'] != null && dadosJson['UserId'] != '' ){
-            Apontamento? aponta = await getPeriodo(dadosJson['Database']);
-            if(aponta != null){
-              UsuarioPonto user = UsuarioPonto.fromMap(dadosJson, false, aponta: aponta);
-              return user;
-            }else {
-              throw "Falaha ao carregar apontamento, entre em contato com suporte";
-            }
+            Apontamento aponta = await getPeriodo(dadosJson['Database']);
+            UsuarioPonto user = UsuarioPonto.fromMap(dadosJson, false, aponta: aponta);
+            return user;
           }else{
             debugPrint('signIn ' + dadosJson.toString());
             throw "Falaha ao carregar seu dados, entre em contato com suporte";
           }
-        }else{
-          debugPrint(response.codigo.toString());
-          debugPrint(response.data.toString());
-          throw "Login ou Senha Invalido";
         }
+        debugPrint(response.codigo.toString());
+        debugPrint(response.data.toString());
+        throw "Login ou Senha Invalido";
+
     }catch(e){
       debugPrint("Erro ${e.toString()}");
       throw e;
     }
   }
 
-  Future<Apontamento?> getPeriodo(int database) async {
+  Future<Apontamento> getPeriodo(int database) async {
     String _api = "/api/apontamento/GetPeriodo";
+    Apontamento aponta = Apontamento.aponta(descricao: DateFormat('MMMM yyyy').format(DateTime.now()),
+        datainicio: DateTime(DateTime.now().year, DateTime.now().month, 1),
+        datatermino: DateTime(DateTime.now().year, DateTime.now().month+1, 1).subtract(Duration(days: 1)));
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseponto! + _api,
@@ -119,9 +119,6 @@ class UserPontoService {
             "Database": database
           }
       );
-      Apontamento aponta = Apontamento.aponta(descricao: DateFormat('MMMM yyyy').format(DateTime.now()),
-          datainicio: DateTime(DateTime.now().year, DateTime.now().month, 1),
-          datatermino: DateTime(DateTime.now().year, DateTime.now().month+1, 1).subtract(Duration(days: 1)));
       if(response.isSucess && response.data.toString() != 'null'){
         Map dadosJson = response.data;
         aponta = Apontamento.fromMap(dadosJson);
@@ -129,10 +126,11 @@ class UserPontoService {
         debugPrint(response.codigo.toString() + '  getPeriodo');
         debugPrint(response.data.toString());
       }
-      return aponta;
     }catch(e){
       debugPrint("Erro ${e.toString()}");
+      throw e;
     }
+    return aponta;
   }
 
 }

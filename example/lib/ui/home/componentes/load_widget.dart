@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:assecontservices/assecontservices.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:assecontservices/assecontservices.dart';
 
 Widget shimmerWidget(double width, BuildContext context)  {
   return Container(
@@ -13,16 +13,16 @@ Widget shimmerWidget(double width, BuildContext context)  {
         padding: EdgeInsets.symmetric(horizontal: width * 0.026),
         child: Column(
             children:[
-              SizedBox(height: 10,),
-              Container(margin: EdgeInsets.only(bottom: 10,),
+              const SizedBox(height: 10,),
+              Container(margin: const EdgeInsets.only(bottom: 10,),
                 color: Colors.black,
                 height: 50,
               ),
-              Container(margin: EdgeInsets.only(bottom: 10),
+              Container(margin: const EdgeInsets.only(bottom: 10),
                 color: Colors.black,
                 height: 50,
               ),
-              Container(margin: EdgeInsets.only(bottom: 10),
+              Container(margin: const EdgeInsets.only(bottom: 10),
                 color: Colors.black,
                 height: 50,
               ),

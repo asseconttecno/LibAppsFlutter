@@ -6,7 +6,7 @@ import '../controllers.dart';
 
 
 class MarcacoesManager extends ChangeNotifier {
-  MarcacoesService _service = MarcacoesService();
+  final MarcacoesService _service = MarcacoesService();
   List<Marcacao> listamarcacao = [];
   bool _load = true;
   bool get load => _load;
@@ -32,7 +32,7 @@ class MarcacoesManager extends ChangeNotifier {
       listamarcacao = await _service.getEspelho(user);
       notifyListeners();
     }catch(e){
-      debugPrint("Erro Try ${e.toString()}");
+      debugPrint("MarcacoesManager getEspelho Erro Try ${e.toString()}");
     }
   }
 
