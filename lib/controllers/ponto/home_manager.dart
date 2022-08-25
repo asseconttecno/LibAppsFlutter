@@ -29,12 +29,12 @@ class HomePontoManager extends ChangeNotifier {
       if(context != null && user != null){
         HomePontoModel? _home = await _service.getHome(user);
         homeModel = _home;
-        await context.read<UserPontoManager>().updateUser(
-            nome: homeModel!.funcionario?.nome,
-            cargo: homeModel!.funcionario?.cargo,
-            perm: homeModel!.funcionario?.permitirMarcarPonto,
-            offline: homeModel!.funcionario?.permitirMarcarPontoOffline,
-            local: homeModel!.funcionario?.capturarGps
+        context.read<UserPontoManager>().updateUser(
+            nome: homeModel?.funcionario?.nome,
+            cargo: homeModel?.funcionario?.cargo,
+            perm: homeModel?.funcionario?.permitirMarcarPonto,
+            offline: homeModel?.funcionario?.permitirMarcarPontoOffline,
+            local: homeModel?.funcionario?.capturarGps
         );
         _pontoService.salvarNovoUsuario( user.toMap() );
         notifyListeners();
