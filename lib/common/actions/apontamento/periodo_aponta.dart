@@ -31,6 +31,7 @@ PeriodoApontamento(BuildContext context){
                           onPressed: (){
                             if(aponta.indice > 0){
                               context.read<UserPontoManager>().updateUser(aponta: aponta.apontamento[aponta.indice]);
+                              context.read<UserPontoManager>().getHome();
                               context.read<MarcacoesManager>().getEspelho(context.read<UserPontoManager>().usuario);
                               context.read<MemorandosManager>().memorandosUpdate();
                               context.read<BancoHorasManager>().getFuncionarioHistorico(context.read<UserPontoManager>().usuario);

@@ -25,14 +25,14 @@ class _MarcacoesState extends State<MarcacoesPage> {
   late Future<Marcacao?> myFuture;
 
   Future<Marcacao?> getFuture() async {
-      try{
-        _marcacao = context.read<MarcacoesManager>().listamarcacao.firstWhere((element) =>
-        DateTime(element.datahora!.year, element.datahora!.month,
-            element.datahora!.day) == _data) ;
-      }catch (e){
-        _marcacao = null;
-      }
-      return _marcacao;
+    try{
+      _marcacao = context.read<MarcacoesManager>().listamarcacao.firstWhere((element) =>
+      DateTime(element.datahora!.year, element.datahora!.month,
+          element.datahora!.day) == _data) ;
+    }catch (e){
+      _marcacao = null;
+    }
+    return _marcacao;
 
   }
 
@@ -49,43 +49,43 @@ class _MarcacoesState extends State<MarcacoesPage> {
     return Consumer<MarcacoesManager>(
         builder: (_, marcacao, __){
           //if(!start){
-            marcacao.listamarcacao.map((element) {
-              if(((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0)
-                  && (element.resultado?.extrasmin ?? 0)> 0){
-                listdecoration.add(
-                    DecorationItem(
-                        decoration: Icon(Icons.circle, color: Config.corPri,),
-                        date: element.datahora
-                    )
-                );
-              }else if((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0){
-                  listdecoration.add(
-                      DecorationItem(
-                          decoration: Icon(Icons.circle, color: Colors.red,),
-                          date: element.datahora
-                      )
-                  );
+          marcacao.listamarcacao.map((element) {
+            if(((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0)
+                && (element.resultado?.extrasmin ?? 0)> 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: Icon(Icons.circle, color: Config.corPri,),
+                      date: element.datahora
+                  )
+              );
+            }else if((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: Icon(Icons.circle, color: Colors.red,),
+                      date: element.datahora
+                  )
+              );
 
-              }else if((element.resultado?.extrasmin ?? 0) > 0){
-                  listdecoration.add(
-                      DecorationItem(
-                          decoration: Icon(Icons.circle, color: Colors.green,),
-                          date: element.datahora
-                      )
-                  );
-              }else if((element.resultado?.abonosmin ?? 0) > 0){
-                listdecoration.add(
-                    DecorationItem(
-                        decoration: Icon(Icons.circle, color: Colors.white,),
-                        date: element.datahora
-                    )
-                );
-              }
-            }).toList();
-            //start = true;
+            }else if((element.resultado?.extrasmin ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: Icon(Icons.circle, color: Colors.green,),
+                      date: element.datahora
+                  )
+              );
+            }else if((element.resultado?.abonosmin ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: Icon(Icons.circle, color: Colors.white,),
+                      date: element.datahora
+                  )
+              );
+            }
+          }).toList();
+          //start = true;
           //}
 
-            return CustomScaffold.calendario(
+          return CustomScaffold.calendario(
               key: _scaffoldKey,
               context: context,
               appTitle:'Marcações',

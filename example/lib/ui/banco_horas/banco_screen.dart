@@ -50,9 +50,9 @@ class _BancoHorasScreenState extends State<BancoHorasScreen> {
             String? _saldo;
             try{
               _saldo = banco.listabanco.lastWhere((element) =>
-                element.data != null ? _data.compareTo(
-                    DateTime(element.data!.year, element.data!.month,
-                        element.data!.day)) > 0 : false
+              element.data != null ? _data.compareTo(
+                  DateTime(element.data!.year, element.data!.month,
+                      element.data!.day)) > 0 : false
               ).saldo;
             }catch (e){
               _saldo = null;
@@ -87,50 +87,50 @@ class _BancoHorasScreenState extends State<BancoHorasScreen> {
           }).toList();
 
           return CustomScaffold.calendario(
-              key: _scaffoldKey,
-              context: context,
-              appTitle:'Banco de Horas',
-              funcData: (DateTime datetime) {
-                setState(() {
-                  _data = datetime;
-                  myFuture = dadosdia();
-                });
-              },
-              listdecoration: listdecoration,
-              controller: _controller,
-              body: Center(
-                  child:  !connectionStatus.hasConnection ? const Text('Verifique sua Conexão com Internet') :
-                  FutureBuilder<BancoHoras?>(
-                    future: myFuture,
-                    builder: (context, snapshot){
-                      Widget resultado;
-                      String? _saldo = saldoAnteror();
-                      switch( snapshot.connectionState ){
-                        case ConnectionState.none :
-                        case ConnectionState.waiting :
-                          resultado = const Center(child: CircularProgressIndicator());
-                          break;
-                        case ConnectionState.active :
-                        case ConnectionState.done :
-                          if( snapshot.hasError ){
-                            resultado = GestureDetector(
-                                child: Icon(Icons.autorenew_outlined,
-                                  color: Config.corPri, size: 70,),
-                                onTap: (){
-                                  setState(() {
-                                    myFuture = dadosdia();
-                                  });
-                                }
-                            );
-                          }else {
-                            resultado = DetalhesBanco(snapshot.data, _data, _saldo);
-                          }
-                          break;
-                      }
-                      return resultado;
-                    },
-                  )
-              ), 
+            key: _scaffoldKey,
+            context: context,
+            appTitle:'Banco de Horas',
+            funcData: (DateTime datetime) {
+              setState(() {
+                _data = datetime;
+                myFuture = dadosdia();
+              });
+            },
+            listdecoration: listdecoration,
+            controller: _controller,
+            body: Center(
+                child:  !connectionStatus.hasConnection ? const Text('Verifique sua Conexão com Internet') :
+                FutureBuilder<BancoHoras?>(
+                  future: myFuture,
+                  builder: (context, snapshot){
+                    Widget resultado;
+                    String? _saldo = saldoAnteror();
+                    switch( snapshot.connectionState ){
+                      case ConnectionState.none :
+                      case ConnectionState.waiting :
+                        resultado = const Center(child: CircularProgressIndicator());
+                        break;
+                      case ConnectionState.active :
+                      case ConnectionState.done :
+                        if( snapshot.hasError ){
+                          resultado = GestureDetector(
+                              child: Icon(Icons.autorenew_outlined,
+                                color: Config.corPri, size: 70,),
+                              onTap: (){
+                                setState(() {
+                                  myFuture = dadosdia();
+                                });
+                              }
+                          );
+                        }else {
+                          resultado = DetalhesBanco(snapshot.data, _data, _saldo);
+                        }
+                        break;
+                    }
+                    return resultado;
+                  },
+                )
+            ),
           );
         }
     );

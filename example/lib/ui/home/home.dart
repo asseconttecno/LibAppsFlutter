@@ -9,7 +9,6 @@ import 'package:assecontservices/assecontservices.dart';
 import 'package:tutorial/tutorial.dart';
 
 
-import '../../controller/home/home_manager.dart';
 import '../camera/foto_screen.dart';
 import '../registro/screen_registro.dart';
 import 'componentes/custom_listTile.dart';
@@ -35,7 +34,6 @@ class _HomePageState extends State<Home> {
   final keyRegistro = GlobalKey();
 
   List<TutorialItens> itens = [];
-  //bool loadpage = true;
   Widget icon = Container();
   VoidCallback? function;
   bool load = false;
@@ -48,15 +46,15 @@ class _HomePageState extends State<Home> {
       Future.delayed(const Duration(seconds: 1)).then((value) async {
         Tutorial.showTutorial(
             context, itens, (v)  {
-          if(v == (Config.isWin ? 3:  4) && (keyMenu.currentState?.mounted ?? false)){
-            //keyMenu.currentState!.showButtonMenu();
-            Navigator.pop(keyMenu.currentState!.context,);
-          }else if(v == (Config.isWin ? 5 : 6)){
-            Config().priacesso();
-          }else if(v == (Config.isWin ? 6 : 7)){
-            BiometriaAlert(context);
-          }
-        }
+              if(v == (Config.isWin ? 3:  4) && (keyMenu.currentState?.mounted ?? false)){
+                //keyMenu.currentState!.showButtonMenu();
+                Navigator.pop(keyMenu.currentState!.context,);
+              }else if(v == (Config.isWin ? 5 : 6)){
+                Config().priacesso();
+              }else if(v == (Config.isWin ? 6 : 7)){
+                BiometriaAlert(context);
+              }
+            }
         );
       });
     });
@@ -72,9 +70,7 @@ class _HomePageState extends State<Home> {
     context.read<CameraPontoManager>().getPhoto(context.read<UserPontoManager>().usuario!);
 
     deleteHist();
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      context.read<HomeManager>().getHome();
-    });
+
     if(Config.primeiroAcesso || !kReleaseMode){
       itens.addAll({
         TutorialItens(
@@ -158,33 +154,33 @@ class _HomePageState extends State<Home> {
             ),
             shapeFocus: ShapeFocus.square),
         if(!Config.isWin)
-          TutorialItens(
-              globalKey: keyMenu4,
-              touchScreen: true,
-              top: 120 + (WidgetsBinding.instance?.window.padding.top ?? 0),
-              left: 10,
-              right: 180,
-              children: [
-                Container(color: Colors.black54,
-                  child: const Text(
-                    "Nesse menu é possível avaliar o app na loja.",
-                    style: const TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 50,)
-              ],
-              widgetNext: Container(
-                padding: const EdgeInsets.all(5),
-                color: Colors.black12,
-                child: Text(
-                  "Continuar",
-                  style: TextStyle(
-                    color: Config.corPri,
-                    fontWeight: FontWeight.bold,
-                  ),
+        TutorialItens(
+            globalKey: keyMenu4,
+            touchScreen: true,
+            top: 120 + (WidgetsBinding.instance?.window.padding.top ?? 0),
+            left: 10,
+            right: 180,
+            children: [
+              Container(color: Colors.black54,
+                child: const Text(
+                  "Nesse menu é possível avaliar o app na loja.",
+                  style: const TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
               ),
-              shapeFocus: ShapeFocus.square),
+              const SizedBox(height: 50,)
+            ],
+            widgetNext: Container(
+              padding: const EdgeInsets.all(5),
+              color: Colors.black12,
+              child: Text(
+                "Continuar",
+                style: TextStyle(
+                  color: Config.corPri,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            shapeFocus: ShapeFocus.square),
         TutorialItens(
             globalKey: keyMenu5,
             touchScreen: true,
@@ -219,7 +215,7 @@ class _HomePageState extends State<Home> {
           right: 0, left: 0,
           children: [
             Container(color: Colors.black54,
-              padding: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
               child: const Center(
                 child: Text(
                   "Lista de menu deslizável na horizontal.",
@@ -230,16 +226,16 @@ class _HomePageState extends State<Home> {
             const SizedBox(height: 50,)
           ],
           widgetNext: Container(
-            padding: const EdgeInsets.all(5),
-            //margin: EdgeInsets.only(right: 30),
-            color: Colors.black12,
-            child: Text(
-              "Continuar",
-              style: TextStyle(
-                color: Config.corPri,
-                fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(5),
+              //margin: EdgeInsets.only(right: 30),
+              color: Colors.black12,
+              child: Text(
+                "Continuar",
+                style: TextStyle(
+                  color: Config.corPri,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ),
           shapeFocus: ShapeFocus.square,
         ),
@@ -261,15 +257,15 @@ class _HomePageState extends State<Home> {
             const SizedBox(height: 30,)
           ],
           widgetNext: Container(
-            padding: const EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
-            color: Colors.black12,
-            child: Text(
-              "Continuar",
-              style: TextStyle(
-                color: Config.corPri,
-                fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
+              color: Colors.black12,
+              child: Text(
+                "Continuar",
+                style: TextStyle(
+                  color: Config.corPri,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ),
           shapeFocus: ShapeFocus.square,
         ),
@@ -282,8 +278,8 @@ class _HomePageState extends State<Home> {
           children: [
             Container(color: Colors.black54,
               padding: const EdgeInsets.only(top: 20, bottom: 20, right: 50),
-              child: const Center(
-                child: Text(
+                child: const Center(
+                  child: Text(
                   "Clicando em Registrar é possível realizar a marcação de ponto.",
                   style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,
                 ),
@@ -292,15 +288,15 @@ class _HomePageState extends State<Home> {
             const SizedBox(height: 20,)
           ],
           widgetNext: Container(
-            padding: const EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
-            color: Colors.black12,
-            child: Text(
-              "Sair",
-              style: TextStyle(
-                color: Config.corPri,
-                fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(5), //margin: EdgeInsets.only(right: 30),
+              color: Colors.black12,
+              child: Text(
+                "Sair",
+                style: TextStyle(
+                  color: Config.corPri,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ),
           shapeFocus: ShapeFocus.oval,
         ),
@@ -325,230 +321,230 @@ class _HomePageState extends State<Home> {
     return Container(
       color: Config.corPribar,
       child: SafeArea(
-        child: Consumer2<HomeManager, UserPontoManager>(
-            builder: (_,home, user,__){
-              List<int>? img = context.watch<CameraPontoManager>().img;
+        child: Consumer<UserPontoManager>(
+              builder: (_, user,__){
+                List<int>? img = context.watch<CameraPontoManager>().img;
 
-              return CustomScaffold.home(
-                context: context,
-                height: 170 + MediaQuery.of(context).padding.top,
-                keyListMenu: keyListMenu,
-                listMenu: [
-                  CustomMenuItem(
-                    const Icon(Icons.calendar_today, color: Colors.white, size: 40),
-                    'Marcações',
-                        () {
-                      Navigator.pushNamed(context, '/marcacoes');
-                    },
-                  ),
-                  CustomMenuItem(
-                    const Icon(Icons.receipt_rounded, color: Colors.white, size: 40,),
-                    'Espelho de Ponto',
-                        () {
-                      if(user.usuario?.master ?? false){
-                        Navigator.pushNamed(context, '/espelho');
-                      }else{
-                        CustomAlert.info(
-                          context: context,
-                          mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
-                        );
-                      }
-                    },
-                  ),
-                  CustomMenuItem(
-                    const Icon(Icons.account_balance, color: Colors.white, size: 40,),
-                    'Banco Horas',
-                        () {
-                      if(user.usuario?.master ?? false){
-                        Navigator.pushNamed(context, '/banco');
-                      }else{
-                        CustomAlert.info(
-                          context: context,
-                          mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
-                        );
-                      }
-                    },
-                  ),
-
-                  CustomMenuItem(
-                    const Icon(Icons.question_answer, color: Colors.white, size: 40),
-                    'Solicitações',
-                        () {
-                      if(user.usuario?.master ?? false){
-                        Navigator.pushNamed(context, '/solicitacoes');
-                      }else{
-                        CustomAlert.info(
-                          context: context,
-                          mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
-                        );
-                      }
-                    },
-                  ),
-
-                  CustomMenuItem(
-                    const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 40),
-                    'Holerites',
-                        () {
-                      if(user.usuario?.master ?? false){
-                        Navigator.pushNamed(context, '/holerites');
-                      }else{
-                        CustomAlert.info(
-                          context: context,
-                          mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
-                        );
-                      }
-                    },
-                  ),
-                ],
-                appbar: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 5,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(width: 20,),
-                          Text('ASSEPONTO APP', style: TextStyle(color: Config.corPri,fontSize: 18),),
-                          actions(context, aponta: true, keyMenu: keyMenu, key1: keyMenu1,
-                              key2: keyMenu2, key3: keyMenu3, key4: keyMenu4, key5: keyMenu5),
-                        ],
-                      ),
-                      const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: width * 0.6,
-                            padding: const EdgeInsets.only(left: 15, right: 5),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Olá, ' + (user.usuario?.nome ?? ''),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.visible,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Config.corPri
-                                  ),
-                                ),
-                                Text(user.usuario?.cargo ?? '',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Config.corPri,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                              ],
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Hero(tag: "foto",
-                              child: GestureDetector(
-                                onTap: () async {
-                                  await Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => ImageHero(img == null ? null :
-                                      Uint8List.fromList(img)) ) );
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  alignment: Alignment.topCenter,
-                                  height: 115,
-                                  width: 115,
-                                  decoration: BoxDecoration(
-                                      border: img != null ?
-                                      Border.all(color: Config.corPri, width: 2) :
-                                      Border.all(color: Colors.white, width: 5),
-                                      borderRadius: BorderRadius.circular(100),
-                                      color: Config.corPri,
-                                      image: img != null ?
-                                      DecorationImage(
-                                          image: MemoryImage(Uint8List.fromList(img)),
-                                          fit: BoxFit.fitWidth
-                                      ): null
-                                  ),child: img == null ?
-                                const Icon(CupertinoIcons.person,
-                                  color: Colors.white,
-                                  size: 105,) : null,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                body: Container(
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide(width: 80, color: Theme.of(context).scaffoldBackgroundColor))
+                return CustomScaffold.home(
+                  context: context,
+                  height: 170 + MediaQuery.of(context).padding.top,
+                  keyListMenu: keyListMenu,
+                  listMenu: [
+                    CustomMenuItem(
+                      const Icon(Icons.calendar_today, color: Colors.white, size: 40),
+                      'Marcações',
+                          () {
+                        Navigator.pushNamed(context, '/marcacoes');
+                      },
                     ),
-                    child: user.usuario == null ?
-                    Container(
-                      key: keyResumo,
-                      child: shimmerWidget(width, context),
-                    ) :  Column(
+                    CustomMenuItem(
+                      const Icon(Icons.receipt_rounded, color: Colors.white, size: 40,),
+                      'Espelho de Ponto',
+                          () {
+                        if(user.usuario?.master ?? false){
+                          Navigator.pushNamed(context, '/espelho');
+                        }else{
+                          CustomAlert.info(
+                            context: context,
+                            mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
+                          );
+                        }
+                      },
+                    ),
+                    CustomMenuItem(
+                      const Icon(Icons.account_balance, color: Colors.white, size: 40,),
+                      'Banco Horas',
+                          () {
+                        if(user.usuario?.master ?? false){
+                          Navigator.pushNamed(context, '/banco');
+                        }else{
+                          CustomAlert.info(
+                            context: context,
+                            mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
+                          );
+                        }
+                      },
+                    ),
+
+                    CustomMenuItem(
+                      const Icon(Icons.question_answer, color: Colors.white, size: 40),
+                      'Solicitações',
+                          () {
+                        if(user.usuario?.master ?? false){
+                          Navigator.pushNamed(context, '/solicitacoes');
+                        }else{
+                          CustomAlert.info(
+                            context: context,
+                            mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
+                          );
+                        }
+                      },
+                    ),
+
+                    CustomMenuItem(
+                      const Icon(Icons.monetization_on_outlined, color: Colors.white, size: 40),
+                      'Holerites',
+                          () {
+                        if(user.usuario?.master ?? false){
+                          Navigator.pushNamed(context, '/holerites');
+                        }else{
+                          CustomAlert.info(
+                            context: context,
+                            mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                  appbar: SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
+                        const SizedBox(height: 5,),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            //const SizedBox(height: 10,),
-                            Row(
-                                children: const [
-                                  SizedBox(width: 50,),
-                                  Text('Resumo:',
+                          children: [
+                            const SizedBox(width: 20,),
+                            Text('ASSEPONTO APP', style: TextStyle(color: Config.corPri,fontSize: 18),),
+                            actions(context, aponta: true, keyMenu: keyMenu, key1: keyMenu1,
+                                key2: keyMenu2, key3: keyMenu3, key4: keyMenu4, key5: keyMenu5),
+                          ],
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: width * 0.6,
+                              padding: const EdgeInsets.only(left: 15, right: 5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Olá, ' + (user.usuario?.nome ?? ''),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.visible,
                                     style: TextStyle(
-                                      //fontWeight: FontWeight.bold,
-                                      fontSize: 14 ,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Config.corPri
                                     ),
                                   ),
-                                ]
+                                  Text(user.usuario?.cargo ?? '',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Config.corPri,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20,),
+                                ],
+                              ),
                             ),
-                            const SizedBox(width: 5,),
-                            Text(user.usuario?.aponta?.descricao ?? '',
-                              style: const TextStyle(
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 14 ,
+
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Hero(tag: "foto",
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    await Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => ImageHero(img == null ? null :
+                                        Uint8List.fromList(img)) ) );
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.topCenter,
+                                    height: 115,
+                                    width: 115,
+                                    decoration: BoxDecoration(
+                                        border: img != null ?
+                                        Border.all(color: Config.corPri, width: 2) :
+                                        Border.all(color: Colors.white, width: 5),
+                                        borderRadius: BorderRadius.circular(100),
+                                        color: Config.corPri,
+                                        image: img != null ?
+                                        DecorationImage(
+                                            image: MemoryImage(Uint8List.fromList(img)),
+                                            fit: BoxFit.fitWidth
+                                        ): null
+                                    ),child: img == null ?
+                                  const Icon(CupertinoIcons.person,
+                                    color: Colors.white,
+                                    size: 105,) : null,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
-
-                        Expanded(
-                          key: keyResumo,
-                          //height: 80.0 * (home.homeModel?.resultadoItemList?.length ?? 1),
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemBuilder:   (BuildContext context, int index) {
-                              customIcon(home.homeModel?.resultadoItemList![index].descricao ?? '');
-                              return CustomListTile(
-                                  icon,
-                                  home.homeModel?.resultadoItemList![index].descricao ?? '',
-                                  home.homeModel?.resultadoItemList![index].valor ?? '',
-                                  (user.usuario?.master ?? false) ? function :
-                                      () {
-                                    CustomAlert.info(
-                                      context: context,
-                                      mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
-                                    );
-                                  }
-                              );
-                            },
-                            itemCount: (home.homeModel?.resultadoItemList?.length ?? 0),
-                          ),
-                        ),
                       ],
-                    )
-                ),
+                    ),
+                  ),
+                  body: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      border: Border(bottom: BorderSide(width: 80, color: Theme.of(context).scaffoldBackgroundColor))
+                    ),
+                    child: user.usuario == null ?
+                      Container(
+                        key: keyResumo,
+                        child: shimmerWidget(width, context),
+                      ) :  Column(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              //const SizedBox(height: 10,),
+                              Row(
+                                  children: const [
+                                    SizedBox(width: 50,),
+                                    Text('Resumo:',
+                                      style: TextStyle(
+                                        //fontWeight: FontWeight.bold,
+                                        fontSize: 14 ,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                              const SizedBox(width: 5,),
+                              Text(user.usuario?.aponta?.descricao ?? '',
+                                style: const TextStyle(
+                                  //fontWeight: FontWeight.bold,
+                                  fontSize: 14 ,
+                                ),
+                              ),
+                            ],
+                          ),
 
-                buttom: FloatingActionButton.extended(
+                          Expanded(
+                            key: keyResumo,
+                            //height: 80.0 * (home.homeModel?.resultadoItemList?.length ?? 1),
+                            child: ListView.builder(
+                              controller: scrollController,
+                              itemBuilder:   (BuildContext context, int index) {
+                                customIcon(user.homeModel?.resultadoItemList![index].descricao ?? '');
+                                return CustomListTile(
+                                    icon,
+                                    user.homeModel?.resultadoItemList![index].descricao ?? '',
+                                    user.homeModel?.resultadoItemList![index].valor ?? '',
+                                    (user.usuario?.master ?? false) ? function :
+                                        () {
+                                      CustomAlert.info(
+                                        context: context,
+                                        mensage: 'Você está utilizando a Versão free.\nContate seu gestor para contratar a versão máster!\n',
+                                      );
+                                    }
+                                );
+                              },
+                              itemCount: (user.homeModel?.resultadoItemList?.length ?? 0),
+                            ),
+                          ),
+                        ],
+                    )
+                  ),
+
+                  buttom: FloatingActionButton.extended(
                     key: keyRegistro,
                     backgroundColor: Config.corPri,
                     onPressed: () {
@@ -563,15 +559,15 @@ class _HomePageState extends State<Home> {
                         //setState(() {});
                       }else{
                         CustomAlert.info(
-                          context: context,
-                          mensage: 'Você não tem permissão para marca o ponto!',
+                            context: context,
+                            mensage: 'Você não tem permissão para marca o ponto!',
                         );
                       }
                     },
                     label: const Text('REGISTRAR', style: TextStyle(fontSize: 20, color: Colors.white),)
-                ),
-              );
-            }
+                  ),
+                );
+          }
         ),
       ),
     );

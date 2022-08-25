@@ -132,7 +132,6 @@ class _LancarMarcacaoState extends State<LancarMarcacao> {
                             || marcacoes[1] != '' || marcacoes[2] != '' || marcacoes[3] != '')){
                           List _i = memo.controlerData.text.split("/");
                           DateTime datahora = DateTime(int.parse(_i[2]), int.parse(_i[1]), int.parse(_i[0]));
-                          Navigator.pop(context);
                           await context.read<MemorandosManager>().postMemorando(
                             context, context.read<UserPontoManager>().usuario!,
                             datahora, memo.controlerObs.text, 5, marcacao: marcacoes,

@@ -92,17 +92,14 @@ class UserPontoManager extends ChangeNotifier {
 
   Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
     usuario = await _service.signInAuth(email: email, senha: senha);
+    await getHome();
     if(usuario?.master ?? false){
       context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
     }
     return true;
   }
 
-  homeUpdate(){
-    getHome();
-  }
-
-  getHome() async {
+  Future<void> getHome() async {
     try {
       HomePontoModel? _home = await _homeservice.getHome(usuario!);
       homeModel = _home;

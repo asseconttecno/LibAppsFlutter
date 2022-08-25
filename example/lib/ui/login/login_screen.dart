@@ -281,18 +281,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _clickLogin(String email, String senha) async {
     if (_formKey.currentState!.validate()) {
-      bool? result = await context.read<UserPontoManager>()
-          .auth(context, email, senha, false).onError((error, stackTrace) {
-        CustomSnackbar.scaffoldKey(widget.scaffoldKey, error.toString(), Colors.black87);
-      });
+      bool? result = await context.read<UserPontoManager>().auth(context, email, senha, false);
 
       if(result ?? false){
         Config.usenha = context.read<UserPontoManager>().senha.text;
         context.read<UserPontoManager>().memorizar();
 
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-      }else{
-        CustomSnackbar.scaffoldKey(widget.scaffoldKey, 'Não foi possível realizar o login, tente novamente!', Colors.black87);
       }
     }
   }
@@ -302,9 +297,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (context.read<BiometriaManager>().bio) {
         if (email == context.read<UserPontoManager>().uemail) {
           bool? result = await context.read<UserPontoManager>().auth(context,
-              email, context.read<UserPontoManager>().senha.text, true,
+            email, context.read<UserPontoManager>().senha.text, true,
           ).onError((error, stackTrace) {
-            CustomSnackbar.scaffoldKey(widget.scaffoldKey, error.toString(), Colors.black87);
             setState(() {
               loadAcessar = false;
             });

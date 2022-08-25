@@ -71,16 +71,16 @@ class MemorandosManager extends ChangeNotifier {
     memorandos = [];
   }
 
-  postMemorando(BuildContext context, UsuarioPonto usuario, DateTime data,
+  Future<void> postMemorando(BuildContext context, UsuarioPonto usuario, DateTime data,
       String texto, int tipo ,{File? img, List<String>? marcacao}) async {
 
-    bool result = await _services.postMemorando(usuario, data, texto, tipo);
+    bool result = await _services.postMemorando(usuario, data, texto, tipo, marcacao: marcacao, img: img);
     if(result){
       await Future.delayed(Duration(milliseconds: 100));
       memorandosUpdate();
-      CustomSnackbar.context(context, 'Solicitação realizada!', Colors.green);
+      await CustomSnackbar.context(context, 'Solicitação realizada!', Colors.green);
     } else {
-      CustomSnackbar.context(context, 'Não foi possivel realizar a solicitação!', Colors.red);
+      await CustomSnackbar.context(context, 'Não foi possivel realizar a solicitação!', Colors.red);
     }
   }
 
