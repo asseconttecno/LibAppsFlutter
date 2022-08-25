@@ -29,8 +29,8 @@ class MemorandosServices {
         "arquivo": img != null ? base64Encode(img.readAsBytesSync()) : null
       };
     }else { //if(tipo == 5)
-      List<String?> temp = marcacao!.map((e) => e == '' ? null :
-          "${DateFormat('dd/MM/yyyy').format(data)} ${e.toString()}").toList();
+      List<String?> temp = marcacao?.map((e) => e == '' ? null :
+          "${DateFormat('dd/MM/yyyy').format(data)} ${e.toString()}").toList() ?? [];
       debugPrint(temp.toString());
       body = {
         "user": {

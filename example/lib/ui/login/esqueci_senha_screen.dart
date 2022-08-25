@@ -5,10 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:assecontservices/assecontservices.dart';
 
 
-class EsqueciSenhaScreen extends StatelessWidget {
+class EsqueciSenhaScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   EsqueciSenhaScreen(this.scaffoldKey);
 
+  @override
+  State<EsqueciSenhaScreen> createState() => _EsqueciSenhaScreenState();
+}
+
+class _EsqueciSenhaScreenState extends State<EsqueciSenhaScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

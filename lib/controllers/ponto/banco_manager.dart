@@ -9,6 +9,12 @@ class BancoHorasManager extends ChangeNotifier {
   BancoHorasService _service = BancoHorasService();
 
   List<BancoHoras> listabanco = [];
+  DateTime _data = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime get data => _data;
+  set data(DateTime v){
+    _data = DateTime(v.year, v.month, v.day);
+    notifyListeners();
+  }
 
   BancoHorasManager(){
     bancoUpdate();
@@ -20,6 +26,22 @@ class BancoHorasManager extends ChangeNotifier {
 
   signOut(){
     listabanco = [];
+  }
+
+
+  Future<BancoHoras?> getBancodia() async {
+    BancoHoras? _bancoHoras;
+    try{
+      _bancoHoras = listabanco.firstWhere((e) {
+        if(e.data != null){
+          return DateTime(e.data!.year, e.data!.month, e.data!.day) == data;
+        }
+        return false;
+      });
+    }catch (e){
+      print(e);
+    }
+    return _bancoHoras;
   }
 
   getFuncionarioHistorico(UsuarioPonto? user) async {

@@ -20,27 +20,11 @@ class _MarcacoesState extends State<MarcacoesPage> {
   List<DecorationItem> listdecoration = [];
   final CalendarWeekController _controller = CalendarWeekController();
 
-  Marcacao? _marcacao;
-  DateTime _data = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  late Future<Marcacao?> myFuture;
-
-  Future<Marcacao?> getFuture() async {
-      try{
-        _marcacao = context.read<MarcacoesManager>().listamarcacao.firstWhere((element) =>
-        DateTime(element.datahora!.year, element.datahora!.month,
-            element.datahora!.day) == _data) ;
-      }catch (e){
-        _marcacao = null;
-      }
-      return _marcacao;
-
-  }
 
   @override
   void initState() {
     context.read<MarcacoesManager>().getEspelho(context.read<UserPontoManager>().usuario);
     super.initState();
-    myFuture = getFuture();
   }
 
   @override
@@ -49,79 +33,74 @@ class _MarcacoesState extends State<MarcacoesPage> {
     return Consumer<MarcacoesManager>(
         builder: (_, marcacao, __){
           //if(!start){
-            marcacao.listamarcacao.map((element) {
-              if(((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0)
-                  && (element.resultado?.extrasmin ?? 0)> 0){
-                listdecoration.add(
-                    DecorationItem(
-                        decoration: Icon(Icons.circle, color: Config.corPri,),
-                        date: element.datahora
-                    )
-                );
-              }else if((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0){
-                  listdecoration.add(
-                      DecorationItem(
-                          decoration: Icon(Icons.circle, color: Colors.red,),
-                          date: element.datahora
-                      )
-                  );
+          marcacao.listamarcacao.map((element) {
+            if(((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0)
+                && (element.resultado?.extrasmin ?? 0)> 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: Icon(Icons.circle, color: Config.corPri,),
+                      date: element.datahora
+                  )
+              );
+            }else if((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: const Icon(Icons.circle, color: Colors.red,),
+                      date: element.datahora
+                  )
+              );
 
-              }else if((element.resultado?.extrasmin ?? 0) > 0){
-                  listdecoration.add(
-                      DecorationItem(
-                          decoration: Icon(Icons.circle, color: Colors.green,),
-                          date: element.datahora
-                      )
-                  );
-              }else if((element.resultado?.abonosmin ?? 0) > 0){
-                listdecoration.add(
-                    DecorationItem(
-                        decoration: Icon(Icons.circle, color: Colors.white,),
-                        date: element.datahora
-                    )
-                );
-              }
-            }).toList();
-            //start = true;
+            }else if((element.resultado?.extrasmin ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: const Icon(Icons.circle, color: Colors.green,),
+                      date: element.datahora
+                  )
+              );
+            }else if((element.resultado?.abonosmin ?? 0) > 0){
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: const Icon(Icons.circle, color: Colors.white,),
+                      date: element.datahora
+                  )
+              );
+            }
+          }).toList();
+          //start = true;
           //}
 
-            return CustomScaffold.calendario(
+          return CustomScaffold.calendario(
               key: _scaffoldKey,
               context: context,
               appTitle:'Marcações',
               funcData: (DateTime datetime) {
-                setState(() {
-                  _data = datetime;
-                  myFuture = getFuture();
-                });
+                marcacao.data = datetime;
               },
               listdecoration: listdecoration,
               controller: _controller,
               body: Center(
-                  child: !connectionStatus.hasConnection ? Text('Verifique sua Conexão com Internet') :
+                  child: !connectionStatus.hasConnection ? const Text('Verifique sua Conexão com Internet') :
                   FutureBuilder<Marcacao?>(
-                    future: myFuture,
+                    future: marcacao.getMarcacaoDia(),
                     builder: (context, snapshot){
                       Widget resultado;
                       switch( snapshot.connectionState ){
                         case ConnectionState.none :
                         case ConnectionState.waiting :
-                          resultado = CircularProgressIndicator();
+                          resultado = const CircularProgressIndicator();
                           break;
                         case ConnectionState.active :
                         case ConnectionState.done :
                           if( snapshot.hasError ){
                             resultado = GestureDetector(
-                                child: Icon(Icons.autorenew_outlined,
-                                  color: Config.corPri, size: 70,),
-                                onTap: (){
-                                  setState(() {
-                                    myFuture = getFuture();
-                                  });
-                                }
+                              child: Icon(Icons.autorenew_outlined,
+                                color: Config.corPri, size: 70,),
+                              onTap: (){
+                                setState(() {});
+                              }
                             );
                           }else {
-                            resultado = DetalhesMarcacao(snapshot.data, _data);
+                            resultado = DetalhesMarcacao(snapshot.data, marcacao.data);
                           }
                           break;
                       }

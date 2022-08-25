@@ -60,17 +60,17 @@ class UsuarioPonto {
   UsuarioPonto.fromMap(Map map, bool sql, {Apontamento? aponta}){
     if(sql){
       this.userId =  map['userId'];
-      this.email =  map['email'];
+      this.email =  map['email'] ?? '';
       this.database =  map['database'];
       this.funcionarioCpf =  map['funcionarioCpf'] ?? '';
       this.cnpj =  map['cnpj'] ?? '';
-      this.nome = map['nome'];
-      this.cargo = map['cargo'];
-      this.registro = map['registro'];
-      this.permitirMarcarPonto = map['permitirMarcarPonto'] == 'true';
-      this.permitirMarcarPontoOffline = map['permitirMarcarPontoOffline'] == 'true';
-      this.permitirLocalizacao = map['permitirLocalizacao'] == 'true';
-      this.master = map['master'] == 'true';
+      this.nome = map['nome'] ?? '';
+      this.cargo = map['cargo'] ?? '';
+      this.registro = map['registro'] ?? '';
+      this.permitirMarcarPonto = map['permitirMarcarPonto'].toString() == 'true';
+      this.permitirMarcarPontoOffline = map['permitirMarcarPontoOffline'] .toString()== 'true';
+      this.permitirLocalizacao = map['permitirLocalizacao'].toString() == 'true';
+      this.master = map['master'].toString() == 'true';
       this.aponta = Apontamento.aponta(datainicio: DateTime.parse(map['datainicio']),
           datatermino: DateTime.parse(map['datatermino']), descricao: map['apontamento']);
     }else{

@@ -19,7 +19,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
 
     return CustomScaffold.custom(
         context: context,
-        height: 100,
+        height: 40,
         appTitle: 'Configurações',
         body: Container(
             child: Column(

@@ -18,7 +18,6 @@ class DetalhesBanco extends StatefulWidget {
 
 class _DetalhesMarcacaoState extends State<DetalhesBanco> {
   final ScrollController scrollController = ScrollController();
-
   Widget card(String menu, String valor){
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 35),

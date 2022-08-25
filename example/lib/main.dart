@@ -4,7 +4,6 @@ import 'package:assecontservices/assecontservices.dart';
 
 
 import '../route_generator.dart';
-import 'controller/home/home_manager.dart';
 import 'controller/hora/gethora.dart';
 
 
@@ -29,9 +28,6 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (_)=> GetHora(),
-        ),
-        ChangeNotifierProvider(
-          create: (_)=> HomeManager(),
         ),
       ]
   );
