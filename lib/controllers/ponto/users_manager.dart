@@ -11,6 +11,9 @@ import '../controllers.dart';
 class UserPontoManager extends ChangeNotifier {
   final UserPontoService _service = UserPontoService();
   final BiometriaServices _serviceBio = BiometriaServices();
+  final HomePontoService _homeservice = HomePontoService();
+  final SqlitePontoService _sqlService = SqlitePontoService();
+
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
   factory UserPontoManager() {
@@ -36,9 +39,14 @@ class UserPontoManager extends ChangeNotifier {
 
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
-    print(valor);
-    print(valor?.nome);
     _usuario = valor;
+    notifyListeners();
+  }
+
+  HomePontoModel? _homeModel;
+  HomePontoModel? get homeModel => _homeModel;
+  set homeModel(HomePontoModel? valor){
+    _homeModel = valor;
     notifyListeners();
   }
 
@@ -62,8 +70,6 @@ class UserPontoManager extends ChangeNotifier {
 
   updateUser({String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta}){
     usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm, offline: offline, local: local, aponta: aponta);
-    print(nome);
-    print(usuario?.nome);
   }
 
   Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
@@ -92,6 +98,28 @@ class UserPontoManager extends ChangeNotifier {
     return true;
   }
 
+  homeUpdate(){
+    getHome();
+  }
+
+  getHome() async {
+    try {
+      HomePontoModel? _home = await _homeservice.getHome(usuario!);
+      homeModel = _home;
+      updateUser(
+          nome: homeModel?.funcionario?.nome,
+          cargo: homeModel?.funcionario?.cargo,
+          perm: homeModel?.funcionario?.permitirMarcarPonto,
+          offline: homeModel?.funcionario?.permitirMarcarPontoOffline,
+          local: homeModel?.funcionario?.capturarGps
+      );
+      _sqlService.salvarNovoUsuario( usuario!.toMap() );
+    } on Exception catch (e) {
+      debugPrint('try erro getHome ' + e.toString());
+      homeModel = null;
+    }
+  }
+
   init() async {
     try{
       final prefs = await SharedPreferences.getInstance();
@@ -108,6 +136,7 @@ class UserPontoManager extends ChangeNotifier {
   signOut() {
     try{
       usuario = null;
+      homeModel = null;
     }catch(e){
       debugPrint(e.toString());
     }

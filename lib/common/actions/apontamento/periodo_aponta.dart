@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../config.dart';
 import '../../../controllers/controllers.dart';
@@ -32,7 +31,6 @@ PeriodoApontamento(BuildContext context){
                           onPressed: (){
                             if(aponta.indice > 0){
                               context.read<UserPontoManager>().updateUser(aponta: aponta.apontamento[aponta.indice]);
-                              context.read<HomePontoManager>().homeUpdate();
                               context.read<MarcacoesManager>().getEspelho(context.read<UserPontoManager>().usuario);
                               context.read<MemorandosManager>().memorandosUpdate();
                               context.read<BancoHorasManager>().getFuncionarioHistorico(context.read<UserPontoManager>().usuario);
