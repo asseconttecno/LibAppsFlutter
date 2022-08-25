@@ -46,10 +46,15 @@ class SenhaHoleriteService {
     try{
       response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+          },
           body: <String, dynamic>{
-            "id": id,
-            "senha": senha,
-            "senhaNova": senhaNova
+            "Id": id,
+            "Senha": senha,
+            "NovaSenha": senhaNova
           }
       );
       if(response.isSucess){
