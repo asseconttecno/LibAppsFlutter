@@ -37,7 +37,7 @@ class HoleriteManager extends ChangeNotifier {
     return result;
   }
 
-  String _dropdowndata = "";
+  String _dropdowndata = "Holerites";
   String get dropdowndata => _dropdowndata;
   set dropdowndata(String v){
     _dropdowndata = v;
