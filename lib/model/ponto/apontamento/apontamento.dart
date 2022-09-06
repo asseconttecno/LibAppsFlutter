@@ -7,6 +7,12 @@ class Apontamento {
   DateTime datatermino = DateTime(DateTime.now().year, DateTime.now().month+1, 1).subtract(Duration(days: 1));
   String? descricao;
 
+  Apontamento.padrao(){
+    this.datainicio  = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    this.datatermino  = DateTime(DateTime.now().year, DateTime.now().month+1, 1).subtract(Duration(days: 1));
+    this.descricao = DateFormat('MMMM yyyy').format(DateTime.now());
+  }
+
   Apontamento.aponta({this.descricao, required this.datainicio, required this.datatermino});
 
   Apontamento.fromMap(Map? map) {

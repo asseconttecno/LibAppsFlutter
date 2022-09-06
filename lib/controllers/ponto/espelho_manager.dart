@@ -7,7 +7,7 @@ import '../../services/services.dart';
 
 
 class EspelhoManager extends ChangeNotifier {
-  EspelhoService _service = EspelhoService();
+  final EspelhoService _service = EspelhoService();
 
   Future<bool> postEspelhoStatus(UsuarioPonto? user, Apontamento aponta, bool status) async {
     bool result = await _service.postEspelhoStatus(user, aponta, status);
@@ -27,10 +27,10 @@ class EspelhoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  setMesAtual(Apontamento v){
+  setMesAtual(Apontamento? v){
     print(v);
     _apontamento = v;
-    _dropdowndata = v.descricao ?? '';
+    _dropdowndata = v?.descricao ?? '';
   }
 
   String _dropdowndata = "Selecione o Mes";
