@@ -18,7 +18,8 @@ class _EspelhoScreenState extends State<EspelhoScreen> {
 
   @override
   void initState() {
-    context.read<EspelhoManager>().setMesAtual(context.read<ApontamentoManager>().apontamento.first);
+    List<Apontamento> aponta = context.read<ApontamentoManager>().apontamento;
+    if(aponta.length > 0)context.read<EspelhoManager>().setMesAtual(aponta.first);
     super.initState();
   }
 
@@ -80,7 +81,7 @@ class _EspelhoScreenState extends State<EspelhoScreen> {
                   espelho.apontamento == null ?
                   const Center(
                     child: Text('Usuario nao possui periodo de apontamento',
-                      style: TextStyle(fontSize: 20),),
+                      style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                   ) : Center(child: DetalhesEspelho(espelho.apontamento!))
               ),
           );

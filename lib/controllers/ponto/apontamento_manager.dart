@@ -28,10 +28,8 @@ class ApontamentoManager extends ChangeNotifier {
   getPeriodo(UsuarioPonto? user) async {
     try{
       List<Apontamento>? aponta = await _service.getPeriodo(user);
-      if(aponta != null){
-        apontamento = aponta;
-        notifyListeners();
-      }
+      apontamento = aponta;
+      notifyListeners();
     }catch(e){
       debugPrint("aponta erro ${e.toString()}");
     }

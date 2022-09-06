@@ -90,26 +90,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      PrimeiroAcessoAlert(context);
-                    },
-                    child: const Center(
-                      child: Text(
-                        'PRIMEIRO ACESSO',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w900,
+                if(!Config.isIOS)
+                  Container(
+                    alignment: Alignment.centerRight,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        PrimeiroAcessoAlert(context);
+                      },
+                      child: const Center(
+                        child: Text(
+                          'PRIMEIRO ACESSO',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
               ])),
     );
   }

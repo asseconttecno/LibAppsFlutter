@@ -37,6 +37,6 @@ class ApontamentoService {
     }catch(e){
       debugPrint("ApontamentoService getPeriodo erro ${e.toString()}");
     }
-    return [];
+    return [Apontamento.padrao()];
   }
 }

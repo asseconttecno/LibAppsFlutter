@@ -20,7 +20,7 @@ class EspelhoService {
 
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiEspelho! + _api,
+          url: Config.conf.apiEspelho! + _api, decoder: false,
           body: {
             "email": user?.email,
             "funcionarioId": user?.userId ,
