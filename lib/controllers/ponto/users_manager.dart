@@ -111,7 +111,7 @@ class UserPontoManager extends ChangeNotifier {
           local: homeModel?.funcionario?.capturarGps
       );
       _sqlService.salvarNovoUsuario( usuario!.toMap() );
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint('try erro getHome ' + e.toString());
       homeModel = null;
     }
