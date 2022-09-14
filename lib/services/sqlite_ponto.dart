@@ -72,7 +72,7 @@ class SqlitePontoService {
     return 0;
   }
 
-  Future<List<Map<String, dynamic>>?> getMarcacoes() async {
+  Future<List<Map<String, dynamic>>> getMarcacoes() async {
     try {
       var bancoDados = await DBPonto().db;
       List _sql = await bancoDados.query("marcacao");
@@ -81,9 +81,10 @@ class SqlitePontoService {
             _sql.map((e) => Marcacao().toSql2(e)).toList());
         return marcacao;
       }
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint("erro getMarcacoes ${e.toString()}");
     }
+    return [];
   }
 
   Future<bool> salvarMarcacao(Marcacao dados, {bool hist = true}) async {

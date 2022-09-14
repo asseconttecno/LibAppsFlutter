@@ -24,13 +24,13 @@ class ConnectionStatusSingleton {
   void initialize() {
     _connectivity.onConnectivityChanged.listen(_connectionChange);
     checkConnection();
-    if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {
-      Timer.periodic(const Duration(minutes: 1, seconds: 30), (T) async {
-        if(hasConnection){
-          await RegistroManger().enviarMarcacoes();
-        }
-      });
-    }
+    print('Connectivity initialize');
+    Timer.periodic(const Duration(minutes: 1), (T) async {
+      print('Timer $T ' + hasConnection.toString());
+      if(hasConnection && (Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet)){
+        await RegistroManger().enviarMarcacoes();
+      }
+    });
   }
 
   Stream get connectionChange => connectionChangeController.stream;
@@ -56,7 +56,7 @@ class ConnectionStatusSingleton {
       hasConnection = false;
     }
 
-    if (previousConnection != hasConnection ) {
+    if (previousConnection != hasConnection) {
       connectionChangeController.add(hasConnection);
       if(hasConnection){
         if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {

@@ -87,9 +87,10 @@ class RegistroManger {
   }
 
   enviarMarcacoes() async {
+    print('enviarMarcacoes off');
     try{
-      List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getMarcacoes();
-      if(marcacao != null && marcacao.isNotEmpty) {
+      List<Map<String, dynamic>> marcacao = await _sqlitePonto.getMarcacoes();
+      if(marcacao.isNotEmpty) {
         final result =  await _service.postPontoMarcacoesOffline(
             UserPontoManager().usuario,
             marcacao,
@@ -97,8 +98,9 @@ class RegistroManger {
         );
         if(result == MarcacaoOffStatus.Sucess){
           debugPrint('sucess');
-          if(Config.scaffoldKey.currentState != null)
+          if(Config.scaffoldKey.currentState != null) {
             CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
+          }
           int _result = await _sqlitePonto.deleteMarcacoes();
           debugPrint( _result.toString() );
         }

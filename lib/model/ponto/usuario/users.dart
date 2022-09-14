@@ -40,83 +40,83 @@ class UsuarioPonto {
   UsuarioPonto copyWith({
         String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta
       }) => UsuarioPonto(
-          userId: userId ?? this.userId,
-          email: email ?? this.email,
-          database: database ?? this.database,
-          funcionarioCpf: funcionarioCpf ?? this.funcionarioCpf,
-          faceid: faceid ?? this.faceid,
-          cnpj: cnpj ?? this.cnpj,
+          userId: userId ?? userId,
+          email: email ?? email,
+          database: database ?? database,
+          funcionarioCpf: funcionarioCpf ?? funcionarioCpf,
+          faceid: faceid ?? faceid,
+          cnpj: cnpj ?? cnpj,
           nome: nome ?? this.nome,
           cargo: cargo ?? this.cargo,
           aponta: aponta ?? this.aponta,
-          permitirMarcarPonto: perm ?? this.permitirMarcarPonto,
-          permitirLocalizacao: local ?? this.permitirLocalizacao,
-          permitirMarcarPontoOffline: offline ?? this.permitirMarcarPontoOffline,
-          registro: registro ?? this.registro,
-          master: master ?? this.master
+          permitirMarcarPonto: perm ?? permitirMarcarPonto,
+          permitirLocalizacao: local ?? permitirLocalizacao,
+          permitirMarcarPontoOffline: offline ?? permitirMarcarPontoOffline,
+          registro: registro ?? registro,
+          master: master ?? master
       );
 
 
   UsuarioPonto.fromMap(Map map, bool sql, {Apontamento? aponta}){
     if(sql){
-      this.userId =  map['userId'];
-      this.email =  map['email'] ?? '';
-      this.database =  map['database'];
-      this.funcionarioCpf =  map['funcionarioCpf'] ?? '';
-      this.cnpj =  map['cnpj'] ?? '';
-      this.nome = map['nome'] ?? '';
-      this.cargo = map['cargo'] ?? '';
-      this.registro = map['registro'] ?? '';
-      this.permitirMarcarPonto = map['permitirMarcarPonto'].toString() == 'true';
-      this.permitirMarcarPontoOffline = map['permitirMarcarPontoOffline'] .toString()== 'true';
-      this.permitirLocalizacao = map['permitirLocalizacao'].toString() == 'true';
-      this.master = map['master'].toString() == 'true';
+      userId =  map['userId'];
+      email =  map['email'] ?? '';
+      database =  map['database'];
+      funcionarioCpf =  map['funcionarioCpf'] ?? '';
+      cnpj =  map['cnpj'] ?? '';
+      nome = map['nome'] ?? '';
+      cargo = map['cargo'] ?? '';
+      registro = map['registro'] ?? '';
+      permitirMarcarPonto = map['permitirMarcarPonto'].toString() == 'true';
+      permitirMarcarPontoOffline = map['permitirMarcarPontoOffline'] .toString()== 'true';
+      permitirLocalizacao = map['permitirLocalizacao'].toString() == 'true';
+      master = map['master'].toString() == 'true';
       this.aponta = Apontamento.aponta(datainicio: DateTime.parse(map['datainicio']),
           datatermino: DateTime.parse(map['datatermino']), descricao: map['apontamento']);
     }else{
-      this.userId =   map["UserId"] == null ? null : map["UserId"];
-      this.email = map["Email"] == null ? null : map["Email"];
-      this.database = map["Database"] == null ? null : map["Database"];
-      this.master = map['App'].toString() == 'true';
+      userId =   map["UserId"];
+      email = map["Email"];
+      database = map["Database"];
+      master = map['App'].toString() == 'true';
       if(map['Funcionario'] != null){
-        this.funcionarioCpf = map['Funcionario']['FuncionarioCpf'];
-        this.cnpj = map['Funcionario']['Cnpj']['Numero'];
-        this.registro = map['Funcionario']['Registro'];
+        funcionarioCpf = map['Funcionario']['FuncionarioCpf'];
+        cnpj = map['Funcionario']['Cnpj']['Numero'];
+        registro = map['Funcionario']['Registro'];
       }
       this.aponta = aponta;
-      this.faceid = map["IdFoto"] == null ? null : map["IdFoto"];
+      faceid = map["IdFoto"];
     }
   }
 
 
   UsuarioPonto.fromMapTab(Map map, String cod) {
     print('ok from');
-    this.userId =  (int?.parse(map["Id"].toString()));
-    this.nome = map["Nome"];
-    this.cargo = map["Cargo"];
-    this.image = map["IdFoto"];
-    this.cnpj = map["Cnpj"];
-    this.registro = cod;
+    userId =  (int?.parse(map["Id"].toString()));
+    nome = map["Nome"];
+    cargo = map["Cargo"];
+    image = map["IdFoto"];
+    cnpj = map["Cnpj"];
+    registro = cod;
   }
 
   UsuarioPonto.fromOff(UserPontoOffine user) {
-    this.userId =  user.id!;
-    this.nome = user.nome!;
-    this.cargo = ' ';
-    this.registro = user.registro!;
+    userId =  user.id!;
+    nome = user.nome!;
+    cargo = ' ';
+    registro = user.registro!;
   }
 
   Map toMapTab() {
     Map<String, dynamic> map = {
-      "nome": this.nome,
-      "img" : this.image,
-      "cargo" : this.cargo,
-      "codigo" : this.registro,
-      "cnpj" : this.cnpj
+      "nome": nome,
+      "img" : image,
+      "cargo" : cargo,
+      "codigo" : registro,
+      "cnpj" : cnpj
     };
 
-    if (this.userId != null) {
-      map["id"] = this.userId;
+    if (userId != null) {
+      map["id"] = userId;
     }
 
     return map;
