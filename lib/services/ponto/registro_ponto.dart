@@ -99,7 +99,7 @@ class RegistroService {
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAsseponto! + _api,
             body: {
-              "Database": "${usuario?.database?.toString()}",
+              "Database": "${usuario!.database}",
               "Marcacoes": listOff
             }
         );
@@ -121,6 +121,8 @@ class RegistroService {
             return MarcacaoOffStatus.Delete;
           }
         }
+        debugPrint(response.data.toString());
+        debugPrint(response.codigo.toString());
       }catch (e){
         debugPrint("Erro postPontoMarcacoesOffline ${e.toString()}");
       }
