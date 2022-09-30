@@ -87,7 +87,7 @@ class RegistroManger {
   }
 
   enviarMarcacoes() async {
-    debugPrint('enviarMarcacoes off');
+    debugPrint('enviarMarcacoes off ' + (Config.isReenvioMarc ? '45 dias' : '1 dia'));
     try{
       List<Map<String, dynamic>>? marcacao = await ( Config.isReenvioMarc ?
           _sqlitePonto.getHistoricoFormatado() : _sqlitePonto.getMarcacoes() );
