@@ -10,8 +10,8 @@ import '../controllers.dart';
 
 
 class RegistroManger {
-  RegistroService _service = RegistroService();
-  SqlitePontoService _sqlitePonto = SqlitePontoService();
+  final RegistroService _service = RegistroService();
+  final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
 
   String? bytes;
@@ -87,22 +87,25 @@ class RegistroManger {
   }
 
   enviarMarcacoes() async {
-    print('enviarMarcacoes off');
+    debugPrint('enviarMarcacoes off');
     try{
-      List<Map<String, dynamic>> marcacao = await _sqlitePonto.getMarcacoes();
-      if(marcacao.isNotEmpty) {
+      List<Map<String, dynamic>>? marcacao = await ( Config.isReenvioMarc ?
+          _sqlitePonto.getHistoricoFormatado() : _sqlitePonto.getMarcacoes() );
+      if(marcacao != null && marcacao.isNotEmpty) {
         final result =  await _service.postPontoMarcacoesOffline(
             UserPontoManager().usuario,
             marcacao,
-            delete: true
+            delete: !Config.isReenvioMarc
         );
         if(result == MarcacaoOffStatus.Sucess){
           debugPrint('sucess');
           if(Config.scaffoldKey.currentState != null) {
             CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
           }
-          int _result = await _sqlitePonto.deleteMarcacoes();
-          debugPrint( _result.toString() );
+          if(!Config.isReenvioMarc){
+            int _result = await _sqlitePonto.deleteMarcacoes();
+            debugPrint( _result.toString() );
+          }
         }
       }
     }catch(e){
@@ -111,6 +114,8 @@ class RegistroManger {
   }
 
   deleteHistorico() async {
-    _sqlitePonto.deleteHistorico();
+    if(!Config.isReenvioMarc){
+      _sqlitePonto.deleteHistorico();
+    }
   }
 }

@@ -18,12 +18,13 @@ class Config extends ChangeNotifier {
   static final bool isIOS = Platform.isIOS;
   static final bool isWin = Platform.isWindows;
 
-  static Color corPribar = const Color(0xff002450);
-  static Color corPribar2 = const Color(0xff27689e);
-  static Color corPri = const Color(0xffff8000);
+  static const Color corPribar =  Color(0xff002450);
+  static const Color corPribar2 =  Color(0xff27689e);
+  static const Color corPri =  Color(0xffff8000);
 
   static BioSupportState bioState = BioSupportState.unknown;
 
+  static bool isReenvioMarc = false;
   static bool primeiroAcesso = true;
   static bool isJailBroken = true;
   static bool canMockLocation = true;
