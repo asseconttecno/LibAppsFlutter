@@ -5,10 +5,10 @@ import 'http/http.dart';
 
 
 class UpdateAppService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<bool> postUpdateApp() async {
-    String _api = "/api/AppVersoes";
+    String _api = "/api/Versoes";
 
     Map<String, dynamic> bod = {
       "App": Config.conf.nomeApp.toString().replaceAll('VersaoApp.', ''),
@@ -18,7 +18,6 @@ class UpdateAppService {
 
     debugPrint(bod.toString());
     final MyHttpResponse response = await _http.post(
-        decoder: false,
         url: Config.conf.apiEspelho! + _api,
         body: bod
     );
@@ -26,7 +25,8 @@ class UpdateAppService {
     try{
       if(response.isSucess){
         final dadosJson = response.data;
-        return dadosJson.toString() == 'true';
+        Config.isReenvioMarc = dadosJson['isReenviar'];
+        return dadosJson['isUpdate'];
       }
     }catch(e){
       debugPrint("postUpdateApp erro ${e.toString()}");

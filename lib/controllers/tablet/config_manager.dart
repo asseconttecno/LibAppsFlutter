@@ -2,8 +2,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:schedulers/schedulers.dart';
 
 import '../../enums/enums.dart';
@@ -110,22 +112,22 @@ class ConfigTabletManager extends ChangeNotifier {
 
     try {
       if(configModel.status == ConfigBackup.Mensal){
-        timer = Timer.periodic(Duration(days: 30), (timer) {
+        timer = Timer.periodic(const Duration(days: 30), (timer) {
           int mes = DateTime.now().month + 1;
           int ano = mes > 12 ? DateTime.now().year + 1 : DateTime.now().year;
           mes = mes > 12 ? 1 : mes;
-          DateTime _data = DateTime(ano, mes, 1, hora, min).subtract(Duration(days: 1));
+          DateTime _data = DateTime(ano, mes, 1, hora, min).subtract(const Duration(days: 1));
           scheduler.run(() {
             backup(empresa);
           }, _data);
         });
       }else if(configModel.status == ConfigBackup.Semanal){
-        timer = Timer.periodic(Duration(days: 7), (timer) {
+        timer = Timer.periodic(const Duration(days: 7), (timer) {
           int difeDias = difeDiaSemana(DateTime.now());
           int mes = DateTime.now().add(Duration(days: difeDias)).month;
           int ano = DateTime.now().add(Duration(days: difeDias)).year;
           int dia = DateTime.now().add(Duration(days: difeDias)).day;
-          DateTime _data = DateTime(ano, mes, dia, hora, min).subtract(Duration(days: 1));
+          DateTime _data = DateTime(ano, mes, dia, hora, min).subtract(const Duration(days: 1));
           scheduler.run(() {
             backup(empresa);
           }, _data);
@@ -140,7 +142,7 @@ class ConfigTabletManager extends ChangeNotifier {
             backup(empresa);
           }, _data);
         }
-        timer = Timer.periodic(Duration(hours: 6), (timer) {
+        timer = Timer.periodic(const Duration(hours: 6), (timer) {
           int mes = DateTime.now().month;
           int ano = DateTime.now().year;
           int dia = DateTime.now().day;
@@ -151,7 +153,9 @@ class ConfigTabletManager extends ChangeNotifier {
         });
       }
     } on Exception catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -161,14 +165,14 @@ class ConfigTabletManager extends ChangeNotifier {
       if(resultsql != null && resultsql.isNotEmpty){
         DateTime inicio = DateTime.parse(resultsql.first["datahora"]);
         DateTime terminmo = DateTime.parse(resultsql.last["datahora"]);
-        File? _file = await afd(empresa, inicio,terminmo,resultsql);
+        File? _file = await afd(empresa, inicio, terminmo, resultsql);
         if(_file != null){
           bool rest = await _sendMail.postSendMail(configModel.email!,
               'Segue anexo do AFD ate data ${DateFormat("dd/MM/yyyy", 'pt_BR').format(DateTime.now())}' , _file);
           return rest;
         }
       }
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint(e.toString());
     }
     return false;
@@ -176,8 +180,13 @@ class ConfigTabletManager extends ChangeNotifier {
 
   Future<File?> afd(EmpresaPontoModel empresa, DateTime inicio, DateTime fim, List marcacoes) async {
     try {
+      Directory tempDir = await getTemporaryDirectory();
+      String tempPath = tempDir.path;
+
       String _data = '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
-      File file = File('${configModel.local}/afd-${_data}.txt');
+      File file = File('$tempPath/afd-$_data.txt');
+
+
       int identCnpj = 1;
       if((empresa.cnpj?.replaceAll("/", "").replaceAll(".", "").replaceAll("-", "").length ?? 0) == 11){
         identCnpj = 2;
@@ -187,17 +196,26 @@ class ConfigTabletManager extends ChangeNotifier {
           "${DateFormat("ddMMyyyy", 'pt_BR').format(fim)}${DateFormat("ddMMyyyy", 'pt_BR').format(DateTime.now())}"
           "${DateFormat("HHmm", 'pt_BR').format(DateTime.now())}\n";
 
-      marcacoes.map((e){
-        String pis = e["pis"] != null ? e["pis"].toString() : e["registro"] != null ? e["registro"].toString() : "0";
-        afd = "$afd${e["id"].toString().padLeft(9, "0")}3${DateFormat("ddMMyyyy", 'pt_BR').format( DateTime.parse(e["datahora"]) )}"
-            "${DateFormat("HHmm", 'pt_BR').format( DateTime.parse(e["datahora"]) )}${pis.padLeft(11, "0")} "
-            "${e["nome"]}\n";
-      }).toList();
+      if(marcacoes.isNotEmpty){
+        marcacoes.map((e){
+          String pis = e["pis"] != null ? e["pis"].toString() : e["registro"] != null ? e["registro"].toString() : "0";
+          afd = "$afd${e["id"].toString().padLeft(9, "0")}3${DateFormat("ddMMyyyy", 'pt_BR').format( DateTime.parse(e["datahora"]) )}"
+              "${DateFormat("HHmm", 'pt_BR').format( DateTime.parse(e["datahora"]) )}${pis.padLeft(11, "0")} "
+              "${e["nome"]}\n";
+        }).toList();
+      }
 
-      print(afd);
-      await file.writeAsString('$afd');
+      await file.writeAsString(afd);
+
+      try {
+        File localFile = File('${configModel.local}/afd-$_data.txt');
+        await localFile.writeAsString(afd);
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+
       return file;
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint(e.toString());
     }
   }
