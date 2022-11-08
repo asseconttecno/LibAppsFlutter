@@ -1,11 +1,13 @@
 import 'package:assecontservices/model/asseweb/usuario/obrigacoes.dart';
+
 import 'package:flutter/material.dart';
+
 import '../../config.dart';
 import '../../model/asseweb/usuario/contatos.dart';
 import '../http/http.dart';
 
 class HomeAssewebService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<List<ContatosAsseweb>> contatos(
       {required String token, required int id}) async {
@@ -21,7 +23,7 @@ class HomeAssewebService {
       );
 
       if (response.isSucess) {
-        List<Map<String, dynamic>> result = response.data;
+        List result = response.data;
 
         List<ContatosAsseweb> ListaContatos =
             result.map((e) => ContatosAsseweb.fromMap(e)).toList();
@@ -48,7 +50,7 @@ class HomeAssewebService {
       );
 
       if (response.isSucess) {
-        List<Map<String, dynamic>> result = response.data;
+        List result = response.data;
 
         List<Obrigacoes> obrigacoes =
         result.map((e) => Obrigacoes.fromMap(e)).toList();
