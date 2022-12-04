@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 
+import '../../../common/common.dart';
 import '../../../config.dart';
 import '../../../helper/helper.dart';
 import '../../../model/model.dart';
@@ -92,7 +93,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                           value: value ?? '',
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Text(value ?? ''),
+                            child: CustomText.text(value ?? ''),
                           ),
                         );
                       }).toList(),
@@ -103,10 +104,10 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
               body: Container(
                   //height: MediaQuery.of(context).size.height - 100 - AppBar().preferredSize.height  -MediaQuery.of(context).padding.top,
                   child: !connectionStatus.hasConnection ?
-                  const Center(child: Text('Verifique sua Conexão com Internet')) :
+                  Center(child: CustomText.text('Verifique sua Conexão com Internet')) :
                   holerite.dropdowndata == 'Holerites' ?
-                  const Center(
-                    child: Text('Usuário não tem Holerites',
+                  Center(
+                    child: CustomText.text('Usuário não tem Holerites',
                       style: TextStyle(fontSize: 20),),
                   ) : FutureBuilder<List<HoleriteModel>?>(
                     future: dadosHolerite(),
@@ -140,7 +141,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                                   )
                               );
                             }else{
-                              resultado = const Center(child: Text('Nenhum Holerite disponivel'));
+                              resultado = Center(child: CustomText.text('Nenhum Holerite disponivel'));
                             }
                           }
                           break;

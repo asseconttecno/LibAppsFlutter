@@ -6,7 +6,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as common;
 import 'package:charts_common/src/common/color.dart' as colors;
 
-
+import '../../../common/common.dart';
 import '../../../config.dart';
 import '../../../controllers/controllers.dart';
 import '../../../model/model.dart';
@@ -98,7 +98,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
                               ),
                             );
                           }else{
-                            resultado = Center(child: Text(''));
+                            resultado = Center(child: CustomText.text(''));
                           }
                         }
                         break;

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config.dart';
-
+import '../../../common/common.dart';
 
 class CustomMenuItem extends StatelessWidget {
   CustomMenuItem(this.icon, this.titulo, this.function);
@@ -31,7 +31,7 @@ class CustomMenuItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(titulo, textAlign: TextAlign.center,),
+            child: CustomText.text(titulo, textAlign: TextAlign.center,),
           )
         ],
       ),

@@ -106,7 +106,7 @@ class CustomScaffold {
     return Scaffold(
       key: key,
       appBar: appTitle == null ? null : AppBar(
-        title: Text(appTitle),
+        title: CustomText.text(appTitle),
         centerTitle: true,
         actions: [
           actions(context),

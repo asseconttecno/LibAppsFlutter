@@ -1,9 +1,7 @@
-import 'package:assecontservices/model/asseweb/usuario/obrigacoes.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../config.dart';
-import '../../model/asseweb/usuario/contatos.dart';
+import '../../model/model.dart';
 import '../http/http.dart';
 
 class HomeAssewebService {

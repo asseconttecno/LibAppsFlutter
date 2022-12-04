@@ -79,6 +79,8 @@ dependencies:
 
   #store_launcher: ^1.0.1
 
+  auto_size_text: ^3.0.0
+
   schedulers: ^0.3.1
 
   device_preview: 1.0.0

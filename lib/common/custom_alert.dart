@@ -4,6 +4,8 @@ import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:provider/provider.dart';
 
 import '../config.dart';
+import 'common.dart';
+
 
 class CustomAlert {
 
@@ -62,7 +64,7 @@ class CustomAlert {
                 widgeTitulo != null ? widgeTitulo :
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(titulo?.toUpperCase() ?? '', style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+                  child: CustomText.text(titulo?.toUpperCase() ?? '', style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
                 ),
               ],
             ),
@@ -79,7 +81,7 @@ class CustomAlert {
                     child: Container(
                       //width: 100, alignment: Alignment.center,
                         padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text(txtBotaoCancel, style: TextStyle(color: isDark ? Colors.white54 : Colors.black45),))
+                        child: CustomText.text(txtBotaoCancel, style: TextStyle(color: isDark ? Colors.white54 : Colors.black45),))
                 ),
               if(txtBotaoCancel != null) SizedBox(width: 10,),
               if(txtBotaoSucess != null)
@@ -91,7 +93,7 @@ class CustomAlert {
                     child: Container(
                       //width: 100, alignment: Alignment.center,
                         padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text(txtBotaoSucess, style: TextStyle(color: Colors.blue),))
+                        child: CustomText.text(txtBotaoSucess, style: TextStyle(color: Colors.blue),))
                 ),
               SizedBox(width: 10,),
             ],

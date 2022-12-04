@@ -22,7 +22,7 @@ class UpdateAppManager {
         CustomAlert.custom(
             context: context,
             titulo: 'Atenção!',
-            corpo: Text('Não é possivel executar este app neste dispositivo!',
+            corpo: CustomText.text('Não é possivel executar este app neste dispositivo!',
               maxLines: 2, softWrap: true, textAlign: TextAlign.center,),
             txtBotaoSucess: 'OK',
             funcSucess: _funcExit()
@@ -37,7 +37,7 @@ class UpdateAppManager {
                 titulo: 'Exite uma nova versão',
                 corpo: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('\nAtualize agora mesmo para poder continuar acessando o app!\n',
+                  child: CustomText.text('\nAtualize agora mesmo para poder continuar acessando o app!\n',
                     textAlign: TextAlign.center,),
                 ),
                 txtBotaoSucess: 'Atualizar',

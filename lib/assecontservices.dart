@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
@@ -46,10 +44,6 @@ class Assecontservices {
     }else if(!Config.isWin){
       Config.isRealDevice = await SafeDevice.isRealDevice;
       Config.canMockLocation = await TrustLocation.isMockLocation;
-    }
-
-    if (Config.conf.nomeApp == VersaoApp.PontoApp && defaultTargetPlatform == TargetPlatform.android) {
-      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
@@ -193,7 +187,7 @@ class App extends StatefulWidget {
 }
 
 class _MyAppState extends State<App> {
-  BiometriaServices _bio = BiometriaServices();
+  final BiometriaServices _bio = BiometriaServices();
 
   @override
   void initState() {

@@ -1,10 +1,8 @@
-import 'package:assecontservices/model/asseweb/usuario/obrigacoes.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../config.dart';
-import '../../model/asseweb/usuario/obrigacoesdetalhes.dart';
+import '../../model/model.dart';
 import '../http/http.dart';
 
 class ObrigacoesAssewebService {
