@@ -1,72 +1,151 @@
+// To parse this JSON data, do
+//
+//     final obrigacaoModel = obrigacaoModelFromMap(jsonString);
+
 import 'dart:convert';
 
-class Obrigacoes {
-  Obrigacoes({
-    this.obrigacao,
-    this.obrigacaoClientePeriodo,
+import 'package:assecontservices/assecontservices.dart';
+
+class ObrigacaoModel {
+  ObrigacaoModel({
+    this.obrigacaoId,
+    this.obrcliperId,
+    this.grupo,
+    this.descricao,
+    this.nomeUsuario,
+    this.cliente,
+    this.status,
+    this.vencimento,
+    this.prazo,
+    this.concluidoEm,
+    this.prazoOuVencimento,
+    this.statusDescricao,
+    this.competencia,
+    this.tipoeDescricao,
+    this.temMemo,
+    this.darfVencido,
+    this.darfDataArrecadacao,
+    this.notaServico,
+    this.prestadorNome,
+    this.notaFiscal,
+    this.solicitacaoAdmissao,
+    this.solicitacaoFerias,
+    this.solicitacaoRecisao,
+    this.solicitacaoNome,
+    this.concluidoPor,
+    this.obrigacaoArquivoId,
+    this.ultimaBaixa,
+    this.numeroArquivos,
+    this.abonadoPor,
+    this.abonadoEm,
+    this.numeroNotasUnificadas,
+    this.diasMes,
   });
 
-  Obrigacao? obrigacao;
-  ObrigacaoClientePeriodo? obrigacaoClientePeriodo;
+  int? obrigacaoId;
+  int? obrcliperId;
+  String? grupo;
+  String? descricao;
+  String? nomeUsuario;
+  int? cliente;
+  int? status;
+  DateTime? vencimento;
+  DateTime? prazo;
+  DateTime? concluidoEm;
+  DateTime? prazoOuVencimento;
+  String? statusDescricao;
+  String? competencia;
+  String? tipoeDescricao;
+  bool? temMemo;
+  bool? darfVencido;
+  DateTime? darfDataArrecadacao;
+  String? notaServico;
+  String? prestadorNome;
+  String? notaFiscal;
+  String? solicitacaoAdmissao;
+  String? solicitacaoFerias;
+  String? solicitacaoRecisao;
+  String? solicitacaoNome;
+  String? concluidoPor;
+  int? obrigacaoArquivoId;
+  String? ultimaBaixa;
+  int? numeroArquivos;
+  String? abonadoPor;
+  DateTime? abonadoEm;
+  int? numeroNotasUnificadas;
+  String? diasMes;
 
-  factory Obrigacoes.fromJson(String str) => Obrigacoes.fromMap(json.decode(str));
-
-
-  factory Obrigacoes.fromMap(Map<String, dynamic> json) => Obrigacoes(
-    obrigacao: json["obrigacao"] == null ? null : Obrigacao.fromMap(json["obrigacao"]),
-    obrigacaoClientePeriodo: json["obrigacaoClientePeriodo"] == null ? null : ObrigacaoClientePeriodo.fromMap(json["obrigacaoClientePeriodo"]),
-  );
-
-}
-
-class Obrigacao {
-  Obrigacao({
-    this.id,
-    this.description,
-    this.sector,
-  });
-
-  int? id;
-  String? description;
-  int? sector;
-
-  factory Obrigacao.fromJson(String str) => Obrigacao.fromMap(json.decode(str));
+  factory ObrigacaoModel.fromJson(String str) => ObrigacaoModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Obrigacao.fromMap(Map<String, dynamic> json) => Obrigacao(
-    id: json["id"] == null ? null : json["id"],
-    description: json["description"] == null ? null : json["description"],
-    sector: json["sector"] == null ? null : json["sector"],
+  factory ObrigacaoModel.fromMap(Map<String, dynamic> json) => ObrigacaoModel(
+    obrigacaoId: json["obrigacaoId"],
+    obrcliperId: json["obrcliperId"],
+    grupo: json["grupo"],
+    descricao: json["descricao"],
+    nomeUsuario: json["nomeUsuario"],
+    cliente: json["cliente"],
+    status: json["status"],
+    vencimento: Validacoes.stringToDataBr(json["vencimento"]),
+    prazo: Validacoes.stringToDataBr(json["prazo"]),
+    concluidoEm: Validacoes.stringToDataBr(json["concluidoEm"]),
+    prazoOuVencimento: Validacoes.stringToDataBr(json["prazoOuVencimento"]),
+    statusDescricao: json["statusDescricao"],
+    competencia: json["competencia"],
+    tipoeDescricao: json["tipoeDescricao"],
+    temMemo: json["temMemo"],
+    darfVencido: json["darfVencido"],
+    darfDataArrecadacao: Validacoes.stringToDataBr(json["darfDataArrecadacao"]),
+    notaServico: json["notaServico"],
+    prestadorNome: json["prestadorNome"],
+    notaFiscal: json["notaFiscal"],
+    solicitacaoAdmissao: json["solicitacaoAdmissao"],
+    solicitacaoFerias: json["solicitacaoFerias"],
+    solicitacaoRecisao: json["solicitacaoRecisao"],
+    solicitacaoNome: json["solicitacaoNome"],
+    concluidoPor: json["concluidoPor"],
+    obrigacaoArquivoId: json["obrigacaoArquivoId"],
+    ultimaBaixa: json["ultimaBaixa"],
+    numeroArquivos: json["numeroArquivos"],
+    abonadoPor: json["abonadoPor"],
+    abonadoEm: Validacoes.stringToDataBr(json["abonadoEm"]),
+    numeroNotasUnificadas: json["numeroNotasUnificadas"],
+    diasMes: json["diasMes"].toString(),
   );
 
   Map<String, dynamic> toMap() => {
-    "id": id == null ? null : id,
-    "description": description == null ? null : description,
-    "sector": sector == null ? null : sector,
+    "obrigacaoId": obrigacaoId,
+    "obrcliperId": obrcliperId,
+    "grupo": grupo,
+    "descricao": descricao,
+    "nomeUsuario": nomeUsuario,
+    "cliente": cliente,
+    "status": status,
+    "vencimento": vencimento,
+    "prazo": prazo,
+    "concluidoEm": concluidoEm,
+    "prazoOuVencimento": prazoOuVencimento,
+    "statusDescricao": statusDescricao,
+    "competencia": competencia,
+    "tipoeDescricao": tipoeDescricao,
+    "temMemo": temMemo,
+    "darfVencido": darfVencido,
+    "darfDataArrecadacao": darfDataArrecadacao,
+    "notaServico": notaServico,
+    "prestadorNome": prestadorNome,
+    "notaFiscal": notaFiscal,
+    "solicitacaoAdmissao": solicitacaoAdmissao,
+    "solicitacaoFerias": solicitacaoFerias,
+    "solicitacaoRecisao": solicitacaoRecisao,
+    "solicitacaoNome": solicitacaoNome,
+    "concluidoPor": concluidoPor,
+    "obrigacaoArquivoId": obrigacaoArquivoId,
+    "ultimaBaixa": ultimaBaixa,
+    "numeroArquivos": numeroArquivos,
+    "abonadoPor": abonadoPor,
+    "abonadoEm": abonadoEm,
+    "numeroNotasUnificadas": numeroNotasUnificadas,
+    "diasMes": diasMes,
   };
-}
-
-class ObrigacaoClientePeriodo {
-  ObrigacaoClientePeriodo({
-    this.id,
-    this.deadLine,
-    this.finishedIn,
-    this.completedBy,
-  });
-
-  int? id;
-  String? deadLine;
-  DateTime? finishedIn;
-  int? completedBy;
-
-  factory ObrigacaoClientePeriodo.fromJson(String str) => ObrigacaoClientePeriodo.fromMap(json.decode(str));
-
-  factory ObrigacaoClientePeriodo.fromMap(Map<String, dynamic> json) => ObrigacaoClientePeriodo(
-    id: json["id"] == null ? null : json["id"],
-    deadLine: json["deadLine"] == null ? null : json["deadLine"],
-    finishedIn: json["finishedIn"] == null ? null : DateTime.parse(json["finishedIn"]),
-    completedBy: json["completedBy"] == null ? null : json["completedBy"],
-  );
-
 }

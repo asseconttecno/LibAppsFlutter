@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-class ObrigacoesDetalhes {
-  ObrigacoesDetalhes({
+import 'package:assecontservices/assecontservices.dart';
+
+class ObrigacoesDetalhesModel {
+  ObrigacoesDetalhesModel({
     this.obrigacaoDescricao,
     this.obrigacaoTipo,
     this.responsavel,
@@ -20,35 +22,35 @@ class ObrigacoesDetalhes {
   String? obrigacaoDescricao;
   String? obrigacaoTipo;
   String? responsavel;
-  String? vencimento;
+  DateTime? vencimento;
   String? competencia;
   int? clienteId;
   int? obrigacaoArquivoId;
   String? disponivelPor;
-  String? disponivelEm;
+  DateTime? disponivelEm;
   String? visualizadoPor;
-  String? visualizadoEm;
-  String? emailEnviadoEm;
-  String? smsEnviadoEm;
+  DateTime? visualizadoEm;
+  DateTime? emailEnviadoEm;
+  DateTime? smsEnviadoEm;
 
-  factory ObrigacoesDetalhes.fromJson(String str) => ObrigacoesDetalhes.fromMap(json.decode(str));
+  factory ObrigacoesDetalhesModel.fromJson(String str) => ObrigacoesDetalhesModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ObrigacoesDetalhes.fromMap(Map<String, dynamic> json) => ObrigacoesDetalhes(
+  factory ObrigacoesDetalhesModel.fromMap(Map<String, dynamic> json) => ObrigacoesDetalhesModel(
     obrigacaoDescricao: json["obrigacaoDescricao"] == null ? null : json["obrigacaoDescricao"],
     obrigacaoTipo: json["obrigacaoTipo"] == null ? null : json["obrigacaoTipo"],
     responsavel: json["responsavel"] == null ? null : json["responsavel"],
-    vencimento: json["vencimento"] == null ? null : json["vencimento"],
+    vencimento: json["vencimento"] == null ? null : Validacoes.stringToDataBr(json["vencimento"]),
     competencia: json["competencia"] == null ? null : json["competencia"],
     clienteId: json["clienteId"] == null ? null : json["clienteId"],
     obrigacaoArquivoId: json["obrigacaoArquivoId"] == null ? null : json["obrigacaoArquivoId"],
     disponivelPor: json["disponivelPor"] == null ? null : json["disponivelPor"],
-    disponivelEm: json["disponivelEm"] == null ? null : json["disponivelEm"],
+    disponivelEm: json["disponivelEm"] == null ? null : Validacoes.stringToDataBr(json["disponivelEm"]),
     visualizadoPor: json["visualizadoPor"] == null ? null : json["visualizadoPor"],
-    visualizadoEm: json["visualizadoEm"] == null ? null : json["visualizadoEm"],
-    emailEnviadoEm: json["emailEnviadoEm"] == null ? null : json["emailEnviadoEm"],
-    smsEnviadoEm: json["smsEnviadoEm"] == null ? null : json["smsEnviadoEm"],
+    visualizadoEm: json["visualizadoEm"] == null ? null : Validacoes.stringToDataBr(json["visualizadoEm"]),
+    emailEnviadoEm: json["emailEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["emailEnviadoEm"]),
+    smsEnviadoEm: json["smsEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["smsEnviadoEm"]),
   );
 
   Map<String, dynamic> toMap() => {

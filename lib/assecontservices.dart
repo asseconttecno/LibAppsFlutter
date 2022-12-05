@@ -15,6 +15,7 @@ import 'helper/helper.dart';
 import 'model/model.dart';
 import 'config.dart';
 
+
 export 'model/model.dart';
 export 'enums/enums.dart';
 export 'controllers/controllers.dart';
@@ -23,8 +24,10 @@ export 'common/common.dart';
 export 'ui/ui.dart';
 export 'helper/helper.dart';
 export 'config.dart';
+export 'utils/utils.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:tutorial/tutorial.dart';
 
 class Assecontservices {
 
@@ -157,6 +160,22 @@ class Assecontservices {
           create: (_)=> SenhaPontoManager(),
         ),
 
+      ///-----------asseweb--------------///
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: true,
+          create: (_) => HomeAssewebManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: false,
+          create: (_) => UserAssewebManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        Provider(
+          lazy: false,
+          create: (context) => SenhaAssewebManager(),
+        ),
     ];
 
     if(providers != null){

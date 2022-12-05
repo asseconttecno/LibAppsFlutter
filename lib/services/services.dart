@@ -29,4 +29,3 @@ export 'biometria.dart';
 export 'sendmail.dart';
 export 'update_app.dart';
 export 'sqlite_ponto.dart';
-export 'camera.dart';

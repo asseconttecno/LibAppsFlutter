@@ -1,9 +1,8 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-import 'package:url_launcher/url_launcher.dart';
-
+import '../utils/utils.dart';
 import '../config.dart';
 import 'common.dart';
 
@@ -68,7 +67,7 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                           ),
                         ),
                         onTap: (){
-                          launch('https://web.whatsapp.com/send?phone=551121738888&text=Ol%C3%A1%2C%20quero%20ser%20cliente%20da%20assecont');
+                          UrlLauncher.openUrl('https://web.whatsapp.com/send?phone=551121738888&text=Ol%C3%A1%2C%20quero%20ser%20cliente%20da%20assecont');
                         },
                       ),
                     ),
@@ -85,7 +84,7 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                           ),
                         ),
                         onTap: (){
-                          launch('mailto:suporte@assecont.com.br');
+                          UrlLauncher.openMail('suporte@assecont.com.br');
                         },
                       ),
                     ),

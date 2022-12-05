@@ -11,8 +11,9 @@ class ExpansiveContainer extends StatefulWidget {
   String titulo;
   Color tituloColor;
   Color color;
+  bool isExpanded;
 
-  ExpansiveContainer({this.child, this.titulo = '', this.tituloWidget,
+  ExpansiveContainer({this.child, this.titulo = '', this.tituloWidget, this.isExpanded = false,
     this.color = Colors.white, this.tituloColor = Colors.black});
 
   @override
@@ -21,6 +22,12 @@ class ExpansiveContainer extends StatefulWidget {
 
 class _ExpansiveContainerState extends State<ExpansiveContainer> {
   bool open = false;
+
+  @override
+  void initState() {
+    open = widget.isExpanded;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -18,6 +18,7 @@ export 'ponto/usuario/users.dart';
 export 'configuracoes.dart';
 
 export 'asseweb/usuario/usuario.dart';
+export 'asseweb/obrigacoes/obrigacoes_home.dart';
 export 'asseweb/obrigacoes/obrigacoes.dart';
 export 'asseweb/obrigacoes/obrigacoesdetalhes.dart';
 export 'asseweb/contatos/contatos.dart';

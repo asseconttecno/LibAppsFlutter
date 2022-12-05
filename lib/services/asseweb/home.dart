@@ -34,9 +34,9 @@ class HomeAssewebService {
     return [];
   }
 
-  Future<List<Obrigacoes>> obrigacoesusuarios(
+  Future<List<ObrigacoesHomeModel>> obrigacoesusuarios(
       {required String token, required int idcliente, required int idusuario}) async {
-    String _metodo = ' /api/Obrigacao/obrbyuser?userId=${idcliente}&clientId=${idusuario}&days=3';
+    String _metodo = '/api/Obrigacao/obrbyuser?userId=${idusuario}&clientId=${idcliente}&days=5';
 
     try {
       MyHttpResponse response = await _http.get(
@@ -50,13 +50,15 @@ class HomeAssewebService {
       if (response.isSucess) {
         List result = response.data;
 
-        List<Obrigacoes> obrigacoes =
-        result.map((e) => Obrigacoes.fromMap(e)).toList();
+        List<ObrigacoesHomeModel> obrigacoes =
+        result.map((e) => ObrigacoesHomeModel.fromMap(e)).toList();
 
         return obrigacoes;
+      }else{
+        debugPrint('HomeAssewebService - obrigacoesusuarios: ${response.codigo}\n${response.data}');
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('HomeAssewebService - obrigacoesusuarios: ' + e.toString());
     }
     return [];
   }

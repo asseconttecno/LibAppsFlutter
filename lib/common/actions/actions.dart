@@ -4,7 +4,7 @@ import '../../controllers/controllers.dart';
 import '../../config.dart';
 import '../../common/common.dart';
 import '../../enums/enums.dart';
-import '../alterar_senha.dart';
+import 'func_alter_empresa.dart';
 import 'func_alter_user.dart';
 import 'func_aponta.dart';
 import 'func_config.dart';
@@ -18,13 +18,18 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
       key: keyMenu,
-      child: Icon(Icons.more_vert, color: Colors.white,),
       itemBuilder: (context) => [
         if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
           PopupMenuItem(
             key: key1,
             value: 0,
             child: CustomText.text("Alterar Usuario"),
+          ),
+        if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+          PopupMenuItem(
+            key: key1,
+            value: 0,
+            child: CustomText.text("Alterar Empresa"),
           ),
         if(Config.conf.nomeApp == VersaoApp.PontoApp && aponta && !registro)
           PopupMenuItem(
@@ -65,11 +70,15 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
 
       ],
       //initialValue: intvalue,
-      offset: Offset(10,5),
+      offset: const Offset(10,5),
       onSelected: (value) async {
         switch( value ){
           case 0 :
-            alterUser(context);
+            if(Config.conf.nomeApp == VersaoApp.HoleriteApp) {
+              alterUser(context);
+            } else if(Config.conf.nomeApp == VersaoApp.AssewebApp) {
+              alterEmpresa(context);
+            }
             break;
           case 1 :
             funcAponta(context);
@@ -91,6 +100,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             break;
         }
       },
+      child: const Icon(Icons.more_vert, color: Colors.white,),
     )
   );
 }
