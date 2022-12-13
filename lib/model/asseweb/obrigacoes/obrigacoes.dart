@@ -55,7 +55,7 @@ class ObrigacaoModel {
   DateTime? prazoOuVencimento;
   String? statusDescricao;
   String? competencia;
-  String? tipoeDescricao;
+  ObrigacaoTipo? tipoeDescricao;
   bool? temMemo;
   bool? darfVencido;
   DateTime? darfDataArrecadacao;
@@ -93,7 +93,7 @@ class ObrigacaoModel {
     prazoOuVencimento: Validacoes.stringToDataBr(json["prazoOuVencimento"]),
     statusDescricao: json["statusDescricao"],
     competencia: json["competencia"],
-    tipoeDescricao: json["tipoeDescricao"],
+    tipoeDescricao: ObrigacaoTipo.getEnum(json["tipoeDescricao"]),
     temMemo: json["temMemo"],
     darfVencido: json["darfVencido"],
     darfDataArrecadacao: Validacoes.stringToDataBr(json["darfDataArrecadacao"]),
