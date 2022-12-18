@@ -22,3 +22,4 @@ export 'asseweb/obrigacoes/obrigacoes_home.dart';
 export 'asseweb/obrigacoes/obrigacoes.dart';
 export 'asseweb/obrigacoes/obrigacoesdetalhes.dart';
 export 'asseweb/contatos/contatos.dart';
+export 'asseweb/boletos/boletos.dart';

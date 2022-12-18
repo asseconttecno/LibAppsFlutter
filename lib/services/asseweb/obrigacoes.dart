@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../config.dart';
 import '../../controllers/controllers.dart';
 import '../../model/model.dart';
+import '../../utils/get_file.dart';
 import '../http/http.dart';
 
 class ObrigacoesAssewebService {
@@ -63,7 +64,8 @@ class ObrigacoesAssewebService {
   }
 
   Future<File?> obrigacaoFile({int? idfileObg}) async {
-    String _metodo = '/api/Obrigacao/obrfile?obrAqrId=${idfileObg}&clientId=${UserAssewebManager.sCompanies?.id}&recalculo=true';
+    String _metodo = '/api/Obrigacao/obrfile?obrAqrId=${idfileObg}&clientId=${UserAssewebManager.sCompanies?.id}&recalculo=false';
+
 
     try {
       MyHttpResponse response = await _http.get(
@@ -77,7 +79,7 @@ class ObrigacoesAssewebService {
 
       if (response.isSucess) {
         Uint8List u = response.data;
-        File result = File.fromRawPath(u);
+        File result = await CustomFile.fileTemp('pdf',memori: u);
         return result;
       }else{
         debugPrint('ObrigacoesAssewebService - obrigacaoFile: ${response.codigo} ${response.data}');

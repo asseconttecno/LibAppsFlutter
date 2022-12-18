@@ -29,6 +29,8 @@ class HomeAssewebManager extends ChangeNotifier {
         idcliente: UserAssewebManager.sCompanies?.id ?? 0,
         idusuario: UserAssewebManager.sUser?.login?.id ?? 0,
     );
+    listObrigacoes.sort((a,b) => a.obrigacaoClientePeriodo?.deadLine?.compareTo(b.obrigacaoClientePeriodo!.deadLine!) ?? 0);
+
     notifyListeners();
   }
 }

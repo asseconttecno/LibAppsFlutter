@@ -23,7 +23,7 @@ export 'asseweb/usuario.dart';
 export 'asseweb/home.dart';
 export 'asseweb/obrigacoes.dart';
 export 'asseweb/senha.dart';
-
+export 'asseweb/boletos.dart';
 
 export 'biometria.dart';
 export 'sendmail.dart';

@@ -41,7 +41,7 @@ alterEmpresa(BuildContext context){
                         return InkWell(
                             child: Card(elevation: 0.2,
                               child: ListTile(
-                                leading: Icon(CupertinoIcons.person_crop_circle, size: 40,
+                                leading: Icon(Icons.account_balance_sharp, size: 40,
                                   color: user.user?.login?.companies![index] == user.companies
                                       ? Config.corPri : null,),
                                 title: CustomText.text(
@@ -66,8 +66,8 @@ alterEmpresa(BuildContext context){
                             ),
                             onTap: () async {
                               user.companies = user.user?.login?.companies![index];
-                              await context.read<HomeAssewebManager>().getObrigacoesusuarios();
-                              await context.read<HomeAssewebManager>().getContatos();
+                              context.read<HomeAssewebManager>().getObrigacoesusuarios();
+                              context.read<HomeAssewebManager>().getContatos();
                               //Navigator.pop(context);
                             }
                         );

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../services/http/http_cliente.dart';
@@ -22,12 +23,26 @@ class CustomFile {
     return file;
   }
 
-  static Future<File> fileTemp(String extensao, {Uint8List? memori, String? base64})  async {
+  static Future<File> fileTemp(String extensao, {Uint8List? memori, String? base64, String? nome })  async {
     assert(memori != null || base64 != null);
 
-    String name = DateTime.now().microsecondsSinceEpoch.toString();
+    String name = nome ?? DateTime.now().microsecondsSinceEpoch.toString();
     var tempDir = await getTemporaryDirectory();
     File file = await File('${tempDir.path}/${name}.$extensao').writeAsBytes(memori ?? base64Decode(base64!));
+    return file;
+  }
+
+  static Future<File> fileHtml(String nomeFile, {String? html})  async {
+    var htmlContent = '''<!DOCTYPE html>
+        <html>
+        <head></head>
+        <body>${html}</body>
+        </html>
+        ''';
+    Directory tempDir = await getTemporaryDirectory();
+    File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
+        htmlContent, tempDir.path, nomeFile
+    );
     return file;
   }
 }
