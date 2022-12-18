@@ -1,7 +1,10 @@
-import 'package:assecontservices/assecontservices.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../utils/utils.dart';
+import '../config.dart';
+import 'common.dart';
 
 Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
   return showDialog(
@@ -17,7 +20,7 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                 const SizedBox(height: 10,),
                 isCnpj ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.warning_rounded,
                       color: Color(0xFFFF9800),
@@ -27,20 +30,20 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                       width: 10,
                     ),
                     Flexible(
-                      child: Text('CNPJ NÃO CADASTRADO',
+                      child: CustomText.text('CNPJ NÃO CADASTRADO',
                         style: TextStyle( fontWeight: FontWeight.w600,fontSize: 18),
                       ),
                     ),
                   ],
-                ) : const Flexible(
-                    child: Text('PRIMEIRO ACESSO',
+                ) :  Flexible(
+                    child: CustomText.text('PRIMEIRO ACESSO',
                     style: TextStyle( fontWeight: FontWeight.w600,fontSize: 18),
                   ),
                 ),
                 const SizedBox(height: 10,),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal:10),
-                  child: Text('Entre em contato com Assecont!',
+                  child: CustomText.text('Solicite para seu RH entrar em contato com Assecont!',
                     style: TextStyle(fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
@@ -56,15 +59,15 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
-                            children: const [
+                            children: [
                               Icon(CupertinoIcons.phone_down_circle_fill, color: Colors.green, size: 60,),
-                              Text('11 21738888', textAlign: TextAlign.center,
+                              CustomText.text('11 21738888', textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 11),),
                             ],
                           ),
                         ),
                         onTap: (){
-                          launch('https://web.whatsapp.com/send?phone=551121738863&text=Quero%20contratar%20holerite%20eletr%C3%B4nico');
+                          UrlLauncher.openUrl('https://web.whatsapp.com/send?phone=551121738888&text=Ol%C3%A1%2C%20quero%20ser%20cliente%20da%20assecont');
                         },
                       ),
                     ),
@@ -73,15 +76,15 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: Column(
-                            children: const [
+                            children: [
                               Icon(CupertinoIcons.mail_solid, color: Colors.red, size: 60,),
-                              Text('comercial@assecont.com.br', textAlign: TextAlign.center,
+                              CustomText.text('suporte@assecont.com.br', textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 10),),
                             ],
                           ),
                         ),
                         onTap: (){
-                          launch('mailto:comercial@assecont.com.br');
+                          UrlLauncher.openMail('suporte@assecont.com.br');
                         },
                       ),
                     ),

@@ -4,7 +4,7 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
   flutter: ">=2.5.0"
 
 dependencies:
@@ -13,32 +13,32 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  provider: ^6.0.3
+  provider: ^6.0.4
 
   flutter_awesome_alert_box: ^2.1.1
 
 
-  sqflite: ^2.0.2 #^2.0.2
-  sqflite_common_ffi: ^2.1.1+1
+  sqflite: ^2.2.2 #^2.0.2
+  sqflite_common_ffi: ^2.2.0+1
 
-  http: ^0.13.4
+  http: ^0.13.5
 
   intl: ^0.17.0
 
-  image_picker: ^0.8.5+3
-  filesystem_picker: ^2.0.0 #^2.0.2
+  image_picker: ^0.8.6
+  filesystem_picker: ^3.1.0 #^2.0.2
 
-  local_auth: ^2.1.0
+  local_auth: ^2.1.2
 
   photo_view: ^0.14.0
 
-  geocoding: ^2.0.4
+  geocoding: ^2.0.5
   location: ^4.4.0
-  google_maps_flutter: ^2.1.10
+  google_maps_flutter: ^2.2.1
 
-  url_launcher: ^6.1.5
+  url_launcher: ^6.1.7
 
-  flutter_carousel_slider: ^1.0.9
+  flutter_carousel_slider: ^1.1.0
 
   flutter_calendar_week:
     git:
@@ -61,7 +61,7 @@ dependencies:
 
   path_provider: ^2.0.11
   shared_preferences: ^2.0.15
-  external_path: ^1.0.1
+  external_path: ^1.0.3
 
   cpf_cnpj_validator: ^2.0.0
 
@@ -69,19 +69,21 @@ dependencies:
 
   share_extend: ^2.0.0
 
-  connectivity_plus: ^2.3.6
-  package_info_plus: ^1.4.2 #^1.4.2
-  safe_device: ^1.1.1
+  connectivity_plus: ^3.0.2
+  package_info_plus: any #^3.0.2 #^1.4.2
+  safe_device: ^1.1.2
   trust_location: ^2.0.13
 
-  in_app_review: ^2.0.4
+  in_app_review: ^2.0.6
   launch_review: ^3.0.1
 
   #store_launcher: ^1.0.1
 
-  schedulers: ^0.3.1
+  auto_size_text: ^3.0.0
 
-  device_preview: 1.0.0
+  schedulers: ^1.0.1
+
+  device_preview: ^1.1.0
 
 dev_dependencies:
 

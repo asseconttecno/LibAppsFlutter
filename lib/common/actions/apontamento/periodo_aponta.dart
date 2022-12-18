@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/common.dart';
 import '../../../config.dart';
 import '../../../controllers/controllers.dart';
 import 'item_listwheel.dart';
@@ -25,7 +26,7 @@ PeriodoApontamento(BuildContext context){
                           onPressed: (){
                             Navigator.pop(context);
                           },
-                          child: Text('Cancelar')
+                          child: CustomText.text('Cancelar')
                       ),
                       TextButton(
                           onPressed: (){
@@ -40,12 +41,12 @@ PeriodoApontamento(BuildContext context){
                               Navigator.pop(context);
                             }
                           },
-                          child: Text('Ok')
+                          child: CustomText.text('Ok')
                       ),
                     ],
                   ),
                 ),
-                Text('APONTAMENTOS', style: TextStyle(
+                CustomText.text('APONTAMENTOS', style: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.normal,
                   color: context.watch<Config>().darkTemas ? Colors.white : Colors.black,
                   decoration: TextDecoration.none
@@ -105,7 +106,7 @@ LiveList(
                               elevation: 4,
                               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                               child: Container(height: 70, alignment: Alignment.center,
-                                child: Text( aponta?.apontamento[indice].descricao.toUpperCase() ?? "",
+                                child: CustomText.text( aponta?.apontamento[indice].descricao.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 20,),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,

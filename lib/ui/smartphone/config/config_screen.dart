@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 
+import '../../../common/common.dart';
 import '../../../ui/ui.dart';
 import '../../../controllers/controllers.dart';
 import '../../../../config.dart';
@@ -30,7 +31,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                     child: Column(
                       children: [
                         SwitchListTile(
-                            title: Text("Modo Escuro"),
+                            title: CustomText.text("Modo Escuro"),
                             value: color,
                             onChanged: (bool valor){
                               context.read<Config>().darkTemas = valor;
@@ -40,7 +41,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                         Consumer<BiometriaManager>(
                           builder: (_, bio, __) {
                             return SwitchListTile(
-                                title: Text("Login com Bio/Face"),
+                                title: CustomText.text("Login com Bio/Face"),
                                 value: bio.bio,
                                 onChanged: (bool valor) {
                                   if(bio.checkbio){
@@ -59,7 +60,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                     padding: const EdgeInsets.only(bottom: 15, right: 25),
                     child: Row(mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Versao '+ Config.versao),
+                        CustomText.text('Versao '+ Config.versao),
                       ],
                     ),
                   )

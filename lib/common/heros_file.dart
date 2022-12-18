@@ -10,10 +10,11 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../config.dart';
 
 class FileHero extends StatefulWidget {
-  final File img;
+  final File file;
+
   final String name;
   final Widget? menu;
-  FileHero(this.img, this.name, {this.menu});
+  FileHero(this.file, this.name, {this.menu});
 
   @override
   _FileHeroState createState() => _FileHeroState();
@@ -51,7 +52,7 @@ class _FileHeroState extends State<FileHero> {
                     );
                     if(appDocDir != null){
                       File down = await File((appDocDir + '/${widget.name}.pdf').replaceAll(' ', '-')).
-                      writeAsBytes(widget.img.readAsBytesSync());
+                      writeAsBytes(widget.file.readAsBytesSync());
                       print(down.path);
                       OpenFile.open(down.path);
                     }
@@ -59,7 +60,7 @@ class _FileHeroState extends State<FileHero> {
                 ),
               IconButton(icon: Icon(Icons.send, color: Colors.white,),
                 onPressed: (){
-                  ShareExtend.share(widget.img.path, "file",
+                  ShareExtend.share(widget.file.path, "file",
                       sharePanelTitle: "Enviar PDF",
                       subject: "${widget.name}.pdf");
                 }
@@ -80,7 +81,7 @@ class _FileHeroState extends State<FileHero> {
                           margin: widget.menu != null ? EdgeInsets.only(bottom: 120) : null,
                           alignment: Alignment.center,
                           color: Colors.black,
-                          child: SfPdfViewer.file(widget.img),
+                          child: SfPdfViewer.file(widget.file),
                         ),
                         menus()
                       ],

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 
-import '../../../common/custom_alert.dart';
+
 import '../config.dart';
 import '../controllers/controllers.dart';
 import '../enums/enums.dart';
-import 'load_screen.dart';
+import 'common.dart';
+
 
 
 
@@ -41,7 +42,7 @@ class _AlertSenhaState extends State<AlertSenha> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text(
+           CustomText.text(
             "Deseja trocar a senha?",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20),
@@ -125,8 +126,8 @@ class _AlertSenhaState extends State<AlertSenha> {
                 primary: Colors.white,
                 backgroundColor: Config.corPri,
               ),
-              child: const Center(
-                child: Text("ENVIAR",
+              child: Center(
+                child: CustomText.text("ENVIAR",
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
@@ -156,6 +157,25 @@ class _AlertSenhaState extends State<AlertSenha> {
                   } else if(Config.conf.nomeApp == VersaoApp.HoleriteApp){
                     await context.read<SenhaHoleriteManager>().alteracaoPass(
                       context, senha: senhaAtual.text, senhaNova: senhaNova.text,
+                    ).then((value){
+                      if(value){
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        CustomAlert.sucess(
+                          context: context,
+                          mensage: 'Senha Alterada!',
+                        );
+                      }
+                    }).onError((error, stackTrace) {
+                      Navigator.pop(context);
+                      CustomAlert.erro(
+                        context: context,
+                        mensage: error.toString(),
+                      );
+                    });
+                  } else if(Config.conf.nomeApp == VersaoApp.AssewebApp){
+                    await context.read<SenhaAssewebManager>().alteracaoPass(
+                      context, senhaNova: senhaNova.text,
                     ).then((value){
                       if(value){
                         Navigator.pop(context);

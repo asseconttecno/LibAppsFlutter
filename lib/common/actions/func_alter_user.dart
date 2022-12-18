@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/common.dart';
 import '../../config.dart';
 import '../../controllers/controllers.dart';
-import '../custom_bottom_sheet.dart';
 
 
 alterUser(BuildContext context){
@@ -27,7 +27,7 @@ alterUser(BuildContext context){
                         icon: const Icon(Icons.clear, color: Colors.blue,)),
                   ],
                 ),
-                Text('SELECIONE O USUARIO', style: TextStyle(
+                CustomText.text('SELECIONE O USUARIO', style: TextStyle(
                     fontSize: 18, fontWeight: FontWeight.normal,
                     color: context.watch<Config>().darkTemas ? Colors.white : Colors.black,
                     decoration: TextDecoration.none
@@ -43,7 +43,7 @@ alterUser(BuildContext context){
                               child: ListTile(
                                 leading: Icon(CupertinoIcons.person_crop_circle, size: 40,
                                   color: user.listuser![index] == user.user ? Config.corPri : null,),
-                                title: Text(
+                                title: CustomText.text(
                                   user.listuser![index].empresa?.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 16,
                                       color: user.listuser![index] == user.user ? Config.corPri : null
@@ -52,7 +52,7 @@ alterUser(BuildContext context){
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
                                 ),
-                                subtitle: Text('Registro: ' +
+                                subtitle: CustomText.text('Registro: ' +
                                     (user.listuser![index].registro ?? ""),
                                   style: TextStyle(fontSize: 13,
                                       color: user.listuser![index] == user.user ? Config.corPri : null),

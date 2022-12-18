@@ -113,7 +113,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                       value: value,
                       child: Padding(
                         padding:  EdgeInsets.symmetric(vertical: 8),
-                        child: Text(value ?? ''),
+                        child: CustomText.text(value ?? ''),
                       ),
                     );
                   }).toList(),
@@ -137,7 +137,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: Text("Proventos\n${mask.format(holerite?.vencimentos ?? 0)}",
+                              child: CustomText.text("Proventos\n${mask.format(holerite?.vencimentos ?? 0)}",
                                 textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -151,7 +151,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: Text("Descontos\n${mask.format(holerite?.descontos ?? 0)}",
+                              child: CustomText.text("Descontos\n${mask.format(holerite?.descontos ?? 0)}",
                                 textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -165,7 +165,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: Text("Liquido\n${mask.format(holerite?.liquido ?? 0)}",
+                              child: CustomText.text("Liquido\n${mask.format(holerite?.liquido ?? 0)}",
                                 textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -185,7 +185,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           child: Column(mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Text('Proventos'.toUpperCase(), style: TextStyle(color: Colors.black),),
+                              CustomText.text('Proventos'.toUpperCase(), style: TextStyle(color: Colors.black),),
                               SizedBox(height: 4,),
                               Container(
                                 height: 138, width: width * 0.59,
@@ -267,7 +267,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   child: Column(mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text('Líquido nos ultimos 3 meses', style: TextStyle(color: Colors.black),),
+                      CustomText.text('Líquido nos ultimos 3 meses', style: TextStyle(color: Colors.black),),
                       SizedBox(height: 10,),
                       Container(height: height * 0.25,
                         child: charts.BarChart(
@@ -325,7 +325,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   )
               ),
               SizedBox(height: 15,),
-              Text("Disponibilizado\n${holerite?.dataCriacao ?? ''}", textAlign: TextAlign.center,),
+              CustomText.text("Disponibilizado\n${holerite?.dataCriacao ?? ''}", textAlign: TextAlign.center,),
             ],
           ),
         ),
@@ -357,7 +357,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
               );
             }
           },
-          label: Text('Visualizar'.toUpperCase(), style: TextStyle(fontSize: 20, color: Colors.white),)
+          label: CustomText.text('Visualizar'.toUpperCase(), style: TextStyle(fontSize: 20, color: Colors.white),)
 
       ),
     );

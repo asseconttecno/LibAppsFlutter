@@ -1,11 +1,11 @@
-import 'package:assecontservices/model/asseweb/usuario/obrigacoes.dart';
 import 'package:flutter/material.dart';
+
 import '../../config.dart';
-import '../../model/asseweb/usuario/contatos.dart';
+import '../../model/model.dart';
 import '../http/http.dart';
 
 class HomeAssewebService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<List<ContatosAsseweb>> contatos(
       {required String token, required int id}) async {
@@ -21,7 +21,7 @@ class HomeAssewebService {
       );
 
       if (response.isSucess) {
-        List<Map<String, dynamic>> result = response.data;
+        List result = response.data;
 
         List<ContatosAsseweb> ListaContatos =
             result.map((e) => ContatosAsseweb.fromMap(e)).toList();
@@ -34,9 +34,9 @@ class HomeAssewebService {
     return [];
   }
 
-  Future<List<Obrigacoes>> obrigacoesusuarios(
+  Future<List<ObrigacoesHomeModel>> obrigacoesusuarios(
       {required String token, required int idcliente, required int idusuario}) async {
-    String _metodo = ' /api/Obrigacao/obrbyuser?userId=${idcliente}&clientId=${idusuario}&days=3';
+    String _metodo = '/api/Obrigacao/obrbyuser?userId=${idusuario}&clientId=${idcliente}&days=5';
 
     try {
       MyHttpResponse response = await _http.get(
@@ -48,15 +48,17 @@ class HomeAssewebService {
       );
 
       if (response.isSucess) {
-        List<Map<String, dynamic>> result = response.data;
+        List result = response.data;
 
-        List<Obrigacoes> obrigacoes =
-        result.map((e) => Obrigacoes.fromMap(e)).toList();
+        List<ObrigacoesHomeModel> obrigacoes =
+        result.map((e) => ObrigacoesHomeModel.fromMap(e)).toList();
 
         return obrigacoes;
+      }else{
+        debugPrint('HomeAssewebService - obrigacoesusuarios: ${response.codigo}\n${response.data}');
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('HomeAssewebService - obrigacoesusuarios: ' + e.toString());
     }
     return [];
   }

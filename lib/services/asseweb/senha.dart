@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../config.dart';
+import '../../controllers/asseweb/user_manager.dart';
 import '../http/http.dart';
 
 
@@ -38,7 +40,7 @@ class SenhaAssewebService {
     }
   }
 
-  Future<bool?> alteracaoPass({required String email, required String senha, required String token}) async {
+  Future<bool?> alteracaoPass({required String senha,}) async {
     String _metodo = '/api/ExternalLogin/changepassword';
     MyHttpResponse? response;
 
@@ -48,13 +50,12 @@ class SenhaAssewebService {
           decoder: false,
           headers: {
             'Content-Type' : 'application/json',
-            'Authorization' : 'Bearer ' + token
+            'Authorization' : 'Bearer ${UserAssewebManager.sUser?.token}'
 
           },
           body: <String, dynamic>{
-            "email": email,
+            "email": UserAssewebManager.sUser?.login?.email,
             "password": senha,
-
           }
       );
       if(response.isSucess){

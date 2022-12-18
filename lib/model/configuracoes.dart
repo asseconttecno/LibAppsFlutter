@@ -7,6 +7,7 @@ class ConfiguracoesModel {
   String? apiHoleriteEmail;
   String? apiAsseponto;
   String? apiEspelho;
+  String? apiBoletos;
   String? androidAppId ;
   String? iosAppId;
   String? iosAppIdNum ;
@@ -18,6 +19,7 @@ class ConfiguracoesModel {
       this.apiHolerite,
       this.apiHoleriteEmail,
       this.apiAsseponto,
+      this.apiBoletos,
       this.apiEspelho,
       this.androidAppId,
       this.iosAppId,

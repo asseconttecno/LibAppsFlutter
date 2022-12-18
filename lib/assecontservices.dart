@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
@@ -17,6 +15,7 @@ import 'helper/helper.dart';
 import 'model/model.dart';
 import 'config.dart';
 
+
 export 'model/model.dart';
 export 'enums/enums.dart';
 export 'controllers/controllers.dart';
@@ -25,8 +24,10 @@ export 'common/common.dart';
 export 'ui/ui.dart';
 export 'helper/helper.dart';
 export 'config.dart';
+export 'utils/utils.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:tutorial/tutorial.dart';
 
 class Assecontservices {
 
@@ -46,10 +47,6 @@ class Assecontservices {
     }else if(!Config.isWin){
       Config.isRealDevice = await SafeDevice.isRealDevice;
       Config.canMockLocation = await TrustLocation.isMockLocation;
-    }
-
-    if (Config.conf.nomeApp == VersaoApp.PontoApp && defaultTargetPlatform == TargetPlatform.android) {
-      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
@@ -163,6 +160,22 @@ class Assecontservices {
           create: (_)=> SenhaPontoManager(),
         ),
 
+      ///-----------asseweb--------------///
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: true,
+          create: (_) => HomeAssewebManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        ChangeNotifierProvider(
+          lazy: false,
+          create: (_) => UserAssewebManager(),
+        ),
+      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        Provider(
+          lazy: false,
+          create: (context) => SenhaAssewebManager(),
+        ),
     ];
 
     if(providers != null){
@@ -193,7 +206,7 @@ class App extends StatefulWidget {
 }
 
 class _MyAppState extends State<App> {
-  BiometriaServices _bio = BiometriaServices();
+  final BiometriaServices _bio = BiometriaServices();
 
   @override
   void initState() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../config.dart';
+import 'common.dart';
 
 class CustomSnackbar {
 
@@ -8,7 +9,7 @@ class CustomSnackbar {
     ScaffoldMessenger.of(Config.scaffoldKey.currentContext!).showSnackBar(SnackBar(
       backgroundColor: cor,
       duration: const Duration(seconds: 3),
-      content: Text(text, style: const TextStyle(color: Colors.white),),
+      content: CustomText.text(text, style: const TextStyle(color: Colors.white),),
     ));
   }
 
@@ -16,7 +17,7 @@ class CustomSnackbar {
     ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
       backgroundColor: cor,
       duration: const Duration(seconds: 3),
-      content: Text(text, style: const TextStyle(color: Colors.white),),
+      content: CustomText.text(text, style: const TextStyle(color: Colors.white),),
     ));
   }
 
@@ -24,7 +25,7 @@ class CustomSnackbar {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: cor,
       duration: const Duration(seconds: 3),
-      content: Text(text, style: const TextStyle(color: Colors.white),),
+      content: CustomText.text(text, style: const TextStyle(color: Colors.white),),
     ));
   }
 }

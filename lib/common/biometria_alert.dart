@@ -18,7 +18,7 @@ BiometriaAlert(BuildContext context)  {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text("Gostaria de se logar com sua biometria?",
+                  child: CustomText.text("Gostaria de se logar com sua biometria?",
                     style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.end,
@@ -30,7 +30,7 @@ BiometriaAlert(BuildContext context)  {
                           bio.perguntar = valor!;
                         }
                     ),
-                    Text("Nao Perguntar novamente", textAlign: TextAlign.left,
+                    CustomText.text("Nao Perguntar novamente", textAlign: TextAlign.left,
                       style: TextStyle( fontSize: 14),
                     ),
                   ],),
@@ -42,7 +42,7 @@ BiometriaAlert(BuildContext context)  {
                           bio.bio = false;
                           Navigator.pop(context);
                         },
-                        child: Text("Não")
+                        child: CustomText.text("Não")
                     ),
                     SizedBox(width: 10,),
                     TextButton(
@@ -50,7 +50,7 @@ BiometriaAlert(BuildContext context)  {
                           bio.bio = true;
                           Navigator.pop(context);
                         },
-                        child: Text("Sim")
+                        child: CustomText.text("Sim")
                     ),
                   ],
                 )
