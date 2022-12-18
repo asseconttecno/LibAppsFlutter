@@ -6,6 +6,7 @@ class MyHttpResponse {
   var data;
   HttpError? httpError;
   int? codigo;
+  String? extencao;
 
-  MyHttpResponse({required this.isSucess, this.httpError, this.data, this.codigo});
+  MyHttpResponse({required this.isSucess, this.httpError, this.extencao, this.data, this.codigo});
 }

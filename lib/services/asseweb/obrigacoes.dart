@@ -78,9 +78,16 @@ class ObrigacoesAssewebService {
       );
 
       if (response.isSucess) {
-        Uint8List u = response.data;
-        File result = await CustomFile.fileTemp('pdf',memori: u);
-        return result;
+        if(response.extencao == 'pdf'){
+          Uint8List u = response.data;
+          File result = await CustomFile.fileTemp('pdf',memori: u);
+          return result;
+        }else{
+          Uint8List u = response.data;
+          File file = await CustomFile.fileTemp('html',memori: u);
+          File result = await CustomFile.fileHtml(file);
+          return result;
+        }
       }else{
         debugPrint('ObrigacoesAssewebService - obrigacaoFile: ${response.codigo} ${response.data}');
       }
