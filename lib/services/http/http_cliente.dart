@@ -34,12 +34,17 @@ class HttpCli {
         });
 
         try{
-          if(response.statusCode == 200){
+          if(response.statusCode >= 200 && response.statusCode < 300){
             var result = bits ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
+            print(response.headers['content-disposition']);
             return MyHttpResponse(
-                isSucess: true,
-                codigo: 200,
-                data: result
+              isSucess: true,
+              codigo: 200,
+              data: result,
+              extencao: !response.headers.containsKey('content-disposition') ? null :
+                response.headers['content-disposition']!.contains('html') ? 'html' :
+                response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+                response.headers['content-disposition']!.contains('json') ? 'json' : null
             );
           } else {
             throw HttpError.statusCode;
@@ -91,12 +96,16 @@ class HttpCli {
       });
 
       try{
-        if(response.statusCode == 200){
+        if(response.statusCode >= 200 && response.statusCode < 300){
           final result =  isbyte ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
           return MyHttpResponse(
               isSucess: true,
               codigo: 200,
-              data: result
+              data: result,
+              extencao: !response.headers.containsKey('content-disposition') ? null :
+                response.headers['content-disposition']!.contains('html') ? 'html' :
+                response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+                response.headers['content-disposition']!.contains('json') ? 'json' : null
           );
         } else {
           debugPrint(response.body);
@@ -147,12 +156,16 @@ class HttpCli {
       });
 
       try{
-        if(response.statusCode == 200){
+        if(response.statusCode >= 200 && response.statusCode < 300){
           final result = decoder ? json.decode(response.body) : response.body;
           return MyHttpResponse(
               isSucess: true,
               codigo: 200,
-              data: result
+              data: result,
+              extencao: !response.headers.containsKey('content-disposition') ? null :
+                response.headers['content-disposition']!.contains('html') ? 'html' :
+                response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+                response.headers['content-disposition']!.contains('json') ? 'json' : null
           );
         } else {
           throw HttpError.statusCode;

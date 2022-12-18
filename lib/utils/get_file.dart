@@ -32,7 +32,7 @@ class CustomFile {
     return file;
   }
 
-  static Future<File> fileHtml(String nomeFile, {String? html})  async {
+  static Future<File> contentHtml(String nomeFile, {String? html})  async {
     var htmlContent = '''<!DOCTYPE html>
         <html>
         <head></head>
@@ -42,6 +42,16 @@ class CustomFile {
     Directory tempDir = await getTemporaryDirectory();
     File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
         htmlContent, tempDir.path, nomeFile
+    );
+    return file;
+  }
+
+  static Future<File> fileHtml( File html,{String? nomeFile,})  async {
+    String name = nomeFile ?? DateTime.now().microsecondsSinceEpoch.toString();
+
+    Directory tempDir = await getTemporaryDirectory();
+    File? file = await FlutterHtmlToPdf.convertFromHtmlFile(
+        html, tempDir.path, name
     );
     return file;
   }
