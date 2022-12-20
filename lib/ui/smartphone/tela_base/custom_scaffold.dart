@@ -58,7 +58,7 @@ class CustomScaffold {
       buttom: buttom,
       appbar: CalendarWeek(
           controller: controller,
-          height: 50,
+          height: 100,
           showMonth: true,
           backgroundColor: Colors.transparent,
           minDate: dataMin ?? DateTime(2000),

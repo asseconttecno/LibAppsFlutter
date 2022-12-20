@@ -34,7 +34,7 @@ class UserAssewebManager extends ChangeNotifier {
   }
 
   final TextEditingController email = TextEditingController(text: kReleaseMode ? '' : 'gabriel.mattos.web@gmail.com');
-  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : 'yinao2');
+  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : 'k5e0bp');
 
   String? uemail;
   String? usenha;
