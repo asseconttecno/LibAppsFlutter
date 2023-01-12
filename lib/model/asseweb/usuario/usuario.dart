@@ -15,10 +15,17 @@ class UsuarioAsseweb {
 
   factory UsuarioAsseweb.fromJson(String str) => UsuarioAsseweb.fromMap(json.decode(str));
 
+  String toJson() => json.encode(toMap());
+
   factory UsuarioAsseweb.fromMap(Map<String, dynamic> json) => UsuarioAsseweb(
     login: Login.fromMap(json["login"]),
     token: json["token"],
   );
+
+  Map<String, dynamic> toMap() => {
+    "login": login!.toMap(),
+    "token": token,
+  };
 }
 
 class Login {
@@ -54,6 +61,8 @@ class Login {
 
   factory Login.fromJson(String str) => Login.fromMap(json.decode(str));
 
+  String toJson() => json.encode(toMap());
+
   factory Login.fromMap(Map<String, dynamic> json) => Login(
     id: json["id"],
     name: json["name"],
@@ -62,14 +71,29 @@ class Login {
     ddd: json["ddd"],
     password: json["password"],
     lastAcess: DateTime.parse(json["lastAcess"]),
-    birthday: json["birthday"],
+    birthday: DateTime.parse(json["birthday"]),
     version: json["version"],
     resignation: json["resignation"],
     uid: json["uid"],
     master: json["master"],
-    companies: List<Company>.from(json["companies"].map((x) => Company.fromMap(x))),
+    companies: json["companies"] == null ? [] : List<Company>.from(json["companies"]!.map((x) => Company.fromMap(x))),
   );
 
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "name": name,
+    "email": email,
+    "phoneNumber": phoneNumber,
+    "ddd": ddd,
+    "password": password,
+    "lastAcess": lastAcess?.toIso8601String(),
+    "birthday": birthday?.toIso8601String(),
+    "version": version,
+    "resignation": resignation,
+    "uid": uid,
+    "master": master,
+    "companies": companies == null ? [] : List<dynamic>.from(companies!.map((x) => x!.toMap())),
+  };
 }
 
 class Company {

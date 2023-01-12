@@ -28,7 +28,7 @@ class UserAssewebService {
         throw response.codigo.toString();
       }
     } catch (e){
-      debugPrint(e.toString());
+      debugPrint('UserAssewebService signInAuth: ' +  e.toString());
       switch(e){
         case HttpError.unexpected :
           throw 'Erro inesperado, tente novamente!';
