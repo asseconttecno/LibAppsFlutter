@@ -41,12 +41,18 @@ Future PrimeiroAcessoAlert(BuildContext context, {bool isCnpj = false}) {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal:10),
-                  child: CustomText.text('Solicite para seu RH entrar em contato com Assecont!',
-                    style: TextStyle(fontSize: 14),
-                    textAlign: TextAlign.center,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal:10),
+                        child: CustomText.text('Solicite para seu RH entrar em contato com Assecont!',
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 15,),
 
