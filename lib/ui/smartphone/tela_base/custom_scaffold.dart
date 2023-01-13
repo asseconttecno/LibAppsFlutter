@@ -45,10 +45,13 @@ class CustomScaffold {
   }
 
   static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
-    required CalendarWeekController controller,
+    required CalendarWeekController controller, required Widget body,
     required List<DecorationItem> listdecoration, required String appTitle, Widget? buttom,
-    required BuildContext context, required Widget body, DateTime? dataMin, DateTime? dataMax}){
+    required BuildContext context,  DateTime? dataInit, DateTime? dataMin, DateTime? dataMax}){
 
+    if(dataInit != null){
+      controller.jumpToDate(dataInit);
+    }
 
     return custom(
       key: key,
@@ -61,7 +64,7 @@ class CustomScaffold {
           height: 100,
           showMonth: true,
           backgroundColor: Colors.transparent,
-          minDate: dataMin ?? DateTime(2000),
+          minDate: dataMin ?? DateTime(2020),
           maxDate: dataMax ?? DateTime(DateTime.now().year + 1),
           dateStyle: const TextStyle(color: Colors.white,),
           dayOfWeekStyle: TextStyle(color: Config.corPri),
