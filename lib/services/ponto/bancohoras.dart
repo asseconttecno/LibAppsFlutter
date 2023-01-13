@@ -30,8 +30,7 @@ class BancoHorasService {
       try{
         if(response.isSucess){
           Map dadosJson = response.data;
-          if(dadosJson['IsSuccess'] && dadosJson.containsValue("Result")
-              && dadosJson["Result"]['BancoDiaList'].length > 0){
+          if(dadosJson['IsSuccess'] && dadosJson.containsKey("Result") ){
             List temp = dadosJson["Result"]['BancoDiaList'];
             if(temp.isNotEmpty){
               List<BancoHoras> listaTemporaria = [];
