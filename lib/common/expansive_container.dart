@@ -1,4 +1,5 @@
 
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 
 import 'common.dart';
@@ -6,15 +7,15 @@ import 'common.dart';
 
 
 class ExpansiveContainer extends StatefulWidget {
+
   Widget? child;
   Widget? tituloWidget;
   String titulo;
-  Color tituloColor;
-  Color color;
+  Color? tituloColor;
+  Color? color;
   bool isExpanded;
 
-  ExpansiveContainer({this.child, this.titulo = '', this.tituloWidget, this.isExpanded = false,
-    this.color = Colors.white, this.tituloColor = Colors.black});
+  ExpansiveContainer({this.child, this.titulo = '', this.tituloWidget, this.isExpanded = false, this.color , this.tituloColor});
 
   @override
   State<ExpansiveContainer> createState() => _ExpansiveContainerState();
@@ -23,16 +24,18 @@ class ExpansiveContainer extends StatefulWidget {
 class _ExpansiveContainerState extends State<ExpansiveContainer> {
   bool open = false;
 
+
   @override
   void initState() {
     open = widget.isExpanded;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      color: widget.color,
+      color: widget.color ?? (context.watch<Config>().darkTemas ? Theme.of(context).primaryColor : Colors.white),
       center: true,
       ispadding: false,
       child: Container(
@@ -54,12 +57,12 @@ class _ExpansiveContainerState extends State<ExpansiveContainer> {
                       child: widget.tituloWidget ?? Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomText.text(widget.titulo,
-                            style: TextStyle(fontSize: 18, color: widget.tituloColor)
+                            style: TextStyle(fontSize: 18, color: widget.tituloColor ?? (context.watch<Config>().darkTemas ? Colors.white : Colors.black))
                         ),
                       ),
                     ),
                     Icon(open ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                      size: 34, color: Colors.blue,)
+                      size: 34, color: context.read<Config>().darkTemas ? Config.corPri : Colors.blue,)
                   ]
                 ),
               ),
