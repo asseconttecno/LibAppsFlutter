@@ -9,7 +9,7 @@ class CustomText {
     Key? key,
     TextStyle style = const TextStyle(fontSize: 13),
     TextAlign? textAlign,
-    bool? softWrap = false,
+    bool? softWrap = true,
     bool autoSize = false,
     TextOverflow? overflow,
     int? maxLines}){
@@ -17,7 +17,7 @@ class CustomText {
     if(autoSize) {
       return AutoSizeText(txt ?? '', maxLines: maxLines, textAlign: textAlign,
         maxFontSize: (style.fontSize ?? 13), minFontSize: (style.fontSize ?? 13) - 1,
-        wrapWords: false, softWrap: softWrap, overflow: overflow, textScaleFactor: 1.0,
+        wrapWords: false, softWrap: softWrap, overflow: overflow , textScaleFactor: 1.0,
         style: style.copyWith(fontSize: style.fontSize ?? 13),
       );
     }
