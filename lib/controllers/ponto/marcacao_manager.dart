@@ -61,7 +61,7 @@ class MarcacoesManager extends ChangeNotifier {
     return _marcacao;
   }
 
-  getEspelho(UsuarioPonto? user) async {
+  getEspelho(UsuarioPonto? user, {int? filtro}) async {
     try{
       listamarcacao = await _service.getEspelho(user);
       if(listamarcacao.isNotEmpty){
@@ -98,7 +98,27 @@ class MarcacoesManager extends ChangeNotifier {
             );
           }
         }).toList();
-        if(listamarcacao.last.datahora != null &&
+        if(filtro != null){
+          DateTime? _d = listamarcacao.lastWhere((element) {
+            if(filtro == 1 && (element.resultado?.atrasosmin ?? 0) > 0){
+              return true;
+            }else if(filtro == 2 && (element.resultado?.extrasmin ?? 0 ) > 0){
+              return true;
+            }else if(filtro == 3 && (element.resultado?.abonosmin ?? 0 ) > 0){
+              return true;
+            }else if(filtro == 4 && (element.resultado?.faltasDias ?? 0 ) > 0){
+              return true;
+            }else{
+              return false;
+            }
+          }).datahora;
+          if(_d != null){
+            _data = DateTime(_d.year, _d.month, _d.day);
+          }else{
+            _data = DateTime(listamarcacao.last.datahora!.year, listamarcacao.last.datahora!.month, listamarcacao.last.datahora!.day);
+          }
+        }
+        else if(listamarcacao.last.datahora != null &&
             DateTime(listamarcacao.last.datahora!.year, listamarcacao.last.datahora!.month, listamarcacao.last.datahora!.day).compareTo(_data) < 0){
           _data = DateTime(listamarcacao.last.datahora!.year, listamarcacao.last.datahora!.month, listamarcacao.last.datahora!.day);
         }
