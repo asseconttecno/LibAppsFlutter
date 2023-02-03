@@ -83,6 +83,7 @@ class UserPontoManager extends ChangeNotifier {
       }else{
         result = await signInAuth(context, email: email,  senha: senha);
       }
+      if(result) Config.usenha = senha;
       return result;
     } catch(e) {
       debugPrint(e.toString());

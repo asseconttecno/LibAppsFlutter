@@ -45,6 +45,7 @@ class UserHoleriteManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("user", email.text);
     await prefs.setString("usenha", senha.text);
+    Config.usenha = usenha;
     if(status){
       await prefs.setString("senha", senha.text);
     }else if(email.text != uemail){

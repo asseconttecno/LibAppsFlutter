@@ -51,6 +51,7 @@ class UserAssewebManager extends ChangeNotifier {
     await prefs.setString("user", email.text);
     await prefs.setString("usenha", senha.text);
     await prefs.setString("token", user?.token ?? '');
+    Config.usenha = senha.text;
     if(status){
       await prefs.setString("senha", senha.text);
     }else if(email.text != uemail){
