@@ -19,13 +19,13 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
     child: PopupMenuButton<int>(
       key: keyMenu,
       itemBuilder: (context) => [
-        if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+        if(Config.conf.nomeApp == VersaoApp.HoleriteApp && aponta)
           PopupMenuItem(
             key: key1,
             value: 0,
             child: CustomText.text("Alterar Usuario"),
           ),
-        if(Config.conf.nomeApp == VersaoApp.AssewebApp)
+        if(Config.conf.nomeApp == VersaoApp.AssewebApp && aponta)
           PopupMenuItem(
             key: key1,
             value: 0,
