@@ -25,6 +25,7 @@ class CustomScaffold {
       appbar: appbar,
       context: context,
       buttom: buttom,
+      home: true ,
       expanAppbar: Container(
         key: keyListMenu,
         margin: EdgeInsets.only(top: (height ?? h) - 30),
@@ -104,7 +105,7 @@ class CustomScaffold {
   }
 
   static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height,
-    Widget? appbar, required Widget body, Widget? expanAppbar, String? appTitle, Widget? buttom}){
+    Widget? appbar, required Widget body, bool home = false, Widget? expanAppbar, String? appTitle, Widget? buttom}){
 
     return Scaffold(
       key: key,
@@ -112,7 +113,7 @@ class CustomScaffold {
         title: CustomText.text(appTitle, style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
         centerTitle: true,
         actions: [
-          actions(context),
+          actions(context, aponta: home),
         ],
       ),
       body: SizedBox(
