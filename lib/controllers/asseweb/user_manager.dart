@@ -82,7 +82,7 @@ class UserAssewebManager extends ChangeNotifier {
   Future<bool> signInAuth({required String email, required String senha}) async {
     sUser = await _service.signInAuth(email: email, senha: senha);
     if (user != null && (user!.login?.companies?.isNotEmpty ?? false)) {
-      sCompanies = user!.login?.companies?.firstWhere((e) => e.id == user?.login?.lastCompanyId);
+      sCompanies = user!.login?.companies?.firstWhere((e) => e.id == user?.login?.lastCompanyId) ?? user!.login?.companies?.first;
     }
     notifyListeners();
     return true;
