@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final contatosAsseweb = contatosAssewebFromMap(jsonString);
+
 import 'dart:convert';
 
 class ContatosAsseweb {
@@ -15,10 +19,10 @@ class ContatosAsseweb {
 
   int? id;
   String? name;
-  String?role;
+  String? role;
   String? email;
   String? phone;
-  dynamic cellPhoneDdd;
+  String? cellPhoneDdd;
   String? cellPhone;
   int? sector;
   String? sectorName;
@@ -28,26 +32,26 @@ class ContatosAsseweb {
   String toJson() => json.encode(toMap());
 
   factory ContatosAsseweb.fromMap(Map<String, dynamic> json) => ContatosAsseweb(
-    id: json["id"] == null ? null : json["id"],
-    name: json["name"] == null ? null : json["name"],
-    role: json["role"] == null ? null : json["role"],
-    email: json["email"] == null ? null : json["email"],
-    phone: json["phone"] == null ? null : json["phone"],
+    id: json["id"],
+    name: json["name"],
+    role: json["role"],
+    email: json["email"],
+    phone: json["phone"],
     cellPhoneDdd: json["cellPhoneDDD"],
-    cellPhone: json["cellPhone"] == null ? null : json["cellPhone"],
-    sector: json["sector"] == null ? null : json["sector"],
-    sectorName: json["sectorName"] == null ? null : json["sectorName"],
+    cellPhone: json["cellPhone"],
+    sector: json["sector"],
+    sectorName: json["sectorName"],
   );
 
   Map<String, dynamic> toMap() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-    "role": role == null ? null : role,
-    "email": email == null ? null : email,
-    "phone": phone == null ? null : phone,
+    "id": id,
+    "name": name,
+    "role": role,
+    "email": email,
+    "phone": phone,
     "cellPhoneDDD": cellPhoneDdd,
-    "cellPhone": cellPhone == null ? null : cellPhone,
-    "sector": sector == null ? null : sector,
-    "sectorName": sectorName == null ? null : sectorName,
+    "cellPhone": cellPhone,
+    "sector": sector,
+    "sectorName": sectorName,
   };
 }

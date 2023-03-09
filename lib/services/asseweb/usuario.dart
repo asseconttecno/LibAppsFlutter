@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../controllers/asseweb/user_manager.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -10,8 +11,6 @@ class UserAssewebService {
   Future<UsuarioAsseweb> signInAuth({required String email, required String senha}) async {
     String _metodo = '/api/ExternalLogin/login';
     try{
-      print(Config.conf.apiAsseweb! + _metodo);
-
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseweb! + _metodo,
           body: <String, dynamic>{
@@ -41,4 +40,22 @@ class UserAssewebService {
       }
     }
   }
+
+  Future<bool> lastcompanyupdate({required int? companyId}) async {
+    String _metodo = '/api/ExternalLogin/lastcompanyupdate';
+    try{
+      MyHttpResponse response = await _http.put(
+          url: Config.conf.apiAsseweb! + _metodo,
+          body: <String, dynamic>{
+            "id": UserAssewebManager.sUser?.login?.id,
+            "lastCompanyId": companyId
+          }
+      );
+      return response.isSucess;
+    } catch (e){
+      debugPrint('UserAssewebService lastcompanyupdate: ' +  e.toString());
+    }
+    return false;
+  }
+
 }

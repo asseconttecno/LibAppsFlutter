@@ -37,15 +37,15 @@ class Obrigacao {
   String toJson() => json.encode(toMap());
 
   factory Obrigacao.fromMap(Map<String, dynamic> json) => Obrigacao(
-    id: json["id"] == null ? null : json["id"],
-    description: json["description"] == null ? null : json["description"],
-    sector: json["sector"] == null ? null : json["sector"],
+    id: json["id"],
+    description: json["description"],
+    sector: json["sector"],
   );
 
   Map<String, dynamic> toMap() => {
-    "id": id == null ? null : id,
-    "description": description == null ? null : description,
-    "sector": sector == null ? null : sector,
+    "id": id,
+    "description": description,
+    "sector": sector,
   };
 }
 
@@ -65,10 +65,10 @@ class ObrigacaoClientePeriodo {
   factory ObrigacaoClientePeriodo.fromJson(String str) => ObrigacaoClientePeriodo.fromMap(json.decode(str));
 
   factory ObrigacaoClientePeriodo.fromMap(Map<String, dynamic> json) => ObrigacaoClientePeriodo(
-    id: json["id"] == null ? null : json["id"],
+    id: json["id"],
     deadLine: json["deadLine"] == null ? null : Validacoes.stringToDataBr( json["deadLine"].toString() ),
     finishedIn: json["finishedIn"] == null ? null : DateTime.parse(json["finishedIn"]),
-    completedBy: json["completedBy"] == null ? null : json["completedBy"],
+    completedBy: json["completedBy"],
   );
 
 }
