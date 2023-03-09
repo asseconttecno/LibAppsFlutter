@@ -7,6 +7,7 @@ import '../../config.dart';
 import '../../controllers/controllers.dart';
 import '../../model/model.dart';
 import '../../utils/get_file.dart';
+import '../../utils/utils.dart';
 import '../http/http.dart';
 
 class ObrigacoesAssewebService {
@@ -36,6 +37,33 @@ class ObrigacoesAssewebService {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<List<DateTime>> obrigacoesMes() async {
+    String _metodo = '/api/Obrigacao/obrmonthbyuser?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}';
+
+    try {
+      MyHttpResponse response = await _http.get(
+        url: Config.conf.apiAsseweb! + _metodo,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${UserAssewebManager.sUser?.token}'
+        },
+      );
+
+      if (response.isSucess) {
+        List result = response.data;
+        if(result.isNotEmpty){
+          List<DateTime> obrigacoes = result.map((e) => Validacoes.stringToDataBr(e.toString())! ).toList();
+          return obrigacoes;
+        }
+      }else{
+        debugPrint('ObrigacoesAssewebService - obrigacoesMes: ${response.codigo} ${response.data}');
+      }
+    } catch (e) {
+      debugPrint('ObrigacoesAssewebService - obrigacoesMes: ${e.toString()}');
+    }
+    return [];
   }
 
   Future<List<ObrigacaoModel>> obrigacoesdata({required DateTime date}) async {

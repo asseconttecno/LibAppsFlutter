@@ -22,6 +22,7 @@ class UserAssewebManager extends ChangeNotifier {
   Company? get companies => sCompanies;
   set companies(Company? v){
     sCompanies = v;
+    _service.lastcompanyupdate(companyId: v?.id);
     notifyListeners();
   }
 
@@ -34,7 +35,7 @@ class UserAssewebManager extends ChangeNotifier {
   }
 
   final TextEditingController email = TextEditingController(text: kReleaseMode ? '' : 'gabriel.mattos.web@gmail.com');
-  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : 'k5e0bp');
+  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : '123456');
 
   String? uemail;
   String? usenha;
@@ -50,7 +51,6 @@ class UserAssewebManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("user", email.text);
     await prefs.setString("usenha", senha.text);
-    await prefs.setString("token", user?.token ?? '');
     Config.usenha = senha.text;
     if(status){
       await prefs.setString("senha", senha.text);
@@ -63,8 +63,8 @@ class UserAssewebManager extends ChangeNotifier {
     bool result = false;
     try{
       if(bio){
-        bool _resultBio = await _serviceBio.authbiometria();
-        if(_resultBio){
+        bool resultBio = await _serviceBio.authbiometria();
+        if(resultBio){
           result = await signInAuth(email: email,  senha: senha);
         }
       }else{
@@ -80,16 +80,18 @@ class UserAssewebManager extends ChangeNotifier {
   }
 
   Future<bool> signInAuth({required String email, required String senha}) async {
-    user = await _service.signInAuth(email: email, senha: senha);
+    sUser = await _service.signInAuth(email: email, senha: senha);
     if (user != null && (user!.login?.companies?.isNotEmpty ?? false)) {
-      companies = user!.login?.companies?.first;
+      sCompanies = user!.login?.companies?.firstWhere((e) => e.id == user?.login?.lastCompanyId);
     }
     notifyListeners();
     return true;
   }
 
   signOut(){
-    user = null;
+    sUser = null;
+    sCompanies = null;
+    _status = false;
   }
 
   loadBio() async {

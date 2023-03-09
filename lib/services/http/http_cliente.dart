@@ -42,9 +42,14 @@ class HttpCli {
               codigo: 200,
               data: result,
               extencao: !response.headers.containsKey('content-disposition') ? null :
-                response.headers['content-disposition']!.contains('html') ? 'html' :
-                response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
-                response.headers['content-disposition']!.contains('json') ? 'json' : null
+              response.headers['content-disposition']!.contains('html') ? 'html' :
+              response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+              response.headers['content-disposition']!.contains('txt') ? 'txt' :
+              response.headers['content-disposition']!.contains('xlsx') ? 'xlsx' :
+              response.headers['content-disposition']!.contains('xls') ? 'xls' :
+              response.headers['content-disposition']!.contains('docx') ? 'docx' :
+              response.headers['content-disposition']!.contains('doc') ? 'doc' :
+              response.headers['content-disposition']!.contains('json') ? 'json' : null
             );
           } else {
             throw HttpError.statusCode;
@@ -103,9 +108,14 @@ class HttpCli {
               codigo: 200,
               data: result,
               extencao: !response.headers.containsKey('content-disposition') ? null :
-                response.headers['content-disposition']!.contains('html') ? 'html' :
-                response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
-                response.headers['content-disposition']!.contains('json') ? 'json' : null
+              response.headers['content-disposition']!.contains('html') ? 'html' :
+              response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+              response.headers['content-disposition']!.contains('txt') ? 'txt' :
+              response.headers['content-disposition']!.contains('xlsx') ? 'xlsx' :
+              response.headers['content-disposition']!.contains('xls') ? 'xls' :
+              response.headers['content-disposition']!.contains('docx') ? 'docx' :
+              response.headers['content-disposition']!.contains('doc') ? 'doc' :
+              response.headers['content-disposition']!.contains('json') ? 'json' : null
           );
         } else {
           debugPrint(response.body);
@@ -165,6 +175,11 @@ class HttpCli {
               extencao: !response.headers.containsKey('content-disposition') ? null :
                 response.headers['content-disposition']!.contains('html') ? 'html' :
                 response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
+                response.headers['content-disposition']!.contains('txt') ? 'txt' :
+                response.headers['content-disposition']!.contains('xlsx') ? 'xlsx' :
+                response.headers['content-disposition']!.contains('xls') ? 'xls' :
+                response.headers['content-disposition']!.contains('docx') ? 'docx' :
+                response.headers['content-disposition']!.contains('doc') ? 'doc' :
                 response.headers['content-disposition']!.contains('json') ? 'json' : null
           );
         } else {

@@ -29,7 +29,7 @@ class BoletosModel {
 
   factory BoletosModel.fromMap(Map<String, dynamic> json) => BoletosModel(
     numero: json["Numero"],
-    dataVencimento: json["DataVencimento"] == null ? null : Validacoes.stringToDataBr(json["DataVencimento"]),
+    dataVencimento: json["DataVencimento"] == null ? null : Validacoes.stringToDataBr(json["DataVencimento"].toString()),
     valor: json["Valor"],
     status: json["Status"] == null ? null : StatusBoleto.getEnum(json["Status"]),
     url: json["Url"],

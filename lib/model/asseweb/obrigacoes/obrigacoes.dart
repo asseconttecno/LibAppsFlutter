@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-import 'package:assecontservices/assecontservices.dart';
+import '../../../enums/enums.dart';
+import '../../../utils/utils.dart';
 
 class ObrigacaoModel {
   ObrigacaoModel({
@@ -12,7 +13,7 @@ class ObrigacaoModel {
     this.obrcliperId,
     this.grupo,
     this.descricao,
-    this.nomeUsuario,
+    this.responsavel,
     this.cliente,
     this.status,
     this.vencimento,
@@ -40,13 +41,15 @@ class ObrigacaoModel {
     this.abonadoEm,
     this.numeroNotasUnificadas,
     this.diasMes,
+    this.homeOffice,
+    this.nomeSupervisor,
   });
 
   int? obrigacaoId;
   int? obrcliperId;
   String? grupo;
   String? descricao;
-  String? nomeUsuario;
+  String? responsavel;
   int? cliente;
   int? status;
   DateTime? vencimento;
@@ -74,6 +77,8 @@ class ObrigacaoModel {
   DateTime? abonadoEm;
   int? numeroNotasUnificadas;
   String? diasMes;
+  bool? homeOffice;
+  String? nomeSupervisor;
 
   factory ObrigacaoModel.fromJson(String str) => ObrigacaoModel.fromMap(json.decode(str));
 
@@ -84,19 +89,19 @@ class ObrigacaoModel {
     obrcliperId: json["obrcliperId"],
     grupo: json["grupo"],
     descricao: json["descricao"],
-    nomeUsuario: json["nomeUsuario"],
+    responsavel: json["responsavel"],
     cliente: json["cliente"],
     status: json["status"],
-    vencimento: Validacoes.stringToDataBr(json["vencimento"]),
-    prazo: Validacoes.stringToDataBr(json["prazo"]),
-    concluidoEm: Validacoes.stringToDataBr(json["concluidoEm"]),
-    prazoOuVencimento: Validacoes.stringToDataBr(json["prazoOuVencimento"]),
+    vencimento: Validacoes.stringToDataBr(json["vencimento"].toString()),
+    prazo: Validacoes.stringToDataBr(json["prazo"].toString()),
+    concluidoEm: Validacoes.stringToDataBr(json["concluidoEm"].toString()),
+    prazoOuVencimento: Validacoes.stringToDataBr(json["prazoOuVencimento"].toString()),
     statusDescricao: json["statusDescricao"],
     competencia: json["competencia"],
-    tipoeDescricao: ObrigacaoTipo.getEnum(json["tipoeDescricao"]),
+    tipoeDescricao: ObrigacaoTipo.getEnum(json["tipoeDescricao"].toString()),
     temMemo: json["temMemo"],
     darfVencido: json["darfVencido"],
-    darfDataArrecadacao: Validacoes.stringToDataBr(json["darfDataArrecadacao"]),
+    darfDataArrecadacao: Validacoes.stringToDataBr(json["darfDataArrecadacao"].toString()),
     notaServico: json["notaServico"],
     prestadorNome: json["prestadorNome"],
     notaFiscal: json["notaFiscal"],
@@ -109,9 +114,11 @@ class ObrigacaoModel {
     ultimaBaixa: json["ultimaBaixa"],
     numeroArquivos: json["numeroArquivos"],
     abonadoPor: json["abonadoPor"],
-    abonadoEm: Validacoes.stringToDataBr(json["abonadoEm"]),
+    abonadoEm: Validacoes.stringToDataBr(json["abonadoEm"].toString()),
     numeroNotasUnificadas: json["numeroNotasUnificadas"],
     diasMes: json["diasMes"].toString(),
+    homeOffice: json["homeOffice"],
+    nomeSupervisor: json["nomeSupervisor"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -119,7 +126,7 @@ class ObrigacaoModel {
     "obrcliperId": obrcliperId,
     "grupo": grupo,
     "descricao": descricao,
-    "nomeUsuario": nomeUsuario,
+    "responsavel": responsavel,
     "cliente": cliente,
     "status": status,
     "vencimento": vencimento,
@@ -147,5 +154,7 @@ class ObrigacaoModel {
     "abonadoEm": abonadoEm,
     "numeroNotasUnificadas": numeroNotasUnificadas,
     "diasMes": diasMes,
+    "homeOffice": homeOffice,
+    "nomeSupervisor": nomeSupervisor,
   };
 }

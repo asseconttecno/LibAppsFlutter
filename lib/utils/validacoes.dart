@@ -5,13 +5,19 @@ import 'dart:core';
 class Validacoes {
 
   static DateTime? stringToDataBr(String date){
-    List _data = date.split(' ');
-    if(_data.isNotEmpty){
-      List s = _data.first.split('/');
-      if(s.length == 3 && !s.any((e) => int.tryParse(e) == null )) {
-        DateTime d = DateTime(int.parse(s[2]), int.parse(s[1]), int.parse(s[0]) );
-        return d;
+    DateTime? _d = DateTime.tryParse(date);
+    if(_d != null) return _d;
+    try{
+      List _data = date.split(' ');
+      if(_data.isNotEmpty){
+        List s = _data.first.split('/');
+        if(s.length == 3 && !s.any((e) => int.tryParse(e) == null )) {
+          DateTime d = DateTime(int.parse(s[2]), int.parse(s[1]), int.parse(s[0]) );
+          return d;
+        }
       }
+    }catch (e){
+      print(e);
     }
   }
 
