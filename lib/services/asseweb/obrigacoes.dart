@@ -106,21 +106,20 @@ class ObrigacoesAssewebService {
       );
 
       if (response.isSucess) {
-        if(response.extencao == 'pdf'){
-          Uint8List u = response.data;
-          File result = await CustomFile.fileTemp('pdf',memori: u);
-          return result;
-        }else{
-          Uint8List u = response.data;
+        Uint8List u = response.data;
+        if(response.extencao == 'html'){
           File file = await CustomFile.fileTemp('html',memori: u);
           File result = await CustomFile.fileHtml(file);
+          return result;
+        }else{
+          File result = await CustomFile.fileTemp(response.extencao ?? 'pdf', memori: u);
           return result;
         }
       }else{
         debugPrint('ObrigacoesAssewebService - obrigacaoFile: ${response.codigo} ${response.data}');
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('ObrigacoesAssewebService - obrigacaoFile: ${e.toString()}');
     }
   }
 
