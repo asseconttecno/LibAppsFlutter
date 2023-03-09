@@ -26,9 +26,9 @@ class ObrigacoesAssewebService {
       );
 
       if (response.isSucess) {
-        final result = response.data;
+        final List result = response.data;
 
-        ObrigacoesDetalhesModel obrigacoesDetalhes = ObrigacoesDetalhesModel.fromMap(result);
+        ObrigacoesDetalhesModel obrigacoesDetalhes = ObrigacoesDetalhesModel.fromMap(result.first);
 
         return obrigacoesDetalhes;
       }else{
