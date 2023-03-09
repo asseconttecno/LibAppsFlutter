@@ -220,8 +220,8 @@ class _MyAppState extends State<App> {
       title: widget.titulo ?? '',
       debugShowCheckedModeBanner: false,
       theme: context.watch<Config>().darkTemas ?
-      ThemeData.dark().copyWith(
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+      ThemeData.dark(useMaterial3: true).copyWith(
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
           foregroundColor: Colors.white,
           backgroundColor: Config.corPri,
         ),
@@ -229,19 +229,19 @@ class _MyAppState extends State<App> {
           centerTitle: true,
           elevation: 0,
           backgroundColor: ThemeData.dark().primaryColor,
-          titleTextStyle: TextStyle(color: Config.corPri,),
-          toolbarTextStyle: TextStyle(color: Config.corPri,fontSize: 18),
-          iconTheme: IconThemeData(color: Colors.white),
-          actionsIconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: const TextStyle(color: Config.corPri,),
+          toolbarTextStyle: const TextStyle(color: Config.corPri,fontSize: 18),
+          iconTheme: const IconThemeData(color: Colors.white),
+          actionsIconTheme: const IconThemeData(color: Colors.white),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ) : ThemeData.light().copyWith(
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+      ) : ThemeData.light(useMaterial3: true).copyWith(
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
           foregroundColor: Colors.white,
           backgroundColor: Config.corPri,
         ),
         primaryColor: Config.corPribar ,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           centerTitle: true,
           titleTextStyle: TextStyle(color: Config.corPri,),
           toolbarTextStyle: TextStyle(color: Config.corPri, fontSize: 18),
