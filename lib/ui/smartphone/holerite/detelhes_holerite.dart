@@ -33,13 +33,11 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
     if(context.read<HoleriteManager>().dropdowntipo != ''){
       List<HoleriteModel>? _temp  = widget.holerite.where((e) =>
         e.holeriteTipo == context.read<HoleriteManager>().dropdowntipo).toList();
-      if(_temp != null && _temp.isNotEmpty){
+      if(_temp.isNotEmpty){
         holerite = _temp.first;
       }
     }
-    if(holerite == null){
-      holerite = widget.holerite.first;
-    }
+    holerite ??= widget.holerite.first;
     context.read<HoleriteManager>().dropdowntipoInit(holerite?.holeriteTipo ?? '');
   }
 
@@ -77,7 +75,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
         width: width,
         height: height,
         alignment: Alignment.topCenter,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,8 +83,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             children: [
               Container(
                 height: 35,
-                margin: EdgeInsets.symmetric(horizontal: 40,),
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 40,),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -98,8 +96,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   iconSize: 20,
                   dropdownColor: Colors.white,
                   elevation: 0,
-                  icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                  style: TextStyle(color: Colors.black),
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black,),
+                  style: const TextStyle(color: Colors.black),
                   underline: Container(),
                   onChanged: (newValue) async {
                     setState(() {
@@ -112,7 +110,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Padding(
-                        padding:  EdgeInsets.symmetric(vertical: 8),
+                        padding:  const EdgeInsets.symmetric(vertical: 8),
                         child: CustomText.text(value ?? ''),
                       ),
                     );
@@ -120,53 +118,56 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                 ),
               ),
               Container(
-                height: 185, width: width,
+                height: 195, width: width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 10,),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: 105,
-                            padding: EdgeInsets.all(5),
+                            width: 110,
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.blue[900],
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
                               child: CustomText.text("Proventos\n${mask.format(holerite?.vencimentos ?? 0)}",
-                                textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center, autoSize: true,
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           Container(
-                            width: 105,
-                            padding: EdgeInsets.all(5),
+                            width: 110,
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.red[900],
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
                               child: CustomText.text("Descontos\n${mask.format(holerite?.descontos ?? 0)}",
-                                textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center, autoSize: true,
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           Container(
-                            width: 105,
-                            padding: EdgeInsets.all(5),
+                            width: 110,
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.orange,
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
                               child: CustomText.text("Liquido\n${mask.format(holerite?.liquido ?? 0)}",
-                                textAlign: TextAlign.center, style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center, autoSize: true,
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
@@ -177,7 +178,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Container(alignment: Alignment.center,
-                          padding: EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(25)
@@ -185,8 +186,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           child: Column(mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              CustomText.text('Proventos'.toUpperCase(), style: TextStyle(color: Colors.black),),
-                              SizedBox(height: 4,),
+                              CustomText.text('Proventos'.toUpperCase(), style: const TextStyle(color: Colors.black),),
+                              const SizedBox(height: 4,),
                               Container(
                                 height: 138, width: width * 0.59,
                                 child: charts.PieChart<String>([charts.Series<ChartPizza, String>(
@@ -225,7 +226,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                       bottomMarginSpec: common.MarginSpec.fixedPixel(2),
                                     ),
                                     behaviors: [
-                                      new charts.DatumLegend(
+                                      charts.DatumLegend(
                                         position: charts.BehaviorPosition.bottom,
                                         horizontalFirst: true,
                                         cellPadding: EdgeInsets.only(left: width * 0.06, bottom: 2),
@@ -236,13 +237,13 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                         legendDefaultMeasure: charts.LegendDefaultMeasure.none,
                                       ),
                                     ],
-                                    defaultRenderer: new charts.ArcRendererConfig(
+                                    defaultRenderer: charts.ArcRendererConfig(
                                         arcRendererDecorators: [
                                           charts.ArcLabelDecorator(
                                             insideLabelStyleSpec: charts.TextStyleSpec(
                                               fontSize: (12).toInt(), color: charts.MaterialPalette.white,
                                             ),
-                                            outsideLabelStyleSpec: new charts.TextStyleSpec(
+                                            outsideLabelStyleSpec: charts.TextStyleSpec(
                                               fontSize: (11).toInt(), color: charts.MaterialPalette.black,
                                             ),
                                             labelPosition: charts.ArcLabelPosition.auto,
@@ -257,9 +258,9 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Container(alignment: Alignment.center,
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(25)
@@ -267,8 +268,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   child: Column(mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      CustomText.text('Líquido nos ultimos 3 meses', style: TextStyle(color: Colors.black),),
-                      SizedBox(height: 10,),
+                      CustomText.text('Líquido nos ultimos 3 meses', style: const TextStyle(color: Colors.black),),
+                      const SizedBox(height: 10,),
                       Container(height: height * 0.25,
                         child: charts.BarChart(
                           [charts.Series<ChartColum, String>(
@@ -295,16 +296,16 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           ],
                           animate: true,
                           vertical: true,
-                          domainAxis: new charts.OrdinalAxisSpec(
-                              renderSpec: new charts.SmallTickRendererSpec(
+                          domainAxis: charts.OrdinalAxisSpec(
+                              renderSpec: charts.SmallTickRendererSpec(
 
                                 // Tick and Label styling here.
-                                  labelStyle: new charts.TextStyleSpec(
+                                  labelStyle: charts.TextStyleSpec(
                                       fontSize: (width * 0.03).toInt(), // size in Pts.
                                       color: charts.MaterialPalette.black),
 
                                   // Change the line colors to match text color.
-                                  lineStyle: new charts.LineStyleSpec(
+                                  lineStyle: const charts.LineStyleSpec(
                                       color: charts.MaterialPalette.black))),
                           defaultRenderer: common.BarRendererConfig(
                             barRendererDecorator: charts.BarLabelDecorator<String>(
@@ -313,7 +314,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 insideLabelStyleSpec: charts.TextStyleSpec(
                                   fontSize: (width * 0.03).toInt(), color: charts.MaterialPalette.white,
                                 ),
-                                outsideLabelStyleSpec: new charts.TextStyleSpec(
+                                outsideLabelStyleSpec: charts.TextStyleSpec(
                                   fontSize: (width * 0.03).toInt(), color: charts.MaterialPalette.black,
                                 )
                             ),
@@ -324,7 +325,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                     ],
                   )
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               CustomText.text("Disponibilizado\n${holerite?.dataCriacao ?? ''}", textAlign: TextAlign.center,),
             ],
           ),
@@ -357,7 +358,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
               );
             }
           },
-          label: CustomText.text('Visualizar'.toUpperCase(), style: TextStyle(fontSize: 20, color: Colors.white),)
+          label: CustomText.text('Visualizar'.toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),)
 
       ),
     );

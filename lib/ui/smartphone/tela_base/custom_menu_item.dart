@@ -30,8 +30,9 @@ class CustomMenuItem extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomText.text(titulo, textAlign: TextAlign.center, autoSize: true),
+            padding: const EdgeInsets.all(2.0),
+            child: CustomText.text(titulo, textAlign: TextAlign.center, autoSize: true,
+                style: TextStyle(height: 0)),
           )
         ],
       ),
