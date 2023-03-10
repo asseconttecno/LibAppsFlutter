@@ -58,42 +58,49 @@ class _ScreenConfigState extends State<ConfigScreen> {
                     ),
                   ),
 
-                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red),
-                          borderRadius: const BorderRadius.all(Radius.circular(8))
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Deletar sua conta!", style: TextStyle(color: Colors.redAccent)),
-                          const Text("Esta ação excluirá permanentemente sua conta e não poderá ser desfeita.",
-                              style: TextStyle(color: Colors.redAccent)),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-                            ),
-                            onPressed: () async {
-                              _showDeleteDialog(context);
-                            },
-                            child: const Center(child: Text("Excluir"),),
+                  Column(
+                    children: [
+                      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red),
+                              borderRadius: const BorderRadius.all(Radius.circular(8))
                           ),
-                        ],
-                      ),
-                    ),
-                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-                    const SizedBox(height: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Deletar sua conta!",
+                                  style: TextStyle(color: Colors.redAccent)),
+                              const Text("Esta ação excluirá permanentemente sua conta e não poderá ser desfeita.",
+                                  style: TextStyle(color: Colors.redAccent)),
+                              const SizedBox(height: 8),
+                              ElevatedButton(
+                                style: const ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                                ),
+                                onPressed: () async {
+                                  _showDeleteDialog(context);
+                                },
+                                child: const Center(child: Text("Excluir",
+                                  style: TextStyle(color: Colors.white),),),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                        SizedBox(height: 20,),
 
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15, right: 25),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CustomText.text('Versao '+ Config.versao),
-                      ],
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15, right: 25),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomText.text('Versao '+ Config.versao),
+                          ],
+                        ),
+                      )
+                    ],
                   )
                 ]
             )
@@ -105,7 +112,6 @@ class _ScreenConfigState extends State<ConfigScreen> {
   void _showDeleteDialog(BuildContext context) {
     showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Center(
@@ -124,6 +130,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
               ],
             ),
           ),
+          actionsPadding: EdgeInsets.symmetric(horizontal: 15),
           actions: <Widget>[
             TextButton(
               child: const Text("Cancelar", ),
