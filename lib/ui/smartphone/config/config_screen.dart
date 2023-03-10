@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 
 import '../../../common/common.dart';
+import '../../../enums/versao_app.dart';
 import '../../../ui/ui.dart';
 import '../../../controllers/controllers.dart';
 import '../../../../config.dart';
@@ -56,6 +57,36 @@ class _ScreenConfigState extends State<ConfigScreen> {
                       ],
                     ),
                   ),
+
+                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.red),
+                          borderRadius: const BorderRadius.all(Radius.circular(8))
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Deletar sua conta!", style: TextStyle(color: Colors.redAccent)),
+                          const Text("Esta ação excluirá permanentemente sua conta e não poderá ser desfeita.",
+                              style: TextStyle(color: Colors.redAccent)),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                            ),
+                            onPressed: () async {
+                              _showDeleteDialog(context);
+                            },
+                            child: const Center(child: Text("Excluir"),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                    const SizedBox(height: 20),
+
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15, right: 25),
                     child: Row(mainAxisAlignment: MainAxisAlignment.end,
@@ -67,6 +98,58 @@ class _ScreenConfigState extends State<ConfigScreen> {
                 ]
             )
         )
+    );
+  }
+
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: Text(
+              "Deletar sua conta!",
+              style: TextStyle(color: Colors.redAccent),
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const <Widget>[
+                Text("Depois de excluir esta conta, não há como voltar atrás.",),
+                SizedBox(height: 25),
+                Text("Deseja excluir sua conta?",),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Cancelar", ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "Confirmar",
+                style: TextStyle(color: Colors.redAccent),
+              ),
+              onPressed: () async {
+                await context.read<UserHoleriteManager>().deleteUser().then((value) {
+                  if(value){
+                    Navigator.of(context).pushReplacementNamed('/');
+                  }else{
+                    CustomSnackbar.context(context, 'Não foi possivel excluir sua conta, tente novamente!', Colors.red);
+                    Navigator.pop(context);
+                  }
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
