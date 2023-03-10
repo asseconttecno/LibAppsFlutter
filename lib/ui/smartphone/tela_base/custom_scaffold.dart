@@ -128,7 +128,7 @@ class CustomScaffold {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: context.watch<Config>().darkTemas ?
-                          Theme.of(context).primaryColor : Config.corPribar,
+                          Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
                           borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(45),
                             bottomLeft: Radius.circular(45),
