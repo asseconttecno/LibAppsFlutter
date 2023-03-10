@@ -12,8 +12,8 @@ import '../../config.dart';
 
 
 class UserHoleriteManager extends ChangeNotifier {
-  UserHoleriteService _service = UserHoleriteService();
-  BiometriaServices _serviceBio = BiometriaServices();
+  final UserHoleriteService _service = UserHoleriteService();
+  final BiometriaServices _serviceBio = BiometriaServices();
   
   UserHoleriteManager(){
     loadBio();
@@ -77,8 +77,17 @@ class UserHoleriteManager extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> deleteUser() async {
+    bool result = await _service.deleteUser(user?.id);
+    if(result){
+      signOut();
+    }
+    return result;
+  }
+
   signOut(){
     user = null;
+    listuser = null;
   }
 
   loadBio() async {

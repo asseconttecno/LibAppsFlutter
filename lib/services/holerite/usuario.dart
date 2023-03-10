@@ -48,4 +48,21 @@ class UserHoleriteService {
       }
     }
   }
+
+  Future<bool> deleteUser(int? idUser) async {
+    String _metodo = '/holerite/novo/delete';
+    try{
+      MyHttpResponse response = await _http.post(
+          url: Config.conf.apiHoleriteEmail! + _metodo,
+          body: <String, dynamic>{
+            "Id": idUser
+          }
+      );
+
+      return response.isSucess;
+    } catch (e){
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
