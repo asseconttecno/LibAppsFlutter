@@ -4,7 +4,6 @@ export 'package:provider/provider.dart';
 export 'ponto/camera_manager.dart';
 export 'ponto/apontamento_manager.dart';
 export 'ponto/banco_manager.dart';
-export 'ponto/gps.dart';
 export 'ponto/marcacao_manager.dart';
 export 'ponto/memorando_manager.dart';
 export 'ponto/registro_ponto_manager.dart';

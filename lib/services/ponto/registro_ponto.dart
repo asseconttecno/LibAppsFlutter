@@ -6,6 +6,7 @@ import '../../controllers/controllers.dart';
 import '../../enums/enums.dart';
 import '../../model/model.dart';
 import '../../config.dart';
+import '../../utils/utils.dart';
 import '../http/http.dart';
 import '../sqlite_ponto.dart';
 
@@ -20,9 +21,9 @@ class RegistroService {
 
     String? endereco;
     try {
-      endereco = await Gps.getEndereco(latitude, longitude);
+      endereco = await Conversoes.getEndereco(latitude, longitude);
     } on Exception catch (e) {
-      print('erro endereco ' + e.toString());
+      print('erro endereco $e');
     }
 
     final MyHttpResponse response = await _http.post(
@@ -129,10 +130,6 @@ class RegistroService {
     }
     return MarcacaoOffStatus.Erro;
   }
-
-
-
-
 
 
 
