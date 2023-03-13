@@ -1,10 +1,12 @@
 
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:geocoding/geocoding.dart' as geo;
+
 
 class Conversoes {
 
@@ -40,6 +42,20 @@ class Conversoes {
       result = (tamanhoNovo * widthOriginal) / heightOriginal;
     }
     return result;
+  }
+
+
+
+  static Future<String?> getEndereco(double? latitude, double? longitude) async {
+    if(latitude == null || longitude == null) return null;
+    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(latitude, longitude, localeIdentifier: 'pt_BR');
+    if(placemarks.isNotEmpty){
+      geo.Placemark place = placemarks.first;
+
+      String endereco = '${place.street}, ${place.subThoroughfare} - ${place.subLocality}, ${place.subAdministrativeArea} - ${place.country}';
+      print(endereco);
+      return endereco;
+    }
   }
 }
 

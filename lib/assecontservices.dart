@@ -26,7 +26,6 @@ export 'helper/helper.dart';
 export 'config.dart';
 export 'utils/utils.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
-export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:tutorial/tutorial.dart';
 
 class Assecontservices {
@@ -108,16 +107,11 @@ class Assecontservices {
           lazy: true,
           create: (_)=> HistoricoManager(),
         ),
-      ///-------------------------///
+      ///--------------------------------------------------------------------///
       if(ponto)
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> UserPontoManager(),
-        ),
-      if(ponto)
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_)=> Gps(),
         ),
       if(ponto)
         ChangeNotifierProvider(

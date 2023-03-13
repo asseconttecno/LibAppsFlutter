@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../controllers/controllers.dart';
+import '../../../utils/utils.dart';
 import 'resultado_apontamento.dart';
 
 
@@ -22,10 +23,10 @@ class Marcacao {
 
   Marcacao.fromMap(Map map) {
     List _i = map["Data"].split("/");
-    this.datahora = DateTime(int.parse(_i[2]), int.parse(_i[1]), int.parse(_i[0]));
-    this.expediente = map["Expediente"]["Descricao"];
-    this.resultado = ResultadoApontamento.fromMap(map["Resultado"]);
-    this.marcacao = [
+    datahora = DateTime(int.parse(_i[2]), int.parse(_i[1]), int.parse(_i[0]));
+    expediente = map["Expediente"]["Descricao"];
+    resultado = ResultadoApontamento.fromMap(map["Resultado"]);
+    marcacao = [
       if(map["Marcacao1"] != null)
         map["Marcacao1"],
       if(map["Marcacao2"] != null)
@@ -47,42 +48,42 @@ class Marcacao {
       if( map["Expediente"]["Codigo"] < 0 ){
         switch( map["Expediente"]["Codigo"] ){
           case -990 :
-            this.marcacao = ['Folga'];
+            marcacao = ['Folga'];
             break;
           case -999 :
-            this.marcacao = ['Dsr'];
+            marcacao = ['Dsr'];
             break;
           case -998 :
-            this.marcacao = ['Afastado'];
+            marcacao = ['Afastado'];
             break;
           case -997 :
-            this.marcacao = ['DescontoDSR'];
+            marcacao = ['DescontoDSR'];
             break;
           case -996 :
-            this.marcacao = ['Ferias'];
+            marcacao = ['Ferias'];
             break;
           case -994 :
-            this.marcacao = ['Feriado'];
+            marcacao = ['Feriado'];
             break;
         }
       }else if(expediente != null){
-        this.marcacao = [expediente!];
+        marcacao = [expediente!];
       }else if(map["Resultado"]["Abono"]["Minutos"] > 0){
-        this.marcacao = ["Falta Abonada"];
+        marcacao = ["Falta Abonada"];
       }else if( resultado!.faltasDias > 0 ){
-        this.marcacao.add("Falta");
+        marcacao.add("Falta");
       }else {
-        this.marcacao = ["Horas lançada no Banco de Horas"];
+        marcacao = ["Horas lançada no Banco de Horas"];
       }
     }else if( resultado!.faltasDias > 0 ){
-      this.marcacao.add("\nFalta");
+      marcacao.add("\nFalta");
     }
   }
 
   Future<Map<String, dynamic>> toSql2(Map map) async {
-    double? lat =  map["latitude"] == null ? null : double?.tryParse(map["latitude"]) ?? null;
-    double? long =  map["longitude"] == null ? null : double?.tryParse(map["longitude"]) ?? null;
-    String? end = await Gps.getEndereco(lat, long);
+    double? lat =  map["latitude"] == null ? null : double.tryParse(map["latitude"]);
+    double? long =  map["longitude"] == null ? null : double.tryParse(map["longitude"]);
+    String? end = await Conversoes.getEndereco(lat, long);
 
     Map<String, dynamic> result = {
       "UserId": int.tryParse(map["iduser"].toString()),
@@ -95,52 +96,52 @@ class Marcacao {
   }
 
   Marcacao.fromSql(Map map) {
-    this.iduser = int.tryParse(map["iduser"].toString());
-    this.datahora = DateTime.tryParse(map["datahora"].toString());
-    this.latitude = map["latitude"] == null ? null : double?.tryParse(map["latitude"]) ?? null;
-    this.longitude = map["longitude"] == null ? null : double?.tryParse(map["longitude"]) ?? null;
+    iduser = int.tryParse(map["iduser"].toString());
+    datahora = DateTime.tryParse(map["datahora"].toString());
+    latitude = map["latitude"] == null ? null : double.tryParse(map["latitude"]);
+    longitude = map["longitude"] == null ? null : double.tryParse(map["longitude"]);
   }
 
   Marcacao.fromReSql(Map map) {
-    this.iduser = int.tryParse(map["UserId"].toString());
-    this.datahora = DateTime.tryParse(map["Marcacao"].toString());
-    this.latitude = map["Latitude"] == null ? null : double?.tryParse(map["Latitude"]) ?? null;
-    this.longitude = map["Longitude"] == null ? null : double?.tryParse(map["Longitude"]) ?? null;
+    iduser = int.tryParse(map["UserId"].toString());
+    datahora = DateTime.tryParse(map["Marcacao"].toString());
+    latitude = map["Latitude"] == null ? null : double.tryParse(map["Latitude"]);
+    longitude = map["Longitude"] == null ? null : double.tryParse(map["Longitude"]);
   }
 
   Map<String, Object?> toMap() {
     Map<String, dynamic> map = {
-      "iduser": this.iduser,
-      "datahora": this.datahora.toString(),
-      "latitude": this.latitude.toString(),
-      "longitude": this.longitude.toString(),
+      "iduser": iduser,
+      "datahora": datahora.toString(),
+      "latitude": latitude.toString(),
+      "longitude": longitude.toString(),
     };
     return map;
   }
 
   Map<String, dynamic> toHistMap() {
     Map<String, dynamic> map = {
-      "iduser": this.iduser,
+      "iduser": iduser,
       /*
       "nome": this.nome.toString(),
       "registro": this.registro.toString(),
       "pis": this.pis.toString(),
       "cargo": this.cargo.toString(),
       */
-      "datahora": this.datahora.toString(),
-      "latitude": this.latitude.toString(),
-      "longitude": this.longitude.toString(),
-      "img": this.img,
+      "datahora": datahora.toString(),
+      "latitude": latitude.toString(),
+      "longitude": longitude.toString(),
+      "img": img,
     };
     return map;
   }
 
   Map<String, dynamic> toSql() {
     Map<String, dynamic> map = {
-      "UserId": this.iduser,
-      "Marcacao": DateFormat('yyyy-MM-dd HH:mm').format(this.datahora!),
-      "Latitude": this.latitude,
-      "Longitude": this.longitude,
+      "UserId": iduser,
+      "Marcacao": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
+      "Latitude": latitude,
+      "Longitude": longitude,
     };
     return map;
   }
