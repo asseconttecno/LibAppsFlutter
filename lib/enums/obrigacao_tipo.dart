@@ -70,8 +70,8 @@ enum ObrigacaoTipo
     }
   }
 
-  static ObrigacaoTipo filtro(ObrigacaoTipo x) {
-    switch(x.value) {
+  ObrigacaoTipo get filtro {
+    switch(value) {
       case "Nenhum":
         return Impostos;
       case "Impostos":
