@@ -70,6 +70,29 @@ enum ObrigacaoTipo
     }
   }
 
+  static ObrigacaoTipo filtro(ObrigacaoTipo x) {
+    switch(x.value) {
+      case "Nenhum":
+        return Impostos;
+      case "Impostos":
+        return Impostos;
+      case "Obr. Acessórias":
+        return Acessorias;
+      case "Relatórios":
+        return Relatorios;
+      case "Arquivos":
+        return Impostos;
+      case "Solicitações":
+        return Solicitacoes;
+      case "Obrigações de Clientes":
+        return Impostos;
+      case "Folha de Pagamento":
+        return Impostos;
+      default:
+        return Impostos;
+    }
+  }
+
   static ObrigacaoTipo getEnum(String x) {
     switch(x.trim()) {
       case "Nenhum":
