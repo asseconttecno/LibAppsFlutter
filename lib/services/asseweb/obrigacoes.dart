@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../config.dart';
 import '../../controllers/controllers.dart';
+import '../../enums/enums.dart';
 import '../../model/model.dart';
 import '../../utils/get_file.dart';
 import '../../utils/utils.dart';
@@ -29,7 +30,7 @@ class ObrigacoesAssewebService {
         final List result = response.data;
 
         ObrigacoesDetalhesModel obrigacoesDetalhes = ObrigacoesDetalhesModel.fromMap(result.first);
-
+        obrigacoesDetalhes.statusTimeLine = StatusTimeLine.statusTimeLine(obrigacoesDetalhes);
         return obrigacoesDetalhes;
       }else{
         debugPrint('ObrigacoesAssewebService - obrigacoesdetalhes: ${response.codigo} ${response.data}');

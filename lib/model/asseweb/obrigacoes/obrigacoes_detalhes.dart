@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../../enums/enums.dart';
 import '../../../utils/utils.dart';
 
 
@@ -34,6 +35,7 @@ class ObrigacoesDetalhesModel {
   DateTime? visualizadoEm;
   DateTime? emailEnviadoEm;
   DateTime? smsEnviadoEm;
+  StatusTimeLine? statusTimeLine;
   bool? ativo;
 
 
