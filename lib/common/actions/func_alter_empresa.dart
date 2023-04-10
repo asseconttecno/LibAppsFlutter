@@ -68,7 +68,7 @@ alterEmpresa(BuildContext context){
                               user.companies = user.user?.login?.companies![index];
                               context.read<HomeAssewebManager>().getObrigacoesusuarios();
                               context.read<HomeAssewebManager>().getContatos();
-                              //Navigator.pop(context);
+                              Navigator.pop(context);
                             }
                         );
                       },
