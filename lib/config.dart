@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:yaml/yaml.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:external_path/external_path.dart';
@@ -76,6 +78,12 @@ class Config extends ChangeNotifier {
   }
 
 
+
+  static Future<String> getVersion() async {
+    final String manifestContent = await rootBundle.loadString('pubspec.yaml');
+    final Map<dynamic, dynamic> manifestMap = loadYaml(manifestContent);
+    return manifestMap['version'];
+  }
 }
 
 
