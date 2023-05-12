@@ -24,6 +24,8 @@ class UserAssewebService {
         final UsuarioAsseweb _user = UsuarioAsseweb.fromMap(map);
         return _user;
       }else{
+        debugPrint(response.data.toString());
+        debugPrint(response.codigo.toString());
         throw response.codigo.toString();
       }
     } catch (e){

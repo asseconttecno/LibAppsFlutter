@@ -65,8 +65,8 @@ alterUser(BuildContext context){
                             onTap: () async {
                               user.user = user.listuser![index];
                               context.read<HoleriteManager>().listcompetencias =
-                              await context.read<HoleriteManager>().competencias(user.user);
-                              //Navigator.pop(context);
+                                await context.read<HoleriteManager>().competencias(user.user);
+                              Navigator.pop(context);
                             }
                         );
                       },

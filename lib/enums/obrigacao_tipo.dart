@@ -47,6 +47,29 @@ enum ObrigacaoTipo
     }
   }
 
+  int get toInt {
+    switch(value) {
+      case "Nenhum":
+        return 0;
+      case "Impostos":
+        return 1;
+      case "Obr. Acessórias":
+        return 2;
+      case "Relatórios":
+        return 3;
+      case "Arquivos":
+        return 4;
+      case "Solicitações":
+        return 5;
+      case "Obrigações de Clientes":
+        return 6;
+      case "Folha de Pagamento":
+        return 7;
+      default:
+        return 0;
+    }
+  }
+
   Color get cores {
     switch(value) {
       case "Nenhum":
@@ -67,6 +90,29 @@ enum ObrigacaoTipo
         return Colors.yellow;
       default:
         return Colors.blue;
+    }
+  }
+
+  ObrigacaoTipo get filtro {
+    switch(value) {
+      case "Nenhum":
+        return Impostos;
+      case "Impostos":
+        return Impostos;
+      case "Obr. Acessórias":
+        return Acessorias;
+      case "Relatórios":
+        return Relatorios;
+      case "Arquivos":
+        return Impostos;
+      case "Solicitações":
+        return Solicitacoes;
+      case "Obrigações de Clientes":
+        return Impostos;
+      case "Folha de Pagamento":
+        return Impostos;
+      default:
+        return Impostos;
     }
   }
 

@@ -36,7 +36,7 @@ class HomeAssewebService {
 
   Future<List<ObrigacoesHomeModel>> obrigacoesusuarios(
       {required String token, required int idcliente, required int idusuario}) async {
-    String _metodo = '/api/Obrigacao/obrbyuser?userId=${idusuario}&clientId=${idcliente}&days=5';
+    String _metodo = '/api/Obrigacao/obrbyuser?userId=${idusuario}&clientId=${idcliente}&days=20';
 
     try {
       MyHttpResponse response = await _http.get(
