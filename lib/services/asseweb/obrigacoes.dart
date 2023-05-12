@@ -40,8 +40,9 @@ class ObrigacoesAssewebService {
     }
   }
 
-  Future<List<DateTime>> obrigacoesMes() async {
-    String _metodo = '/api/Obrigacao/obrmonthbyuser?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}';
+  Future<List<DateTime>> obrigacoesMes(
+      {int? tipo, required DateTime inicio, required DateTime termino}) async {
+    String _metodo = '/api/Obrigacao/obrmonthbyuser?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}&obrType=${inicio}&startDate=${tipo ?? 0}&endDate=${termino}';
 
     try {
       MyHttpResponse response = await _http.get(
@@ -67,8 +68,8 @@ class ObrigacoesAssewebService {
     return [];
   }
 
-  Future<List<ObrigacaoModel>> obrigacoesdata({required DateTime date}) async {
-    String _metodo = '/api/Obrigacao/obrbydate?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}&date=${DateFormat("yyyy-MM-dd").format(date)}';
+  Future<List<ObrigacaoModel>> obrigacoesdata({required DateTime date, int? tipo}) async {
+    String _metodo = '/api/Obrigacao/obrbydate?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}&obrType=${tipo ?? 0}&date=${DateFormat("yyyy-MM-dd").format(date)}';
 
     try {
       MyHttpResponse response = await _http.get(
