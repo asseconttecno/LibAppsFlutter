@@ -235,6 +235,7 @@ class _MyAppState extends State<App> {
           backgroundColor: Config.corPri,
         ),
         primaryColor: Config.corPribar ,
+        colorScheme: ThemeData(useMaterial3: true).colorScheme.copyWith(surfaceTint: Colors.white),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           titleTextStyle: TextStyle(color: Config.corPri,),
@@ -245,6 +246,13 @@ class _MyAppState extends State<App> {
           color: Config.corPribar,
         ),
       ),
+      builder: (context, child) {
+        final MediaQueryData data = MediaQuery.of(context);
+        return MediaQuery(
+          data: data.copyWith(textScaleFactor: 1.0),
+          child: child!,
+        );
+      },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
