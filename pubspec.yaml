@@ -70,7 +70,7 @@ dependencies:
 
   cpf_cnpj_validator: ^2.0.0
 
-  open_file_safe: ^3.2.3
+  open_file_safe: any
 
   share_extend: ^2.0.0
 
