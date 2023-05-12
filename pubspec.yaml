@@ -75,7 +75,7 @@ dependencies:
   share_extend: ^2.0.0
 
   connectivity_plus: ^4.0.0
-  package_info_plus: ^1.4.2 #^3.0.2 #^1.4.2
+  #package_info_plus: ^3.0.2 #^3.0.2 #^1.4.2
   safe_device: ^1.1.2
   trust_location: ^2.0.13
 
