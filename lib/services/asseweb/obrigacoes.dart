@@ -42,7 +42,7 @@ class ObrigacoesAssewebService {
 
   Future<List<DateTime>> obrigacoesMes(
       {int? tipo, required DateTime inicio, required DateTime termino}) async {
-    String _metodo = '/api/Obrigacao/obrmonthbyuser?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}&obrType=${inicio}&startDate=${tipo ?? 0}&endDate=${termino}';
+    String _metodo = '/api/Obrigacao/obrmonthbyuser?userId=${UserAssewebManager.sUser?.login?.id}&clientId=${UserAssewebManager.sCompanies?.id}&obrType=${tipo ?? 0}&startDate=${DateFormat('yyyy-MM-dd').format(inicio)}&endDate=${DateFormat('yyyy-MM-dd').format(termino)}';
 
     try {
       MyHttpResponse response = await _http.get(
