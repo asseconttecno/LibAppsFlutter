@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 
-import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as common;
 import 'package:charts_common/src/common/color.dart' as colors;
 
