@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:intl/intl.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as common;
 import 'package:charts_common/src/common/color.dart' as colors;
+
+
 
 import '../../../common/common.dart';
 import '../../../config.dart';
