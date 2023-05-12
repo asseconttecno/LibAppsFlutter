@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'package:open_file_safe/open_file_safe.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
@@ -39,7 +38,7 @@ class _FileHeroState extends State<FileHero> {
     return Scaffold(
           appBar: AppBar(
             actions: [
-              if(!Config.isIOS)
+/*              if(!Config.isIOS)
                 IconButton(icon: Icon(Icons.download_rounded, color: Colors.white,),
                   onPressed: () async {
                     String? appDocDir = await FilesystemPicker.open(
@@ -57,7 +56,7 @@ class _FileHeroState extends State<FileHero> {
                       OpenFile.open(down.path);
                     }
                   }
-                ),
+                ),*/
               IconButton(icon: Icon(Icons.send, color: Colors.white,),
                 onPressed: (){
                   ShareExtend.share(widget.file.path, "file",

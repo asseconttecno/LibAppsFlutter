@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 
 import 'controllers/controllers.dart';
@@ -39,7 +40,8 @@ class Assecontservices {
     Provider.debugCheckInvalidValueType = null;
 
     Config.conf = config;
-    Config.versao = await Config.getVersion();
+    final packageInfo = await PackageInfo.fromPlatform();
+    Config.versao = packageInfo.version;
     if(Config.isIOS) {
       Config.isJailBroken = await SafeDevice.isJailBroken;
     }else if(!Config.isWin){

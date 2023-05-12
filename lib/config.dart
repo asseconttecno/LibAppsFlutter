@@ -76,14 +76,6 @@ class Config extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
-
-
-
-  static Future<String> getVersion() async {
-    final String manifestContent = await rootBundle.loadString('pubspec.yaml');
-    final Map<dynamic, dynamic> manifestMap = loadYaml(manifestContent);
-    return manifestMap['version'];
-  }
 }
 
 
