@@ -18,14 +18,14 @@ dependencies:
   flutter_awesome_alert_box: ^2.1.1
 
 
-  sqflite: ^2.2.6 #^2.0.2
-  sqflite_common_ffi: ^2.2.2
+  sqflite: ^2.2.8+2 #^2.0.2
+  sqflite_common_ffi: ^2.2.5
 
-  http: ^0.13.5
+  http: ^0.13.6
 
-  intl: ^0.17.0
+  intl: any #^0.18.1
 
-  image_picker: ^0.8.7
+  image_picker: ^0.8.7+5
   filesystem_picker: ^3.1.0 #^2.0.2
 
   local_auth: ^2.1.6
@@ -36,7 +36,7 @@ dependencies:
   location: ^4.4.0
   #$google_maps_flutter: ^2.2.5
 
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.11
 
   flutter_carousel_slider: ^1.1.0
 
@@ -59,8 +59,8 @@ dependencies:
       url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
       ref: main
 
-  path_provider: ^2.0.13
-  shared_preferences: ^2.0.18
+  path_provider: ^2.0.15
+  shared_preferences: ^2.1.1
   external_path: ^1.0.3
 
   cpf_cnpj_validator: ^2.0.0
@@ -69,7 +69,7 @@ dependencies:
 
   share_extend: ^2.0.0
 
-  connectivity_plus: ^3.0.3
+  connectivity_plus: ^4.0.0
   package_info_plus: any #^3.0.2 #^1.4.2
   safe_device: ^1.1.2
   trust_location: ^2.0.13
