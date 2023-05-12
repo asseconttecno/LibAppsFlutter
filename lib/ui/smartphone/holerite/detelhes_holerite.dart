@@ -358,7 +358,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
               );
             }
           },
-          label: CustomText.text('Visualizar'.toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),)
+          label: CustomText.text('Visualizar e Assinar'.toUpperCase(),
+            style: const TextStyle(fontSize: 20, color: Colors.white),)
 
       ),
     );
