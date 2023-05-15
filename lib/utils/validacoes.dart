@@ -13,6 +13,12 @@ class Validacoes {
         List s = _data.first.split('/');
         if(s.length == 3 && !s.any((e) => int.tryParse(e) == null )) {
           DateTime d = DateTime(int.parse(s[2]), int.parse(s[1]), int.parse(s[0]) );
+          if(_data.length > 1){
+            List h = _data[2].split(':');
+            if(h.length >= 2){
+              d.add(Duration(hours: h.first, minutes: h[2]));
+            }
+          }
           return d;
         }
       }
