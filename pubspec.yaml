@@ -79,7 +79,7 @@ dependencies:
   #device_info_plus: ^9.0.0
   safe_device: ^1.1.2
   trust_location: ^2.0.13
-  yaml: any
+
   in_app_review: ^2.0.6
   launch_review: ^3.0.1
 
