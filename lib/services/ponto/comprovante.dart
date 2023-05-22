@@ -9,6 +9,7 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 
 import '../../model/model.dart';
 import '../../config.dart';
+import '../../utils/get_file.dart';
 import '../http/http.dart';
 
 
@@ -45,7 +46,7 @@ class ComprovanteService {
     String api = "/api/comprovantemarcacao/RetornarComprovante";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAssepontoNova! + api, decoder: false,
+          url: Config.conf.apiAssepontoNova! + api, decoder: false, isbyte: true,
           headers: <String, String>{
             'Content-Type': 'application/json',
           },
@@ -57,19 +58,8 @@ class ComprovanteService {
       );
 
       if(response.isSucess) {
-        var dados = response.data ;
-        var htmlContent = '''<!DOCTYPE html>
-        <html>
-        <head></head>
-        <body>${dados}</body>
-        </html>
-        ''';
-        Directory tempDir = await getTemporaryDirectory();
-        String savedPath = "Comprovante-${marcId}-${DateTime.now().microsecondsSinceEpoch}" ;
-        File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
-            htmlContent, tempDir.path, savedPath
-        );
-
+        final dados = response.data ;
+        File? file = await CustomFile.fileTemp('pdf', memori: dados);
         return file;
       } else {
         debugPrint(response.codigo.toString());
