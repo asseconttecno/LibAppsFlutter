@@ -23,15 +23,6 @@ class CustomFile {
     return file;
   }
 
-  static Future<File> filePDF(String extensao, ByteBuffer buffer)  async {
-    ByteData byteData = ByteData.view(buffer);
-    String name = DateTime.now().microsecondsSinceEpoch.toString();
-    var tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/${name}.${extensao}').writeAsBytes(
-        buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-    return file;
-  }
-
   static Future<File> fileTemp(String extensao, {Uint8List? memori, String? base64, String? nome })  async {
     assert(memori != null || base64 != null);
 
