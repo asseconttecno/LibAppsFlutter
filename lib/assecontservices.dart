@@ -26,6 +26,7 @@ export 'ui/ui.dart';
 export 'helper/helper.dart';
 export 'config.dart';
 export 'utils/utils.dart';
+export 'package:provider/provider.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:tutorial/tutorial.dart';
 
@@ -113,6 +114,10 @@ class Assecontservices {
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> UserPontoManager(),
+        ),
+      if(ponto)
+        ChangeNotifierProvider(
+          create: (_)=> ComprovanteManagger(),
         ),
       if(ponto)
         ChangeNotifierProvider(
