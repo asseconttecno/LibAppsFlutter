@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -58,8 +59,8 @@ class ComprovanteService {
       );
 
       if(response.isSucess) {
-        final dados = response.data ;
-        File? file = await CustomFile.fileTemp('pdf', memori: dados);
+        final dados = response.data.buffer;
+        File? file = await CustomFile.filePDF('pdf', dados);
         return file;
       } else {
         debugPrint(response.codigo.toString());
