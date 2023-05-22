@@ -8,6 +8,7 @@ export 'ponto/senha.dart';
 export 'ponto/usuario.dart';
 export 'ponto/espelho.dart';
 export 'ponto/registro_ponto.dart';
+export 'ponto/comprovante.dart';
 
 export 'holerite/holerite.dart';
 export 'holerite/informe.dart';

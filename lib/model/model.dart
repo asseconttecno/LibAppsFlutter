@@ -15,6 +15,8 @@ export 'ponto/marcacao/marcacao.dart';
 export 'ponto/espelho/espelho_model.dart';
 export 'ponto/memorando/memorando.dart';
 export 'ponto/usuario/users.dart';
+export 'ponto/comprovantes/marcacoes.dart';
+
 export 'configuracoes.dart';
 
 export 'asseweb/usuario/usuario.dart';
