@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -46,7 +47,7 @@ class ComprovanteService {
     String api = "/api/comprovantemarcacao/RetornarComprovante";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAssepontoNova! + api, decoder: false, isbyte: true,
+          url: Config.conf.apiAssepontoNova! + api,
           headers: <String, String>{
             'Content-Type': 'application/json',
           },
@@ -58,8 +59,8 @@ class ComprovanteService {
       );
 
       if(response.isSucess) {
-        final dados = response.data ;
-        File? file = await CustomFile.fileTemp('pdf', memori: dados);
+        final dados = response.data;
+        File? file = await CustomFile.fileTemp('pdf', base64: dados);
         return file;
       } else {
         debugPrint(response.codigo.toString());

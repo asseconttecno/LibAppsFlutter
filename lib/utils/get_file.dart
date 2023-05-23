@@ -28,7 +28,8 @@ class CustomFile {
 
     String name = nome ?? DateTime.now().microsecondsSinceEpoch.toString();
     var tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/${name}.$extensao').writeAsBytes(memori ?? base64Decode(base64!));
+    File file = File('${tempDir.path}/${name}.$extensao');
+    file = await file.writeAsBytes(memori ?? base64Decode(base64!));
     return file;
   }
 
