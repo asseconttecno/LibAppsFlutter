@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final obrigacaoModel = obrigacaoModelFromMap(jsonString);
+
 
 import 'dart:convert';
 

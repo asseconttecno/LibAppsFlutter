@@ -28,14 +28,11 @@ class Validacoes {
   }
 
   static String removerAcentos(String str) {
-
     var comAcento = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
     var semAcento = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
-
     for (int i = 0; i < comAcento.length; i++) {
       str = str.replaceAll(comAcento[i], semAcento[i]);
     }
-
     return str;
   }
 
@@ -51,7 +48,6 @@ class Validacoes {
         multiLine: true,
         caseSensitive: true
     );
-
     return htmlText.replaceAll(' />', '/>').replaceAll(exp, '');
   }
 

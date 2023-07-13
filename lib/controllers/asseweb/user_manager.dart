@@ -59,16 +59,16 @@ class UserAssewebManager extends ChangeNotifier {
     }
   }
 
-  Future<bool?> auth(BuildContext context, String email, String senha, bool bio, {required Null Function() sucess}) async {
+  Future<bool> auth(BuildContext context, {String? email, String? senha, bool bio = false}) async {
     bool result = false;
     try{
       if(bio){
         bool resultBio = await _serviceBio.authbiometria();
         if(resultBio){
-          result = await signInAuth(email: email,  senha: senha);
+          result = await signInAuth(email: uemail ?? '',  senha: usenha ?? '');
         }
       }else{
-        result = await signInAuth(email: email,  senha: senha);
+        result = await signInAuth(email: email ?? '',  senha: senha ?? '');
       }
       memorizar();
       return result;
@@ -76,7 +76,7 @@ class UserAssewebManager extends ChangeNotifier {
       debugPrint(e.toString());
       CustomSnackbar.context(context, e.toString(), Colors.black87);
     }
-    return null;
+    return result;
   }
 
   Future<bool> signInAuth({required String email, required String senha}) async {
