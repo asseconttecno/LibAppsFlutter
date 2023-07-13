@@ -53,6 +53,9 @@ class Assecontservices {
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
 
+    final BiometriaServices _bio = BiometriaServices();
+    _bio.supportedBio();
+
     List<SingleChildWidget> _providers = [
       ChangeNotifierProvider(
         lazy: false,
@@ -207,12 +210,11 @@ class App extends StatefulWidget {
 }
 
 class _MyAppState extends State<App> {
-  final BiometriaServices _bio = BiometriaServices();
 
   @override
   void initState() {
     super.initState();
-    _bio.supportedBio();
+
   }
 
   @override
