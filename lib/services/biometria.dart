@@ -13,6 +13,7 @@ class BiometriaServices {
   void supportedBio() {
     if(!Config.isWin){
       localAuth.isDeviceSupported().then((isSupported) {
+        debugPrint('Biometria suportado: $isSupported');
         Config.bioState = isSupported ? BioSupportState.supported : BioSupportState.unsupported;
       });
     }
@@ -23,8 +24,10 @@ class BiometriaServices {
     if(Config.bioState == BioSupportState.supported) {
       try {
         bool canCheckBiometrics = await localAuth.canCheckBiometrics;
+        debugPrint('Tem biometria cadastrada: $canCheckBiometrics');
         if (canCheckBiometrics) {
           List<BiometricType> availableBiometrics = await localAuth.getAvailableBiometrics();
+          debugPrint('Lista de biometria cadastrada: $availableBiometrics.isNotEmpty');
           if (availableBiometrics.isNotEmpty) {
             return true;
           } 
@@ -33,6 +36,7 @@ class BiometriaServices {
         debugPrint(e.toString());
       }
     }
+
     return false;
   }
 

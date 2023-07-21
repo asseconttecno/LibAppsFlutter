@@ -30,6 +30,7 @@ class ApontamentoService {
           List temp = dadosJson["Apontamentos"];
           if(temp.isNotEmpty){
             List<Apontamento> listaTemporaria = temp.map((e) => Apontamento.fromMap(e)).toList();
+            listaTemporaria.sort((a,b) => b.datainicio.compareTo(a.datainicio));
             return listaTemporaria;
           }
         }

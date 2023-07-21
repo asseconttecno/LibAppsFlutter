@@ -53,6 +53,9 @@ class Assecontservices {
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
 
+    final BiometriaServices _bio = BiometriaServices();
+    _bio.supportedBio();
+
     List<SingleChildWidget> _providers = [
       ChangeNotifierProvider(
         lazy: false,
@@ -188,7 +191,7 @@ class Assecontservices {
           providers: _providers,
           child: DevicePreview(
             enabled: devicePreview, //!kReleaseMode,
-            builder: (context) => myApp ?? App(titulo: titulo, rotas: rotas,), // Wrap your app
+            builder: (context) => myApp ?? MyApp(titulo: titulo, rotas: rotas,), // Wrap your app
           ),
         )
     );
@@ -196,25 +199,16 @@ class Assecontservices {
 
 }
 
-class App extends StatefulWidget {
+class MyApp extends StatefulWidget {
   String? titulo;
   RouteFactory? rotas;
-  App({required this.titulo, required this.rotas});
-
+  MyApp({required this.titulo, required this.rotas});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<App> {
-  final BiometriaServices _bio = BiometriaServices();
-
-  @override
-  void initState() {
-    super.initState();
-    _bio.supportedBio();
-  }
-
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

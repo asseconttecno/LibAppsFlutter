@@ -1,37 +1,71 @@
 
+// To parse this JSON data, do
+//
+//     final bancoHoras = bancoHorasFromMap(jsonString);
+
+import 'dart:convert';
 
 class BancoHoras {
+  DateTime? dataInicial;
+  DateTime? dataFinal;
+  List<BancoDiasList>? bancoDiasList;
+
+  BancoHoras({
+    this.dataInicial,
+    this.dataFinal,
+    this.bancoDiasList,
+  });
+
+  factory BancoHoras.fromJson(String str) => BancoHoras.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory BancoHoras.fromMap(Map<String, dynamic> json) => BancoHoras(
+    dataInicial: json["DataInicial"] == null ? null : DateTime.parse(json["DataInicial"]),
+    dataFinal: json["DataFinal"] == null ? null : DateTime.parse(json["DataFinal"]),
+    bancoDiasList: json["BancoDiasList"] == null ? [] : List<BancoDiasList>.from(json["BancoDiasList"]!.map((x) => BancoDiasList.fromMap(x))),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "DataInicial": dataInicial?.toIso8601String(),
+    "DataFinal": dataFinal?.toIso8601String(),
+    "BancoDiasList": bancoDiasList == null ? [] : List<dynamic>.from(bancoDiasList!.map((x) => x.toMap())),
+  };
+}
+
+class BancoDiasList {
   DateTime? data;
   String? credito;
-  int? creditomin;
+  String? descricaoCredito;
   String? debito;
-  int? debitomin;
+  String? descricaoDebito;
   String? saldo;
-  String? saldodia;
-  String? descricao;
+  int get creditomin => getmin(credito);
+  int get debitomin => getmin(debito);
+  String get saldodia => gethoras(creditomin, debitomin);
 
 
-  BancoHoras(
-      {this.data,
-      this.credito,
-      this.creditomin,
-      this.debito,
-      this.debitomin,
-      this.saldo,
-      this.saldodia,
-      this.descricao});
+  BancoDiasList({
+    this.data,
+    this.credito,
+    this.descricaoCredito,
+    this.debito,
+    this.descricaoDebito,
+    this.saldo,
+  });
 
-  BancoHoras.fromMap(Map map) {
-    List _i = map["Data"] == null ? null : map["Data"].split("/");
-    this.data = _i == null ? null : DateTime(int.parse(_i[2]), int.parse(_i[1]), int.parse(_i[0]));
-    this.credito = map["Credito"] == null ? null : map["Credito"];
-    this.creditomin = map["Credito"] == null ? 0 : getmin( map["Credito"]?.toString());
-    this.debito = map["Debito"] == null ? null : map["Debito"]?.toString().replaceAll(":-", ":");
-    this.debitomin = map["Debito"] == null ? 0 : getmin( map["Debito"]?.toString().replaceAll("-", "") );
-    this.saldo = map["Saldo"] == null ? null : map["Saldo"]?.toString().replaceAll(":-", ":");
-    this.saldodia = gethoras(this.creditomin ?? 0, this.debitomin ?? 0);
-    this.descricao = map["Descricao"] == null ? null : map["Descricao"];
-  }
+  factory BancoDiasList.fromJson(String str) => BancoDiasList.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory BancoDiasList.fromMap(Map<String, dynamic> json) => BancoDiasList(
+    data: json["Data"] == null ? null : DateTime.parse(json["Data"]),
+    credito: json["Credito"],
+    descricaoCredito: json["DescricaoCredito"],
+    debito: json["Debito"],
+    descricaoDebito: json["DescricaoDebito"],
+    saldo: json["Saldo"],
+  );
 
   int getmin(String? horas){
     int valor = 0 ;
@@ -62,4 +96,13 @@ class BancoHoras {
     }
     return valor;
   }
+
+  Map<String, dynamic> toMap() => {
+    "Data": data?.toIso8601String(),
+    "Credito": credito,
+    "DescricaoCredito": descricaoCredito,
+    "Debito": debito,
+    "DescricaoDebito": descricaoDebito,
+    "Saldo": saldo,
+  };
 }

@@ -27,7 +27,7 @@ class ApontamentoManager extends ChangeNotifier {
 
   getPeriodo(UsuarioPonto? user) async {
     try{
-      List<Apontamento>? aponta = await _service.getPeriodo(user);
+      List<Apontamento> aponta = await _service.getPeriodo(user);
       apontamento = aponta;
       notifyListeners();
     }catch(e){
