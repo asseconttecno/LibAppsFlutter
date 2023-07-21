@@ -8,21 +8,16 @@ class SenhaPontoService {
 
 
   Future<bool> sendPass(String email) async {
-    String _api = "/api/database/SendPass";
+    String _api = "/api/funcionario/EsqueciMinhaSenha";
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
-          "Email": email.trim().replaceAll(' ', '')
+          "DatabaseId": ,
+          "Email": email.trim()
         }
     );
     if(response.isSucess){
-      var dadosJson = response.data;
-      if(dadosJson["IsSuccess"]){
-        print(dadosJson['Message']);
-        return true;
-      }else{
-        throw dadosJson["Message"];
-      }
+      return true;
     }else{
       debugPrint(response.codigo.toString());
       throw 'Não foi possivel enviar sua senha, tente novamente!';
@@ -30,22 +25,17 @@ class SenhaPontoService {
   }
 
   Future<bool> alteracaoPass(String email, String atual, String nova, ) async {
-    String _api = "/api/database/AlteracaoPass";
+    String _api = "/api/funcionario/AlterarSenha";
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
+          "DatabaseId": ,
           "Email": email.trim(),
-          "SenhaAtual": atual.trim(),
-          "SenhaNova": nova.trim()
+          "NovaSenha": nova.trim()
         }
     );
     if(response.isSucess){
-      var dadosJson = response.data;
-      if(dadosJson["IsSuccess"]){
-        return true;
-      }else{
-        throw dadosJson["Message"];
-      }
+      return true;
     }else{
       debugPrint(response.codigo.toString());
       throw 'Não foi possivel alterar sua senha, tente novamente!';
