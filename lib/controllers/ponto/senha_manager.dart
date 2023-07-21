@@ -8,43 +8,25 @@ import '../controllers.dart';
 
 
 class SenhaPontoManager extends ChangeNotifier {
-  SenhaPontoService _service = SenhaPontoService();
+  final SenhaPontoService _service = SenhaPontoService();
 
   Future<bool> sendPass(BuildContext context, String email) async {
     try{
       bool result = await _service.sendPass(email);
       return result;
-      if(result){
-        CustomAlert.sucess(
-          context: context,
-          mensage: 'Nova senha enviada para seu email!\n',
-        );
-      }
     }catch(e){
       debugPrint("alteracaoPass erro ${e.toString()}");
       return false;
-      CustomAlert.erro(
-        context: context,
-        mensage: e.toString(),
-      );
     }
   }
 
   Future<bool> alteracaoPass(BuildContext context, UsuarioPonto usuario, String atual, String nova) async {
-    bool result = await _service.alteracaoPass(usuario.email!, atual, nova);
+    bool result = await _service.alteracaoPass(usuario.email!, usuario.database!, nova);
     if(result){
       Config.usenha = nova;
       context.read<UserPontoManager>().senha.text = nova;
       context.read<UserPontoManager>().memorizar();
     }
-
     return result;
-    if(result){
-      CustomAlert.sucess(
-        context: context,
-        mensage: 'Senha Alterada!\n',
-      );
-    }
-
   }
 }

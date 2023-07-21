@@ -12,7 +12,6 @@ class SenhaPontoService {
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
-          "DatabaseId": ,
           "Email": email.trim()
         }
     );
@@ -24,12 +23,12 @@ class SenhaPontoService {
     }
   }
 
-  Future<bool> alteracaoPass(String email, String atual, String nova, ) async {
+  Future<bool> alteracaoPass(String email, int dbId, String nova, ) async {
     String _api = "/api/funcionario/AlterarSenha";
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
-          "DatabaseId": ,
+          "DatabaseId": dbId,
           "Email": email.trim(),
           "NovaSenha": nova.trim()
         }

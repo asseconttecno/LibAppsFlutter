@@ -9,12 +9,12 @@ import '../http/http.dart';
 class BancoHorasService {
   final HttpCli _http = HttpCli();
 
-  Future<List<BancoHoras>> getFuncionarioHistorico(UsuarioPonto? user) async {
+  Future<List<BancoDiasList>> getFuncionarioHistorico(UsuarioPonto? user) async {
     if(user != null){
-      String _api = "/api/bcohoras/GetFuncionarioHistorico";
+      String _api = "/api/bancoHoras/GetFuncionarioBancoHoras";
 
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
               "UserId": user.userId.toString(),
@@ -29,15 +29,9 @@ class BancoHorasService {
 
       try{
         if(response.isSucess){
-          Map dadosJson = response.data;
-          if(dadosJson['IsSuccess'] && dadosJson.containsKey("Result") ){
-            List temp = dadosJson["Result"]['BancoDiaList'];
-            if(temp.isNotEmpty){
-              List<BancoHoras> listaTemporaria = [];
-              listaTemporaria = temp.map((e) => BancoHoras.fromMap(e)).toList();
-              return listaTemporaria;
-            }
-          }
+          Map<String, dynamic> dadosJson = response.data;
+          final model = BancoHoras.fromMap(dadosJson);
+          return model.bancoDiasList ?? [];
         }
       }catch(e){
         debugPrint("BancoHorasService getFuncionarioHistorico Erro Try ${e.toString()}");

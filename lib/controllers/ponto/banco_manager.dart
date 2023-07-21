@@ -10,9 +10,10 @@ import '../controllers.dart';
 class BancoHorasManager extends ChangeNotifier {
   final BancoHorasService _service = BancoHorasService();
 
-  List<BancoHoras> listabanco = [];
+  List<BancoDiasList> listabanco = [];
   List<DecorationItem> listdecoration = [];
   DateTime _data = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
   DateTime get data => _data;
   set data(DateTime v){
     _data = DateTime(v.year, v.month, v.day);
@@ -32,8 +33,8 @@ class BancoHorasManager extends ChangeNotifier {
   }
 
 
-  Future<BancoHoras?> getBancodia() async {
-    BancoHoras? _bancoHoras;
+  Future<BancoDiasList?> getBancodia() async {
+    BancoDiasList? bancoHoras;
     try{
       if(listabanco.any((e) {
         if(e.data != null){
@@ -41,7 +42,7 @@ class BancoHorasManager extends ChangeNotifier {
         }
         return false;
       })){
-          _bancoHoras = listabanco.firstWhere((e) {
+          bancoHoras = listabanco.firstWhere((e) {
             if(e.data != null){
               return DateTime(e.data!.year, e.data!.month, e.data!.day) == data;
             }
@@ -49,9 +50,9 @@ class BancoHorasManager extends ChangeNotifier {
           });
       }
     }catch (e){
-      print(e);
+      debugPrint(e.toString());
     }
-    return _bancoHoras;
+    return bancoHoras;
   }
 
   getFuncionarioHistorico(UsuarioPonto? user) async {
@@ -59,14 +60,14 @@ class BancoHorasManager extends ChangeNotifier {
       listabanco = await _service.getFuncionarioHistorico(user);
       if(listabanco.isNotEmpty){
         listabanco.map((element) {
-          if((element.debitomin ?? 0) > 0 && (element.creditomin ?? 0) > 0){
+          if((element.debitomin) > 0 && (element.creditomin) > 0){
             listdecoration.add(
                 DecorationItem(
-                    decoration: Icon(Icons.circle, color: Config.corPri,),
+                    decoration: const Icon(Icons.circle, color: Config.corPri,),
                     date: element.data
                 )
             );
-          }else if((element.debitomin ?? 0) > 0 ){
+          }else if((element.debitomin) > 0 ){
             listdecoration.add(
                 DecorationItem(
                     decoration: const Icon(Icons.circle, color: Colors.red,),
@@ -74,7 +75,7 @@ class BancoHorasManager extends ChangeNotifier {
                 )
             );
 
-          }else if((element.creditomin ?? 0) > 0){
+          }else if((element.creditomin) > 0){
             listdecoration.add(
                 DecorationItem(
                     decoration: const Icon(Icons.circle, color: Colors.green,),
