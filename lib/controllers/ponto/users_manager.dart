@@ -35,10 +35,10 @@ class UserPontoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  UsuarioPonto? _usuario;
-  UsuarioPonto? get usuario => _usuario;
+  static UsuarioPonto? susuario;
+  UsuarioPonto? get usuario => susuario;
   set usuario(UsuarioPonto? valor){
-    _usuario = valor;
+    susuario = valor;
     notifyListeners();
   }
 
