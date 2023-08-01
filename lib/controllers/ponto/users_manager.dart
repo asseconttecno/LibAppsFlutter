@@ -25,8 +25,8 @@ class UserPontoManager extends ChangeNotifier {
 
   final TextEditingController email = TextEditingController();
   final TextEditingController senha = TextEditingController();
-  String? uemail;
-  String? usenha;
+  String uemail = '';
+  String usenha = '';
 
   bool _status = false;
   bool get status => _status;
@@ -36,7 +36,6 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   UsuarioPonto? _usuario;
-
   UsuarioPonto? get usuario => _usuario;
   set usuario(UsuarioPonto? valor){
     _usuario = valor;
@@ -78,12 +77,11 @@ class UserPontoManager extends ChangeNotifier {
       if(bio){
         bool _resultBio = await _serviceBio.authbiometria();
         if(_resultBio){
-          result = await signInAuth(context, email: email,  senha: senha);
+          result = await signInAuth(email: email,  senha: senha);
         }
       }else{
-        result = await signInAuth(context, email: email,  senha: senha);
+        result = await signInAuth(email: email,  senha: senha);
       }
-      if(result) Config.usenha = senha;
       return result;
     } catch(e) {
       debugPrint(e.toString());
@@ -91,12 +89,13 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInAuth(BuildContext context, {required String email,required String senha}) async {
+  Future<bool> signInAuth({required String email,required String senha}) async {
     usuario = await _service.signInAuth(email: email, senha: senha);
     await getHome();
     if(usuario?.master ?? false){
-      context.read<UserHoleriteManager>().user = UsuarioHolerite.fromPonto(usuario!);
+      UserHoleriteManager.user = UsuarioHolerite.fromPonto(usuario!);
     }
+    Config.usenha = senha;
     return true;
   }
 
@@ -118,14 +117,27 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
+  Future<bool> autoLogin() async {
+    bool result = false;
+    try {
+      if (uemail != '' && usenha != '') {
+        result = await signInAuth(email: uemail, senha: usenha);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return result;
+  }
+
   init() async {
     try{
       final prefs = await SharedPreferences.getInstance();
       uemail = prefs.getString("login") ?? '';
-      usenha = prefs.getString("usenha");
+      usenha = prefs.getString("usenha") ?? '';
       senha.text = prefs.getString("senha") ?? '';
-      email.text = uemail!;
+      email.text = uemail;
       Config.usenha = usenha;
+      await autoLogin();
     } catch(e) {
       debugPrint(e.toString());
     }

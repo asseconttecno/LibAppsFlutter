@@ -61,8 +61,8 @@ class BiometriaManager extends ChangeNotifier {
   loadBio() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      perguntar =  await prefs.getBool("perguntar") ?? false;
-      bio = await prefs.getBool("bio") ?? false;
+      perguntar =  prefs.getBool("perguntar") ?? false;
+      bio = prefs.getBool("bio") ?? false;
     } catch(e) {
       debugPrint(e.toString());
     }

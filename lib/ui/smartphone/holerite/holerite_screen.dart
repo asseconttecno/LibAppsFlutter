@@ -26,14 +26,14 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
 
   @override
   void initState() {
-    context.read<HoleriteManager>().competencias(context.read<UserHoleriteManager>().user);
+    context.read<HoleriteManager>().competencias(UserHoleriteManager.user);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    //double width = MediaQuery.of(context).size.width;
 
     return Consumer2<UserHoleriteManager,HoleriteManager>(
         builder: (_, use, holerite, __){
@@ -41,13 +41,13 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
             List<HoleriteModel>? _holerite;
             try{
               if(holerite.listcompetencias.isEmpty){
-                holerite.listcompetencias = await holerite.competencias(use.user);
+                holerite.listcompetencias = await holerite.competencias(UserHoleriteManager.user);
               }
               if(holerite.listcompetencias.isNotEmpty){
                 _comp = holerite.listcompetencias.firstWhere(
                         (e) => e.descricao == holerite.dropdowndata);
                 if(_comp != null){
-                  _holerite = await holerite.resumoscreen(use.user, _comp!.mes!, _comp!.ano!);
+                  _holerite = await holerite.resumoscreen(UserHoleriteManager.user, _comp!.mes!, _comp!.ano!);
                 }
               }
             } catch(e){
