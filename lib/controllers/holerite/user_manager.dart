@@ -95,10 +95,27 @@ class UserHoleriteManager extends ChangeNotifier {
   }
 
   signOut(){
+    cleanPreferebces();
     user = null;
     listuser = null;
+    _status = false;
+    uemail = '';
+    usenha = '';
+    Config.usenha = '';
   }
 
+  cleanPreferebces() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      prefs.remove("user");
+      prefs.remove("usenha");
+      prefs.remove("senha");
+      prefs.remove("bio");
+      prefs.remove("perguntar");
+    } catch(e) {
+      debugPrint(e.toString());
+    }
+  }
   loadBio() async {
     try{
       final prefs = await SharedPreferences.getInstance();

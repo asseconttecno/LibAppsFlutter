@@ -101,9 +101,26 @@ class UserAssewebManager extends ChangeNotifier {
   }
 
   signOut(){
+    cleanPreferebces();
     sUser = null;
     sCompanies = null;
     _status = false;
+    uemail = '';
+    usenha = '';
+    Config.usenha = '';
+  }
+
+  cleanPreferebces() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      prefs.remove("user");
+      prefs.remove("usenha");
+      prefs.remove("senha");
+      prefs.remove("bio");
+      prefs.remove("perguntar");
+    } catch(e) {
+      debugPrint(e.toString());
+    }
   }
 
   loadBio() async {
