@@ -80,7 +80,10 @@ class _FileHeroState extends State<FileHero> {
                           margin: widget.menu != null ? EdgeInsets.only(bottom: 120) : null,
                           alignment: Alignment.center,
                           color: Colors.black,
-                          child: SfPdfViewer.file(widget.file),
+                          child: SfPdfViewer.file(
+                              widget.file,
+                              pageSpacing: 0
+                          ),
                         ),
                         menus()
                       ],
