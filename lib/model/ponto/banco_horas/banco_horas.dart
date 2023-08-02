@@ -71,7 +71,9 @@ class BancoDiasList {
     int valor = 0 ;
     if(horas != null){
       List  _l = horas.split(':');
-      valor = (int.parse(_l[0]) * 60) + int.parse(_l[1]);
+      if(_l.length > 1){
+        valor = (int.parse(_l[0]) * 60) + int.parse(_l[1]);
+      }
     }
     return valor;
   }
