@@ -39,6 +39,8 @@ class BancoDiasList {
   String? descricaoCredito;
   String? debito;
   String? descricaoDebito;
+  String? lancamentos;
+  String? descricaoLancamentos;
   String? saldo;
   int get creditomin => getmin(credito);
   int get debitomin => getmin(debito);
@@ -51,6 +53,8 @@ class BancoDiasList {
     this.descricaoCredito,
     this.debito,
     this.descricaoDebito,
+    this.lancamentos,
+    this.descricaoLancamentos,
     this.saldo,
   });
 
@@ -64,6 +68,8 @@ class BancoDiasList {
     descricaoCredito: json["DescricaoCredito"],
     debito: json["Debito"],
     descricaoDebito: json["DescricaoDebito"],
+    lancamentos: json["Lancamentos"],
+    descricaoLancamentos: json["DescricaoLancamentos"],
     saldo: json["Saldo"],
   );
 
