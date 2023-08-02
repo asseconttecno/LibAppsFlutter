@@ -21,7 +21,7 @@ dependencies:
   sqflite: ^2.2.8+2 #^2.0.2
   sqflite_common_ffi: ^2.2.5
 
-  http: ^0.13.6
+  http: ^1.0.0
 
   intl: any #^0.18.1
 
@@ -58,11 +58,12 @@ dependencies:
 
   #webcontent_converter: ^0.0.7+1
   flutter_html_to_pdf: ^0.7.0
-  #syncfusion_flutter_pdfviewer: ^19.4.53-beta
-  syncfusion_flutter_pdfviewer:
-    git:
-      url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
-      ref: main
+
+  syncfusion_flutter_pdfviewer: ^22.2.7
+  #syncfusion_flutter_pdfviewer:
+  #  git:
+  #    url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
+  #    ref: main
 
   path_provider: ^2.0.15
   shared_preferences: ^2.2.0

@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 
+
+
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -60,12 +62,7 @@ class EspelhoService {
       if(response.isSucess) {
         var dadosJson = response.data ;
         EspelhoModel espelhoModel = EspelhoModel.fromMap(dadosJson);
-        var htmlContent = '''<!DOCTYPE html>
-        <html>
-        <head></head>
-        <body>${espelhoModel.espelhoHtml}</body>
-        </html>
-        ''';
+        var htmlContent = '''${espelhoModel.espelhoHtml}''';
         Directory tempDir = await getTemporaryDirectory();
         String savedPath = "Espelho-${aponta.descricao?.replaceAll(' ', '-')}-${DateTime.now().microsecondsSinceEpoch}" ;
         File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
@@ -83,4 +80,5 @@ class EspelhoService {
     }
     return null;
   }
+
 }

@@ -82,7 +82,6 @@ class _FileHeroState extends State<FileHero> {
                           color: Colors.black,
                           child: SfPdfViewer.file(
                               widget.file,
-                              pageSpacing: 0
                           ),
                         ),
                         menus()
