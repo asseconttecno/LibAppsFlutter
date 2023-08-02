@@ -64,13 +64,13 @@ class BancoDiasList {
 
   factory BancoDiasList.fromMap(Map<String, dynamic> json) => BancoDiasList(
     data: json["Data"] == null ? null : DateTime.parse(json["Data"]),
-    credito: json["Credito"],
-    descricaoCredito: json["DescricaoCredito"],
-    debito: json["Debito"],
-    descricaoDebito: json["DescricaoDebito"],
-    lancamentos: json["Lancamentos"],
-    descricaoLancamentos: json["DescricaoLancamentos"],
-    saldo: json["Saldo"],
+    credito: json["Credito"]?.toString().trim(),
+    descricaoCredito: json["DescricaoCredito"]?.toString().trim(),
+    debito: json["Debito"]?.toString().trim(),
+    descricaoDebito: json["DescricaoDebito"]?.toString().trim(),
+    lancamentos: json["Lancamentos"]?.toString().trim(),
+    descricaoLancamentos: json["DescricaoLancamentos"]?.toString().trim(),
+    saldo: json["Saldo"]?.toString().trim(),
   );
 
   int getmin(String? horas){
