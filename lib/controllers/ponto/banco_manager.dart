@@ -67,21 +67,30 @@ class BancoHorasManager extends ChangeNotifier {
                     date: element.data
                 )
             );
-          }else if((element.debitomin) > 0 ){
-            listdecoration.add(
-                DecorationItem(
-                    decoration: const Icon(Icons.circle, color: Colors.red,),
-                    date: element.data
-                )
-            );
-
-          }else if((element.creditomin) > 0){
+          }else  if((element.creditomin) > 0){
             listdecoration.add(
                 DecorationItem(
                     decoration: const Icon(Icons.circle, color: Colors.green,),
                     date: element.data
                 )
             );
+          }else if((element.lancamentos ?? '') != ''){
+            listdecoration.add(
+                DecorationItem(
+                    decoration: const Icon(Icons.circle, color: Colors.amber,),
+                    date: element.data
+                )
+            );
+
+          }else if((element.debitomin) > 0 ){
+            if(element.data != null && element.data!.compareTo(DateTime.now()) <= 0) {
+              listdecoration.add(
+                  DecorationItem(
+                      decoration: const Icon(Icons.circle, color: Colors.red,),
+                      date: element.data
+                  )
+              );
+            }
           }
           return element;
         }).toList();

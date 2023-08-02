@@ -39,6 +39,8 @@ class BancoDiasList {
   String? descricaoCredito;
   String? debito;
   String? descricaoDebito;
+  String? lancamentos;
+  String? descricaoLancamentos;
   String? saldo;
   int get creditomin => getmin(credito);
   int get debitomin => getmin(debito);
@@ -51,6 +53,8 @@ class BancoDiasList {
     this.descricaoCredito,
     this.debito,
     this.descricaoDebito,
+    this.lancamentos,
+    this.descricaoLancamentos,
     this.saldo,
   });
 
@@ -60,24 +64,30 @@ class BancoDiasList {
 
   factory BancoDiasList.fromMap(Map<String, dynamic> json) => BancoDiasList(
     data: json["Data"] == null ? null : DateTime.parse(json["Data"]),
-    credito: json["Credito"],
-    descricaoCredito: json["DescricaoCredito"],
-    debito: json["Debito"],
-    descricaoDebito: json["DescricaoDebito"],
-    saldo: json["Saldo"],
+    credito: json["Credito"]?.toString().trim(),
+    descricaoCredito: json["DescricaoCredito"]?.toString().trim(),
+    debito: json["Debito"]?.toString().trim(),
+    descricaoDebito: json["DescricaoDebito"]?.toString().trim(),
+    lancamentos: json["Lancamentos"]?.toString().trim(),
+    descricaoLancamentos: json["DescricaoLancamentos"]?.toString().trim(),
+    saldo: json["Saldo"]?.toString().trim(),
   );
 
   int getmin(String? horas){
     int valor = 0 ;
-    if(horas != null){
-      List  _l = horas.split(':');
-      valor = (int.parse(_l[0]) * 60) + int.parse(_l[1]);
+    if(horas != null && horas != '' ){
+      List  _l = horas.replaceAll('-', '').split(':');
+      if(_l.length > 1){
+        valor = (int.parse(_l[0]) * 60) + int.parse(_l[1]);
+      }
     }
     return valor;
   }
 
   String gethoras(int credito, int debito){
     String valor = '0:00' ;
+    print(credito); print(debito);
+
     if(credito > 0 || debito > 0){
       int horas = 0;
       int min = 0;

@@ -30,6 +30,7 @@ class BancoHorasService {
       try{
         if(response.isSucess){
           Map<String, dynamic> dadosJson = response.data;
+          debugPrint(dadosJson.toString());
           final model = BancoHoras.fromMap(dadosJson);
           return model.bancoDiasList ?? [];
         }
