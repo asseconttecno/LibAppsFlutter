@@ -69,7 +69,7 @@ class BancoDiasList {
 
   int getmin(String? horas){
     int valor = 0 ;
-    if(horas != null){
+    if(horas != null && horas != '' ){
       List  _l = horas.split(':');
       if(_l.length > 1){
         valor = (int.parse(_l[0]) * 60) + int.parse(_l[1]);
