@@ -21,18 +21,13 @@ class UserHoleriteManager extends ChangeNotifier {
 
   List<UsuarioHolerite>? listuser;
 
-  UsuarioHolerite? _user;
-  UsuarioHolerite? get user => _user;
-  set user(UsuarioHolerite? v){
-    _user = v;
-    notifyListeners();
-  }
+  static UsuarioHolerite? user;
 
   final TextEditingController email = TextEditingController();
   final TextEditingController cpf = TextEditingController();
   final TextEditingController senha = TextEditingController();
-  String? uemail;
-  String? usenha;
+  String uemail = '';
+  String usenha = '';
 
   bool _status = false;
   bool get status => _status;
@@ -74,7 +69,21 @@ class UserHoleriteManager extends ChangeNotifier {
   Future<bool> signInAuth({required String email, required String senha}) async {
     listuser = await _service.signInAuth(email: email, senha: senha);
     user = listuser!.last;
+    memorizar();
     return true;
+  }
+
+
+  Future<bool> autoLogin() async {
+    bool result = false;
+    try {
+      if (uemail != '' && usenha != '') {
+        result = await signInAuth(email: uemail, senha: usenha);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return result;
   }
 
   Future<bool> deleteUser() async {
@@ -93,10 +102,10 @@ class UserHoleriteManager extends ChangeNotifier {
   loadBio() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      uemail = (await prefs.getString("user")) ?? '';
-      usenha = await prefs.getString("usenha");
-      senha.text = await prefs.getString("senha") ?? '';
-      email.text = uemail!;
+      uemail = prefs.getString("user") ?? '';
+      usenha = prefs.getString("usenha") ?? '';
+      senha.text = prefs.getString("senha") ?? '';
+      email.text = uemail;
       Config.usenha = usenha;
     } catch(e) {
       debugPrint(e.toString());

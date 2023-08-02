@@ -42,20 +42,19 @@ alterUser(BuildContext context){
                             child: Card(elevation: 0.2,
                               child: ListTile(
                                 leading: Icon(CupertinoIcons.person_crop_circle, size: 40,
-                                  color: user.listuser![index] == user.user ? Config.corPri : null,),
+                                  color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null,),
                                 title: CustomText.text(
                                   user.listuser![index].empresa?.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 16,
-                                      color: user.listuser![index] == user.user ? Config.corPri : null
+                                      color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
                                 ),
-                                subtitle: CustomText.text('Registro: ' +
-                                    (user.listuser![index].registro ?? ""),
+                                subtitle: CustomText.text('Registro: ${user.listuser![index].registro ?? ""}',
                                   style: TextStyle(fontSize: 13,
-                                      color: user.listuser![index] == user.user ? Config.corPri : null),
+                                      color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
@@ -63,9 +62,9 @@ alterUser(BuildContext context){
                               ),
                             ),
                             onTap: () async {
-                              user.user = user.listuser![index];
+                              UserHoleriteManager.user = user.listuser![index];
                               context.read<HoleriteManager>().listcompetencias =
-                                await context.read<HoleriteManager>().competencias(user.user);
+                                await context.read<HoleriteManager>().competencias(UserHoleriteManager.user);
                               Navigator.pop(context);
                             }
                         );

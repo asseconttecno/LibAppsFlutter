@@ -24,7 +24,6 @@ class DetalhesHoleritePDF extends StatefulWidget {
 class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
   bool load = false;
   CompetenciasModel? _comp;
-  HoleriteModel? _holerite;
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height - (WidgetsBinding.instance?.window.padding.top ?? 0);
+    //double height = MediaQuery.of(context).size.height - (WidgetsBinding.instance.window.padding.top);
     double width = MediaQuery.of(context).size.width;
 
 
@@ -44,13 +43,13 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
             List<HoleriteModel>? _holerite;
             try{
               if(holerite.listcompetencias.isEmpty){
-                holerite.listcompetencias = await holerite.competencias(use.user, );
+                holerite.listcompetencias = await holerite.competencias(UserHoleriteManager.user, );
               }
               if(holerite.listcompetencias.isNotEmpty){
                 _comp = holerite.listcompetencias.firstWhere(
                         (e) => e.descricao == holerite.dropdowndata);
                 if(_comp != null){
-                  _holerite = await holerite.resumoscreen(use.user, _comp!.mes!, _comp!.ano!);
+                  _holerite = await holerite.resumoscreen(UserHoleriteManager.user, _comp!.mes!, _comp!.ano!);
                 }
               }
             } catch(e){
@@ -65,7 +64,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
               height: widget.constraints.maxHeight,
               width: width,
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
               child: FutureBuilder<List<HoleriteModel>?>(
                   future: dadosHolerite(),
                   builder: (_, snapshot){
@@ -76,7 +75,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
                         resultado = Center(
                           child: Container(
                               width: 50,
-                              child: LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
+                              child: const LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
                           ),
                         );
                         break;
@@ -84,7 +83,7 @@ class _DetalhesHoleriteState extends State<DetalhesHoleritePDF> {
                       case ConnectionState.done :
                         if( snapshot.hasError || !snapshot.hasData || snapshot.data == null){
                           resultado = GestureDetector(
-                              child: Icon(Icons.autorenew_outlined,
+                              child: const Icon(Icons.autorenew_outlined,
                                 color: Config.corPri, size: 70,),
                               onTap: (){
                                 dadosHolerite();

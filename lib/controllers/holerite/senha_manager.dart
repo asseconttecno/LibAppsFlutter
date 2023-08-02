@@ -26,7 +26,7 @@ class SenhaHoleriteManager extends ChangeNotifier {
   }
 
   Future<bool> alteracaoPass(BuildContext context, {required String senha, required String senhaNova,}) async {
-    bool? result = await _service.alteracaoPass(id: context.read<UserHoleriteManager>().user!.id!, senha: senha, senhaNova: senhaNova);
+    bool? result = await _service.alteracaoPass(id: UserHoleriteManager.user!.id!, senha: senha, senhaNova: senhaNova);
     if(result ?? false){
       Config.usenha = senhaNova;
       context.read<UserHoleriteManager>().senha.text = senhaNova;

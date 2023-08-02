@@ -37,8 +37,8 @@ class UserAssewebManager extends ChangeNotifier {
   final TextEditingController email = TextEditingController(text: kReleaseMode ? '' : 'gabriel.mattos.web@gmail.com');
   final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : '123456');
 
-  String? uemail;
-  String? usenha;
+  String uemail = '';
+  String usenha = '';
 
   bool _status = false;
   bool get status => _status;
@@ -65,12 +65,11 @@ class UserAssewebManager extends ChangeNotifier {
       if(bio){
         bool resultBio = await _serviceBio.authbiometria();
         if(resultBio){
-          result = await signInAuth(email: uemail ?? '',  senha: usenha ?? '');
+          result = await signInAuth(email: uemail,  senha: usenha);
         }
       }else{
         result = await signInAuth(email: email ?? '',  senha: senha ?? '');
       }
-      memorizar();
       return result;
     }catch(e) {
       debugPrint(e.toString());
@@ -84,8 +83,21 @@ class UserAssewebManager extends ChangeNotifier {
     if (user != null && (user!.login?.companies?.isNotEmpty ?? false)) {
       sCompanies = user!.login?.companies?.firstWhere((e) => e.id == user?.login?.lastCompanyId) ?? user!.login?.companies?.first;
     }
+    memorizar();
     notifyListeners();
     return true;
+  }
+
+  Future<bool> autoLogin() async {
+    bool result = false;
+    try {
+      if (uemail != '' && usenha != '') {
+        result = await signInAuth(email: uemail, senha: usenha);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return result;
   }
 
   signOut(){
@@ -97,10 +109,10 @@ class UserAssewebManager extends ChangeNotifier {
   loadBio() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      uemail = prefs.getString("user");
-      usenha = prefs.getString("usenha");
+      uemail = prefs.getString("user") ?? '';
+      usenha = prefs.getString("usenha") ?? '';
       senha.text = prefs.getString("senha") ?? senha.text;
-      email.text = uemail ?? email.text;
+      email.text = uemail;
       Config.usenha = senha.text;
     } catch(e) {
       debugPrint(e.toString());
