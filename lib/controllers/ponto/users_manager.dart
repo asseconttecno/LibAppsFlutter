@@ -144,10 +144,24 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   signOut() {
+    cleanPreferebces();
+    usuario = null;
+    homeModel = null;
+    _status = false;
+    uemail = '';
+    usenha = '';
+    Config.usenha = '';
+  }
+
+  cleanPreferebces() async {
     try{
-      usuario = null;
-      homeModel = null;
-    }catch(e){
+      final prefs = await SharedPreferences.getInstance();
+      prefs.remove("user");
+      prefs.remove("usenha");
+      prefs.remove("senha");
+      prefs.remove("bio");
+      prefs.remove("perguntar");
+    } catch(e) {
       debugPrint(e.toString());
     }
   }

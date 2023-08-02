@@ -15,6 +15,8 @@ funcSair(BuildContext context){
   } else if(Config.conf.nomeApp == VersaoApp.PontoApp) {
     context.read<UserPontoManager>().signOut();
     context.read<CameraPontoManager>().img = null;
+  } else if(Config.conf.nomeApp == VersaoApp.AssewebApp) {
+    context.read<UserAssewebManager>().signOut();
   }
 
   Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
