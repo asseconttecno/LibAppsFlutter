@@ -52,7 +52,7 @@ class BiometriaManager extends ChangeNotifier {
     try{
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool("bio", bio);
-      await prefs.setBool("perguntar", perguntar);
+      await prefs.setBool("perguntar", bio ? true : perguntar);
     }catch(e){
       debugPrint(e.toString());
     }

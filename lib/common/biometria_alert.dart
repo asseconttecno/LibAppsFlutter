@@ -7,7 +7,7 @@ import '../enums/enums.dart';
 import 'common.dart';
 
 BiometriaAlert(BuildContext context)  {
-  if(Config.bioState == BioSupportState.supported && context.read<BiometriaManager>().checkbio){
+  if(Config.bioState == BioSupportState.supported && context.read<BiometriaManager>().checkbio && !context.read<BiometriaManager>().perguntar ){
     return CustomAlert.custom(
       context: context,
       widgeTitulo: Icon(Icons.fingerprint, size: 100, color: Colors.blueAccent,),
