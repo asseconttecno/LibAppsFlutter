@@ -350,7 +350,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             Navigator.pop(context);
             if(a != null){
               await Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=> FileHero(a, 'holerite-${widget.ano}-${widget.mes}')));
+                  builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}', file: a,)));
             }else{
               InfoAlertBox(
                   context: context,
