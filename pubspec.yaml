@@ -58,7 +58,7 @@ dependencies:
 
   #webcontent_converter: ^0.0.7+1
   flutter_html_to_pdf: ^0.7.0
-
+  flutter_html: any
   syncfusion_flutter_pdfviewer: ^22.2.7
   #syncfusion_flutter_pdfviewer:
   #  git:
@@ -76,7 +76,7 @@ dependencies:
   share_extend: ^2.0.0
 
   connectivity_plus: any
-  package_info_plus: ^4.0.0 #^3.0.2 #^1.4.2
+  package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0
   safe_device: ^1.1.2
   trust_location: ^2.0.13
