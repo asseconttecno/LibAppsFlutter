@@ -114,7 +114,7 @@ class _FileHeroState extends State<FileHero> {
                           child: widget.file == null ? Html(
                             key: _globalKey,
                             data: widget.html ?? '',
-                          ) : SfPdfViewer.file(widget.file),
+                          ) : SfPdfViewer.file(widget.file!),
                         ),
                         menus()
                       ],
