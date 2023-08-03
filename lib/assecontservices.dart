@@ -30,7 +30,7 @@ export 'package:provider/provider.dart';
 export 'package:intl/intl.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:tutorial/tutorial.dart';
-export 'package:flutter_html/flutter_html.dart';
+export 'package:flutter_super_html_viewer/flutter_super_html_viewer.dart';
 
 class Assecontservices {
 
