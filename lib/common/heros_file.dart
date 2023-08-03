@@ -10,6 +10,7 @@ import 'package:share_extend/share_extend.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:html/parser.dart' as htmlparser;
 
 import '../config.dart';
 import '../utils/get_file.dart';
@@ -111,9 +112,9 @@ class _FileHeroState extends State<FileHero> {
                           margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
                           alignment: Alignment.center,
                           color: Colors.black,
-                          child: widget.file == null ? Html(
+                          child: widget.file == null ? Html.fromDom(
                             key: _globalKey,
-                            data: widget.html ?? '',
+                            document: htmlparser.parse(widget.html ?? ''),
                           ) : SfPdfViewer.file(widget.file!),
                         ),
                         menus()
