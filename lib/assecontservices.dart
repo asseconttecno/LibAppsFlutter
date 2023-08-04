@@ -223,7 +223,7 @@ class _MyAppState extends State<MyApp> {
         ),
         appBarTheme: AppBarTheme(
           centerTitle: true,
-          elevation: 0,
+          elevation: 0, scrolledUnderElevation: 0,
           backgroundColor: ThemeData.dark().primaryColor,
           titleTextStyle: const TextStyle(color: Config.corPri,),
           toolbarTextStyle: const TextStyle(color: Config.corPri,fontSize: 18),
