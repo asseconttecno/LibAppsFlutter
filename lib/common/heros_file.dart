@@ -32,9 +32,9 @@ class _FileHeroState extends State<FileHero> {
 
   Future<Uint8List?> _capturePng() async {
     try {
-      RenderRepaintBoundary? boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      final boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      ui.Image? image = await boundary?.toImage(pixelRatio: 3.0);
+      ByteData? byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
@@ -85,6 +85,7 @@ class _FileHeroState extends State<FileHero> {
                   }else{
                     carregar(context);
                     Uint8List? rawPath = await _capturePng();
+                    Navigator.pop(context);
                     if(rawPath != null){
                       final file = await CustomFile.fileTemp('pdf', memori: rawPath, nome: widget.name);
                       ShareExtend.share(file.path, "file",
