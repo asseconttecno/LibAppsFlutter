@@ -3,14 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 
 import '../config.dart';
-import 'http/http.dart';
+import 'services.dart';
 
-class SendMail {
-  HttpCli _http = HttpCli();
+class SendMail extends Services {
 
   Future<bool> postSendMail(String email, String corpo, File? file) async {
     String _api = '/email/sendMail';
@@ -37,7 +34,7 @@ class SendMail {
     }
     //print(body);
     try{
-      final response = await _http.post(
+      final response = await http.post(
         url: Config.conf.apiHolerite! + _api, decoder: false,
         body: body,
         headers: <String, String>{
