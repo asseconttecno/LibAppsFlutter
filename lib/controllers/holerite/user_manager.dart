@@ -124,6 +124,7 @@ class UserHoleriteManager extends ChangeNotifier {
       senha.text = prefs.getString("senha") ?? '';
       email.text = uemail;
       Config.usenha = usenha;
+      await autoLogin();
     } catch(e) {
       debugPrint(e.toString());
     }
