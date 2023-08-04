@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -44,7 +45,7 @@ class EspelhoService {
   }
 
   Future<EspelhoModel?> postEspelhoPontoPDF(UsuarioPonto? user, Apontamento aponta) async {
-    String _api = "/api/espelhoPonto";
+    String _api = "/api/EspelhoPontoBytes";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiEspelho! + _api,
@@ -62,13 +63,14 @@ class EspelhoService {
       if(response.isSucess) {
         var dadosJson = response.data ;
         EspelhoModel espelhoModel = EspelhoModel.fromMap(dadosJson);
-        var htmlContent = '''${espelhoModel.espelhoHtml}''';
+        espelhoModel.espelho = await CustomFile.fileTemp('pdf', memori: espelhoModel.espelhoHtml);
+/*        var htmlContent = '''${espelhoModel.espelhoHtml}''';
         Directory tempDir = await getTemporaryDirectory();
         String savedPath = "Espelho-${aponta.descricao?.replaceAll(' ', '-')}-${DateTime.now().microsecondsSinceEpoch}" ;
         File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
             htmlContent, tempDir.path, savedPath
         );
-        espelhoModel.espelho = file;
+        espelhoModel.espelho = file;*/
 
         return espelhoModel;
       } else {

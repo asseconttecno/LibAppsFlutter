@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 class EspelhoModel {
   bool? assinado;
   File? espelho;
-  String? espelhoHtml;
+  Uint8List? espelhoHtml;
   DateTime? data;
 
   EspelhoModel({this.assinado, this.espelho, this.espelhoHtml, this.data});
