@@ -1,4 +1,6 @@
 
+import 'http/http.dart';
+
 export 'ponto/apontamento.dart';
 export 'ponto/bancohoras.dart';
 export 'ponto/homepage.dart';
@@ -30,3 +32,9 @@ export 'biometria.dart';
 export 'sendmail.dart';
 export 'update_app.dart';
 export 'sqlite_ponto.dart';
+
+
+abstract class Services {
+  final HttpCli http = HttpCli();
+
+}
