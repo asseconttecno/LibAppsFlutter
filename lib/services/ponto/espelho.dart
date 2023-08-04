@@ -63,7 +63,9 @@ class EspelhoService {
       if(response.isSucess) {
         var dadosJson = response.data ;
         EspelhoModel espelhoModel = EspelhoModel.fromMap(dadosJson);
-        espelhoModel.espelho = await CustomFile.fileTemp('pdf', memori: espelhoModel.espelhoHtml);
+        if(espelhoModel.espelhoHtml != null){
+          espelhoModel.espelho = await CustomFile.fileTemp('pdf', memori: espelhoModel.espelhoHtml);
+        }
 /*        var htmlContent = '''${espelhoModel.espelhoHtml}''';
         Directory tempDir = await getTemporaryDirectory();
         String savedPath = "Espelho-${aponta.descricao?.replaceAll(' ', '-')}-${DateTime.now().microsecondsSinceEpoch}" ;
