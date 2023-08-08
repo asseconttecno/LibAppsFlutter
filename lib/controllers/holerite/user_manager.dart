@@ -21,7 +21,12 @@ class UserHoleriteManager extends ChangeNotifier {
 
   List<UsuarioHolerite>? listuser;
 
-  static UsuarioHolerite? user;
+  static UsuarioHolerite? sUser;
+  UsuarioHolerite? get user => sUser;
+  set user(UsuarioHolerite? v){
+    sUser = v;
+    notifyListeners();
+  }
 
   final TextEditingController email = TextEditingController();
   final TextEditingController cpf = TextEditingController();
@@ -110,8 +115,6 @@ class UserHoleriteManager extends ChangeNotifier {
       prefs.remove("user");
       prefs.remove("usenha");
       prefs.remove("senha");
-      prefs.remove("bio");
-      prefs.remove("perguntar");
     } catch(e) {
       debugPrint(e.toString());
     }

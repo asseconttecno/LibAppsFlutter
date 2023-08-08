@@ -42,11 +42,11 @@ alterUser(BuildContext context){
                             child: Card(elevation: 0.2,
                               child: ListTile(
                                 leading: Icon(CupertinoIcons.person_crop_circle, size: 40,
-                                  color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null,),
+                                  color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null,),
                                 title: CustomText.text(
                                   user.listuser![index].empresa?.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 16,
-                                      color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null
+                                      color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
@@ -54,7 +54,7 @@ alterUser(BuildContext context){
                                 ),
                                 subtitle: CustomText.text('Registro: ${user.listuser![index].registro ?? ""}',
                                   style: TextStyle(fontSize: 13,
-                                      color: user.listuser![index] == UserHoleriteManager.user ? Config.corPri : null),
+                                      color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
@@ -62,9 +62,8 @@ alterUser(BuildContext context){
                               ),
                             ),
                             onTap: () async {
-                              UserHoleriteManager.user = user.listuser![index];
-                              context.read<HoleriteManager>().listcompetencias =
-                                await context.read<HoleriteManager>().competencias(UserHoleriteManager.user);
+                              context.read<UserHoleriteManager>().user = user.listuser![index];
+                              context.read<HoleriteManager>().listcompetencias = await context.read<HoleriteManager>().competencias(UserHoleriteManager.sUser);
                               Navigator.pop(context);
                             }
                         );
