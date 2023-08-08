@@ -115,8 +115,6 @@ class UserHoleriteManager extends ChangeNotifier {
       prefs.remove("user");
       prefs.remove("usenha");
       prefs.remove("senha");
-      prefs.remove("bio");
-      prefs.remove("perguntar");
     } catch(e) {
       debugPrint(e.toString());
     }
