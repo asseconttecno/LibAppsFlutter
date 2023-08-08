@@ -345,7 +345,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
           onPressed: () async {
             carregar(context);
             File? a = await HoleriteManager().holeriteresumo(
-                UserHoleriteManager.user,
+                UserHoleriteManager.sUser,
                 widget.mes, widget.ano, holerite?.holeriteTipoCod );
             Navigator.pop(context);
             if(a != null){

@@ -21,7 +21,12 @@ class UserHoleriteManager extends ChangeNotifier {
 
   List<UsuarioHolerite>? listuser;
 
-  static UsuarioHolerite? user;
+  static UsuarioHolerite? sUser;
+  UsuarioHolerite? get user => sUser;
+  set user(UsuarioHolerite? v){
+    sUser = v;
+    notifyListeners();
+  }
 
   final TextEditingController email = TextEditingController();
   final TextEditingController cpf = TextEditingController();

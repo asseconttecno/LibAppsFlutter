@@ -93,7 +93,7 @@ class UserPontoManager extends ChangeNotifier {
     usuario = await _service.signInAuth(email: email, senha: senha);
     await getHome();
     if(usuario?.master ?? false){
-      UserHoleriteManager.user = UsuarioHolerite.fromPonto(usuario!);
+      UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
     }
     Config.usenha = senha;
     return true;
@@ -159,8 +159,6 @@ class UserPontoManager extends ChangeNotifier {
       prefs.remove("user");
       prefs.remove("usenha");
       prefs.remove("senha");
-      prefs.remove("bio");
-      prefs.remove("perguntar");
     } catch(e) {
       debugPrint(e.toString());
     }

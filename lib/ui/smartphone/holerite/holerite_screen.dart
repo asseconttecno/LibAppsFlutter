@@ -26,7 +26,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
 
   @override
   void initState() {
-    context.read<HoleriteManager>().competencias(UserHoleriteManager.user);
+    context.read<HoleriteManager>().competencias(UserHoleriteManager.sUser);
 
     super.initState();
   }
@@ -41,13 +41,13 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
             List<HoleriteModel>? _holerite;
             try{
               if(holerite.listcompetencias.isEmpty){
-                holerite.listcompetencias = await holerite.competencias(UserHoleriteManager.user);
+                holerite.listcompetencias = await holerite.competencias(UserHoleriteManager.sUser);
               }
               if(holerite.listcompetencias.isNotEmpty){
                 _comp = holerite.listcompetencias.firstWhere(
                         (e) => e.descricao == holerite.dropdowndata);
                 if(_comp != null){
-                  _holerite = await holerite.resumoscreen(UserHoleriteManager.user, _comp!.mes!, _comp!.ano!);
+                  _holerite = await holerite.resumoscreen(UserHoleriteManager.sUser, _comp!.mes!, _comp!.ano!);
                 }
               }
             } catch(e){
