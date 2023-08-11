@@ -343,11 +343,16 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
           splashColor: Colors.tealAccent,
           // focusColor: Settings.corPri.withOpacity(0.5),
           onPressed: () async {
-            carregar(context);
-            File? a = await HoleriteManager().holeriteresumo(
-                UserHoleriteManager.sUser,
-                widget.mes, widget.ano, holerite?.holeriteTipoCod );
-            Navigator.pop(context);
+            File? a = null;
+            try {
+              carregar(context);
+              a = await context.read<HoleriteManager>().holeriteresumo(
+                  UserHoleriteManager.sUser, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+            } catch(e){
+              debugPrint(e.toString());
+            } finally {
+              Navigator.pop(context);
+            }
             if(a != null){
               await Navigator.push(context, MaterialPageRoute(
                   builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}', file: a,)));
