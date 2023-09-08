@@ -31,10 +31,12 @@ class HomePontoModel {
 class ExpedienteList {
   DateTime? data;
   String? horario;
+  String? tipo;
 
   ExpedienteList({
     this.data,
     this.horario,
+    this.tipo,
   });
 
   factory ExpedienteList.fromJson(String str) => ExpedienteList.fromMap(json.decode(str));
@@ -44,11 +46,13 @@ class ExpedienteList {
   factory ExpedienteList.fromMap(Map<String, dynamic> json) => ExpedienteList(
     data: json["Data"] == null ? null : DateTime.parse(json["Data"]),
     horario: json["Horario"],
+    tipo: json["Tipo"],
   );
 
   Map<String, dynamic> toMap() => {
     "Data": data?.toIso8601String(),
     "Horario": horario,
+    "Tipo": tipo,
   };
 }
 
