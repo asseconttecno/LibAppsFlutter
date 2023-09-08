@@ -1,38 +1,84 @@
+import 'dart:convert';
 
+class HomePontoModel {
+  List<ResultadosList>? resultadosList;
+  List<ExpedienteList>? expedienteList;
+  bool? marcacoesPendentes;
 
-import 'resultadoItem.dart';
+  HomePontoModel({
+    this.resultadosList,
+    this.expedienteList,
+    this.marcacoesPendentes,
+  });
 
-class HomePontoModel{
-  List<ResultadoItemList>? resultadoItemList;
-  String? ultimoResgistro;
-  HomeFuncionario? funcionario;
+  factory HomePontoModel.fromJson(String str) => HomePontoModel.fromMap(json.decode(str));
 
-  HomePontoModel({this.resultadoItemList, this.ultimoResgistro,this.funcionario,});
+  String toJson() => json.encode(toMap());
 
-  HomePontoModel.fromMap(Map map){
-    funcionario = HomeFuncionario.fromMap(map['Funcionario']);
-    List items = map['ResultadoItemList'];
-    resultadoItemList = items.map((e) => ResultadoItemList.fromMap(e)).toList();
-    ultimoResgistro = map['UltimaMarcacao'];
-  }
+  factory HomePontoModel.fromMap(Map<String, dynamic> json) => HomePontoModel(
+    resultadosList: json["ResultadosList"] == null ? [] : List<ResultadosList>.from(json["ResultadosList"]!.map((x) => ResultadosList.fromMap(x))),
+    expedienteList: json["ExpedienteList"] == null ? [] : List<ExpedienteList>.from(json["ExpedienteList"]!.map((x) => ExpedienteList.fromMap(x))),
+    marcacoesPendentes: json["MarcacoesPendentes"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "ResultadosList": resultadosList == null ? [] : List<dynamic>.from(resultadosList!.map((x) => x.toMap())),
+    "ExpedienteList": expedienteList == null ? [] : List<dynamic>.from(expedienteList!.map((x) => x.toMap())),
+    "MarcacoesPendentes": marcacoesPendentes,
+  };
 }
 
-class HomeFuncionario {
-  String? nome;
-  String? cargo;
-  bool? permitirMarcarPonto;
-  bool? permitirMarcarPontoOffline;
-  bool? capturarGps;
+class ExpedienteList {
+  DateTime? data;
+  String? horario;
+  String? tipo;
 
-  HomeFuncionario({this.nome, this.cargo, this.permitirMarcarPonto,
-    this.permitirMarcarPontoOffline, this.capturarGps});
+  ExpedienteList({
+    this.data,
+    this.horario,
+    this.tipo,
+  });
 
-  HomeFuncionario.fromMap(Map map){
-    nome = map['Nome'];
-    cargo = map['Cargo'];
-    permitirMarcarPonto = map['PermitirMarcarPonto'].toString() == 'true';
-    permitirMarcarPontoOffline = map['PermitirMarcarPontoOffline'].toString() == 'true';
-    capturarGps = map['CapturarGps'].toString() == 'true';
-  }
+  factory ExpedienteList.fromJson(String str) => ExpedienteList.fromMap(json.decode(str));
 
+  String toJson() => json.encode(toMap());
+
+  factory ExpedienteList.fromMap(Map<String, dynamic> json) => ExpedienteList(
+    data: json["Data"] == null ? null : DateTime.parse(json["Data"]),
+    horario: json["Horario"],
+    tipo: json["Tipo"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "Data": data?.toIso8601String(),
+    "Horario": horario,
+    "Tipo": tipo,
+  };
+}
+
+class ResultadosList {
+  int? id;
+  String? titulo;
+  String? valor;
+
+  ResultadosList({
+    this.id,
+    this.titulo,
+    this.valor,
+  });
+
+  factory ResultadosList.fromJson(String str) => ResultadosList.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ResultadosList.fromMap(Map<String, dynamic> json) => ResultadosList(
+    id: json["Id"],
+    titulo: json["Titulo"],
+    valor: json["Valor"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "Titulo": titulo,
+    "Valor": valor,
+  };
 }

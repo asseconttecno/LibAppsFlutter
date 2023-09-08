@@ -1,144 +1,208 @@
+import 'dart:convert';
 
-import '../../model.dart';
-import '../apontamento/apontamento.dart';
+import 'package:assecontservices/assecontservices.dart';
+
+import '../../tablet/usuario/user_offiline.dart';
 
 class UsuarioPonto {
-  int? userId;
-  String? email;
-  String? registro;
-  int? database;
-  String? funcionarioCpf;
-  String? cnpj;
-  String? nome;
-  String? image;
-  String? cargo;
-  String? faceid;
-  Apontamento? aponta;
-  bool? permitirMarcarPonto;
-  bool? permitirLocalizacao;
-  bool? permitirMarcarPontoOffline;
-  bool? master;
+  int? databaseId;
+  bool? app;
+  Periodo? periodo;
+  Funcionario? funcionario;
 
-  UsuarioPonto(
-      {this.userId,
-      this.email,
-      this.database,
-      this.funcionarioCpf,
-      this.faceid,
-      this.cnpj,
-      this.nome,
-      this.image,
-      this.cargo,
-      this.aponta,
-      this.permitirMarcarPonto,
-      this.permitirLocalizacao,
-      this.permitirMarcarPontoOffline,
-      this.registro,
-      this.master
-      });
+  UsuarioPonto({
+    this.databaseId,
+    this.app,
+    this.periodo,
+    this.funcionario,
+  });
 
-  UsuarioPonto copyWith({
-        String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta
-      }) => UsuarioPonto(
-          userId: userId ?? userId,
-          email: email ?? email,
-          database: database ?? database,
-          funcionarioCpf: funcionarioCpf ?? funcionarioCpf,
-          faceid: faceid ?? faceid,
-          cnpj: cnpj ?? cnpj,
-          nome: nome ?? this.nome,
-          cargo: cargo ?? this.cargo,
-          aponta: aponta ?? this.aponta,
-          permitirMarcarPonto: perm ?? permitirMarcarPonto,
-          permitirLocalizacao: local ?? permitirLocalizacao,
-          permitirMarcarPontoOffline: offline ?? permitirMarcarPontoOffline,
-          registro: registro ?? registro,
-          master: master ?? master
-      );
-
-
-  UsuarioPonto.fromMap(Map map, bool sql, {Apontamento? aponta}){
+  factory UsuarioPonto.fromMap(Map<String, dynamic> json, bool sql) {
+    UsuarioPonto user;
     if(sql){
-      userId =  map['userId'];
-      email =  map['email'] ?? '';
-      database =  map['database'];
-      funcionarioCpf =  map['funcionarioCpf'] ?? '';
-      cnpj =  map['cnpj'] ?? '';
-      nome = map['nome'] ?? '';
-      cargo = map['cargo'] ?? '';
-      registro = map['registro'] ?? '';
-      permitirMarcarPonto = map['permitirMarcarPonto'].toString() == 'true';
-      permitirMarcarPontoOffline = map['permitirMarcarPontoOffline'] .toString()== 'true';
-      permitirLocalizacao = map['permitirLocalizacao'].toString() == 'true';
-      master = map['master'].toString() == 'true';
-      this.aponta = Apontamento.aponta(datainicio: DateTime.parse(map['datainicio']),
-          datatermino: DateTime.parse(map['datatermino']), descricao: map['apontamento']);
+      user = UsuarioPonto(
+        databaseId: json['database'],
+        app: json['master'].toString() == 'true',
+        periodo: Periodo(
+          dataFinal: json['datatermino'],
+          dataInicial: json['datainicio'],
+          descricao: json['apontamento']
+        ),
+        funcionario: Funcionario(
+          funcionarioId: json['userId'],
+          nome: json['nome'],
+          registro: json['registro'],
+          cpf: json['funcionarioCpf'],
+          cnpj: json['cnpj'],
+          cargo: json['cargo'],
+          permitirMarcarPonto: json['permitirMarcarPonto'].toString() == 'true',
+          permitirMarcarPontoOffline: json['permitirMarcarPontoOffline'].toString()== 'true',
+          capturarGps: json['permitirLocalizacao'].toString() == 'true',
+        ),
+      );
     }else{
-      userId =   map["UserId"];
-      email = map["Email"];
-      database = map["Database"];
-      master = map['App'].toString() == 'true';
-      if(map['Funcionario'] != null){
-        funcionarioCpf = map['Funcionario']['FuncionarioCpf'];
-        cnpj = map['Funcionario']['Cnpj']['Numero'];
-        registro = map['Funcionario']['Registro'];
-      }
-      this.aponta = aponta;
-      faceid = map["IdFoto"];
+      user = UsuarioPonto(
+        databaseId: json["DatabaseId"],
+        app: json["App"],
+        periodo: json["Periodo"] == null ? null : Periodo.fromMap(json["Periodo"]),
+        funcionario: json["Funcionario"] == null ? null : Funcionario.fromMap(json["Funcionario"]),
+      );
     }
+    return user;
   }
 
-
-  UsuarioPonto.fromMapTab(Map map, String cod) {
+  factory UsuarioPonto.fromMapTab(Map map, String cod) {
     print('ok from');
-    userId =  (int?.parse(map["Id"].toString()));
-    nome = map["Nome"];
-    cargo = map["Cargo"];
-    image = map["IdFoto"];
-    cnpj = map["Cnpj"];
-    registro = cod;
+    return UsuarioPonto(
+      periodo: Periodo(
+          dataFinal: Apontamento.padrao().datatermino,
+          dataInicial: Apontamento.padrao().datainicio,
+          descricao: Apontamento.padrao().descricao
+      ),
+      funcionario: Funcionario(
+        funcionarioId: (int.tryParse(map["Id"].toString())),
+        nome: map["Nome"],
+        registro: cod,
+        foto: map["IdFoto"],
+        cnpj: map["Cnpj"],
+        cargo: map["Cargo"],
+      ),
+    );
   }
 
-  UsuarioPonto.fromOff(UserPontoOffine user) {
-    userId =  user.id!;
-    nome = user.nome!;
-    cargo = ' ';
-    registro = user.registro!;
+  factory UsuarioPonto.fromOff(UserPontoOffine user) {
+    print('ok fromOff');
+    return UsuarioPonto(
+      periodo: Periodo(
+          dataFinal: Apontamento.padrao().datatermino,
+          dataInicial: Apontamento.padrao().datainicio,
+          descricao: Apontamento.padrao().descricao
+      ),
+      funcionario: Funcionario(
+        funcionarioId: user.id!,
+        nome: user.nome!,
+        registro: user.registro!,
+        cargo: '',
+      ),
+    );
   }
 
   Map toMapTab() {
     Map<String, dynamic> map = {
-      "nome": nome,
-      "img" : image,
-      "cargo" : cargo,
-      "codigo" : registro,
-      "cnpj" : cnpj
+      "nome": funcionario?.nome,
+      "img" : null,
+      "cargo" : funcionario?.cargo,
+      "codigo" : funcionario?.registro,
+      "userId" : funcionario?.funcionarioId,
+      "cnpj" : funcionario?.cnpj
     };
-
-    if (userId != null) {
-      map["id"] = userId;
-    }
-
     return map;
   }
 
   Map<String, dynamic> toMap(){
     return {
-      'userId': userId,
-      'email': email,
-      'database': database,
-      'master': master.toString(),
-      'funcionarioCpf': funcionarioCpf,
-      'cnpj': cnpj,
-      'nome': nome,
-      'cargo': cargo,
-      'registro': registro,
-      'apontamento': aponta?.descricao,
-      'datainicio': aponta?.datainicio.toString(),
-      'datatermino': aponta?.datatermino.toString(),
-      'permitirMarcarPonto': permitirMarcarPonto.toString(),
-      'permitirLocalizacao': permitirLocalizacao.toString(),
-      'permitirMarcarPontoOffline': permitirMarcarPontoOffline.toString(),
+      'userId': funcionario?.funcionarioId,
+      'database': databaseId,
+      'nome': funcionario?.nome,
+      'email': funcionario?.email,
+      'pis': funcionario?.pis,
+      'funcionarioCpf': funcionario?.cpf,
+      'registro': funcionario?.registro,
+      'cnpj': funcionario?.cnpj,
+      'master': app,
+      'connected': true,
+      'cargo': funcionario?.cargo,
+      'apontamento': periodo?.descricao,
+      'datainicio': periodo?.dataInicial,
+      'datatermino': periodo?.dataFinal,
+      'permitirMarcarPonto': funcionario?.permitirMarcarPonto,
+      'permitirMarcarPontoOffline': funcionario?.permitirMarcarPontoOffline,
+      'permitirLocalizacao': funcionario?.capturarGps,
     };
   }
+}
+
+class Funcionario {
+  int? funcionarioId;
+  String? nome;
+  String? registro;
+  String? cpf;
+  String? cargo;
+  String? foto;
+  String? email;
+  String? pis;
+  bool? permitirMarcarPontoWeb;
+  bool? permitirMarcarPonto;
+  bool? permitirMarcarPontoOffline;
+  bool? capturarGps;
+  DateTime? ultimaMarcacao;
+  int? setorId;
+  String? cnpj;
+
+  Funcionario({
+    this.funcionarioId,
+    this.nome,
+    this.registro,
+    this.cpf,
+    this.cargo,
+    this.email,
+    this.pis,
+    this.foto,
+    this.permitirMarcarPontoWeb,
+    this.permitirMarcarPonto,
+    this.permitirMarcarPontoOffline,
+    this.capturarGps,
+    this.ultimaMarcacao,
+    this.setorId,
+    this.cnpj,
+  });
+
+  factory Funcionario.fromJson(String str) => Funcionario.fromMap(json.decode(str));
+
+  factory Funcionario.fromMap(Map<String, dynamic> json) => Funcionario(
+    funcionarioId: json["FuncionarioId"],
+    nome: json["Nome"],
+    registro: json["Registro"],
+    cpf: json["CPF"],
+    email: json["email"],
+    pis: json["pis"],
+    cargo: json["Cargo"],
+    foto: json["Foto"],
+    permitirMarcarPontoWeb: json["PermitirMarcarPontoWeb"],
+    permitirMarcarPonto: json["PermitirMarcarPonto"],
+    permitirMarcarPontoOffline: json["PermitirMarcarPontoOffline"],
+    capturarGps: json["CapturarGps"],
+    ultimaMarcacao: json["UltimaMarcacao"] == null ? null : DateTime.parse(json["UltimaMarcacao"]),
+    setorId: json["SetorId"],
+    cnpj: json["CNPJ"],
+  );
+
+}
+
+class Periodo {
+  DateTime? dataInicial;
+  DateTime? dataFinal;
+  String? descricao;
+
+  Periodo({
+    this.dataInicial,
+    this.dataFinal,
+    this.descricao,
+  });
+
+  factory Periodo.fromJson(String str) => Periodo.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Periodo.fromMap(Map<String, dynamic> json) => Periodo(
+    dataInicial: json["DataInicial"] == null ? null : DateTime.parse(json["DataInicial"]),
+    dataFinal: json["DataFinal"] == null ? null : DateTime.parse(json["DataFinal"]),
+    descricao: json["Descricao"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "DataInicial": dataInicial?.toIso8601String(),
+    "DataFinal": dataFinal?.toIso8601String(),
+    "Descricao": descricao,
+  };
 }

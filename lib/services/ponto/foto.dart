@@ -18,12 +18,12 @@ class CameraPontoService {
         url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
-            "UserId": user.userId.toString(),
-            "Database": user.database.toString()
+            "UserId": user.funcionario?.funcionarioId.toString(),
+            "Database": user.databaseId.toString()
           },
           "Periodo": {
-            "DataInicial": user.aponta?.datainicio.toString(),
-            "DataFinal": user.aponta?.datainicio.toString(),
+            "DataInicial": user.periodo?.dataInicial.toString(),
+            "DataFinal": user.periodo?.dataFinal.toString(),
           }
         }
     );
@@ -48,8 +48,8 @@ class CameraPontoService {
         decoder: false,
         body: {
           "user":{
-            "UserId": user.userId,
-            "Database": user.database
+            "UserId": user.funcionario?.funcionarioId.toString(),
+            "Database": user.databaseId.toString()
           },
           "PhotoId": faceId,
           "Array": img

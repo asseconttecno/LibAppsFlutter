@@ -12,24 +12,24 @@ class HomePontoService {
 
 
   Future<HomePontoModel?> getHome(UsuarioPonto user) async {
-    String _api = "/api/apontamento/GetHome";
+    String _api = "/api/apontamento/GetInformacoesApontamento";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
-              "UserId": user.userId.toString(),
-              "Database": user.database.toString()
+              "UserId": user.funcionario?.funcionarioId.toString(),
+              "Database": user.databaseId.toString()
             },
             "Periodo": {
-              "DataInicial": DateFormat('yyyy-MM-dd').format(user.aponta!.datainicio),
-              "DataFinal": DateFormat('yyyy-MM-dd').format(user.aponta!.datatermino)
+              "DataInicial": DateFormat('yyyy-MM-dd').format(user.periodo!.dataInicial!),
+              "DataFinal": DateFormat('yyyy-MM-dd').format(user.periodo!.dataFinal!)
             }
           }
       );
 
       if(response.isSucess){
-        Map dadosJson = response.data;
+        Map<String, dynamic> dadosJson = response.data;
         HomePontoModel homeModel = HomePontoModel.fromMap(dadosJson);
         return homeModel;
       }

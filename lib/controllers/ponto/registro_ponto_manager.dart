@@ -26,7 +26,7 @@ class RegistroManger {
         mensage: 'Marcação registrada!',
       );
     }else{
-      if(user.permitirMarcarPontoOffline ?? false){
+      if(user.funcionario?.permitirMarcarPontoOffline ?? false){
         CustomAlert.erro(
           context: context,
           mensage: 'Marcação não registrada, tente novamente!',

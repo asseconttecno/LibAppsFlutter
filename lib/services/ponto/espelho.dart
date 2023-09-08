@@ -1,12 +1,8 @@
-import 'dart:io';
 import 'dart:async';
-import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
-
+import 'package:assecontservices/assecontservices.dart';
 
 
 import '../../model/model.dart';
@@ -25,8 +21,8 @@ class EspelhoService {
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiEspelho! + _api, decoder: false,
           body: {
-            "email": user?.email,
-            "funcionarioId": user?.userId ,
+            "email": user?.funcionario?.email,
+            "funcionarioId": user?.funcionario?.funcionarioId ,
             "dataInicial": DateFormat('yyyy-MM-dd').format(aponta.datainicio),
             "dataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino),
             "statusEspelho": status
@@ -53,8 +49,8 @@ class EspelhoService {
             'Content-Type': 'application/json',
           },
           body: {
-            "email": user?.email,
-            "funcionarioId": user?.userId ,
+            "email": user?.funcionario?.email,
+            "funcionarioId": user?.funcionario?.funcionarioId ,
             "dataInicial": DateFormat('yyyy-MM-dd').format(aponta.datainicio),
             "dataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino)
           }

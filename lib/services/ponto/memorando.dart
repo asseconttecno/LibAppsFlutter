@@ -18,14 +18,14 @@ class MemorandosServices {
     if(tipo == 1){
       body = {
         "user": {
-          "UserId": "${usuario.userId.toString()}",
-          "Database": "${usuario.database.toString()}",
+          "UserId": usuario.funcionario?.funcionarioId.toString(),
+          "Database": usuario.databaseId.toString()
         },
         "data": "${data}",
         "tipo": tipo,
         "Texto": "$texto",
         "arquivonome": img != null ?
-          "${usuario.userId}-${DateFormat('dd-MM-yyyy-hh-mm').format(DateTime.now())}.jpg" : null,
+          "${usuario.funcionario?.funcionarioId}-${DateFormat('dd-MM-yyyy-hh-mm').format(DateTime.now())}.jpg" : null,
         "arquivo": img != null ? base64Encode(img.readAsBytesSync()) : null
       };
     }else { //if(tipo == 5)
@@ -34,8 +34,8 @@ class MemorandosServices {
       debugPrint(temp.toString());
       body = {
         "user": {
-          "UserId": "${usuario.userId.toString()}",
-          "Database": "${usuario.database.toString()}",
+          "UserId": usuario.funcionario?.funcionarioId.toString(),
+          "Database": usuario.databaseId.toString()
         },
         "data": "${data}",
         "tipo": tipo,
@@ -71,8 +71,8 @@ class MemorandosServices {
           url: Config.conf.apiAsseponto! + _api,
           body: {
             "User": {
-              "UserId": usuario?.userId.toString(),
-              "Database": usuario?.database.toString()
+              "UserId": usuario?.funcionario?.funcionarioId.toString(),
+              "Database": usuario?.databaseId.toString()
             },
             "Periodo": {
               "DataInicial": DateFormat('yyyy-MM-dd').format(inicio),
