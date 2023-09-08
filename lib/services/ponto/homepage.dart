@@ -12,10 +12,10 @@ class HomePontoService {
 
 
   Future<HomePontoModel?> getHome(UsuarioPonto user) async {
-    String _api = "/api/apontamento/GetHome";
+    String _api = "/api/apontamento/GetInformacoesApontamento";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
               "UserId": user.funcionario?.funcionarioId.toString(),
@@ -29,7 +29,7 @@ class HomePontoService {
       );
 
       if(response.isSucess){
-        Map dadosJson = response.data;
+        Map<String, dynamic> dadosJson = response.data;
         HomePontoModel homeModel = HomePontoModel.fromMap(dadosJson);
         return homeModel;
       }
