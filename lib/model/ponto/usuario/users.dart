@@ -112,9 +112,11 @@ class UsuarioPonto {
       'master': app,
       'connected': true,
       'cargo': funcionario?.cargo,
-      'apontamento': periodo?.descricao,
-      'datainicio': periodo?.dataInicial?.toIso8601String(),
-      'datatermino': periodo?.dataFinal?.toIso8601String(),
+      'apontamento': periodo?.descricao ?? Apontamento.padrao().descricao,
+      'datainicio': periodo?.dataInicial == null ? Apontamento.padrao().datainicio
+          : DateFormat('yyyy-MM-dd').format(periodo!.dataInicial!) ,
+      'datatermino': periodo?.dataFinal == null ? Apontamento.padrao().datatermino
+          : DateFormat('yyyy-MM-dd').format(periodo!.dataFinal!),
       'permitirMarcarPonto': funcionario?.permitirMarcarPonto,
       'permitirMarcarPontoOffline': funcionario?.permitirMarcarPontoOffline,
       'permitirLocalizacao': funcionario?.capturarGps,
