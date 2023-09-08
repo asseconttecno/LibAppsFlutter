@@ -25,7 +25,8 @@ class EspelhoService {
             "funcionarioId": user?.funcionario?.funcionarioId ,
             "dataInicial": DateFormat('yyyy-MM-dd').format(aponta.datainicio),
             "dataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino),
-            "statusEspelho": status
+            "statusEspelho": status,
+            "databaseID" : user?.databaseId
           }
       );
       if(response.isSucess) {
@@ -52,7 +53,8 @@ class EspelhoService {
             "email": user?.funcionario?.email,
             "funcionarioId": user?.funcionario?.funcionarioId ,
             "dataInicial": DateFormat('yyyy-MM-dd').format(aponta.datainicio),
-            "dataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino)
+            "dataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino),
+            "databaseID" : user?.databaseId
           }
       );
 
