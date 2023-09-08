@@ -53,10 +53,12 @@ class ExpedienteList {
 }
 
 class ResultadosList {
+  int? id;
   String? titulo;
   String? valor;
 
   ResultadosList({
+    this.id,
     this.titulo,
     this.valor,
   });
@@ -66,6 +68,7 @@ class ResultadosList {
   String toJson() => json.encode(toMap());
 
   factory ResultadosList.fromMap(Map<String, dynamic> json) => ResultadosList(
+    id: json["Id"],
     titulo: json["Titulo"],
     valor: json["Valor"],
   );
