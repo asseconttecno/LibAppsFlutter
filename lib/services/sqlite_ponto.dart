@@ -37,10 +37,12 @@ class SqlitePontoService {
     }
   }
 
-  Future<List?> getUser() async {
+  Future<List?> getUser({String? email}) async {
     try{
       Database bancoDados = await DBPonto().db;
-      String sql = "SELECT * FROM users";
+      String where = '';
+      if(email != null) where = "where email = '$email' ";
+      String sql = "SELECT * FROM users $where ";
 
       List users = await bancoDados.rawQuery(sql);
       return users;

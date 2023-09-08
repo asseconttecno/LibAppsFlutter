@@ -43,7 +43,7 @@ class UsuarioHolerite {
 
   UsuarioHolerite.fromPonto(UsuarioPonto user){
     this.id = user.funcionario?.funcionarioId;
-    this.email = user.email;
+    this.email = user.funcionario?.email;
     this.nome = user.funcionario?.nome;
     this.cpf = user.funcionario?.cpf;
     this.cnpj = user.funcionario?.cnpj;

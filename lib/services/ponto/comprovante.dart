@@ -24,8 +24,8 @@ class ComprovanteService {
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAssepontoNova! + api,
           body: {
-            "DatabaseId": user?.database,
-            "FuncionarioId": user?.userId ,
+            "DatabaseId": user?.databaseId,
+            "FuncionarioId": user?.funcionario?.funcionarioId ,
             "DataInicial": DateFormat('yyyy-MM-dd').format(aponta.datainicio),
             "DataFinal": DateFormat('yyyy-MM-dd').format(aponta.datatermino),
           }
@@ -52,8 +52,8 @@ class ComprovanteService {
             'Content-Type': 'application/json',
           },
           body: {
-            "DatabaseId": user?.database,
-            "FuncionarioId": user?.userId ,
+            "DatabaseId": user?.databaseId,
+            "FuncionarioId": user?.funcionario?.funcionarioId ,
             "MarcacaoId": marcId
           }
       );

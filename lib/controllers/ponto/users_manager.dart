@@ -96,11 +96,9 @@ class UserPontoManager extends ChangeNotifier {
 
   Future<bool> signInAuth({required String email,required String senha}) async {
     usuario = await _service.signInAuth(email: email, senha: senha);
-    await getHome();
     if(usuario?.app ?? false){
       UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
     }
-
     _sqlService.salvarNovoUsuario( usuario!.toMap() );
     Config.usenha = senha;
     return true;

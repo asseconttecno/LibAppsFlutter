@@ -30,8 +30,8 @@ class RegistroService {
         url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
-            "UserId": user.userId?.toString(),
-            "Database": user.database?.toString()
+            "UserId": user.funcionario?.funcionarioId.toString(),
+            "Database": user.databaseId.toString()
           },
           "Latitude": latitude,
           "Longitude": longitude,
@@ -45,17 +45,17 @@ class RegistroService {
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             await  _sqlitePonto.salvarHisMarcacao(
               Marcacao(
-                  iduser: user.userId,
+                  iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
                   datahora: DateTime.now(),
               ),
             );
             return true;
           }else{
-            if(user.permitirMarcarPontoOffline ?? false){
+            if(user.funcionario?.permitirMarcarPontoOffline ?? false){
               bool result = await _sqlitePonto.salvarMarcacao(
                   Marcacao(
-                      iduser: user.userId,
+                      iduser: user.funcionario?.funcionarioId,
                       latitude: latitude, longitude: longitude,
                       datahora: DateTime.now()
                   ),
@@ -64,10 +64,10 @@ class RegistroService {
             }
           }
         }else{
-          if(user.permitirMarcarPontoOffline ?? false){
+          if(user.funcionario?.permitirMarcarPontoOffline ?? false){
             bool result = await _sqlitePonto.salvarMarcacao(
               Marcacao(
-                  iduser: user.userId,
+                  iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
                   datahora: DateTime.now()
               ),
@@ -77,10 +77,10 @@ class RegistroService {
         }
       } catch (e){
         debugPrint("Erro Try ${e.toString()}");
-        if(user.permitirMarcarPontoOffline ?? false){
+        if(user.funcionario?.permitirMarcarPontoOffline ?? false){
           bool result = await _sqlitePonto.salvarMarcacao(
             Marcacao(
-                iduser: user.userId,
+                iduser: user.funcionario?.funcionarioId,
                 latitude: latitude, longitude: longitude,
                 datahora: DateTime.now()
             ),
@@ -95,12 +95,12 @@ class RegistroService {
       List<Map<String, dynamic>> listOff, {bool delete = false}) async {
     String _api = "/api/apontamento/PostPontoMarcacoesOffline";
 
-    if(usuario?.database != null){
+    if(usuario?.databaseId != null){
       try{
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAsseponto! + _api,
             body: {
-              "Database": "${usuario!.database}",
+              "Database": "${usuario!.databaseId}",
               "Marcacoes": listOff
             }
         );

@@ -17,12 +17,12 @@ class BancoHorasService {
           url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
-              "UserId": user.userId.toString(),
-              "Database": user.database.toString()
+              "UserId": user.funcionario?.funcionarioId.toString(),
+              "Database": user.databaseId.toString()
             },
             "Periodo": {
-              "DataInicial": DateFormat('yyyy-MM-dd').format(user.aponta!.datainicio),
-              "DataFinal": DateFormat('yyyy-MM-dd').format(user.aponta!.datatermino)
+              "DataInicial": DateFormat('yyyy-MM-dd').format(user.periodo!.dataInicial!),
+              "DataFinal": DateFormat('yyyy-MM-dd').format(user.periodo!.dataFinal!)
             }
           }
       );

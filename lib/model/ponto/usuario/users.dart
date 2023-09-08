@@ -1,46 +1,49 @@
 import 'dart:convert';
 
+import 'package:assecontservices/assecontservices.dart';
+
+import '../../tablet/usuario/user_offiline.dart';
+
 class UsuarioPonto {
   int? databaseId;
   bool? app;
-  String? email;
-  StatusLogin? statusLogin;
   Periodo? periodo;
   Funcionario? funcionario;
 
   UsuarioPonto({
     this.databaseId,
     this.app,
-    this.email,
-    this.statusLogin,
     this.periodo,
     this.funcionario,
   });
 
-  factory UsuarioPonto.fromMap(Map<String, dynamic> json, String? email, bool sql) {
+  factory UsuarioPonto.fromMap(Map<String, dynamic> json, bool sql) {
     UsuarioPonto user;
     if(sql){
       user = UsuarioPonto(
-        databaseId: json['database''userId'],
+        databaseId: json['database'],
         app: json['master'].toString() == 'true',
-        email: json['email'] ?? '',
-        periodo: json["Periodo"] == null ? null : Periodo.fromMap(json["Periodo"]),
-        funcionario: json["Funcionario"] == null ? null : Funcionario(
-          capturarGps: json['permitirLocalizacao'].toString() == 'true',
-          cargo: json['cargo'] ?? '',
-          nome: json['nome'] ?? '',
-          cnpj: json['cnpj'] ?? '',
-          registro: json['registro'] ?? '',
+        periodo: Periodo(
+          dataFinal: json['datatermino'],
+          dataInicial: json['datainicio'],
+          descricao: json['apontamento']
+        ),
+        funcionario: Funcionario(
+          funcionarioId: json['userId'],
+          nome: json['nome'],
+          registro: json['registro'],
+          cpf: json['funcionarioCpf'],
+          cnpj: json['cnpj'],
+          cargo: json['cargo'],
           permitirMarcarPonto: json['permitirMarcarPonto'].toString() == 'true',
-          permitirMarcarPontoOffline: json['permitirMarcarPontoOffline'] .toString()== 'true',
+          permitirMarcarPontoOffline: json['permitirMarcarPontoOffline'].toString()== 'true',
+          capturarGps: json['permitirLocalizacao'].toString() == 'true',
         ),
       );
     }else{
       user = UsuarioPonto(
         databaseId: json["DatabaseId"],
         app: json["App"],
-        email: email,
-        statusLogin: json["StatusLogin"] == null ? null : StatusLogin.fromMap(json["StatusLogin"]),
         periodo: json["Periodo"] == null ? null : Periodo.fromMap(json["Periodo"]),
         funcionario: json["Funcionario"] == null ? null : Funcionario.fromMap(json["Funcionario"]),
       );
@@ -48,39 +51,73 @@ class UsuarioPonto {
     return user;
   }
 
+  factory UsuarioPonto.fromMapTab(Map map, String cod) {
+    print('ok from');
+    return UsuarioPonto(
+      periodo: Periodo(
+          dataFinal: Apontamento.padrao().datatermino,
+          dataInicial: Apontamento.padrao().datainicio,
+          descricao: Apontamento.padrao().descricao
+      ),
+      funcionario: Funcionario(
+        funcionarioId: (int.tryParse(map["Id"].toString())),
+        nome: map["Nome"],
+        registro: cod,
+        foto: map["IdFoto"],
+        cnpj: map["Cnpj"],
+        cargo: map["Cargo"],
+      ),
+    );
+  }
+
+  factory UsuarioPonto.fromOff(UserPontoOffine user) {
+    print('ok fromOff');
+    return UsuarioPonto(
+      periodo: Periodo(
+          dataFinal: Apontamento.padrao().datatermino,
+          dataInicial: Apontamento.padrao().datainicio,
+          descricao: Apontamento.padrao().descricao
+      ),
+      funcionario: Funcionario(
+        funcionarioId: user.id!,
+        nome: user.nome!,
+        registro: user.registro!,
+        cargo: '',
+      ),
+    );
+  }
+
   Map toMapTab() {
     Map<String, dynamic> map = {
-      "nome": nome,
-      "img" : image,
-      "cargo" : cargo,
-      "codigo" : registro,
-      "cnpj" : cnpj
+      "nome": funcionario?.nome,
+      "img" : null,
+      "cargo" : funcionario?.cargo,
+      "codigo" : funcionario?.registro,
+      "userId" : funcionario?.funcionarioId,
+      "cnpj" : funcionario?.cnpj
     };
-
-    if (userId != null) {
-      map["id"] = userId;
-    }
-
     return map;
   }
 
   Map<String, dynamic> toMap(){
     return {
-      'userId': userId,
-      'email': email,
-      'database': database,
-      'master': master.toString(),
-      'funcionarioCpf': funcionarioCpf,
-      'cnpj': cnpj,
-      'nome': nome,
-      'cargo': cargo,
-      'registro': registro,
-      'apontamento': aponta?.descricao,
-      'datainicio': aponta?.datainicio.toString(),
-      'datatermino': aponta?.datatermino.toString(),
-      'permitirMarcarPonto': permitirMarcarPonto.toString(),
-      'permitirLocalizacao': permitirLocalizacao.toString(),
-      'permitirMarcarPontoOffline': permitirMarcarPontoOffline.toString(),
+      'userId': funcionario?.funcionarioId,
+      'database': databaseId,
+      'nome': funcionario?.nome,
+      'email': funcionario?.email,
+      'pis': funcionario?.pis,
+      'funcionarioCpf': funcionario?.cpf,
+      'registro': funcionario?.registro,
+      'cnpj': funcionario?.cnpj,
+      'master': app,
+      'connected': true,
+      'cargo': funcionario?.cargo,
+      'apontamento': periodo?.descricao,
+      'datainicio': periodo?.dataInicial,
+      'datatermino': periodo?.dataFinal,
+      'permitirMarcarPonto': funcionario?.permitirMarcarPonto,
+      'permitirMarcarPontoOffline': funcionario?.permitirMarcarPontoOffline,
+      'permitirLocalizacao': funcionario?.capturarGps,
     };
   }
 }
@@ -92,6 +129,8 @@ class Funcionario {
   String? cpf;
   String? cargo;
   String? foto;
+  String? email;
+  String? pis;
   bool? permitirMarcarPontoWeb;
   bool? permitirMarcarPonto;
   bool? permitirMarcarPontoOffline;
@@ -106,6 +145,8 @@ class Funcionario {
     this.registro,
     this.cpf,
     this.cargo,
+    this.email,
+    this.pis,
     this.foto,
     this.permitirMarcarPontoWeb,
     this.permitirMarcarPonto,
@@ -118,13 +159,13 @@ class Funcionario {
 
   factory Funcionario.fromJson(String str) => Funcionario.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory Funcionario.fromMap(Map<String, dynamic> json) => Funcionario(
     funcionarioId: json["FuncionarioId"],
     nome: json["Nome"],
     registro: json["Registro"],
     cpf: json["CPF"],
+    email: json["email"],
+    pis: json["pis"],
     cargo: json["Cargo"],
     foto: json["Foto"],
     permitirMarcarPontoWeb: json["PermitirMarcarPontoWeb"],
@@ -136,21 +177,6 @@ class Funcionario {
     cnpj: json["CNPJ"],
   );
 
-  Map<String, dynamic> toMap() => {
-    "FuncionarioId": funcionarioId,
-    "Nome": nome,
-    "Registro": registro,
-    "CPF": cpf,
-    "Cargo": cargo,
-    "Foto": foto,
-    "PermitirMarcarPontoWeb": permitirMarcarPontoWeb,
-    "PermitirMarcarPonto": permitirMarcarPonto,
-    "PermitirMarcarPontoOffline": permitirMarcarPontoOffline,
-    "CapturarGps": capturarGps,
-    "UltimaMarcacao": ultimaMarcacao?.toIso8601String(),
-    "SetorId": setorId,
-    "CNPJ": cnpj,
-  };
 }
 
 class Periodo {
@@ -177,30 +203,6 @@ class Periodo {
   Map<String, dynamic> toMap() => {
     "DataInicial": dataInicial?.toIso8601String(),
     "DataFinal": dataFinal?.toIso8601String(),
-    "Descricao": descricao,
-  };
-}
-
-class StatusLogin {
-  int? status;
-  String? descricao;
-
-  StatusLogin({
-    this.status,
-    this.descricao,
-  });
-
-  factory StatusLogin.fromJson(String str) => StatusLogin.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory StatusLogin.fromMap(Map<String, dynamic> json) => StatusLogin(
-    status: json["Status"],
-    descricao: json["Descricao"],
-  );
-
-  Map<String, dynamic> toMap() => {
-    "Status": status,
     "Descricao": descricao,
   };
 }

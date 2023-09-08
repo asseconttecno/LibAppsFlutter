@@ -17,8 +17,8 @@ class ApontamentoService {
         url: Config.conf.apiAsseponto! + _api,
         body: {
           "User": {
-            "UserId": user?.userId.toString(),
-            "Database": user?.database.toString()
+            "UserId": user?.funcionario?.funcionarioId.toString(),
+            "Database": user?.databaseId.toString()
           }
         }
     );
