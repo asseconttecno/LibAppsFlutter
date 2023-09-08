@@ -42,12 +42,12 @@ class UsuarioHolerite {
   }
 
   UsuarioHolerite.fromPonto(UsuarioPonto user){
-    this.id = user.userId;
+    this.id = user.funcionario?.funcionarioId;
     this.email = user.email;
-    this.nome = user.nome;
-    this.cpf = user.funcionarioCpf;
-    this.cnpj = user.cnpj;
-    this.registro = user.registro;
+    this.nome = user.funcionario?.nome;
+    this.cpf = user.funcionario?.cpf;
+    this.cnpj = user.funcionario?.cnpj;
+    this.registro = user.funcionario?.registro;
   }
 
   Map<String, dynamic> toMap(){

@@ -61,9 +61,11 @@ class MemorandosManager extends ChangeNotifier {
 
   memorandosUpdate(){
     if(UserPontoManager().usuario != null){
-      getMemorandos(UserPontoManager().usuario!,
-          UserPontoManager().usuario!.aponta!.datainicio,
-          UserPontoManager().usuario!.aponta!.datatermino);
+      getMemorandos(
+          UserPontoManager().usuario!,
+          UserPontoManager.susuario!.periodo!.dataInicial!,
+          UserPontoManager.susuario!.periodo!.dataFinal!
+      );
     }
   }
 

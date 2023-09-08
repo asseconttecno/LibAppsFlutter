@@ -42,6 +42,15 @@ class UserPontoManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  updateAponta(Apontamento aponta){
+    susuario?.periodo = Periodo(
+      dataFinal: aponta.datatermino,
+      dataInicial: aponta.datainicio,
+      descricao: aponta.descricao
+    );
+    notifyListeners();
+  }
+
   HomePontoModel? _homeModel;
   HomePontoModel? get homeModel => _homeModel;
   set homeModel(HomePontoModel? valor){
@@ -67,10 +76,6 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
-  updateUser({String? nome, String? cargo, bool? perm, bool? offline, bool? local, Apontamento? aponta}){
-    usuario = usuario!.copyWith(nome: nome, cargo: cargo, perm: perm, offline: offline, local: local, aponta: aponta);
-  }
-
   Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
     bool result = false;
     try {
@@ -92,9 +97,11 @@ class UserPontoManager extends ChangeNotifier {
   Future<bool> signInAuth({required String email,required String senha}) async {
     usuario = await _service.signInAuth(email: email, senha: senha);
     await getHome();
-    if(usuario?.master ?? false){
+    if(usuario?.app ?? false){
       UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
     }
+
+    _sqlService.salvarNovoUsuario( usuario!.toMap() );
     Config.usenha = senha;
     return true;
   }
@@ -103,14 +110,7 @@ class UserPontoManager extends ChangeNotifier {
     try {
       HomePontoModel? _home = await _homeservice.getHome(usuario!);
       homeModel = _home;
-      updateUser(
-          nome: homeModel?.funcionario?.nome,
-          cargo: homeModel?.funcionario?.cargo,
-          perm: homeModel?.funcionario?.permitirMarcarPonto,
-          offline: homeModel?.funcionario?.permitirMarcarPontoOffline,
-          local: homeModel?.funcionario?.capturarGps
-      );
-      _sqlService.salvarNovoUsuario( usuario!.toMap() );
+
     } catch (e) {
       debugPrint('try erro getHome ' + e.toString());
       homeModel = null;
@@ -144,7 +144,7 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   signOut() {
-    cleanPreferebces();
+    cleanPreferences();
     usuario = null;
     homeModel = null;
     _status = false;
@@ -153,7 +153,7 @@ class UserPontoManager extends ChangeNotifier {
     Config.usenha = '';
   }
 
-  cleanPreferebces() async {
+  cleanPreferences() async {
     try{
       final prefs = await SharedPreferences.getInstance();
       prefs.remove("user");
