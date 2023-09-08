@@ -109,17 +109,17 @@ class UsuarioPonto {
       'funcionarioCpf': funcionario?.cpf,
       'registro': funcionario?.registro,
       'cnpj': funcionario?.cnpj,
-      'master': app,
-      'connected': true,
+      'master': app.toString(),
+      'connected': 'true',
       'cargo': funcionario?.cargo,
       'apontamento': periodo?.descricao ?? Apontamento.padrao().descricao,
       'datainicio': periodo?.dataInicial == null ? Apontamento.padrao().datainicio
           : DateFormat('yyyy-MM-dd').format(periodo!.dataInicial!) ,
       'datatermino': periodo?.dataFinal == null ? Apontamento.padrao().datatermino
           : DateFormat('yyyy-MM-dd').format(periodo!.dataFinal!),
-      'permitirMarcarPonto': funcionario?.permitirMarcarPonto,
-      'permitirMarcarPontoOffline': funcionario?.permitirMarcarPontoOffline,
-      'permitirLocalizacao': funcionario?.capturarGps,
+      'permitirMarcarPonto': funcionario?.permitirMarcarPonto.toString(),
+      'permitirMarcarPontoOffline': funcionario?.permitirMarcarPontoOffline.toString(),
+      'permitirLocalizacao': funcionario?.capturarGps.toString(),
     };
   }
 }
