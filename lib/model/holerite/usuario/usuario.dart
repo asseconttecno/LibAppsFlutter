@@ -30,15 +30,15 @@ class UsuarioHolerite {
   );
 
   UsuarioHolerite.fromMap(Map map){
-    this.id =   map["id"] == null ? null : map["id"];
-    this.email = map["email"] == null ? null : map["email"];
-    this.empresa = map["empresa"] == null ? null : map["empresa"];
-    this.nome = map["nome"] == null ? null : map["nome"];
-    this.cpf = map["cpf"] == null ? null : map["cpf"];
-    this.cnpj = map["cnpj"] == null ? null : map["cnpj"];
-    this.registro = map["registro"] == null ? null : map["registro"];
-    this.ddd = map["ddd"] == null ? null : map["ddd"];
-    this.celular = map["celular"] == null ? null : map["celular"];
+    this.id =   map["id"];
+    this.email = map["email"];
+    this.empresa = map["empresa"];
+    this.nome = map["nome"];
+    this.cpf = map["cpf"];
+    this.cnpj = map["cnpj"];
+    this.registro = map["registro"];
+    this.ddd = map["ddd"];
+    this.celular = map["celular"];
   }
 
   UsuarioHolerite.fromPonto(UsuarioPonto user){

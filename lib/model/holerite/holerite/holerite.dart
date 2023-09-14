@@ -50,24 +50,24 @@ class HoleriteModel {
   String toJson() => json.encode(toMap());
 
   factory HoleriteModel.fromMap(Map<String, dynamic> json) => HoleriteModel(
-    holeriteTipo: json["holeriteTipo"] == null ? null : json["holeriteTipo"],
+    holeriteTipo: json["holeriteTipo"],
     holeriteTipoCod: competenciaCodigo(json["holeriteTipo"]),
     vencimentos: json["vencimentos"] == null ? null : double.tryParse(json["vencimentos"].toString().replaceAll('.', '').replaceAll(',', '.')),
     descontos: json["descontos"] == null ? null : double.tryParse(json["descontos"].toString().replaceAll('.', '').replaceAll(',', '.')),
     liquido: json["liquido"] == null ? null : double.tryParse(json["liquido"].toString().replaceAll('.', '').replaceAll(',', '.')),
-    dataCriacao: json["dataCriacao"] == null ? null : json["dataCriacao"],
-    dataVisualizacao: json["dataVisualizacao"] == null ? null : json["dataVisualizacao"],
+    dataCriacao: json["dataCriacao"],
+    dataVisualizacao: json["dataVisualizacao"],
     historicos: json["historicos"] == null ? null : List<Historico>.from(json["historicos"].map((x) => Historico.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
-    "holeriteTipo": holeriteTipo == null ? null : holeriteTipo,
-    "holeriteTipoCod": holeriteTipoCod == null ? null : holeriteTipoCod,
-    "vencimentos": vencimentos == null ? null : vencimentos,
-    "descontos": descontos == null ? null : descontos,
-    "liquido": liquido == null ? null : liquido,
-    "dataCriacao": dataCriacao == null ? null : dataCriacao,
-    "dataVisualizacao": dataVisualizacao == null ? null : dataVisualizacao,
+    "holeriteTipo": holeriteTipo,
+    "holeriteTipoCod": holeriteTipoCod,
+    "vencimentos": vencimentos,
+    "descontos": descontos,
+    "liquido": liquido,
+    "dataCriacao": dataCriacao,
+    "dataVisualizacao": dataVisualizacao,
     "historicos": historicos == null ? null : List<dynamic>.from(historicos!.map((x) => x.toMap())),
   };
 
@@ -87,6 +87,8 @@ class HoleriteModel {
         return 6;
       case "Abono":
         return 7;
+      case "Domestica":
+        return 8;
       default:
         return 1;
     }
@@ -95,7 +97,7 @@ class HoleriteModel {
   List<ChartColum> toColum(List<Historico> list){
     int i = 0;
     List<ChartColum> listmap = [];
-    if(list != null && (list.length ) > 0){
+    if(list.isNotEmpty){
       while(i < ((list.length) > 3 ? 3 : (list.length )) ){
         listmap.add(ChartColum(i, list[i].competencia!, list[i].liquido! ),);
         i++;
@@ -133,8 +135,8 @@ class Historico {
   }
 
   Map<String, dynamic> toMap() => {
-    "competencia": competencia == null ? null : competencia,
-    "liquido": liquido == null ? null : liquido,
+    "competencia": competencia,
+    "liquido": liquido,
   };
 
 }

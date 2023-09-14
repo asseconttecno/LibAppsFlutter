@@ -23,7 +23,7 @@ class HoleriteService  {
           "register": user.registro?.toString(),
           "month": mes,
           "year": ano,
-          "cpf": null//'42585327892'
+          "cpf": user.cpf,//'42585327892'
         }
     );
 
@@ -51,7 +51,7 @@ class HoleriteService  {
         body: {
           "cnpj": user.cnpj.toString(),
           "register": user.registro.toString(),
-          "cpf": null,
+          "cpf": user.cpf,
         }
     );
 
