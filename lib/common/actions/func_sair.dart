@@ -14,7 +14,6 @@ funcSair(BuildContext context){
     context.read<UserHoleriteManager>().signOut();
   } else if(Config.conf.nomeApp == VersaoApp.PontoApp) {
     context.read<UserPontoManager>().signOut();
-    context.read<CameraPontoManager>().img = null;
   } else if(Config.conf.nomeApp == VersaoApp.AssewebApp) {
     context.read<UserAssewebManager>().signOut();
   }
