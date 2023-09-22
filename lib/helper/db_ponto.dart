@@ -27,13 +27,15 @@ class DBPonto{
   Future<Database> get db async {
     if(_db == null) {
       _db = await inicializarDB(versao);
+      _db!.database.setVersion(versaoNew);
     } else if(versao < versaoNew) {
+      versao = await _db!.getVersion();
       if(versao < versaoNew){
-        versao = await _db!.getVersion();
         _db = await inicializarDB(versaoNew);
         await _db!.setVersion(versaoNew);
         _updateTable(_db!);
         versao = versaoNew;
+        _db!.database.setVersion(versaoNew);
       }
     }
     return _db!;

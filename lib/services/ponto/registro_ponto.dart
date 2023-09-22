@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 
@@ -26,6 +27,7 @@ class RegistroService {
       print('erro endereco $e');
     }
 
+    DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api,
         body: {
@@ -50,7 +52,8 @@ class RegistroService {
               Marcacao(
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
-                  datahora: DateTime.now(),
+                  datahora: now,
+                  endereco: endereco
               ),
             );
             return true;
@@ -60,7 +63,8 @@ class RegistroService {
                   Marcacao(
                       iduser: user.funcionario?.funcionarioId,
                       latitude: latitude, longitude: longitude,
-                      datahora: DateTime.now()
+                      datahora: now,
+                      endereco: endereco
                   ),
               );
               return result;
@@ -72,7 +76,8 @@ class RegistroService {
               Marcacao(
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
-                  datahora: DateTime.now()
+                  datahora: now,
+                  endereco: endereco
               ),
             );
             return result;
@@ -85,7 +90,8 @@ class RegistroService {
             Marcacao(
                 iduser: user.funcionario?.funcionarioId,
                 latitude: latitude, longitude: longitude,
-                datahora: DateTime.now()
+                datahora: now,
+                endereco: endereco
             ),
           );
           return result;
@@ -100,17 +106,23 @@ class RegistroService {
 
     if(usuario?.databaseId != null){
       try{
+
+        final body = {
+          "Database": "${usuario!.databaseId}",
+          "UserId": usuario.funcionario?.funcionarioId.toString(),
+          "Origem": 7,
+          "ListaMarcacoes": listOff
+        };
+        print(jsonEncode(body));
+
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAssepontoNova! + _api,
-            body: {
-              "Database": "${usuario!.databaseId}",
-              "UserId": usuario.funcionario?.funcionarioId.toString(),
-              "Origem": 7,
-              "ListaMarcacoes": listOff
-            }
+            body: body, decoder: false
         );
 
         if(response.isSucess){
+
+          return MarcacaoOffStatus.Sucess;
           Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             return MarcacaoOffStatus.Sucess;
