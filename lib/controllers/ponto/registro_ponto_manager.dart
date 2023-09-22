@@ -93,7 +93,7 @@ class RegistroManger {
           _sqlitePonto.getHistoricoFormatado() : _sqlitePonto.getMarcacoes() );
       if(marcacao != null && marcacao.isNotEmpty) {
         final result =  await _service.postPontoMarcacoesOffline(
-            UserPontoManager().usuario,
+            UserPontoManager.susuario,
             marcacao,
             delete: !Config.isReenvioMarc
         );

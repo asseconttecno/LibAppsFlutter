@@ -104,18 +104,24 @@ class RegistroService {
 
     if(usuario?.databaseId != null){
       try{
+
+        final body = {
+          "Database": "${usuario!.databaseId}",
+          "UserId": usuario.funcionario?.funcionarioId.toString(),
+          "Origem": 7,
+          "ListaMarcacoes": listOff
+        };
+        print(body);
+
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAssepontoNova! + _api,
-            body: {
-              "Database": "${usuario!.databaseId}",
-              "UserId": usuario.funcionario?.funcionarioId.toString(),
-              "Origem": 7,
-              "ListaMarcacoes": listOff
-            }
+            body: body
         );
 
         if(response.isSucess){
           Map dadosJson = response.data;
+          return MarcacaoOffStatus.Sucess;
+
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             return MarcacaoOffStatus.Sucess;
           }else if(dadosJson.containsKey("Result")){

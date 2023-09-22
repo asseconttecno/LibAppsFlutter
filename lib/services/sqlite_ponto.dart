@@ -95,7 +95,7 @@ class SqlitePontoService {
 
       try {
         if(hist) await bancoDados.insert("historico", dados.toHistMap());
-      } on Exception catch (e) {
+      } catch (e) {
         debugPrint("erro salvar marca sql ${e.toString()}");
       }
 
@@ -107,11 +107,15 @@ class SqlitePontoService {
   }
 
   deleteSalvarMarcacoes(List<Marcacao> del) async {
-    var bancoDados = await DBPonto().db;
-    await bancoDados.delete("marcacao");
-    await del.map((e) async {
-      await salvarMarcacao(e);
-    });
+    try {
+      var bancoDados = await DBPonto().db;
+      await bancoDados.delete("marcacao");
+      await del.map((e) async {
+        await salvarMarcacao(e);
+      });
+    } catch (e) {
+      debugPrint("erro sql deleteSalvarMarcacoes ${e.toString()}");
+    }
   }
 
   Future<int> deleteMarcacoes() async {
