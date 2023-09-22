@@ -148,6 +148,15 @@ class DBPonto{
       }catch(e){
         debugPrint(e.toString());
       }
+
+      String sql_update2 = "ALTER TABLE marcacao ADD COLUMN Endereco VARCHAR;";
+      try{
+        db.execute(sql_update2).onError((error, stackTrace) {
+          print(error);
+        });
+      }catch(e){
+        debugPrint(e.toString());
+      }
     }
   }
 
