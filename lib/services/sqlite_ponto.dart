@@ -123,7 +123,7 @@ class SqlitePontoService {
       var bancoDados = await DBPonto().db;
       int _result = await bancoDados.delete("marcacao");
       return _result;
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint("erro sql deleteMarcacoes ${e.toString()}");
       return 0;
     }
@@ -134,7 +134,7 @@ class SqlitePontoService {
       var bancoDados = await DBPonto().db;
       List _sql = await bancoDados.query("historico");
       return _sql;
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint("erro getMarcacoes ${e.toString()}");
     }
   }
@@ -146,7 +146,7 @@ class SqlitePontoService {
         List<Map<String, dynamic>> marcacao = _sql.map( (e) => Marcacao.fromSql(e).toSql()  ).toList() ;
         return marcacao;
       }
-    } on Exception catch (e) {
+    }  catch (e) {
       debugPrint("erro getMarcacoes ${e.toString()}");
     }
   }
