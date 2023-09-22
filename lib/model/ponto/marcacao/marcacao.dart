@@ -114,10 +114,10 @@ class Marcacao {
   Map<String, Object?> toMap() {
     Map<String, dynamic> map = {
       "iduser": iduser,
-      "datahora": datahora.toString(),
+      "datahora": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
-      "Endereco": endereco,
+      "Endereco": endereco.toString(),
     };
     return map;
   }
@@ -131,10 +131,10 @@ class Marcacao {
       "pis": this.pis.toString(),
       "cargo": this.cargo.toString(),
       */
-      "datahora": datahora.toString(),
+      "datahora": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
-      "Endereco": endereco,
+      "Endereco": endereco.toString(),
       "img": img,
     };
     return map;
@@ -143,9 +143,9 @@ class Marcacao {
   Map<String, dynamic> toSql() {
     Map<String, dynamic> map = {
       "DataHora": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
-      "Latitude": latitude,
-      "Longitude": longitude,
-      "Endereco": endereco,
+      "Latitude": latitude.toString(),
+      "Longitude": longitude.toString(),
+      "Endereco": endereco.toString(),
     };
     return map;
   }

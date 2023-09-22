@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 
@@ -111,7 +112,7 @@ class RegistroService {
           "Origem": 7,
           "ListaMarcacoes": listOff
         };
-        print(body);
+        print(jsonEncode(body));
 
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAssepontoNova! + _api,
