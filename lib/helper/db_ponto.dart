@@ -138,7 +138,8 @@ class DBPonto{
       }catch(e){
         debugPrint(e.toString());
       }
-    }else if(versao <= 6){
+    }
+    if(versao <= 6){
       String sql_update3 = "ALTER TABLE historico ADD COLUMN Endereco VARCHAR;";
       try{
         db.execute(sql_update3).onError((error, stackTrace) {
