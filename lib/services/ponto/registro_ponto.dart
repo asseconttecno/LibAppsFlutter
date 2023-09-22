@@ -17,7 +17,7 @@ class RegistroService {
 
 
   Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude) async {
-    String _api = "/api/apontamento/PostPontoMarcar";
+    String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
     String? endereco;
     try {
@@ -27,15 +27,18 @@ class RegistroService {
     }
 
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
+        url: Config.conf.apiAssepontoNova! + _api,
         body: {
-          "User": {
-            "UserId": user.funcionario?.funcionarioId.toString(),
-            "Database": user.databaseId.toString()
-          },
-          "Latitude": latitude,
-          "Longitude": longitude,
-          "Endereco": endereco
+          "UserId": user.funcionario?.funcionarioId.toString(),
+          "Database": user.databaseId.toString(),
+          "Origem": 3,
+          "ListaMarcacoes": [
+            {
+              "Latitude": latitude,
+              "Longitude": longitude,
+              "Endereco": endereco
+            }
+          ]
         }
     );
 
@@ -93,15 +96,17 @@ class RegistroService {
 
   Future<MarcacaoOffStatus> postPontoMarcacoesOffline(UsuarioPonto? usuario,
       List<Map<String, dynamic>> listOff, {bool delete = false}) async {
-    String _api = "/api/apontamento/PostPontoMarcacoesOffline";
+    String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
     if(usuario?.databaseId != null){
       try{
         final MyHttpResponse response = await _http.post(
-            url: Config.conf.apiAsseponto! + _api,
+            url: Config.conf.apiAssepontoNova! + _api,
             body: {
               "Database": "${usuario!.databaseId}",
-              "Marcacoes": listOff
+              "UserId": usuario.funcionario?.funcionarioId.toString(),
+              "Origem": 7,
+              "ListaMarcacoes": listOff
             }
         );
 
@@ -109,7 +114,7 @@ class RegistroService {
           Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             return MarcacaoOffStatus.Sucess;
-          }else{
+          }else if(dadosJson.containsKey("Result")){
             debugPrint(dadosJson.toString());
             List list = dadosJson["Result"];
             list.sort((a, b) => b["Index"].compareTo(a["Index"]));
