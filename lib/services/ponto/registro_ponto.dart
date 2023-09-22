@@ -27,6 +27,7 @@ class RegistroService {
       print('erro endereco $e');
     }
 
+    DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api,
         body: {
@@ -51,7 +52,7 @@ class RegistroService {
               Marcacao(
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
-                  datahora: DateTime.now(),
+                  datahora: now,
                   endereco: endereco
               ),
             );
@@ -62,7 +63,7 @@ class RegistroService {
                   Marcacao(
                       iduser: user.funcionario?.funcionarioId,
                       latitude: latitude, longitude: longitude,
-                      datahora: DateTime.now(),
+                      datahora: now,
                       endereco: endereco
                   ),
               );
@@ -75,7 +76,7 @@ class RegistroService {
               Marcacao(
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
-                  datahora: DateTime.now(),
+                  datahora: now,
                   endereco: endereco
               ),
             );
@@ -89,7 +90,7 @@ class RegistroService {
             Marcacao(
                 iduser: user.funcionario?.funcionarioId,
                 latitude: latitude, longitude: longitude,
-                datahora: DateTime.now(),
+                datahora: now,
                 endereco: endereco
             ),
           );
@@ -116,13 +117,13 @@ class RegistroService {
 
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAssepontoNova! + _api,
-            body: body
+            body: body, decoder: false
         );
 
         if(response.isSucess){
-          Map dadosJson = response.data;
-          return MarcacaoOffStatus.Sucess;
 
+          return MarcacaoOffStatus.Sucess;
+          Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             return MarcacaoOffStatus.Sucess;
           }else if(dadosJson.containsKey("Result")){
