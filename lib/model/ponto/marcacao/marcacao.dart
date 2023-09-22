@@ -20,7 +20,7 @@ class Marcacao {
   int? status;
 
   Marcacao({this.iduser, this.datahora, this.expediente, this.resultado, this.obs,
-     this.latitude, this.longitude, this.img, this.imgId, this.status});
+     this.latitude, this.longitude, this.img, this.imgId, this.status, this.endereco,});
 
   Marcacao.fromMap(Map map) {
     List _i = map["Data"].split("/");

@@ -51,6 +51,7 @@ class RegistroService {
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
                   datahora: DateTime.now(),
+                  endereco: endereco
               ),
             );
             return true;
@@ -60,7 +61,8 @@ class RegistroService {
                   Marcacao(
                       iduser: user.funcionario?.funcionarioId,
                       latitude: latitude, longitude: longitude,
-                      datahora: DateTime.now()
+                      datahora: DateTime.now(),
+                      endereco: endereco
                   ),
               );
               return result;
@@ -72,7 +74,8 @@ class RegistroService {
               Marcacao(
                   iduser: user.funcionario?.funcionarioId,
                   latitude: latitude, longitude: longitude,
-                  datahora: DateTime.now()
+                  datahora: DateTime.now(),
+                  endereco: endereco
               ),
             );
             return result;
@@ -85,7 +88,8 @@ class RegistroService {
             Marcacao(
                 iduser: user.funcionario?.funcionarioId,
                 latitude: latitude, longitude: longitude,
-                datahora: DateTime.now()
+                datahora: DateTime.now(),
+                endereco: endereco
             ),
           );
           return result;
