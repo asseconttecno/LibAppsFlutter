@@ -21,7 +21,7 @@ class DBPonto{
     db;
   }
 
-  int versaoNew = 5;
+  int versaoNew = 6;
   int versao = 1;
 
   Future<Database> get db async {
@@ -48,13 +48,13 @@ class DBPonto{
     }catch(e){
       debugPrint(e.toString());
     }
-    String sql2 = "CREATE TABLE marcacao (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
+    String sql2 = "CREATE TABLE marcacao (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
     try{
       await db.execute(sql2);
     }catch(e){
       debugPrint(e.toString());
     }
-    String sql3 = "CREATE TABLE historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, nome VARCHAR, cargo VARCHAR, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
+    String sql3 = "CREATE TABLE historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, nome VARCHAR, cargo VARCHAR, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR,Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
     try{
       await db.execute(sql3);
     }catch(e){
@@ -89,17 +89,9 @@ class DBPonto{
 
   _updateTable(Database db) async {
     if(versao < 5){
-      String sql_update = "CREATE TABLE IF NOT EXISTS historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
+      String sql_update = "CREATE TABLE IF NOT EXISTS historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
       try{
         db.execute(sql_update).onError((error, stackTrace) {
-          print(error);
-        });
-      }catch(e){
-        debugPrint(e.toString());
-      }
-      String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR;";
-      try{
-        db.execute(sql_update2).onError((error, stackTrace) {
           print(error);
         });
       }catch(e){
@@ -113,6 +105,17 @@ class DBPonto{
       }catch(e){
         debugPrint(e.toString());
       }
+
+
+      String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR;";
+      try{
+        db.execute(sql_update2).onError((error, stackTrace) {
+          print(error);
+        });
+      }catch(e){
+        debugPrint(e.toString());
+      }
+
       String sql_drop = "DROP TABLE IF EXISTS users;";
       try{
         db.execute(sql_drop).onError((error, stackTrace) {
@@ -132,6 +135,15 @@ class DBPonto{
       String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
       try{
         await db.execute(sql1);
+      }catch(e){
+        debugPrint(e.toString());
+      }
+    }else if(versao <= 6){
+      String sql_update3 = "ALTER TABLE historico ADD COLUMN Endereco VARCHAR;";
+      try{
+        db.execute(sql_update3).onError((error, stackTrace) {
+          print(error);
+        });
       }catch(e){
         debugPrint(e.toString());
       }

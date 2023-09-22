@@ -13,6 +13,7 @@ class Marcacao {
   List<String> marcacao = [];
   double? latitude;
   double? longitude;
+  String? endereco;
   String? obs;
   String? img;
   String? imgId;
@@ -80,14 +81,13 @@ class Marcacao {
     }
   }
 
-  Future<Map<String, dynamic>> toSql2(Map map) async {
+  Map<String, dynamic> toSql2(Map map) {
     double? lat =  map["latitude"] == null ? null : double.tryParse(map["latitude"]);
     double? long =  map["longitude"] == null ? null : double.tryParse(map["longitude"]);
-    String? end = await Conversoes.getEndereco(lat, long);
+    String? end = map["Endereco"];
 
     Map<String, dynamic> result = {
-      "UserId": int.tryParse(map["iduser"].toString()),
-      "Marcacao": DateFormat('yyyy-MM-dd HH:mm').format(DateTime.tryParse(map["datahora"].toString())!),
+      "DataHora": DateFormat('yyyy-MM-dd HH:mm').format(DateTime.tryParse(map["datahora"].toString())!),
       "Latitude": lat?.toString(),
       "Longitude": long?.toString(),
       "Endereco": end
@@ -100,6 +100,7 @@ class Marcacao {
     datahora = DateTime.tryParse(map["datahora"].toString());
     latitude = map["latitude"] == null ? null : double.tryParse(map["latitude"]);
     longitude = map["longitude"] == null ? null : double.tryParse(map["longitude"]);
+    endereco = map["Endereco"] == null ? null : map["Endereco"].toString();
   }
 
   Marcacao.fromReSql(Map map) {
@@ -107,6 +108,7 @@ class Marcacao {
     datahora = DateTime.tryParse(map["Marcacao"].toString());
     latitude = map["Latitude"] == null ? null : double.tryParse(map["Latitude"]);
     longitude = map["Longitude"] == null ? null : double.tryParse(map["Longitude"]);
+    endereco = map["Endereco"] == null ? null : map["Endereco"].toString();
   }
 
   Map<String, Object?> toMap() {
@@ -115,6 +117,7 @@ class Marcacao {
       "datahora": datahora.toString(),
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
+      "Endereco": endereco,
     };
     return map;
   }
@@ -131,6 +134,7 @@ class Marcacao {
       "datahora": datahora.toString(),
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
+      "Endereco": endereco,
       "img": img,
     };
     return map;
@@ -138,10 +142,10 @@ class Marcacao {
 
   Map<String, dynamic> toSql() {
     Map<String, dynamic> map = {
-      "UserId": iduser,
-      "Marcacao": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
+      "DataHora": DateFormat('yyyy-MM-dd HH:mm').format(datahora!),
       "Latitude": latitude,
       "Longitude": longitude,
+      "Endereco": endereco,
     };
     return map;
   }

@@ -79,8 +79,7 @@ class SqlitePontoService {
       var bancoDados = await DBPonto().db;
       List _sql = await bancoDados.query("marcacao");
       if(_sql.isNotEmpty) {
-        List<Map<String, dynamic>> marcacao = await Future.wait(
-            _sql.map((e) => Marcacao().toSql2(e)).toList());
+        List<Map<String, dynamic>> marcacao = _sql.map((e) => Marcacao().toSql2(e)).toList();
         return marcacao;
       }
     } catch (e) {
