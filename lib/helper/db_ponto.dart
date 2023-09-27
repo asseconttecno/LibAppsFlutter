@@ -27,15 +27,15 @@ class DBPonto{
   Future<Database> get db async {
     if(_db == null) {
       _db = await inicializarDB(versao);
+      _updateTable(_db!);
       _db!.database.setVersion(versaoNew);
     } else if(versao < versaoNew) {
       versao = await _db!.getVersion();
       if(versao < versaoNew){
         _db = await inicializarDB(versaoNew);
-        await _db!.setVersion(versaoNew);
         _updateTable(_db!);
         versao = versaoNew;
-        _db!.database.setVersion(versaoNew);
+        await _db!.setVersion(versaoNew);
       }
     }
     return _db!;
@@ -164,7 +164,7 @@ class DBPonto{
 
   inicializarDB(int v) async {
     final camilhodb = Config.isWin ? await databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
-    final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp.db" : "pontotab.db");
+    final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db");
     if(Config.isWin){
       DatabaseFactory databaseFactory = databaseFactoryFfi;
       Database db = await databaseFactory.openDatabase(localdb,
