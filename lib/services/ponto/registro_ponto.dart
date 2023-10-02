@@ -29,7 +29,7 @@ class RegistroService {
 
     DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAssepontoNova! + _api, decoder: false
+        url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
           "UserId": user.funcionario?.funcionarioId.toString(),
           "Database": user.databaseId.toString(),
@@ -46,7 +46,7 @@ class RegistroService {
 
     try{
         if(response.isSucess){
-          Map dadosJson = response.data;
+          /*Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             await  _sqlitePonto.salvarHisMarcacao(
               Marcacao(
@@ -69,7 +69,17 @@ class RegistroService {
               );
               return result;
             }
-          }
+          }*/
+
+          await  _sqlitePonto.salvarHisMarcacao(
+            Marcacao(
+                iduser: user.funcionario?.funcionarioId,
+                latitude: latitude, longitude: longitude,
+                datahora: now,
+                endereco: endereco
+            ),
+          );
+          return true;
         }else{
           if(user.funcionario?.permitirMarcarPontoOffline ?? false){
             bool result = await _sqlitePonto.salvarMarcacao(
