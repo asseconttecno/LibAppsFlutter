@@ -60,7 +60,7 @@ class RegistroManger {
   enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
     try{
       if (usuario != null) {
-        List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado() ;
+        List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(UserPontoManager.susuario?.funcionario?.funcionarioId) ;
 
         if(marcacao != null && marcacao.isNotEmpty){
           debugPrint(marcacao.toString());
@@ -90,7 +90,8 @@ class RegistroManger {
     debugPrint('enviarMarcacoes off ' + (Config.isReenvioMarc ? '45 dias' : '1 dia'));
     try{
       List<Map<String, dynamic>>? marcacao = await ( Config.isReenvioMarc ?
-          _sqlitePonto.getHistoricoFormatado() : _sqlitePonto.getMarcacoes() );
+          _sqlitePonto.getHistoricoFormatado(UserPontoManager.susuario?.funcionario?.funcionarioId)
+          : _sqlitePonto.getMarcacoes(UserPontoManager.susuario?.funcionario?.funcionarioId) );
       if(marcacao != null && marcacao.isNotEmpty) {
         final result =  await _service.postPontoMarcacoesOffline(
             UserPontoManager.susuario,
@@ -103,7 +104,7 @@ class RegistroManger {
             CustomSnackbar.scaffoldKey(Config.scaffoldKey, 'Marcações sincronizadas com sucesso', Colors.blue[900]!);
           }
           if(!Config.isReenvioMarc){
-            int _result = await _sqlitePonto.deleteMarcacoes();
+            int _result = await _sqlitePonto.deleteMarcacoes(UserPontoManager.susuario?.funcionario?.funcionarioId);
             debugPrint( _result.toString() );
           }
         }
@@ -115,7 +116,7 @@ class RegistroManger {
 
   deleteHistorico() async {
     if(!Config.isReenvioMarc){
-      _sqlitePonto.deleteHistorico();
+      _sqlitePonto.deleteHistorico(UserPontoManager.susuario?.funcionario?.funcionarioId);
     }
   }
 }

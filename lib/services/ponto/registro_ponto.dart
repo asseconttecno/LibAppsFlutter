@@ -133,7 +133,7 @@ class RegistroService {
         if(response.isSucess){
 
           return MarcacaoOffStatus.Sucess;
-          Map dadosJson = response.data;
+          /*Map dadosJson = response.data;
           if(dadosJson.containsKey("IsSuccess") && dadosJson["IsSuccess"]){
             return MarcacaoOffStatus.Sucess;
           }else if(dadosJson.containsKey("Result")){
@@ -147,7 +147,7 @@ class RegistroService {
               _sqlitePonto.deleteSalvarMarcacoes(del);
             }
             return MarcacaoOffStatus.Delete;
-          }
+          }*/
         }
         debugPrint(response.data.toString());
         debugPrint(response.codigo.toString());
