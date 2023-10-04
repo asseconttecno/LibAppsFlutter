@@ -27,6 +27,7 @@ class HoleriteManager extends ChangeNotifier {
     List<CompetenciasModel> result = await _service.competencias(user);
     if(result.isNotEmpty){
       listcompetencias = result;
+      listcompetencias = listcompetencias.reversed.toList();
       dropdowndata = result.first.descricao ?? 'Holerites';
     }
     return result;
