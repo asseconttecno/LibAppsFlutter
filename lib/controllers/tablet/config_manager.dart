@@ -161,7 +161,7 @@ class ConfigTabletManager extends ChangeNotifier {
 
   Future<bool> backup(EmpresaPontoModel empresa,) async {
     try {
-      List? resultsql = await _sqlitePonto.getHistorico();
+      List? resultsql = await _sqlitePonto.getHistorico(null);
       if(resultsql != null && resultsql.isNotEmpty){
         DateTime inicio = DateTime.parse(resultsql.first["datahora"]);
         DateTime terminmo = DateTime.parse(resultsql.last["datahora"]);

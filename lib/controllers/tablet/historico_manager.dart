@@ -20,7 +20,7 @@ class HistoricoManager extends ChangeNotifier {
   Future<List<HistoricoMarcacoesModel>> getMarcacoes() async {
     List<HistoricoMarcacoesModel> result;
     try{
-      List? _select = await _sqlitePonto.getHistorico();
+      List? _select = await _sqlitePonto.getHistorico(null);
       if(_select != null && _select.isNotEmpty){
         result = _select.map((e) => HistoricoMarcacoesModel.fromMap(e)).toList();
         return result;
