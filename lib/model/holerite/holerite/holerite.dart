@@ -151,17 +151,19 @@ class CompetenciasModel {
     this.mes,
     this.ano,
     this.descricao,
+    this.data,
   });
 
   int? mes;
   int? ano;
+  DateTime? data;
   String? descricao;
 
   List<CompetenciasModel> fromList(List json) {
     if(json.isNotEmpty){
       List<CompetenciasModel> list = json.map((e) => CompetenciasModel?.fromString(e.toString())).toList();
       try{
-        list.sort((a,b) => b.ano!.compareTo(a.ano!) );
+        list.sort((a,b) => b.data!.compareTo(a.data!) );
       }catch(e){
         debugPrint(e.toString());
       }
@@ -176,8 +178,9 @@ class CompetenciasModel {
     return CompetenciasModel(
       mes: int.tryParse(_data.first),
       ano: int.tryParse(_data.last),
+      data: DateTime(int.tryParse(_data.last) ?? 0, int.tryParse(_data.first) ?? 0),
       descricao: DateFormat("MMMM yyyy", 'Pt-Br').format(
-          DateTime(int.parse(_data.last), int.parse(_data.first) )).toUpperCase(),
+          DateTime(int.tryParse(_data.last) ?? 0, int.tryParse(_data.first) ?? 0)).toUpperCase(),
     );
   }
 }
