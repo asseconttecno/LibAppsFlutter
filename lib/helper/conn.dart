@@ -3,6 +3,7 @@ import 'Dart:async';
 
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../enums/enums.dart';
@@ -23,18 +24,20 @@ class ConnectionStatusSingleton {
 
   final Connectivity _connectivity = Connectivity();
   void initialize() {
-    _connectivity.onConnectivityChanged.listen(_connectionChange);
-    checkConnection();
-    print('Connectivity initialize');
-    if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet){
-      Timer.periodic(const Duration(minutes: 1), (T) async {
-        debugPrint('Timer ${T.tick} ' + hasConnection.toString());
-        if(hasConnection){
-          await RegistroManger().enviarMarcacoes();
-        }
-      });
+    if(!kIsWeb) {
+      _connectivity.onConnectivityChanged.listen(_connectionChange);
+      checkConnection();
+      print('Connectivity initialize');
+      if (Config.conf.nomeApp == VersaoApp.PontoApp ||
+          Config.conf.nomeApp == VersaoApp.PontoTablet) {
+        Timer.periodic(const Duration(minutes: 1), (T) async {
+          debugPrint('Timer ${T.tick} ' + hasConnection.toString());
+          if (hasConnection) {
+            await RegistroManger().enviarMarcacoes();
+          }
+        });
+      }
     }
-
   }
 
   Stream get connectionChange => connectionChangeController.stream;
@@ -48,26 +51,30 @@ class ConnectionStatusSingleton {
   }
 
   Future<bool> checkConnection() async {
-    bool previousConnection = hasConnection;
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        hasConnection = true;
-      } else {
+    if(!kIsWeb){
+      bool previousConnection = hasConnection;
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          hasConnection = true;
+        } else {
+          hasConnection = false;
+        }
+      } on SocketException catch(_) {
         hasConnection = false;
       }
-    } on SocketException catch(_) {
-      hasConnection = false;
-    }
 
-    if (previousConnection != hasConnection) {
-      connectionChangeController.add(hasConnection);
-      if(hasConnection){
-        if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {
-          await RegistroManger().enviarMarcacoes();
+      if (previousConnection != hasConnection) {
+        connectionChangeController.add(hasConnection);
+        if(hasConnection){
+          if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet) {
+            await RegistroManger().enviarMarcacoes();
+          }
         }
       }
+      return hasConnection;
+    }else{
+     return true;
     }
-    return hasConnection;
   }
 }
