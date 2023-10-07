@@ -75,6 +75,7 @@ dependencies:
 
   share_extend: ^2.0.0
 
+  universal_io: ^2.2.2
   connectivity_plus: any
   package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0

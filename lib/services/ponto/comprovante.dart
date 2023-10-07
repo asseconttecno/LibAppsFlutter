@@ -1,5 +1,5 @@
 
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';

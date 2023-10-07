@@ -1,6 +1,6 @@
 
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'dart:typed_data';
 
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
