@@ -86,7 +86,6 @@ class BancoDiasList {
 
   String gethoras(int credito, int debito){
     String valor = '0:00' ;
-    print(credito); print(debito);
 
     if(credito > 0 || debito > 0){
       int horas = 0;

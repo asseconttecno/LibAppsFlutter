@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,9 +21,10 @@ import '../../../model/model.dart';
 
 class DetalhesHolerite extends StatefulWidget {
   final List<HoleriteModel> holerite;
+  final int idComp;
   final int mes;
   final int ano;
-  DetalhesHolerite(this.holerite, this.mes, this.ano);
+  DetalhesHolerite(this.holerite, this.idComp, this.mes, this.ano);
 
   @override
   _DetalhesHoleriteState createState() => _DetalhesHoleriteState();
@@ -344,18 +348,25 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
           // focusColor: Settings.corPri.withOpacity(0.5),
           onPressed: () async {
             File? a = null;
+            Uint8List? b  = null;
             try {
               carregar(context);
-              a = await context.read<HoleriteManager>().holeriteresumo(
-                  UserHoleriteManager.sUser, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+              if(kIsWeb){
+                b = await context.read<HoleriteManager>().holeriteresumoBytes(
+                    UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+              }else{
+                a = await context.read<HoleriteManager>().holeriteresumo(
+                    UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+              }
             } catch(e){
               debugPrint(e.toString());
             } finally {
               Navigator.pop(context);
             }
-            if(a != null){
+            if(a != null || b != null){
               await Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}', file: a,)));
+                  builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}',
+                    file: a, memori: b,)));
             }else{
               InfoAlertBox(
                   context: context,

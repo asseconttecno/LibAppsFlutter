@@ -47,7 +47,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                 _comp = holerite.listcompetencias.firstWhere(
                         (e) => e.descricao == holerite.dropdowndata);
                 if(_comp != null){
-                  _holerite = await holerite.resumoscreen(UserHoleriteManager.sUser, _comp!.mes!, _comp!.ano!);
+                  _holerite = await holerite.resumoscreen(_comp!.id!, _comp!.mes!, _comp!.ano!);
                 }
               }
             } catch(e){
@@ -137,7 +137,8 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                             if(snapshot.data?.isNotEmpty ?? false){
                               resultado = Center(
                                   child: DetalhesHolerite(
-                                      snapshot.data!.reversed.toList(), _comp!.mes!, _comp!.ano!
+                                      snapshot.data!.reversed.toList(),
+                                      _comp!.id!, _comp!.mes!, _comp!.ano!
                                   )
                               );
                             }else{

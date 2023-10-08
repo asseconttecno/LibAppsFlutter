@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -61,7 +62,7 @@ class EspelhoService {
       if(response.isSucess) {
         var dadosJson = response.data ;
         EspelhoModel espelhoModel = EspelhoModel.fromMap(dadosJson);
-        if(espelhoModel.espelhoHtml != null){
+        if(espelhoModel.espelhoHtml != null && !kIsWeb){
           espelhoModel.espelho = await CustomFile.fileTemp('pdf', memori: espelhoModel.espelhoHtml);
         }
 /*        var htmlContent = '''${espelhoModel.espelhoHtml}''';

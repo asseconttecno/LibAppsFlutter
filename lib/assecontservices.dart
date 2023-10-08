@@ -1,4 +1,5 @@
-import 'package:universal_io/io.dart';
+import 'package:flutter/foundation.dart';
+import 'package:universal_io/io.dart' as io;
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
@@ -7,6 +8,7 @@ import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 
 import 'controllers/controllers.dart';
@@ -37,7 +39,7 @@ class Assecontservices {
   static init({required ConfiguracoesModel config, required RouteFactory rotas,
       List<SingleChildWidget>? providers, bool devicePreview = false, String? titulo, Widget? myApp}) async {
     
-    HttpOverrides.global = MyHttpOverrides();
+    io.HttpOverrides.global = MyHttpOverrides();
     ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
     connectionStatus.initialize();
     Provider.debugCheckInvalidValueType = null;
@@ -252,7 +254,16 @@ class _MyAppState extends State<MyApp> {
         final MediaQueryData data = MediaQuery.of(context);
         return MediaQuery(
           data: data.copyWith(textScaleFactor: 1.0),
-          child: child!,
+          child: ResponsiveWrapper.builder(
+            child,
+            defaultScale: true,
+            breakpoints: const [
+              ResponsiveBreakpoint.resize(480, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(650, name: TABLET),
+              ResponsiveBreakpoint.resize(800, name: DESKTOP),
+              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+            ],
+          ),
         );
       },
       localizationsDelegates: const [
@@ -263,14 +274,16 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: '/',
       onGenerateRoute: widget.rotas,
+
     );
   }
 }
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends io.HttpOverrides{
   @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  io.HttpClient createHttpClient(io.SecurityContext? context) {
+
+    return createHttpClient(context)
+      ..badCertificateCallback = (io.X509Certificate cert, String host, int port)=> true;
   }
 }

@@ -1,7 +1,8 @@
-import 'package:universal_io/io.dart';
+
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -9,17 +10,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:universal_io/io.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../config.dart';
 import '../utils/get_file.dart';
 import 'load_screen.dart';
 
+
+
 class FileHero extends StatefulWidget {
   final File? file;
+  final Uint8List? memori;
   final String? html;
   final String name;
   final Widget? menu;
-  FileHero(this.name, {this.menu, this.file, this.html});
+  FileHero(this.name, {this.menu, this.file,this.memori, this.html});
 
   @override
   _FileHeroState createState() => _FileHeroState();
@@ -29,6 +35,24 @@ class _FileHeroState extends State<FileHero> {
   final GlobalKey _globalKey = GlobalKey();
   Directory? externalDirectory;
 
+// Função para salvar/baixar um arquivo Uint8List
+  void salvarArquivo(Uint8List data, String nomeArquivo) {
+    // Cria um Blob com os dados Uint8List
+    final blob = html.Blob([data]);
+
+    // Cria uma URL para o Blob
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    // Cria um elemento de ancoragem
+    final anchor = html.AnchorElement(href: url)
+      ..target = 'webdownload' // Define o alvo para 'webdownload'
+      ..download = nomeArquivo // Define o nome do arquivo a ser baixado
+      ..click(); // Simula um clique no elemento de ancoragem
+
+    // Revoga a URL criada após o download
+    html.Url.revokeObjectUrl(url);
+  }
+
   Future<Uint8List?> _capturePng() async {
     try {
       final boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
@@ -37,13 +61,13 @@ class _FileHeroState extends State<FileHero> {
       var pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
   @override
   void initState() {
-    if(!Config.isIOS){
+    if(!kIsWeb && !Config.isIOS){
       getExternalStorageDirectory()
           .then((directory) => setState(() => externalDirectory = directory));
     }
@@ -77,13 +101,17 @@ class _FileHeroState extends State<FileHero> {
                 ),*/
               IconButton(icon: Icon(Icons.send, color: Colors.white,),
                 onPressed: () async {
-                  if(widget.file != null){
+                  if(kIsWeb){
+                    if(widget.memori != null){
+                      salvarArquivo(widget.memori!, "${widget.name}.pdf");
+                    }
+                  }else if(widget.file != null){
                     ShareExtend.share(widget.file!.path, "file",
                         sharePanelTitle: "Enviar PDF",
                         subject: "${widget.name}.pdf");
                   }else{
                     carregar(context);
-                    Uint8List? rawPath = await _capturePng();
+                    Uint8List? rawPath = widget.memori ?? await _capturePng();
                     Navigator.pop(context);
                     if(rawPath != null){
                       final file = await CustomFile.fileTemp('pdf', memori: rawPath, nome: widget.name);
@@ -97,28 +125,22 @@ class _FileHeroState extends State<FileHero> {
               ),
             ],
           ),
-          body: Stack(
-            alignment: Alignment.topLeft,
-            children:[
-              Center(
-                child: Hero(
-                    tag: "File",
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Container(
-                          //height: h - 100,
-                          margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
-                          alignment: Alignment.center,
-                          color: Colors.black,
-                          child: widget.file == null ? Container() : SfPdfViewer.file(widget.file!),
-                        ),
-                        menus()
-                      ],
-                    )
-                ),
-              ),
-            ],
+          body: Hero(
+              tag: "File",
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    width: kIsWeb ? MediaQuery.of(context).size.height : null,
+                    margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
+                    alignment: Alignment.center,
+                    color: Colors.black,
+                    child: widget.memori != null ? SfPdfViewer.memory(widget.memori!, ) :
+                    widget.file == null ? Container() : SfPdfViewer.file(widget.file!),
+                  ),
+                  menus()
+                ],
+              )
           )
     );
   }

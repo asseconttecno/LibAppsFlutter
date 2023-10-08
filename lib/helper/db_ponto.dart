@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' as win;
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import '../enums/enums.dart';
 import '../config.dart';
@@ -17,7 +19,7 @@ class DBPonto{
   }
 
   DBPonto._internal() {
-    if(Config.isWin) sqfliteFfiInit();
+    if(Config.isWin) win.sqfliteFfiInit();
     db;
   }
 
@@ -48,19 +50,16 @@ class DBPonto{
     try{
       await db.execute(sql1);
     }catch(e){
-      debugPrint(e.toString());
     }
     String sql2 = "CREATE TABLE marcacao (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
     try{
       await db.execute(sql2);
     }catch(e){
-      debugPrint(e.toString());
     }
     String sql3 = "CREATE TABLE historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, nome VARCHAR, cargo VARCHAR, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR,Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
     try{
       await db.execute(sql3);
     }catch(e){
-      debugPrint(e.toString());
     }
 
     if (Config.conf.nomeApp == VersaoApp.PontoTablet) {
@@ -70,7 +69,6 @@ class DBPonto{
           print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
 
       String sql5 = "CREATE TABLE config (id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR, status int, hora VARCHAR, local VARCHAR);";
@@ -79,7 +77,6 @@ class DBPonto{
           print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
 
     }
@@ -90,89 +87,83 @@ class DBPonto{
   }
 
   _updateTable(Database db) async {
-    if(versao < 5){
+
       String sql_update = "CREATE TABLE IF NOT EXISTS historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
       try{
         db.execute(sql_update).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
       String sql_update3 = "ALTER TABLE historico ADD COLUMN cargo VARCHAR;";
       try{
         db.execute(sql_update3).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
 
 
       String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR;";
       try{
         db.execute(sql_update2).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
 
       String sql_drop = "DROP TABLE IF EXISTS users;";
       try{
         db.execute(sql_drop).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
       String sql_drop2 = "DROP TABLE IF EXISTS usuario;";
       try{
         db.execute(sql_drop2).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
       String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
       try{
         await db.execute(sql1);
       }catch(e){
-        debugPrint(e.toString());
       }
-    }
+
     if(versao <= 6){
       String sql_update3 = "ALTER TABLE historico ADD COLUMN Endereco VARCHAR;";
       try{
         db.execute(sql_update3).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
 
       String sql_update2 = "ALTER TABLE marcacao ADD COLUMN Endereco VARCHAR;";
       try{
         db.execute(sql_update2).onError((error, stackTrace) {
-          print(error);
         });
       }catch(e){
-        debugPrint(e.toString());
       }
     }
   }
 
+
   inicializarDB(int v) async {
-    final camilhodb = Config.isWin ? await databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
-    final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db");
-    if(Config.isWin){
-      DatabaseFactory databaseFactory = databaseFactoryFfi;
-      Database db = await databaseFactory.openDatabase(localdb,
+    if(kIsWeb){
+      var factory = databaseFactoryFfiWeb;
+      Database db = await factory.openDatabase(Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db",
           options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));
       return db;
-    }else{
-      Database db = await openDatabase(localdb, version: v, onCreate: _criardb , onUpgrade: _onUpgrade);
-      return db;
+    }else {
+      final camilhodb = kIsWeb ? '' : Config.isWin ? await win.databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
+      final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db");
+
+      if(Config.isWin){
+        DatabaseFactory databaseFactory = win.databaseFactoryFfi;
+        Database db = await databaseFactory.openDatabase(localdb,
+            options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));
+        return db;
+      } else{
+        Database db = await openDatabase(localdb, version: v, onCreate: _criardb , onUpgrade: _onUpgrade);
+        return db;
+      }
     }
   }
 }

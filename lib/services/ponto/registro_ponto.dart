@@ -23,8 +23,8 @@ class RegistroService {
     String? endereco;
     try {
       endereco = await Conversoes.getEndereco(latitude, longitude);
-    } on Exception catch (e) {
-      print('erro endereco $e');
+    } catch (e) {
+      debugPrint('erro endereco $e');
     }
 
     DateTime now = DateTime.now();

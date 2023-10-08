@@ -37,6 +37,8 @@ class ConnectionStatusSingleton {
           }
         });
       }
+    }else{
+      hasConnection = true;
     }
   }
 
@@ -74,7 +76,8 @@ class ConnectionStatusSingleton {
       }
       return hasConnection;
     }else{
-     return true;
+      hasConnection = true;
+      return true;
     }
   }
 }

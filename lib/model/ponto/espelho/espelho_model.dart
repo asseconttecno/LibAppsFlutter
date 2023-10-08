@@ -11,7 +11,6 @@ class EspelhoModel {
   EspelhoModel({this.assinado, this.espelho, this.espelhoHtml, this.data});
 
   EspelhoModel.fromMap(Map map){
-    print(map["dataAssinatura"]);
     this.assinado = map["status"].toString() == 'true';
     this.espelhoHtml = map["espelho"] != null && map["espelho"] != '' ? base64Decode(map["espelho"]) : null;
     if(map["dataAssinatura"] != '0001-01-01T00:00:00')

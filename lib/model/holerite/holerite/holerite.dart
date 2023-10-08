@@ -148,12 +148,14 @@ class Historico {
 
 class CompetenciasModel {
   CompetenciasModel({
+    this.id,
     this.mes,
     this.ano,
     this.descricao,
     this.data,
   });
 
+  int? id;
   int? mes;
   int? ano;
   DateTime? data;
@@ -161,7 +163,7 @@ class CompetenciasModel {
 
   List<CompetenciasModel> fromList(List json) {
     if(json.isNotEmpty){
-      List<CompetenciasModel> list = json.map((e) => CompetenciasModel?.fromString(e.toString())).toList();
+      List<CompetenciasModel> list = json.map((e) => CompetenciasModel?.fromString(e)).toList();
       try{
         list.sort((a,b) => b.data!.compareTo(a.data!) );
       }catch(e){
@@ -173,9 +175,10 @@ class CompetenciasModel {
     }
   }
 
-  factory CompetenciasModel.fromString(String json) {
-    List<String> _data = json.split("/");
+  factory CompetenciasModel.fromString(Map json) {
+    List<String> _data = json['comp'].split("/");
     return CompetenciasModel(
+      id: int.tryParse(json['idUser'].toString()),
       mes: int.tryParse(_data.first),
       ano: int.tryParse(_data.last),
       data: DateTime(int.tryParse(_data.last) ?? 0, int.tryParse(_data.first) ?? 0),

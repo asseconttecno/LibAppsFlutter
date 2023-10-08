@@ -17,7 +17,7 @@ class ComprovanteManagger extends ChangeNotifier{
     return list;
   }
 
-  Future<File?> getPDF(UsuarioPonto? user, int marcId) async {
+  Future<Uint8List?> getPDF(UsuarioPonto? user, int marcId) async {
     final file = await _service.postComprovantePDF(user, marcId);
     return file;
   }
