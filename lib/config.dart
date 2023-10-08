@@ -1,9 +1,10 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:external_path/external_path.dart';
+import 'package:universal_io/io.dart';
 
 import 'enums/enums.dart';
 import 'model/model.dart';
@@ -67,9 +68,11 @@ class Config extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       primeiroAcesso =  prefs.getBool("priacesso") ?? true;
       darkTemas = prefs.getBool("darkTemas") ?? false;
-      documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
-      if(documentos == ''){
-        documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+      if(!kIsWeb){
+        documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
+        if(documentos == ''){
+          documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+        }
       }
     }catch(e){
       debugPrint(e.toString());

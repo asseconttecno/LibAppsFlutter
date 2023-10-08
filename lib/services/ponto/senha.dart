@@ -15,12 +15,7 @@ class SenhaPontoService {
           "Email": email.trim()
         }
     );
-    if(response.isSucess){
-      return true;
-    }else{
-      debugPrint(response.codigo.toString());
-      throw 'Não foi possivel enviar sua senha, tente novamente!';
-    }
+    return response.isSucess;
   }
 
   Future<bool> alteracaoPass(String email, int dbId, String nova, ) async {

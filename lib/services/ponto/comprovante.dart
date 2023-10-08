@@ -1,5 +1,7 @@
 
-import 'dart:io';
+import 'dart:convert';
+
+import 'package:universal_io/io.dart';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ class ComprovanteService {
     return list;
   }
 
-  Future<File?> postComprovantePDF(UsuarioPonto? user, int marcId) async {
+  Future<Uint8List?> postComprovantePDF(UsuarioPonto? user, int marcId) async {
     String api = "/api/comprovantemarcacao/RetornarComprovante";
     try{
       final MyHttpResponse response = await _http.post(
@@ -60,8 +62,8 @@ class ComprovanteService {
 
       if(response.isSucess) {
         final dados = response.data;
-        File? file = await CustomFile.fileTemp('pdf', base64: dados);
-        return file;
+
+        return base64Decode(dados);
       } else {
         debugPrint(response.codigo.toString());
         debugPrint(response.data.toString());

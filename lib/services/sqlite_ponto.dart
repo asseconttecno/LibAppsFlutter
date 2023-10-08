@@ -33,7 +33,7 @@ class SqlitePontoService {
         debugPrint(_emp.toString());
       }
     }catch(e){
-      print("erro salvar users sql $e");
+      debugPrint("erro salvar users sql $e");
     }
   }
 
@@ -77,8 +77,8 @@ class SqlitePontoService {
   Future<List<Map<String, dynamic>>> getMarcacoes(int? user) async {
     try {
       var bancoDados = await DBPonto().db;
-      String sql = "SELECT * FROM marcacao where iduser = $user";
-      List _sql = await bancoDados.rawQuery(sql);
+      String sql = "SELECT * FROM marcacao where iduser = ?";
+      List _sql = await bancoDados.rawQuery(sql, [user]);
       if(_sql.isNotEmpty) {
         List<Map<String, dynamic>> marcacao = _sql.map((e) => Marcacao().toSql2(e)).toList();
         return marcacao;
@@ -110,8 +110,8 @@ class SqlitePontoService {
   deleteSalvarMarcacoes(List<Marcacao> del, int? user) async {
     try {
       var bancoDados = await DBPonto().db;
-      String sql = "delete FROM marcacao where iduser = $user";
-      await bancoDados.rawDelete(sql);
+      String sql = "delete FROM marcacao where iduser = ?";
+      await bancoDados.rawDelete(sql, [user]);
       await del.map((e) async {
         await salvarMarcacao(e);
       });
@@ -123,8 +123,8 @@ class SqlitePontoService {
   Future<int> deleteMarcacoes(int? user) async {
     try {
       var bancoDados = await DBPonto().db;
-      String sql = "delete FROM marcacao where iduser = $user";
-      int _result = await bancoDados.rawDelete(sql);
+      String sql = "delete FROM marcacao where iduser = ?";
+      int _result = await bancoDados.rawDelete(sql, [user]);
       return _result;
     } catch (e) {
       debugPrint("erro sql deleteMarcacoes ${e.toString()}");
@@ -135,9 +135,15 @@ class SqlitePontoService {
   Future<List?> getHistorico(int? user) async {
     try {
       var bancoDados = await DBPonto().db;
-      String sql =  user == null ? "select * FROM historico" : "select * FROM historico where iduser = $user";
-      List _sql = await bancoDados.rawQuery(sql);
-      return _sql;
+      if(user == null){
+        String sql =  "select * FROM historico" ;
+        List _sql = await bancoDados.rawQuery(sql);
+        return _sql;
+      }else{
+        String sql = "select * FROM historico where iduser = ?";
+        List _sql = await bancoDados.rawQuery(sql, [user]);
+        return _sql;
+      }
     } catch (e) {
       debugPrint("erro getMarcacoes ${e.toString()}");
     }
@@ -159,12 +165,12 @@ class SqlitePontoService {
     if(Config.conf.nomeApp == VersaoApp.PontoApp){
       try{
         var bancoDados = await DBPonto().db;
-        String sql = "SELECT * FROM historico where iduser = $user";
-        List _select = await bancoDados.rawQuery(sql);
+        String sql = "SELECT * FROM historico where iduser = ?";
+        List _select = await bancoDados.rawQuery(sql, [user]);
         if(_select.isNotEmpty){
           List<Marcacao> _listMarc = _select.map((e) => Marcacao.fromSql(e)).toList();
-          String sqlDel = "delete FROM historico where iduser = $user";
-          await bancoDados.rawDelete(sqlDel);
+          String sqlDel = "delete FROM historico where iduser = ?";
+          await bancoDados.rawDelete(sqlDel, [user]);
           _listMarc.map((e) async {
             if((e.datahora?.difference(DateTime.now()).inDays ?? 100) < 40){
               await salvarHisMarcacao(e);

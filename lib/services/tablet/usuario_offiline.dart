@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -26,12 +28,12 @@ class UserPontoOffilineServices {
             return listUsers;
           }
         } else {
-          print(response.codigo);
-          print(response.data);
+          debugPrint(response.codigo.toString());
+          debugPrint(response.data.toString());
         }
 
     } catch (e){
-      print("Erro Try getFuncionariosTablet $e");
+      debugPrint("Erro Try getFuncionariosTablet $e");
     }
     return [];
   }

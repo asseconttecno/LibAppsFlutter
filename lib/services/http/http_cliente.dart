@@ -36,7 +36,6 @@ class HttpCli {
         try{
           if(response.statusCode >= 200 && response.statusCode < 300){
             var result = bits ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
-            print(response.headers['content-disposition']);
             return MyHttpResponse(
               isSucess: true,
               codigo: 200,

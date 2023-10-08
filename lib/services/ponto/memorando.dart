@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -31,7 +31,6 @@ class MemorandosServices {
     }else { //if(tipo == 5)
       List<String?> temp = marcacao?.map((e) => e == '' ? null :
           "${DateFormat('dd/MM/yyyy').format(data)} ${e.toString()}").toList() ?? [];
-      debugPrint(temp.toString());
       body = {
         "user": {
           "UserId": usuario.funcionario?.funcionarioId.toString(),
@@ -83,7 +82,6 @@ class MemorandosServices {
       if(response.isSucess){
         Map dadosJson = response.data ;
         if(dadosJson.containsKey("IsSuccess")){
-          print(dadosJson);
           List temp = dadosJson["Result"]["Memorandos"];
           if(temp.isNotEmpty){
             List<Memorandos> listaTemporaria;

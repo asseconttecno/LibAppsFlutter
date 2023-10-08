@@ -1,6 +1,6 @@
 
 
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';

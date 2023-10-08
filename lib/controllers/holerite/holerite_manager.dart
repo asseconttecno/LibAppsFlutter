@@ -1,4 +1,6 @@
-import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
@@ -16,9 +18,9 @@ class HoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<HoleriteModel>> resumoscreen(UsuarioHolerite? user, int mes, int ano) async {
-    if(user == null ) return [];
-    List<HoleriteModel> result = await _service.resumoscreen(user, mes, ano);
+  Future<List<HoleriteModel>> resumoscreen(int? idholerite, int mes, int ano) async {
+    if(idholerite == null ) return [];
+    List<HoleriteModel> result = await _service.resumoscreen(idholerite, mes, ano);
     return result;
   }
 
@@ -33,8 +35,13 @@ class HoleriteManager extends ChangeNotifier {
     return result;
   }
 
-  Future<File?> holeriteresumo(UsuarioHolerite? user, int mes, int ano, int? tipo) async {
-    File? result = await _service.holeriteresumo(user, mes, ano, tipo);
+  Future<File?> holeriteresumo(UsuarioHolerite? user,  int idholerite, int mes, int ano, int? tipo) async {
+    File? result = await _service.holeriteresumo(user, idholerite, mes, ano, tipo);
+    return result;
+  }
+
+  Future<Uint8List?> holeriteresumoBytes(UsuarioHolerite? user,  int idholerite, int mes, int ano, int? tipo) async {
+    Uint8List? result = await _service.holeriteresumoBytes(user, idholerite, mes, ano, tipo);
     return result;
   }
 

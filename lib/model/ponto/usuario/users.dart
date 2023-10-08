@@ -52,7 +52,7 @@ class UsuarioPonto {
   }
 
   factory UsuarioPonto.fromMapTab(Map map, String cod) {
-    print('ok from');
+
     return UsuarioPonto(
       periodo: Periodo(
           dataFinal: Apontamento.padrao().datatermino,
@@ -71,7 +71,7 @@ class UsuarioPonto {
   }
 
   factory UsuarioPonto.fromOff(UserPontoOffine user) {
-    print('ok fromOff');
+
     return UsuarioPonto(
       periodo: Periodo(
           dataFinal: Apontamento.padrao().datatermino,

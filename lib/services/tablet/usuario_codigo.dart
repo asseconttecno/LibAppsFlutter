@@ -27,11 +27,10 @@ class UsuarioPontoCodigoService {
           user = UsuarioPonto.fromMapTab(dadosJson, codigo);
         }
       }else{
-        print(response.codigo);
         user = await verificarCodigoOff(codigo);
       }
     } catch (e){
-      print("Erro Try verificarcodigo $e");
+      debugPrint("Erro Try verificarcodigo $e");
       user = await verificarCodigoOff(codigo);
     }
     return user;

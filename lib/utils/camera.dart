@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:universal_io/io.dart';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,8 +21,12 @@ class CameraService {
         //imageQuality: 70,
       ).then((value) async {
           if(value != null){
-            image = File(value.path);
-            img = image!.readAsBytesSync();
+            if(kIsWeb){
+              img = await value.readAsBytes();
+            }else{
+              image = File(value.path);
+              img = image!.readAsBytesSync();
+            }
           }
         }
       ).catchError((onError){
@@ -40,13 +45,16 @@ class CameraService {
     try{
       await _picker.pickImage(
         source: ImageSource.gallery,
-        //imageQuality: 70,
+        imageQuality: 60,
         maxHeight: 600,
-      ).then(
-              (value) async {
+      ).then((value) async {
             if(value != null){
-              image = File(value.path);
-              img = image!.readAsBytesSync();
+              if(kIsWeb){
+                img = await value.readAsBytes();
+              }else{
+                image = File(value.path);
+                img = image!.readAsBytesSync();
+              }
               //image.readAsStringSync(encoding: latin1);
             }
           }
