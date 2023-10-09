@@ -28,7 +28,7 @@ class UserPontoManager extends ChangeNotifier {
   String uemail = '';
   String usenha = '';
 
-  bool _status = false;
+  bool _status = true;
   bool get status => _status;
   set status(bool v){
     _status = v;
