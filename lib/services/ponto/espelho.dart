@@ -47,9 +47,6 @@ class EspelhoService {
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiEspelho! + _api,
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-          },
           body: {
             "email": user?.funcionario?.email,
             "funcionarioId": user?.funcionario?.funcionarioId ,

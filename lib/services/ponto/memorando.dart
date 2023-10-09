@@ -47,9 +47,6 @@ class MemorandosServices {
       try{
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAsseponto! + _api,
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
             body: body,
         );
         if(response.isSucess){

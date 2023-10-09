@@ -27,6 +27,7 @@ class HttpCli {
           Uri.parse(url),
           headers: headers ?? <String, String>{
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin':'*'
           }
         ).timeout(const Duration(seconds: 15), onTimeout : () {
           debugPrint('get timeout');
@@ -92,6 +93,10 @@ class HttpCli {
         Uri.parse(url),
         headers: headers ?? <String, String>{
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+          "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
+
         },
         body: jsonEncode(body)
       ).timeout(const Duration(seconds: 15), onTimeout : () {
@@ -157,6 +162,7 @@ class HttpCli {
           Uri.parse(url),
           headers: headers ?? <String, String>{
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin':'*'
           },
           body: jsonEncode(body)
       ).timeout(const Duration(seconds: 15), onTimeout : () {

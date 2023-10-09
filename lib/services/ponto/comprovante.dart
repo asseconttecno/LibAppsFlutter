@@ -50,9 +50,6 @@ class ComprovanteService {
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiAssepontoNova! + api,
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-          },
           body: {
             "DatabaseId": user?.databaseId,
             "FuncionarioId": user?.funcionario?.funcionarioId ,
