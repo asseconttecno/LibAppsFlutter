@@ -69,11 +69,7 @@ class UserPontoManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("login", email.text);
     await prefs.setString("usenha", senha.text);
-    if(status){
-      await prefs.setString("senha", senha.text);
-    }else if(email.text != uemail){
-      await prefs.setString("senha", '');
-    }
+    await prefs.setBool("autologin", status);
   }
 
   Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
@@ -132,10 +128,13 @@ class UserPontoManager extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       uemail = prefs.getString("login") ?? '';
       usenha = prefs.getString("usenha") ?? '';
-      senha.text = prefs.getString("senha") ?? '';
+      _status = prefs.getBool("autologin") ?? false;
+      senha.text = '';
       email.text = uemail;
       Config.usenha = usenha;
-      await autoLogin();
+      if(_status){
+        await autoLogin();
+      }
     } catch(e) {
       debugPrint(e.toString());
     }
@@ -155,8 +154,10 @@ class UserPontoManager extends ChangeNotifier {
     try{
       final prefs = await SharedPreferences.getInstance();
       prefs.remove("user");
+      prefs.remove("login");
       prefs.remove("usenha");
       prefs.remove("senha");
+      prefs.remove("autologin");
     } catch(e) {
       debugPrint(e.toString());
     }
