@@ -17,10 +17,6 @@ class ApontamentoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  ApontamentoManager() {
-    getPeriodo(UserPontoManager().usuario);
-  }
-
   signOut(){
     apontamento = [];
   }

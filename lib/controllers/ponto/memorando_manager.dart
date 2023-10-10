@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:universal_io/io.dart';
 import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +39,9 @@ class MemorandosManager extends ChangeNotifier {
     }
   }
 
-  File? _foto;
-  File? get foto => _foto;
-  set foto(File? img){
+  Uint8List? _foto;
+  Uint8List? get foto => _foto;
+  set foto(Uint8List? img){
     _foto = img;
     notifyListeners();
   }
@@ -53,11 +55,6 @@ class MemorandosManager extends ChangeNotifier {
 
   TextEditingController controlerData =
   TextEditingController(text: DateFormat("dd/MM/yyyy").format(DateTime.now()));
-
-
-  MemorandosManager(){
-    memorandosUpdate();
-  }
 
   memorandosUpdate(){
     if(UserPontoManager().usuario != null){
@@ -74,7 +71,7 @@ class MemorandosManager extends ChangeNotifier {
   }
 
   Future<void> postMemorando(BuildContext context, UsuarioPonto usuario, DateTime data,
-      String texto, int tipo ,{File? img, List<String>? marcacao}) async {
+      String texto, int tipo ,{Uint8List? img, List<String>? marcacao}) async {
 
     bool result = await _services.postMemorando(usuario, data, texto, tipo, marcacao: marcacao, img: img);
     if(result){

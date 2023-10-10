@@ -23,8 +23,8 @@ class UserPontoManager extends ChangeNotifier {
     init();
   }
 
-  final TextEditingController email = TextEditingController();
-  final TextEditingController senha = TextEditingController();
+  final TextEditingController email = TextEditingController(text: 'gabriel@assecont.com.br');
+  final TextEditingController senha = TextEditingController(text: 'ponto');
   String uemail = '';
   String usenha = '';
 
@@ -129,8 +129,8 @@ class UserPontoManager extends ChangeNotifier {
       uemail = prefs.getString("login") ?? '';
       usenha = prefs.getString("usenha") ?? '';
       _status = prefs.getBool("autologin") ?? false;
-      senha.text = '';
-      email.text = uemail;
+      senha.text = senha.text;
+      email.text = email.text ?? uemail;
       Config.usenha = usenha;
       if(_status){
         await autoLogin();

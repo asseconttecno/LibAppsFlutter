@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,8 @@ class MemorandosServices {
   final HttpCli _http = HttpCli();
 
   Future<bool> postMemorando(UsuarioPonto usuario, DateTime data, String texto,
-      int tipo ,{File? img, List<String>? marcacao}) async {
-    String _api = "/api/memorando/PostMemorando";
+      int tipo ,{Uint8List? img, List<String>? marcacao}) async {
+    String _api = "/api/Memorandos/postmemorandos";
     Map<String,dynamic> body;
     if(tipo == 1){
       body = {
@@ -26,7 +27,7 @@ class MemorandosServices {
         "Texto": "$texto",
         "arquivonome": img != null ?
           "${usuario.funcionario?.funcionarioId}-${DateFormat('dd-MM-yyyy-hh-mm').format(DateTime.now())}.jpg" : null,
-        "arquivo": img != null ? base64Encode(img.readAsBytesSync()) : null
+        "arquivo": img != null ? base64Encode(img) : null
       };
     }else { //if(tipo == 5)
       List<String?> temp = marcacao?.map((e) => e == '' ? null :
@@ -46,12 +47,11 @@ class MemorandosServices {
     if(body.isNotEmpty){
       try{
         final MyHttpResponse response = await _http.post(
-            url: Config.conf.apiAsseponto! + _api,
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
-            body: body,
+            url: Config.conf.apiAssepontoNova! + _api,
+            body: body, decoder: false
         );
+
+        return response.isSucess;
         if(response.isSucess){
           Map dadosJson = response.data ;
           return dadosJson.containsKey("IsSuccess");
@@ -64,10 +64,10 @@ class MemorandosServices {
   }
 
   Future<List<Memorandos>> getMemorandos(UsuarioPonto? usuario, DateTime inicio, DateTime fim) async {
-    String _api = "/api/memorando/GetMemorandos";
+    String _api = "/api/Memorandos/getmemorandos";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
               "UserId": usuario?.funcionario?.funcionarioId.toString(),
@@ -79,10 +79,13 @@ class MemorandosServices {
             }
           }
       );
+
       if(response.isSucess){
-        Map dadosJson = response.data ;
+        Map dadosJson = response.data["Result"] ;
+        print(dadosJson);
         if(dadosJson.containsKey("IsSuccess")){
           List temp = dadosJson["Result"]["Memorandos"];
+          print(temp.length);
           if(temp.isNotEmpty){
             List<Memorandos> listaTemporaria;
             listaTemporaria = temp.map((e) => Memorandos.fromMap(e)).toList();

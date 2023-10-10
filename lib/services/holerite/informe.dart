@@ -19,9 +19,6 @@ class InformeService {
       try{
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiHolerite! + _api,
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
             body:{
               "cnpj":  user?.cnpj ,
               "register": user?.registro ,
