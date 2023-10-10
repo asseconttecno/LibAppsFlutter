@@ -92,14 +92,11 @@ class HttpCli {
       final http.Response response = await http.post(
         Uri.parse(url),
         headers: headers ?? <String, String>{
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
+          'Content-Type': 'application/json; charset=UTF-8',
 
         },
         body: jsonEncode(body)
-      ).timeout(const Duration(seconds: 15), onTimeout : () {
+      ).timeout(const Duration(seconds: 55), onTimeout : () {
         debugPrint('post timeout');
         throw HttpError.timeout;
       });

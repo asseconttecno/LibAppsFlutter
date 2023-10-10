@@ -10,56 +10,19 @@ import '../http/http.dart';
 class CameraPontoService {
   final HttpCli _http = HttpCli();
 
-
-  Future<Uint8List?> getPhoto(UsuarioPonto user) async {
-    String _api = "/api/apontamento/GetHome";
-
-    final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
-        body: {
-          "User": {
-            "UserId": user.funcionario?.funcionarioId.toString(),
-            "Database": user.databaseId.toString()
-          },
-          "Periodo": {
-            "DataInicial": user.periodo?.dataInicial.toString(),
-            "DataFinal": user.periodo?.dataFinal.toString(),
-          }
-        }
-    );
-    try{
-      if(response.isSucess){
-        var dadosJson = response.data;
-
-        if(dadosJson["Foto"] != null){
-          Uint8List _list = base64Decode(dadosJson["Foto"]);
-          return _list;
-        }
-      }
-    } catch(e){
-      debugPrint("CameraPontoService getPhoto erro ${e.toString()}");
-    }
-  }
-
   Future<bool> setPhoto(UsuarioPonto user, List<int> img, String? faceId) async {
-    String _api = "/api/funcionario/PostPhoto";
+    String _api = "/api/funcionario/AlterarFoto";
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAsseponto! + _api,
-        decoder: false,
+        url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
           "user":{
             "UserId": user.funcionario?.funcionarioId.toString(),
-            "Database": user.databaseId.toString()
+            "Database": user.databaseId.toString(),
+            "Array": img
           },
-          "PhotoId": faceId,
-          "Array": img
         }
     );
-    if(response.isSucess && response.data.toString().contains("Ok")){
-      //UserManager().usuario?.faceid = faceId;
-      return true;
-    }
-    return false;
+    return response.isSucess;
   }
 
 /*  addface(Uint8List face, String personId, {required Function sucesso, required Function erro}) async {

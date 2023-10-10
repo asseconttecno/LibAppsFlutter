@@ -12,9 +12,9 @@ class MarcacoesService  {
 
   Future<List<Marcacao>> getEspelho(UsuarioPonto? user) async {
     if(user != null){
-      String _api = "/api/apontamento/GetEspelho";
+      String _api = "/api/apontamento/Marcacoes";
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
             "User": {
               "UserId": user.funcionario?.funcionarioId.toString(),
