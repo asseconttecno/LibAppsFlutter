@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,21 +11,153 @@ import '../../../common/common.dart';
 import '../../../controllers/controllers.dart';
 import '../../../config.dart';
 import 'custom_menu_item.dart';
+import 'drawer_web.dart';
 
 
 
 class CustomScaffold {
 
   static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height, Widget? buttom,
-    required BuildContext context, required Widget appbar, required Widget body, bool isListView = true}){
+    required BuildContext context,required Widget body, bool isListView = true, String? foto, Widget? dados,
+    GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5,
+    required String appTitle,String? nome, String? cargo}){
 
     double h = 180 + MediaQuery.of(context).padding.top;
 
-    return custom(
+    return kIsWeb ? homeWeb(
+        context: context,
+        body: body,
+        nome:nome ,
+        cargo:cargo ,
+        listMenus: listMenu,
+        foto: Hero(
+          tag: "foto",
+          child: GestureDetector(
+            onTap: () async {
+              await Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) => ImageHero(
+                          foto == null ? null : base64Decode(foto)
+                      ))
+              );
+              //setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.topCenter,
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  border: foto != null
+                      ? Border.all(
+                      color: Config.corPri, width: 2)
+                      : Border.all(
+                      color: Colors.white, width: 5),
+                  borderRadius: BorderRadius.circular(100),
+                  color: Config.corPri,
+                  image: foto != null
+                      ? DecorationImage(
+                      image: MemoryImage(base64Decode(foto)),
+                      fit: BoxFit.fitWidth)
+                      : null),
+              child: foto == null ? const Icon(
+                CupertinoIcons.person,
+                color: Colors.white,
+                size: 105,
+              ) : null,
+            ),
+          ),
+        ),
+        dados: dados,
+        appTitle: appTitle
+
+    ) : custom(
       key: Config.scaffoldKey,
       body: body,
       height: height ?? h,
-      appbar: appbar,
+      appbar: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                CustomText.text(appTitle,
+                  style: const TextStyle(color: Config.corPri, fontSize: 18),
+                ),
+                actions(context,
+                    aponta: true,
+                    keyMenu: keyMenu,
+                    key1: key1,
+                    key2: key2,
+                    key3: key3,
+                    key4: key4,
+                    key5: key5),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 15, right: 5),
+                    child: dados
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Hero(
+                    tag: "foto",
+                    child: GestureDetector(
+                      onTap: () async {
+                        await Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => ImageHero(
+                                    foto == null ? null : base64Decode(foto)
+                                ))
+                        );
+                        //setState(() {});
+                      },
+                      child: Container(
+                        alignment: Alignment.topCenter,
+                        height: 115,
+                        width: 115,
+                        decoration: BoxDecoration(
+                            border: foto != null
+                                ? Border.all(
+                                color: Config.corPri, width: 2)
+                                : Border.all(
+                                color: Colors.white, width: 5),
+                            borderRadius: BorderRadius.circular(100),
+                            color: Config.corPri,
+                            image: foto != null
+                                ? DecorationImage(
+                                image: MemoryImage(base64Decode(foto)),
+                                fit: BoxFit.fitWidth)
+                                : null),
+                        child: foto == null ? const Icon(
+                          CupertinoIcons.person,
+                          color: Colors.white,
+                          size: 105,
+                        ) : null,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
       context: context,
       buttom: buttom,
       home: true ,
@@ -148,6 +283,60 @@ class CustomScaffold {
       ),
       floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
       floatingActionButton: buttom
+    );
+  }
+
+
+  static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context,
+    required Widget body, required List<Widget> listMenus, required Widget foto,
+    Widget? dados, required String appTitle,required String? nome,required String? cargo, }){
+
+    return Scaffold(
+      key: key,
+      body: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+              width: 180,
+              color: context.watch<Config>().darkTemas
+                  ? Theme.of(context).appBarTheme.backgroundColor
+                  : Config.corPribar,
+              child: DrawerWebView(listMenus, foto,appTitle )
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Card(
+                  margin: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText.text(nome,
+                                style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
+                            CustomText.text(cargo,
+                                style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                          ],
+                        ),
+                        actions(context, aponta: true),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                    child: body
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

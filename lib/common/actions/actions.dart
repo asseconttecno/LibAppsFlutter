@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../controllers/controllers.dart';
@@ -100,7 +101,8 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             break;
         }
       },
-      child: const Icon(Icons.more_vert, color: Colors.white,),
+      child: Icon(Icons.more_vert, color: !context.watch<Config>().darkTemas && aponta && kIsWeb
+          ? Colors.black : Colors.white,),
     )
   );
 }

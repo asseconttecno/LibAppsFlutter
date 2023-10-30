@@ -15,19 +15,22 @@ class UpdateAppManager {
   UpdateAppService _service = UpdateAppService();
 
   checkVersion(BuildContext context) async {
-    try{
-      if(Config.isWin) throw 'executando no windowns';
+    if(kIsWeb){
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    }else{
+      try{
+        if(Config.isWin) throw 'executando no windowns';
 
-      if(kReleaseMode && ((Config.isIOS && Config.isJailBroken) || (!Config.isIOS && !Config.isRealDevice))){
-        CustomAlert.custom(
-            context: context,
-            titulo: 'Atenção!',
-            corpo: CustomText.text('Não é possivel executar este app neste dispositivo!',
-              maxLines: 2, softWrap: true, textAlign: TextAlign.center,),
-            txtBotaoSucess: 'OK',
-            funcSucess: _funcExit()
-        );
-      }else{
+        if(kReleaseMode && ((Config.isIOS && Config.isJailBroken) || (!Config.isIOS && !Config.isRealDevice))){
+          CustomAlert.custom(
+              context: context,
+              titulo: 'Atenção!',
+              corpo: CustomText.text('Não é possivel executar este app neste dispositivo!',
+                maxLines: 2, softWrap: true, textAlign: TextAlign.center,),
+              txtBotaoSucess: 'OK',
+              funcSucess: _funcExit()
+          );
+        }else{
           final bool appStatus = await _service.postUpdateApp();
 
           print(appStatus);
@@ -57,12 +60,13 @@ class UpdateAppManager {
               Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
             });
           }
+        }
+      } catch(e){
+        print(e);
+        Future.delayed(Duration(seconds: 2), (){
+          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+        });
       }
-    } catch(e){
-      print(e);
-      Future.delayed(Duration(seconds: 2), (){
-        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-      });
     }
   }
 
