@@ -21,16 +21,21 @@ class CustomMenuItem extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
-            border: isSelect ? Border.all(color: Config.corPribar) : null,
+            border: isSelect ? Border.all(color: Config.corPri) : null,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: isSelect ? Config.corPribar.withOpacity(0.2) : null,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
               children: [
-                icon,
+                IconTheme(
+                    data: IconThemeData(
+                      color: isSelect ? Config.corPri :  Colors.white, size: 20
+                    ),
+                    child: icon
+                ),
                 const SizedBox(width: 10,),
-                Text(titulo, style: TextStyle(fontSize: 13, color: Colors.white,
+                Text(titulo, style: TextStyle(fontSize: 13,
+                    color: isSelect ? Config.corPri : Colors.white,
                     fontWeight: isSelect ? FontWeight.bold : FontWeight.normal),),
               ]
           ),
@@ -49,7 +54,10 @@ class CustomMenuItem extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Config.corPri
               ),
-              child: icon,
+              child: IconTheme(
+                  data: IconThemeData(color: Colors.white, size: 40),
+                  child: icon
+              ),
             ),
           ),
           Padding(

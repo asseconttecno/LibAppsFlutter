@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 
 
+import '../../../assecontservices.dart';
 import '../../../common/common.dart';
 import '../../../controllers/controllers.dart';
 import '../../../config.dart';
@@ -29,6 +30,7 @@ class CustomScaffold {
         body: body,
         nome:nome ,
         cargo:cargo ,
+        buttom: buttom,
         listMenus: listMenu,
         foto: Hero(
           tag: "foto",
@@ -287,56 +289,75 @@ class CustomScaffold {
   }
 
 
-  static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context,
+  static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context, Widget? buttom,
     required Widget body, required List<Widget> listMenus, required Widget foto,
     Widget? dados, required String appTitle,required String? nome,required String? cargo, }){
+
 
     return Scaffold(
       key: key,
       body: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-              width: 180,
-              color: context.watch<Config>().darkTemas
-                  ? Theme.of(context).appBarTheme.backgroundColor
-                  : Config.corPribar,
-              child: DrawerWebView(listMenus, foto,appTitle )
+          Card(
+            margin: EdgeInsets.zero,
+            elevation: 4,
+            child: Container(
+                width: 180, height: double.infinity,
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                child: DrawerWebView(listMenus, foto, appTitle )
+            ),
           ),
           Expanded(
-            child: Column(
-              children: [
-                Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText.text(nome,
-                                style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
-                            CustomText.text(cargo,
-                                style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-                          ],
+            child: Scaffold(
+              body: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: context.watch<Config>().darkTemas
+                          ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(5.5, 0), // Ajuste a sombra vertical aqui
+                          blurRadius: 4, // Ajuste a intensidade da sombra aqui
                         ),
-                        actions(context, aponta: true),
                       ],
                     ),
+                    margin: EdgeInsets.zero,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText.text(nome,
+                                  style: TextStyle(fontSize: 20), textAlign: TextAlign.center),
+                              CustomText.text(cargo,
+                                  style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                            ],
+                          ),
+
+                          actions(context, aponta: true),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                Expanded(
-                    child: body
-                ),
-              ],
+                  Expanded(
+                      child: body
+                  ),
+                ],
+              ),
+              floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+              floatingActionButton: buttom
             ),
           ),
         ],
       ),
+
     );
   }
 }

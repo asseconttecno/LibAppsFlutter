@@ -25,12 +25,10 @@ class _DrawerWebViewState extends State<DrawerWebView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if(widget.titulo != null) Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomText.text(widget.titulo!.replaceAll(' APP', ''),
-              style: TextStyle(color: Config.corPri)),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: widget.foto,
         ),
-        widget.foto,
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Divider(),
