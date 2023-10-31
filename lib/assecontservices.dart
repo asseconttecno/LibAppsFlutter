@@ -158,6 +158,10 @@ class Assecontservices {
         ),
       if(ponto)
         ChangeNotifierProvider(
+          create: (_)=> GetHora(),
+        ),
+      if(ponto)
+        ChangeNotifierProvider(
           lazy: false,
           create: (_)=> CameraPontoManager(),
         ),
@@ -238,12 +242,13 @@ class _MyAppState extends State<MyApp> {
           foregroundColor: Colors.white,
           backgroundColor: Config.corPri,
         ),
-        primaryColor: Config.corPribar ,
+        primaryColor: Config.corPribar,
+        scaffoldBackgroundColor: kIsWeb ? Colors.grey[100] : null,
         colorScheme: ThemeData(useMaterial3: true).colorScheme.copyWith(surfaceTint: Colors.white),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          titleTextStyle: TextStyle(color: Config.corPri,),
-          toolbarTextStyle: TextStyle(color: Config.corPri, fontSize: 18),
+          titleTextStyle: TextStyle(color: kIsWeb ? Config.corPribar : Config.corPri,),
+          toolbarTextStyle: TextStyle(color: kIsWeb ? Config.corPribar : Config.corPri, fontSize: 18),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.white),
           actionsIconTheme: IconThemeData(color: Colors.white),

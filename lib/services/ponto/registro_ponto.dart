@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,10 +22,12 @@ class RegistroService {
     String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
     String? endereco;
-    try {
-      endereco = await Conversoes.getEndereco(latitude, longitude);
-    } catch (e) {
-      debugPrint('erro endereco $e');
+    if(latitude != null && longitude != null){
+      try {
+        endereco = await Conversoes.getEndereco(latitude, longitude);
+      } catch (e) {
+        debugPrint('erro endereco $e');
+      }
     }
 
     DateTime now = DateTime.now();
@@ -33,7 +36,7 @@ class RegistroService {
         body: {
           "UserId": user.funcionario?.funcionarioId.toString(),
           "Database": user.databaseId.toString(),
-          "Origem": 3,
+          "Origem": kIsWeb ? 5 : 3,
           "ListaMarcacoes": [
             {
               "Latitude": latitude,

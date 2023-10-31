@@ -1,19 +1,47 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config.dart';
 import '../../../common/common.dart';
 
 class CustomMenuItem extends StatelessWidget {
-  CustomMenuItem(this.icon, this.titulo, this.function);
+  CustomMenuItem(this.icon, this.titulo, this.function, {this.isSelect = false});
 
   Widget icon;
   String titulo;
   VoidCallback function;
+  bool isSelect;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return kIsWeb ? Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: function,
+        child: Container(
+          decoration: BoxDecoration(
+            border: isSelect ? Border.all(color: Config.corPri) : null,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Row(
+              children: [
+                IconTheme(
+                    data: IconThemeData(
+                      color: isSelect ? Config.corPri :  Colors.white, size: 20
+                    ),
+                    child: icon
+                ),
+                const SizedBox(width: 10,),
+                Text(titulo, style: TextStyle(fontSize: 13,
+                    color: isSelect ? Config.corPri : Colors.white,
+                    fontWeight: isSelect ? FontWeight.bold : FontWeight.normal),),
+              ]
+          ),
+        ),
+      ),
+    ) : Container(
       width: 115,
       child: Column(
         children: [
@@ -26,7 +54,10 @@ class CustomMenuItem extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Config.corPri
               ),
-              child: icon,
+              child: IconTheme(
+                  data: IconThemeData(color: Colors.white, size: 40),
+                  child: icon
+              ),
             ),
           ),
           Padding(
@@ -38,5 +69,6 @@ class CustomMenuItem extends StatelessWidget {
       ),
     );
   }
+
 }
 

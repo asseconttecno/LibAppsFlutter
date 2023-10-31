@@ -15,6 +15,8 @@ class MemorandosManager extends ChangeNotifier {
   MemorandosServices _services = MemorandosServices();
 
   List<Memorandos> memorandos = [];
+  List<Memorandos> memorandoDia(DateTime? date) => memorandos.where((e) => e.data == date).toList();
+
 
   bool _load = true;
   bool get load => _load;

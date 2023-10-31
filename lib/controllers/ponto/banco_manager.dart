@@ -25,7 +25,7 @@ class BancoHorasManager extends ChangeNotifier {
   }
 
   bancoUpdate(){
-    getFuncionarioHistorico(UserPontoManager().usuario);
+    getFuncionarioHistorico();
   }
 
   signOut(){
@@ -55,9 +55,9 @@ class BancoHorasManager extends ChangeNotifier {
     return bancoHoras;
   }
 
-  getFuncionarioHistorico(UsuarioPonto? user) async {
+  getFuncionarioHistorico() async {
     try{
-      listabanco = await _service.getFuncionarioHistorico(user);
+      listabanco = await _service.getFuncionarioHistorico(UserPontoManager.susuario);
       if(listabanco.isNotEmpty){
         listabanco.map((element) {
           if((element.debitomin) > 0 && (element.creditomin) > 0){
