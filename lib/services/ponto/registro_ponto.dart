@@ -36,7 +36,7 @@ class RegistroService {
         body: {
           "UserId": user.funcionario?.funcionarioId.toString(),
           "Database": user.databaseId.toString(),
-          "Origem": kIsWeb ? 5 : 3,
+          "Origem": kIsWeb ? 4 : 3,
           "ListaMarcacoes": [
             {
               "Latitude": latitude,
@@ -125,7 +125,7 @@ class RegistroService {
         final body = {
           "Database": "${usuario!.databaseId}",
           "UserId": usuario.funcionario?.funcionarioId.toString(),
-          "Origem": 7,
+          "Origem": kIsWeb ? 4 : 7,
           "ListaMarcacoes": listOff
         };
         print(jsonEncode(body));
