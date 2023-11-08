@@ -18,7 +18,7 @@ class RegistroManger {
   File? image;
   int auth = 0;
 
-  postPontoMarcar(BuildContext context, UsuarioPonto user, double? latitude, double? longitude) async {
+  Future<void> postPontoMarcar(BuildContext context, UsuarioPonto user, double? latitude, double? longitude) async {
     bool result = await _service.postPontoMarcar(user, latitude, longitude);
     if(result){
       CustomAlert.sucess(

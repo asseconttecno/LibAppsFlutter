@@ -47,6 +47,8 @@ class RegistroService {
         }
     );
 
+    print(response.isSucess);
+    print(response.data);
     try{
         if(response.isSucess){
           /*Map dadosJson = response.data;

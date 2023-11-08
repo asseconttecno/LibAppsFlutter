@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../controllers/controllers.dart';
 import '../../config.dart';
@@ -101,7 +102,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             break;
         }
       },
-      child: Icon(Icons.more_vert, color: !context.watch<Config>().darkTemas && aponta && kIsWeb
+      child: Icon(Icons.more_vert, color: !context.watch<Config>().darkTemas && aponta && kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
           ? Colors.black : Colors.white,),
     )
   );

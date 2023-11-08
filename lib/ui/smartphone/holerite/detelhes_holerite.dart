@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -91,6 +92,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                 height: 35,
                 margin: const EdgeInsets.symmetric(horizontal: 40,),
                 padding: const EdgeInsets.symmetric(horizontal: 10),
+                constraints: BoxConstraints(maxWidth: 400),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -100,10 +102,9 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   isExpanded: true,
                   value: context.watch<HoleriteManager>().dropdowntipo,
                   iconSize: 20,
-                  dropdownColor: Colors.white,
                   elevation: 0,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black,),
-                  style: const TextStyle(color: Colors.black),
+                  icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
+                  style: TextStyle(color: Colors.black),
                   underline: Container(),
                   onChanged: (newValue) async {
                     setState(() {
@@ -123,13 +124,24 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   }).toList(),
                 ),
               ),
+              if(kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone)
+                SizedBox(height: 20,),
+
               Container(
                 height: 195, width: width,
+                padding: EdgeInsets.symmetric(horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 20 : 0),
+                decoration: BoxDecoration(
+                  color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                      && !ResponsiveBreakpoints.of(context).isPhone ?  Colors.white : null,
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10,),
+                      padding: EdgeInsets.symmetric(vertical: 10,
+                          horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                              && !ResponsiveBreakpoints.of(context).isPhone ? 40 : 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -181,106 +193,108 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(alignment: Alignment.center,
-                          padding: const EdgeInsets.only(top: 5),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(25)
-                          ),
-                          child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              CustomText.text('Proventos'.toUpperCase(), style: const TextStyle(color: Colors.black),),
-                              const SizedBox(height: 4,),
-                              Container(
-                                height: 138, width: width * 0.59,
-                                child: charts.PieChart<String>([charts.Series<ChartPizza, String>(
-                                    id: 'Pizza',
-                                    domainFn: (ChartPizza sales, _) => sales.desc,
-                                    measureFn: (ChartPizza sales, _) => sales.valor,
-                                    colorFn: (ChartPizza sales, cor) {
-                                      if(sales.desc != 'Proventos'){
-                                        return colors.Color.fromHex( code: 'fFF9800');
-                                      }else{
-                                        return colors.Color.fromHex( code: 'f0D47A1');
-                                      }
-                                    },
-                                    data: [
-                                      ChartPizza('Proventos',
-                                        getPorcentagem(holerite?.vencimentos ?? 10.0,
-                                            holerite?.vencimentos != null && holerite?.liquido != null
-                                                ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
-                                            holerite?.vencimentos != null || holerite?.liquido != null
-                                                ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),
-                                      ),
-                                      ChartPizza('Liquido',
-                                        getPorcentagem(holerite?.liquido ?? 0.0,
-                                            holerite?.vencimentos != null && holerite?.liquido != null
-                                                ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
-                                            holerite?.vencimentos != null || holerite?.liquido != null
-                                                ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),)
-                                    ],
-                                    labelAccessorFn: (ChartPizza sales, _) => '${sales.valor.toString()}%')
-                                ],
-                                    animate: true,
-                                    layoutConfig: charts.LayoutConfig(
-                                      leftMarginSpec: common.MarginSpec.fixedPixel(0),
-                                      rightMarginSpec: common.MarginSpec.fixedPixel(0),
-                                      topMarginSpec: common.MarginSpec.fixedPixel(12),
-                                      bottomMarginSpec: common.MarginSpec.fixedPixel(2),
+                    Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomText.text('Proventos'.toUpperCase(),
+                            style: const TextStyle(color: Colors.black),),
+                            const SizedBox(height: 4,),
+                            Container(
+                              height: 138,
+                              width: width * 0.59,
+                              constraints: kIsWeb
+                                  && !ResponsiveBreakpoints.of(context).isMobile
+                                  && !ResponsiveBreakpoints.of(context).isPhone ? BoxConstraints(maxWidth: 500) : null,
+                              child: charts.PieChart<String>([charts.Series<ChartPizza, String>(
+                                  id: 'Pizza',
+                                  domainFn: (ChartPizza sales, _) => sales.desc,
+                                  measureFn: (ChartPizza sales, _) => sales.valor,
+                                  colorFn: (ChartPizza sales, cor) {
+                                    if(sales.desc != 'Proventos'){
+                                      return colors.Color.fromHex( code: 'fFF9800');
+                                    }else{
+                                      return colors.Color.fromHex( code: 'f0D47A1');
+                                    }
+                                  },
+                                  data: [
+                                    ChartPizza('Proventos',
+                                      getPorcentagem(holerite?.vencimentos ?? 10.0,
+                                          holerite?.vencimentos != null && holerite?.liquido != null
+                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
+                                          holerite?.vencimentos != null || holerite?.liquido != null
+                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),
                                     ),
-                                    behaviors: [
-                                      charts.DatumLegend(
-                                        position: charts.BehaviorPosition.bottom,
-                                        horizontalFirst: true,
-                                        cellPadding: EdgeInsets.only(left: width * 0.06, bottom: 2),
-                                        entryTextStyle: common.TextStyleSpec(
-                                          fontSize: (11).toInt(), color: charts.MaterialPalette.black,
-                                        ),
-                                        showMeasures: false,
-                                        legendDefaultMeasure: charts.LegendDefaultMeasure.none,
+                                    ChartPizza('Liquido',
+                                      getPorcentagem(holerite?.liquido ?? 0.0,
+                                          holerite?.vencimentos != null && holerite?.liquido != null
+                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
+                                          holerite?.vencimentos != null || holerite?.liquido != null
+                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),)
+                                  ],
+                                  labelAccessorFn: (ChartPizza sales, _) => '${sales.valor.toString()}%')
+                              ],
+                                  animate: true,
+                                  layoutConfig: charts.LayoutConfig(
+                                    leftMarginSpec: common.MarginSpec.fixedPixel(0),
+                                    rightMarginSpec: common.MarginSpec.fixedPixel(0),
+                                    topMarginSpec: common.MarginSpec.fixedPixel(12),
+                                    bottomMarginSpec: common.MarginSpec.fixedPixel(2),
+                                  ),
+                                  behaviors: [
+                                    charts.DatumLegend(
+                                      position: charts.BehaviorPosition.bottom,
+                                      horizontalFirst: true,
+                                      cellPadding: EdgeInsets.only(left: width * 0.06, bottom: 2),
+                                      entryTextStyle: common.TextStyleSpec(
+                                        fontSize: (11).toInt(), color: charts.MaterialPalette.black,
                                       ),
-                                    ],
-                                    defaultRenderer: charts.ArcRendererConfig(
-                                        arcRendererDecorators: [
-                                          charts.ArcLabelDecorator(
-                                            insideLabelStyleSpec: charts.TextStyleSpec(
-                                              fontSize: (12).toInt(), color: charts.MaterialPalette.white,
-                                            ),
-                                            outsideLabelStyleSpec: charts.TextStyleSpec(
-                                              fontSize: (11).toInt(), color: charts.MaterialPalette.black,
-                                            ),
-                                            labelPosition: charts.ArcLabelPosition.auto,
-                                          )
-                                        ])
-                                ),
-                              )
-                            ],
-                          )
-                      ),
+                                      showMeasures: false,
+                                      legendDefaultMeasure: charts.LegendDefaultMeasure.none,
+                                    ),
+                                  ],
+                                  defaultRenderer: charts.ArcRendererConfig(
+                                      arcRendererDecorators: [
+                                        charts.ArcLabelDecorator(
+                                          insideLabelStyleSpec: charts.TextStyleSpec(
+                                            fontSize: (12).toInt(), color: charts.MaterialPalette.white,
+                                          ),
+                                          outsideLabelStyleSpec: charts.TextStyleSpec(
+                                            fontSize: (11).toInt(), color: charts.MaterialPalette.black,
+                                          ),
+                                          labelPosition: charts.ArcLabelPosition.auto,
+                                        )
+                                      ])
+                              ),
+                            )
+                          ],
+                        )
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 10,),
-              Container(alignment: Alignment.center,
-                  padding: const EdgeInsets.all(5),
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(25)
+                      color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Colors.white : Colors.grey[100],
+                      borderRadius: BorderRadius.circular(15)
                   ),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      CustomText.text('Líquido nos ultimos 3 meses', style: const TextStyle(color: Colors.black),),
+                      CustomText.text('Líquido nos ultimos ${kIsWeb ? '6' : '3'} meses', style: const TextStyle(color: Colors.black),),
                       const SizedBox(height: 10,),
                       Container(height: height * 0.25,
                         child: charts.BarChart(
                           [charts.Series<ChartColum, String>(
                             id: 'Holerites',
-                            displayName: 'Líquido nos ultimos 3 meses',
+                            displayName: 'Líquido nos ultimos ${kIsWeb ? '6' : '3'} meses',
                             domainFn: (ChartColum sales, _) => sales.data,
                             measureFn: (ChartColum sales, _) => sales.valor,
                             colorFn: (_, __) => colors.Color.fromHex( code: 'f0D47A1'),
@@ -307,7 +321,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
 
                                 // Tick and Label styling here.
                                   labelStyle: charts.TextStyleSpec(
-                                      fontSize: (width * 0.03).toInt(), // size in Pts.
+                                      fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), // size in Pts.
                                       color: charts.MaterialPalette.black),
 
                                   // Change the line colors to match text color.
@@ -318,10 +332,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 labelPadding: (height * 0.020).toInt(),
                                 labelPlacement: common.BarLabelPlacement.opposeAxisBaseline,
                                 insideLabelStyleSpec: charts.TextStyleSpec(
-                                  fontSize: (width * 0.03).toInt(), color: charts.MaterialPalette.white,
+                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), color: charts.MaterialPalette.white,
                                 ),
                                 outsideLabelStyleSpec: charts.TextStyleSpec(
-                                  fontSize: (width * 0.03).toInt(), color: charts.MaterialPalette.black,
+                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), color: charts.MaterialPalette.black,
                                 )
                             ),
                             cornerStrategy: const charts.ConstCornerStrategy(20),

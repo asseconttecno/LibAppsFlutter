@@ -65,7 +65,7 @@ class UserPontoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  memorizar() async {
+  Future<void> memorizar() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("login", email.text);
     await prefs.setString("usenha", senha.text);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -38,7 +39,9 @@ class _ScreenConfigState extends State<ConfigScreen> {
                               context.read<Config>().darkTemas = valor;
                             }
                         ),
+                        if(!kIsWeb)
                         Divider(height: 2,),
+                        if(!kIsWeb)
                         Consumer<BiometriaManager>(
                           builder: (_, bio, __) {
                             return SwitchListTile(

@@ -13,3 +13,4 @@ export 'custom_text.dart';
 export 'custom_container.dart';
 export 'expanded_or_container.dart';
 export 'camera/foto_screen.dart';
+export 'custom_textformfield.dart';

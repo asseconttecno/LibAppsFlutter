@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../../config.dart';
 import '../../../common/common.dart';
@@ -15,7 +16,7 @@ class CustomMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return kIsWeb ? Padding(
+    return kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: function,

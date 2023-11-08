@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 
-import '../../../assecontservices.dart';
 import '../../../common/common.dart';
 import '../../../controllers/controllers.dart';
 import '../../../config.dart';
@@ -25,7 +25,8 @@ class CustomScaffold {
 
     double h = 180 + MediaQuery.of(context).padding.top;
 
-    return kIsWeb ? homeWeb(
+    return kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
+      ? homeWeb(
         context: context,
         body: body,
         nome:nome ,
@@ -201,15 +202,16 @@ class CustomScaffold {
           controller: controller,
           height: 100,
           showMonth: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
+              ? Config.corPribar : Colors.transparent,
           minDate: dataMin ?? DateTime(2020),
           maxDate: dataMax ?? DateTime(DateTime.now().year + 1),
-          dateStyle: const TextStyle(color: Colors.white,),
+          dateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
           dayOfWeekStyle: TextStyle(color: Config.corPri),
-          todayDateStyle: const TextStyle(color: Colors.white,),
-          monthStyle: const TextStyle(color: Colors.white),
+          todayDateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
+          monthStyle: TextStyle(color:  Colors.white),
           pressedDateBackgroundColor: Colors.white30,
-          pressedDateStyle: const TextStyle(color: Colors.white),
+          pressedDateStyle: const TextStyle(color:  Colors.white),
           weekendsStyle: TextStyle(color: Config.corPri),
           onDatePressed: funcData,
           dayOfWeek: const [
@@ -246,7 +248,8 @@ class CustomScaffold {
 
     return Scaffold(
       key: key,
-      appBar: appTitle == null ? null : AppBar(
+      appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+          && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
         title: CustomText.text(appTitle, style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
         centerTitle: true,
         actions: [
@@ -263,7 +266,7 @@ class CustomScaffold {
                   Container(
                       height: height,
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
+                      decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? null : BoxDecoration(
                           color: context.watch<Config>().darkTemas ?
                           Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
                           borderRadius: const BorderRadius.only(

@@ -16,13 +16,13 @@ dependencies:
   provider: ^6.0.5
 
   flutter_awesome_alert_box: ^2.1.1
-
+  top_snackbar_flutter: ^3.1.0
 
   sqflite: ^2.3.0 #^2.0.2
-  sqflite_common_ffi: ^2.3.0+2
+  sqflite_common_ffi: ^2.3.0+3
   sqflite_common_ffi_web: ^0.4.0
 
-  responsive_framework: ^0.2.0
+  responsive_framework: ^1.1.1
   ###^0.2.0
 
   http: ^1.1.0
@@ -87,8 +87,10 @@ dependencies:
   #device_info_plus: ^9.0.0
   safe_device: ^1.1.4
 
+  brasil_fields: ^1.14.0
+  datetime_picker_formfield: ^2.0.1
 
-  in_app_review: ^2.0.6
+  in_app_review: ^2.0.8
   launch_review: ^3.0.1
 
   #store_launcher: ^1.0.1
