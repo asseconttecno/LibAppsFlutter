@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -131,7 +132,8 @@ class _FileHeroState extends State<FileHero> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    width: kIsWeb ? MediaQuery.of(context).size.height : null,
+                    width: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - 100 : null,
+                    height: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height : null,
                     margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
                     alignment: Alignment.center,
                     color: Colors.black,

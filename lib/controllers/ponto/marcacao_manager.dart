@@ -32,7 +32,7 @@ class MarcacoesManager extends ChangeNotifier {
   }
 
   marcacaoUpdate(){
-    getEspelho(UserPontoManager().usuario);
+    getEspelho();
   }
 
   signOut(){
@@ -61,9 +61,9 @@ class MarcacoesManager extends ChangeNotifier {
     return _marcacao;
   }
 
-  getEspelho(UsuarioPonto? user, {int? filtro}) async {
+  getEspelho({int? filtro}) async {
     try{
-      listamarcacao = await _service.getEspelho(user);
+      listamarcacao = await _service.getEspelho(UserPontoManager.susuario);
       if(listamarcacao.isNotEmpty){
         listamarcacao.map((element) {
           if(((element.resultado?.atrasosmin ?? 0) > 0 || (element.resultado?.faltasDias ?? 0) > 0)

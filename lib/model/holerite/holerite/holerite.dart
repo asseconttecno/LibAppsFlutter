@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 
@@ -98,7 +99,7 @@ class HoleriteModel {
     int i = 0;
     List<ChartColum> listmap = [];
     if(list.isNotEmpty){
-      while(i < ((list.length) > 3 ? 3 : (list.length )) ){
+      while(i < ((list.length) > (kIsWeb ? 6 : 3) ? (kIsWeb ? 6 : 3) : (list.length )) ){
         listmap.add(ChartColum(i, list[i].competencia!, list[i].liquido! ),);
         i++;
       }

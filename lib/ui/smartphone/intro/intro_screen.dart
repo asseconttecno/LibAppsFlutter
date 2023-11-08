@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config.dart';
@@ -28,6 +29,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
@@ -35,18 +37,22 @@ class _IntroScreenState extends State<IntroScreen> {
               colors: [Config.corPribar2,   Config.corPribar]
           )
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
-            child: Image.asset('assets/imagens/LOGO_ASSECONT.png', fit: BoxFit.fitWidth,  package: 'assecontservices'),
-          ),
-          Container(
-              width: 50,
-              child: LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
-          )
-        ],
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 500),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
+              child: Image.asset('assets/imagens/LOGO_ASSECONT.png',
+                  fit: BoxFit.fitWidth,  package: 'assecontservices'),
+            ),
+            Container(
+                width: 50,
+                child: LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
+            )
+          ],
+        ),
       ),
     );
   }

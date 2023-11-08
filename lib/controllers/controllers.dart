@@ -11,6 +11,7 @@ export 'ponto/senha_manager.dart';
 export 'ponto/users_manager.dart';
 export 'ponto/espelho_manager.dart';
 export 'ponto/comprovante_manager.dart';
+export 'ponto/gethora.dart';
 
 export 'holerite/holerite_manager.dart';
 export 'holerite/informe_manager.dart';

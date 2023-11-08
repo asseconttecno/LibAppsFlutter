@@ -27,6 +27,54 @@ class Validacoes {
     }
   }
 
+  static bool isCPF(String cpf) {
+    // Remove caracteres não numéricos
+    cpf = cpf.replaceAll(RegExp(r'\D'), '');
+
+    // Verifica se o CPF possui 11 dígitos
+    if (cpf.length != 11) {
+      return false;
+    }
+
+    // Verifica se todos os dígitos são iguais (CPF inválido)
+    if (RegExp(r'^(\d)\1*$').hasMatch(cpf)) {
+      return false;
+    }
+
+    // Calcula o primeiro dígito verificador
+    int soma = 0;
+    for (int i = 0; i < 9; i++) {
+      soma += int.parse(cpf[i]) * (10 - i);
+    }
+    int digito1 = 11 - (soma % 11);
+    if (digito1 >= 10) {
+      digito1 = 0;
+    }
+
+    // Verifica o primeiro dígito verificador
+    if (int.parse(cpf[9]) != digito1) {
+      return false;
+    }
+
+    // Calcula o segundo dígito verificador
+    soma = 0;
+    for (int i = 0; i < 10; i++) {
+      soma += int.parse(cpf[i]) * (11 - i);
+    }
+    int digito2 = 11 - (soma % 11);
+    if (digito2 >= 10) {
+      digito2 = 0;
+    }
+
+    // Verifica o segundo dígito verificador
+    if (int.parse(cpf[10]) != digito2) {
+      return false;
+    }
+
+    // CPF válido
+    return true;
+  }
+
   static bool validarCPF(String cpf) {
     // Remove caracteres não numéricos
     cpf = cpf.replaceAll(RegExp(r'\D'), '');

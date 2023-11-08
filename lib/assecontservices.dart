@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:universal_io/io.dart' as io;
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -8,9 +10,10 @@ import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 
+
+import 'common/custom_textformfield.dart';
 import 'controllers/controllers.dart';
 import 'services/services.dart';
 import 'enums/enums.dart';
@@ -32,6 +35,7 @@ export 'package:provider/provider.dart';
 export 'package:intl/intl.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:tutorial/tutorial.dart';
+export 'package:responsive_framework/responsive_framework.dart';
 
 
 class Assecontservices {
@@ -63,6 +67,10 @@ class Assecontservices {
       ChangeNotifierProvider(
         lazy: false,
         create: (_)=> Config(),
+      ),
+      ChangeNotifierProvider(
+        lazy: false,
+        create: (_)=> FormProvider(),
       ),
       if(Config.conf.nomeApp != VersaoApp.PontoTablet)
         ChangeNotifierProvider(
@@ -158,6 +166,10 @@ class Assecontservices {
         ),
       if(ponto)
         ChangeNotifierProvider(
+          create: (_)=> GetHora(),
+        ),
+      if(ponto)
+        ChangeNotifierProvider(
           lazy: false,
           create: (_)=> CameraPontoManager(),
         ),
@@ -238,12 +250,13 @@ class _MyAppState extends State<MyApp> {
           foregroundColor: Colors.white,
           backgroundColor: Config.corPri,
         ),
-        primaryColor: Config.corPribar ,
+        primaryColor: Config.corPribar,
+        scaffoldBackgroundColor: kIsWeb ? Colors.grey[100] : null,
         colorScheme: ThemeData(useMaterial3: true).colorScheme.copyWith(surfaceTint: Colors.white),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          titleTextStyle: TextStyle(color: Config.corPri,),
-          toolbarTextStyle: TextStyle(color: Config.corPri, fontSize: 18),
+          titleTextStyle: TextStyle(color: kIsWeb ? Config.corPribar : Config.corPri,),
+          toolbarTextStyle: TextStyle(color: kIsWeb ? Config.corPribar : Config.corPri, fontSize: 18),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.white),
           actionsIconTheme: IconThemeData(color: Colors.white),
@@ -254,14 +267,14 @@ class _MyAppState extends State<MyApp> {
         final MediaQueryData data = MediaQuery.of(context);
         return MediaQuery(
           data: data.copyWith(textScaleFactor: 1.0),
-          child: ResponsiveWrapper.builder(
-            child,
-            defaultScale: true,
+          child: ResponsiveBreakpoints.builder(
+            child: child ?? Container(),
             breakpoints: const [
-              ResponsiveBreakpoint.resize(480, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(650, name: TABLET),
-              ResponsiveBreakpoint.resize(800, name: DESKTOP),
-              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+              Breakpoint(start: 0, end: 480, name: PHONE),
+              Breakpoint(start: 0, end: 480, name: MOBILE),
+              Breakpoint(start: 651, end: 800, name: TABLET),
+              Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              Breakpoint(start: 1921, end: double.infinity, name: '4K'),
             ],
           ),
         );

@@ -131,27 +131,30 @@ class _AlertSenhaState extends State<AlertSenha> {
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
-              // onPressed: () {},
               onPressed: () async {
+
                 if (_formKey.currentState!.validate()) {
                   carregar(context);
-                  if(Config.conf.nomeApp == VersaoApp.PontoApp){
+                  if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet){
+                    print(_formKey.currentState?.validate());
+                    print(UserPontoManager.susuario?.funcionario?.email);
+
                     await context.read<SenhaPontoManager>().alteracaoPass(
-                      context, context.read<UserPontoManager>().usuario!, senhaAtual.text, senhaNova.text,
+                      context, UserPontoManager.susuario!, senhaAtual.text, senhaNova.text,
                     ).then((value){
                       if(value){
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        CustomAlert.sucess(
+                        CustomSnackbar.sucess(
                           context: context,
-                          mensage: 'Senha Alterada!',
+                          text: 'Senha Alterada!',
                         );
                       }
                     }).onError((error, stackTrace) {
                       Navigator.pop(context);
-                      CustomAlert.erro(
+                      CustomSnackbar.error(
                         context: context,
-                        mensage: error.toString(),
+                        text: error.toString(),
                       );
                     });
                   } else if(Config.conf.nomeApp == VersaoApp.HoleriteApp){
@@ -161,16 +164,16 @@ class _AlertSenhaState extends State<AlertSenha> {
                       if(value){
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        CustomAlert.sucess(
+                        CustomSnackbar.sucess(
                           context: context,
-                          mensage: 'Senha Alterada!',
+                          text: 'Senha Alterada!',
                         );
                       }
                     }).onError((error, stackTrace) {
                       Navigator.pop(context);
-                      CustomAlert.erro(
+                      CustomSnackbar.error(
                         context: context,
-                        mensage: error.toString(),
+                        text: error.toString(),
                       );
                     });
                   } else if(Config.conf.nomeApp == VersaoApp.AssewebApp){
@@ -180,16 +183,16 @@ class _AlertSenhaState extends State<AlertSenha> {
                       if(value){
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        CustomAlert.sucess(
+                        CustomSnackbar.sucess(
                           context: context,
-                          mensage: 'Senha Alterada!',
+                          text: 'Senha Alterada!',
                         );
                       }
                     }).onError((error, stackTrace) {
                       Navigator.pop(context);
-                      CustomAlert.erro(
+                      CustomSnackbar.error(
                         context: context,
-                        mensage: error.toString(),
+                        text: error.toString(),
                       );
                     });
                   }
