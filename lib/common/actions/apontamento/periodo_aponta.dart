@@ -30,7 +30,7 @@ PeriodoApontamento(BuildContext context){
                       ),
                       TextButton(
                           onPressed: (){
-                            if(aponta.indice > 0){
+                            if(aponta.indice >= 0){
                               context.read<UserPontoManager>().updateAponta(aponta.apontamento[aponta.indice]);
                               context.read<UserPontoManager>().getHome();
                               context.read<MarcacoesManager>().getEspelho();
