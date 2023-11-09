@@ -110,7 +110,7 @@ class CustomScaffold {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
                     padding: const EdgeInsets.only(left: 15, right: 5),
                     child: dados
@@ -132,8 +132,8 @@ class CustomScaffold {
                       },
                       child: Container(
                         alignment: Alignment.topCenter,
-                        height: 115,
-                        width: 115,
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
                             border: foto != null
                                 ? Border.all(

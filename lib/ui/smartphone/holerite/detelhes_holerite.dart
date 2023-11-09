@@ -70,9 +70,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height - (WidgetsBinding.instance?.window.padding.top ?? 0);
+    double height = MediaQuery.of(context).size.height - (WidgetsBinding.instance.window.padding.top);
     double width = MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       body: Container(
@@ -81,55 +80,62 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
         ),
         width: width,
         height: height,
-        alignment: Alignment.topCenter,
+        alignment: Alignment.topRight,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                height: 35,
-                margin: const EdgeInsets.symmetric(horizontal: 40,),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                constraints: BoxConstraints(maxWidth: 400),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.grey, width: 1)
-                ),
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: context.watch<HoleriteManager>().dropdowntipo,
-                  iconSize: 20,
-                  elevation: 0,
-                  icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                  style: TextStyle(color: Colors.black),
-                  underline: Container(),
-                  onChanged: (newValue) async {
-                    setState(() {
-                      context.read<HoleriteManager>().dropdowntipo = newValue!;
-                      holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
-                    });
-                  },
-                  items: widget.holerite.map((e) => e.holeriteTipo).toList()
-                      .map<DropdownMenuItem<String>>(( value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Padding(
-                        padding:  const EdgeInsets.symmetric(vertical: 8),
-                        child: CustomText.text(value ?? ''),
-                      ),
-                    );
-                  }).toList(),
-                ),
+              Row(
+                mainAxisAlignment:  width >= 1500 ?  MainAxisAlignment.center : MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 35,
+                    margin: const EdgeInsets.symmetric(horizontal: 40,),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    constraints: BoxConstraints(maxWidth: width >= 1052 ? 400 : 200),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.grey, width: 1)
+                    ),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: context.watch<HoleriteManager>().dropdowntipo,
+                      iconSize: 20,
+                      elevation: 0,
+                      icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
+                      style: TextStyle(color: Colors.black),
+                      underline: Container(),
+                      onChanged: (newValue) async {
+                        setState(() {
+                          context.read<HoleriteManager>().dropdowntipo = newValue!;
+                          holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
+                        });
+                      },
+                      items: widget.holerite.map((e) => e.holeriteTipo).toList()
+                          .map<DropdownMenuItem<String>>(( value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Padding(
+                            padding:  const EdgeInsets.symmetric(vertical: 8),
+                            child: CustomText.text(value ?? ''),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
               if(kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone)
                 SizedBox(height: 20,),
 
               Container(
                 height: 195, width: width,
-                padding: EdgeInsets.symmetric(horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 20 : 0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                        && !ResponsiveBreakpoints.of(context).isPhone ? 20 : 0),
                 decoration: BoxDecoration(
                   color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
                       && !ResponsiveBreakpoints.of(context).isPhone ?  Colors.white : null,
@@ -205,10 +211,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                             const SizedBox(height: 4,),
                             Container(
                               height: 138,
-                              width: width * 0.59,
+                              width: width * 0.59 ,
                               constraints: kIsWeb
                                   && !ResponsiveBreakpoints.of(context).isMobile
-                                  && !ResponsiveBreakpoints.of(context).isPhone ? BoxConstraints(maxWidth: 500) : null,
+                                  && !ResponsiveBreakpoints.of(context).isPhone ? BoxConstraints(maxWidth: width >= 852 ? 400 : 300) : null,
                               child: charts.PieChart<String>([charts.Series<ChartPizza, String>(
                                   id: 'Pizza',
                                   domainFn: (ChartPizza sales, _) => sales.desc,

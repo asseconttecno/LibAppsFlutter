@@ -12,7 +12,9 @@ class SenhaPontoService {
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api, decoder: false,
         body: {
-          "Email": email.trim()
+          "Email": email.trim(),
+          "DatabaseId": '',
+          "NovaSenha": ''
         }
     );
     return response.isSucess;
