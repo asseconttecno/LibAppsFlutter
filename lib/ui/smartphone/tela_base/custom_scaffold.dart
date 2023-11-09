@@ -202,6 +202,7 @@ class CustomScaffold {
           controller: controller,
           height: 100,
           showMonth: true,
+          activeIcon: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone,
           backgroundColor: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
               ? Config.corPribar : Colors.transparent,
           minDate: dataMin ?? DateTime(2020),
