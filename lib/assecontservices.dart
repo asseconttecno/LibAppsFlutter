@@ -53,7 +53,7 @@ class Assecontservices {
     Config.versao = packageInfo.version;
     if(Config.isIOS) {
       Config.isJailBroken = await SafeDevice.isJailBroken;
-    }else if(!Config.isWin){
+    }else if(!kIsWeb && !Config.isWin){
       Config.isRealDevice = await SafeDevice.isRealDevice;
       Config.canMockLocation = await TrustLocation.isMockLocation;
     }
