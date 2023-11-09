@@ -10,7 +10,7 @@ import '../controllers.dart';
 class SenhaPontoManager extends ChangeNotifier {
   final SenhaPontoService _service = SenhaPontoService();
 
-  Future<bool> sendPass(BuildContext context, String email) async {
+  Future<bool> sendPass(String email) async {
     try{
       bool result = await _service.sendPass(email);
       return result;

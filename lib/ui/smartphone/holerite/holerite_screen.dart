@@ -36,6 +36,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
   @override
   Widget build(BuildContext context) {
     //double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
 
     return Consumer2<UserHoleriteManager,HoleriteManager>(
         builder: (_, use, holerite, __){
@@ -172,7 +173,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Container(
                             height: 35,
-                            constraints: BoxConstraints(maxWidth: 400),
+                            constraints: BoxConstraints(maxWidth: width >= 1052 ? 400 : 200),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),

@@ -61,6 +61,8 @@ class CustomMenuItem extends StatelessWidget {
               ),
             ),
           ),
+          if(kIsWeb)
+            SizedBox(height: 5,),
           Padding(
             padding: const EdgeInsets.all(2.0),
             child: CustomText.text(titulo, textAlign: TextAlign.center, autoSize: true,
