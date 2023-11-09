@@ -60,7 +60,7 @@ class CustomScaffold {
                   image: foto != null
                       ? DecorationImage(
                       image: MemoryImage(base64Decode(foto)),
-                      fit: BoxFit.fitWidth)
+                      fit: BoxFit.cover)
                       : null),
               child: foto == null ? const Icon(
                 CupertinoIcons.person,
@@ -145,7 +145,7 @@ class CustomScaffold {
                             image: foto != null
                                 ? DecorationImage(
                                 image: MemoryImage(base64Decode(foto)),
-                                fit: BoxFit.fitWidth)
+                                fit: BoxFit.cover)
                                 : null),
                         child: foto == null ? const Icon(
                           CupertinoIcons.person,

@@ -124,7 +124,7 @@ class HttpCli {
         }
 
       } catch(e){
-        debugPrint('catch ' + e.toString());
+        debugPrint('post catch ' + e.toString());
         bool r = e == HttpError.statusCode;
         return MyHttpResponse(
             isSucess: false,
@@ -134,7 +134,7 @@ class HttpCli {
         );
       }
     }  catch (error) {
-      debugPrint('onError ' + error.toString());
+      debugPrint('post onError ' + error.toString());
       return MyHttpResponse(
           isSucess: false,
           httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
