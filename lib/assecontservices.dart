@@ -43,7 +43,7 @@ class Assecontservices {
   static init({required ConfiguracoesModel config, required RouteFactory rotas,
       List<SingleChildWidget>? providers, bool devicePreview = false, String? titulo, Widget? myApp}) async {
     
-    io.HttpOverrides.global = MyHttpOverrides();
+    //io.HttpOverrides.global = MyHttpOverrides();
     ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
     connectionStatus.initialize();
     Provider.debugCheckInvalidValueType = null;
