@@ -25,10 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    loadAcessar = !kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone;
+    loadAcessar = !kIsWeb;
   }
 
   @override
@@ -176,14 +174,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget loginSenha() {
+    final focus = FocusNode();
+
     return Form(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-
-
           Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: TextFormField(
@@ -191,15 +189,6 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: context.watch<UserPontoManager>().email,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.clear,
-                      color: Colors.white54,
-                      size: 25,
-                    ),
-                    onPressed: () {
-                      context.read<UserPontoManager>().email.clear();
-                    }),
                 enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white)),
                 border: const UnderlineInputBorder(
@@ -209,6 +198,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 errorStyle: TextStyle(color: Colors.red[100]),
                 hintText: "E-mail",
+                suffix: GestureDetector(
+                    child: const Icon(
+                      Icons.clear,
+                      color: Colors.white54,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      context.read<UserPontoManager>().email.clear();
+                    }),
+
                 prefixIcon: const Padding(
                   padding: EdgeInsets.only(left: 5, right: 10),
                   child: Icon(
@@ -218,6 +217,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+              onSaved: (t){
+                FocusScope.of(context).requestFocus(focus);
+              },
               validator: (email) {
                 if (!emailValid(email!)) {
                   return 'E-mail inválido';
@@ -232,16 +234,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: TextFormField(
               keyboardType: TextInputType.visiblePassword,
               controller: context.watch<UserPontoManager>().senha,
-
               style: const TextStyle(color: Colors.white),
+              focusNode: focus,
               decoration: InputDecoration(
-                suffixIcon: IconButton(
-                    icon: const Icon(
+                suffixIcon: GestureDetector(
+                    child: const Icon(
                       Icons.clear,
                       color: Colors.white54,
                       size: 25,
                     ),
-                    onPressed: () {
+                    onTap: () {
                       context.read<UserPontoManager>().senha.clear();
                     }),
                 enabledBorder: const UnderlineInputBorder(
@@ -264,6 +266,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               obscureText: true,
+              onSaved: (value){
+                _clickLogin(
+                    context.read<UserPontoManager>().email.text.trim(),
+                    context.read<UserPontoManager>().senha.text);
+              },
               validator: (senha) {
                 if (senha!.isEmpty || senha.length < 0) {
                   return "Digite sua senha!";

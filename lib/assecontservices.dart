@@ -58,12 +58,12 @@ class Assecontservices {
         Config.isRealDevice = await SafeDevice.isRealDevice;
         Config.canMockLocation = await TrustLocation.isMockLocation;
       }
+
+      final BiometriaServices _bio = BiometriaServices();
+      _bio.supportedBio();
     }
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
-
-    final BiometriaServices _bio = BiometriaServices();
-    _bio.supportedBio();
 
     List<SingleChildWidget> _providers = [
       ChangeNotifierProvider(

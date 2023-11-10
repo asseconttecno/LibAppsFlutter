@@ -76,7 +76,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(width: 70, color: Theme.of(context).scaffoldBackgroundColor))
+            border: Border(bottom: BorderSide(width: 70,
+                color: Theme.of(context).scaffoldBackgroundColor))
         ),
         width: width,
         height: height,
@@ -87,14 +88,20 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
+              if(kIsWeb)
               Row(
-                mainAxisAlignment:  width >= 1500 ?  MainAxisAlignment.center : MainAxisAlignment.end,
+                mainAxisAlignment: !ResponsiveBreakpoints.of(context).isMobile
+                    && !ResponsiveBreakpoints.of(context).isPhone ?
+                    width >= 1500 ?  MainAxisAlignment.center : MainAxisAlignment.end : MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 35,
                     margin: const EdgeInsets.symmetric(horizontal: 40,),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    constraints: BoxConstraints(maxWidth: width >= 1052 ? 400 : 200),
+                    constraints: BoxConstraints(
+                        maxWidth: !ResponsiveBreakpoints.of(context).isMobile
+                            && !ResponsiveBreakpoints.of(context).isPhone
+                            ? width >= 1052 ? 400 : 200 : 250 ),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -105,6 +112,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                       value: context.watch<HoleriteManager>().dropdowntipo,
                       iconSize: 20,
                       elevation: 0,
+                      dropdownColor: Colors.white,
                       icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
                       style: TextStyle(color: Colors.black),
                       underline: Container(),
@@ -128,17 +136,52 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   ),
                 ],
               ),
-              if(kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone)
+              if(kIsWeb)
                 SizedBox(height: 20,),
 
+              if(!kIsWeb)
+              Container(
+                height: 35,
+                margin: const EdgeInsets.symmetric(horizontal: 40,),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey, width: 1)
+                ),
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: context.watch<HoleriteManager>().dropdowntipo,
+                  iconSize: 20,
+                  elevation: 0,
+                  icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
+                  style: TextStyle(color: Colors.black),
+                  underline: Container(),
+                  onChanged: (newValue) async {
+                    setState(() {
+                      context.read<HoleriteManager>().dropdowntipo = newValue!;
+                      holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
+                    });
+                  },
+                  items: widget.holerite.map((e) => e.holeriteTipo).toList()
+                      .map<DropdownMenuItem<String>>(( value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Padding(
+                        padding:  const EdgeInsets.symmetric(vertical: 8),
+                        child: CustomText.text(value ?? ''),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
               Container(
                 height: 195, width: width,
                 padding: EdgeInsets.symmetric(
                     horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
                         && !ResponsiveBreakpoints.of(context).isPhone ? 20 : 0),
                 decoration: BoxDecoration(
-                  color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-                      && !ResponsiveBreakpoints.of(context).isPhone ?  Colors.white : null,
+                  color: kIsWeb ?  Colors.white : null,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(
@@ -294,17 +337,19 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      CustomText.text('Líquido nos ultimos ${kIsWeb ? '6' : '3'} meses', style: const TextStyle(color: Colors.black),),
+                      CustomText.text('Líquido nos ultimos ${kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                      && !ResponsiveBreakpoints.of(context).isPhone  ? '6' : '3'} meses', style: const TextStyle(color: Colors.black),),
                       const SizedBox(height: 10,),
                       Container(height: height * 0.25,
                         child: charts.BarChart(
                           [charts.Series<ChartColum, String>(
                             id: 'Holerites',
-                            displayName: 'Líquido nos ultimos ${kIsWeb ? '6' : '3'} meses',
+                            displayName: 'Líquido nos ultimos ${kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                                && !ResponsiveBreakpoints.of(context).isPhone ? '6' : '3'} meses',
                             domainFn: (ChartColum sales, _) => sales.data,
                             measureFn: (ChartColum sales, _) => sales.valor,
                             colorFn: (_, __) => colors.Color.fromHex( code: 'f0D47A1'),
-                            data: HoleriteModel().toColum(holerite!.historicos!.toList()),
+                            data: HoleriteModel().toColum(holerite!.historicos!.toList(), context),
                             labelAccessorFn: (ChartColum sales, _) =>
                             'R\$${sales.valor.toInt()}',
                           ),
@@ -367,8 +412,9 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
           splashColor: Colors.tealAccent,
           // focusColor: Settings.corPri.withOpacity(0.5),
           onPressed: () async {
-            File? a = null;
-            Uint8List? b  = null;
+            File? a;
+            Uint8List? b;
+            String? html;
             try {
               carregar(context);
               if(kIsWeb){
@@ -383,10 +429,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             } finally {
               Navigator.pop(context);
             }
-            if(a != null || b != null){
+            if(a != null || b != null || html != null){
               await Navigator.push(context, MaterialPageRoute(
                   builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}',
-                    file: a, memori: b,)));
+                    file: a, memori: b, html: html,)));
             }else{
               InfoAlertBox(
                   context: context,

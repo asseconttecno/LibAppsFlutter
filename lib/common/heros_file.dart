@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
@@ -64,6 +65,7 @@ class _FileHeroState extends State<FileHero> {
     } catch (e) {
       debugPrint(e.toString());
     }
+    return null;
   }
 
   @override
@@ -100,7 +102,8 @@ class _FileHeroState extends State<FileHero> {
                     }
                   }
                 ),*/
-              IconButton(icon: Icon(Icons.send, color: Colors.white,),
+              IconButton(
+                icon: Icon(Icons.send, color: Colors.white,),
                 onPressed: () async {
                   if(kIsWeb){
                     if(widget.memori != null){
@@ -132,12 +135,17 @@ class _FileHeroState extends State<FileHero> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    width: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - 100 : null,
-                    height: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height : null,
+
+                    height: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                        && !ResponsiveBreakpoints.of(context).isPhone
+                        ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height : null,
                     margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
                     alignment: Alignment.center,
                     color: Colors.black,
-                    child: widget.memori != null ? SfPdfViewer.memory(widget.memori!, ) :
+                    child: widget.html != null ? Container(
+                        color: Colors.white, padding: EdgeInsets.all(15),
+                        child: HtmlWidget(widget.html!, buildAsync: true, enableCaching: true )) :
+                    widget.memori != null ? SfPdfViewer.memory(widget.memori!, ) :
                     widget.file == null ? Container() : SfPdfViewer.file(widget.file!),
                   ),
                   menus()

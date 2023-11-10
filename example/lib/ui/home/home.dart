@@ -40,7 +40,7 @@ class _HomePageState extends State<Home> {
 
     RegistroManger().enviarMarcacoes();
     deleteHist();
-    if (!kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone && (Config.primeiroAcesso || !kReleaseMode)) {
+    if (!kIsWeb) {
       context.read<TutorController>().init(context);
     } else {
       BiometriaAlert(context);
@@ -235,8 +235,7 @@ class _HomePageState extends State<Home> {
                 key: context.read<TutorController>().keyRegistro,
                 backgroundColor: Config.corPri,
                 onPressed: () async {
-                  if(kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone){
-                    print(user.usuario?.funcionario?.permitirMarcarPontoWeb ?? true);
+                  if(kIsWeb){
                     if(user.usuario?.funcionario?.permitirMarcarPontoWeb ?? true){
                       await context.read<RegistroManger>().postPontoMarcar(
                         context, context.read<UserPontoManager>().usuario!, null, null,

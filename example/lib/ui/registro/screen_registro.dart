@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:assecontservices/assecontservices.dart';
-import 'package:universal_io/io.dart';
+
 
 import '../../controller/gps.dart';
 
@@ -45,8 +43,7 @@ class _RegistroState extends State<RegistroScreen> {
   Widget build(BuildContext context) {
     dynamic data = DateFormat('EEEE d MMM y', 'pt_BR').format(DateTime.now());
     double height = MediaQuery.of(context).size.height -
-        AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        AppBar().preferredSize.height - MediaQuery.of(context).padding.top;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -69,14 +66,14 @@ class _RegistroState extends State<RegistroScreen> {
                 child: Mapa(),
               ),
               Container(
-                height: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 150 : 276,
+                height: 276,
                 decoration: BoxDecoration(
                     color: context.watch<Config>().darkTemas
                         ? Theme.of(context).primaryColor
                         : Config.corPribar,
                     borderRadius: const BorderRadius.only(
-                      bottomRight: const Radius.circular(45),
-                      bottomLeft: const Radius.circular(45),
+                      bottomRight: Radius.circular(45),
+                      bottomLeft: Radius.circular(45),
                     )),
                 alignment: Alignment.topCenter,
                 child: Column(
@@ -94,13 +91,12 @@ class _RegistroState extends State<RegistroScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText.text(
-                                'Olá, ' +
-                                    (context
+                                'Olá, ${context
                                             .read<UserPontoManager>()
                                             .usuario
                                             ?.funcionario
                                             ?.nome ??
-                                        ''),
+                                        ''}',
                                 maxLines: 1,
                                 overflow: TextOverflow.visible,
                                 style: const TextStyle(
@@ -185,7 +181,7 @@ class _RegistroState extends State<RegistroScreen> {
                                                     .usuario!
                                                     .funcionario!
                                                     .foto!)),
-                                            fit: BoxFit.fitWidth)
+                                            fit: BoxFit.cover)
                                         : null),
                                 child: context
                                             .read<UserPontoManager>()
@@ -205,7 +201,6 @@ class _RegistroState extends State<RegistroScreen> {
                         ),
                       ],
                     ),
-                    if(!kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone)
                       Consumer<GetHora>(
                         builder: (_, hora, __) {
                           return Container(
@@ -248,47 +243,6 @@ class _RegistroState extends State<RegistroScreen> {
                   ],
                 ),
               ),
-
-              if(kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone)
-              Consumer<GetHora>(
-                builder: (_, hora, __) {
-                  return Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(
-                      top:  20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: CustomText.text(
-                            data
-                                .toUpperCase()
-                                .toString()
-                                .replaceAll("-FEIRA", ""),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.white,
-                                letterSpacing: 1),
-                          ),
-                        ),
-                        CustomText.text(
-                          hora.horarioAtual,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 70,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
             ],
           ))),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -312,8 +266,7 @@ class _RegistroState extends State<RegistroScreen> {
                   double? lat = context.read<Gps>().locationData?.latitude;
                   double? long = context.read<Gps>().locationData?.longitude;
 
-                  if (!(context.read<UserPontoManager>().usuario?.funcionario?.capturarGps ?? true) ||
-                      ((await context.read<Gps>().serviceEnabled))) {
+                  if (!(context.read<UserPontoManager>().usuario?.funcionario?.capturarGps ?? true) || ((await context.read<Gps>().serviceEnabled))) {
                     if(await context.read<Gps>().isMockLocation){
                       CustomAlert.info(
                         context: context,
@@ -397,10 +350,9 @@ class _MapaState extends State<Mapa> {
       moveCam(context, gps.cam);
 
       return Container(
-          padding: EdgeInsets.only(top:kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 120 : 200),
+          padding: const EdgeInsets.only(top:200),
           child: GoogleMap(
               buildingsEnabled: false,
-              liteModeEnabled: Platform.isAndroid,
               zoomControlsEnabled: false,
               mapToolbarEnabled: false,
               rotateGesturesEnabled: false,

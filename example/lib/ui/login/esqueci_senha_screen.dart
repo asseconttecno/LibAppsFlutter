@@ -132,7 +132,6 @@ class _EsqueciSenhaScreenState extends State<EsqueciSenhaScreen> {
     if (_formKey.currentState!.validate()) {
       carregar(context,);
       bool result = await context.read<SenhaPontoManager>().sendPass(
-          context,
           context.read<UserPontoManager>().email.text,
       );
       if(result){
