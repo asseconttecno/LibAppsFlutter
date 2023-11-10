@@ -8,10 +8,7 @@ import 'dart:async';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:universal_html/html.dart' as html;
-import 'dart:ui' as ui;
+
 
 import '../../enums/versao_app.dart';
 import '../http/http.dart';
@@ -109,36 +106,6 @@ class HoleriteService  {
     }
   }
 
-  Future<Uint8List?> holeriteresumoHtml(UsuarioHolerite? user, int idholerite, int mes, int ano, int? tipo) async {
-    String _api = "/holeriteresumo";
-    try{
-      final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiHolerite! + _api, decoder: false,
-          body: {
-            "Id": idholerite,
-            "cnpj": user?.cnpj,
-            "register": user?.registro,
-            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null :  user?.cpf,
-            "month": mes,
-            "year": ano,
-            "holeriteType": tipo
-          }
-      );
-      if(response.isSucess) {
-        var htmlContent = '''<!DOCTYPE html>
-        <html>
-        <head></head>
-        <body>${response.data.toString().replaceAll('&#x0D;', '').replaceAll(' &#x0D', '')}</body>
-        </html>
-        ''';
-
-
-      }
-    } catch(e){
-      debugPrint(e.toString());
-    }
-  }
-
   Future<Uint8List?> holeriteresumoBytes(UsuarioHolerite? user, int idholerite, int mes, int ano, int? tipo) async {
     String _api = "/holeriteresumo/holeriteresumoBytes";
     try{
@@ -157,16 +124,6 @@ class HoleriteService  {
 
       if(response.isSucess) {
         final dados = response.data;
-
-/*
-        final pdf = pw.Document();
-
-        pdf.addPage(pw.Page(build: (pw.Context context) => pw.Image(pw.MemoryImage(base64.decode(dados)))));
-
-        // Salvar o PDF como bytes (Uint8List)
-        return pdf.save();
-*/
-
         return base64.decode(dados);
       }
     } catch(e){
