@@ -45,6 +45,11 @@ class HoleriteManager extends ChangeNotifier {
     return result;
   }
 
+  Future<Uint8List?> holeriteresumoHtml(UsuarioHolerite? user,  int idholerite, int mes, int ano, int? tipo) async {
+    Uint8List? result = await _service.holeriteresumoHtml(user, idholerite, mes, ano, tipo);
+    return result;
+  }
+
   String _dropdowndata = "Holerites";
   String get dropdowndata => _dropdowndata;
   set dropdowndata(String v){

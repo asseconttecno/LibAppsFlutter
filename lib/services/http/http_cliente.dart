@@ -93,7 +93,7 @@ class HttpCli {
         Uri.parse(url),
         headers: headers ?? <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-
+          'charset': 'UTF-8',
         },
         body: jsonEncode(body)
       ).timeout(const Duration(seconds: 55), onTimeout : () {

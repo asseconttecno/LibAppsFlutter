@@ -122,7 +122,7 @@ class _DetalhesEspelhoState extends State<DetalhesEspelho> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           FileHero('Espelho de Ponto - ${widget.apontamento.descricao}',
-                                                            file: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? null : snapshot.data!.espelho!,
+                                                            file: kIsWeb ? null : snapshot.data!.espelho!,
                                                             memori: snapshot.data!.espelhoHtml!,
                                                           )));
                                             },

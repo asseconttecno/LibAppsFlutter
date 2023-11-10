@@ -57,7 +57,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
           value: 3,
           child: CustomText.text("Configurações"),
         ),
-        if(!Config.isWin && !registro)
+        if(!kIsWeb && !Config.isWin && !registro)
           PopupMenuItem(
             key:  key4  ,
             value: 4,

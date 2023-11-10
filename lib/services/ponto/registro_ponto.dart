@@ -47,8 +47,6 @@ class RegistroService {
         }
     );
 
-    print(response.isSucess);
-    print(response.data);
     try{
         if(response.isSucess){
           /*Map dadosJson = response.data;
@@ -128,8 +126,6 @@ class RegistroService {
           "Origem": kIsWeb ? 4 : 7,
           "ListaMarcacoes": listOff
         };
-        print(jsonEncode(body));
-
         final MyHttpResponse response = await _http.post(
             url: Config.conf.apiAssepontoNova! + _api,
             body: body, decoder: false
