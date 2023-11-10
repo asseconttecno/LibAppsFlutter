@@ -51,11 +51,13 @@ class Assecontservices {
     Config.conf = config;
     final packageInfo = await PackageInfo.fromPlatform();
     Config.versao = packageInfo.version;
-    if(Config.isIOS) {
-      Config.isJailBroken = await SafeDevice.isJailBroken;
-    }else if(!kIsWeb && !Config.isWin){
-      Config.isRealDevice = await SafeDevice.isRealDevice;
-      Config.canMockLocation = await TrustLocation.isMockLocation;
+    if(!kIsWeb){
+      if(Config.isIOS) {
+        Config.isJailBroken = await SafeDevice.isJailBroken;
+      }else if(!Config.isWin){
+        Config.isRealDevice = await SafeDevice.isRealDevice;
+        Config.canMockLocation = await TrustLocation.isMockLocation;
+      }
     }
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
