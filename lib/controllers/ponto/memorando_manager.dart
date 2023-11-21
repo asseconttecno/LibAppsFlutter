@@ -48,7 +48,7 @@ class MemorandosManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _dropdownValue = "Atestado";
+  String _dropdownValue = "Abono";
   String get dropdownValue => _dropdownValue;
   set dropdownValue(String v){
     _dropdownValue = v;
