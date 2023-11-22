@@ -40,14 +40,14 @@ class UserPontoService {
             return _user;
           }
         }
-      debugPrint(response.codigo.toString() + '  signInAuth');
+      debugPrint('${response.codigo}  signInAuth');
       throw "Login ou Senha Invalido";
     } catch (e) {
       _user = await authOffiline(email.trim().replaceAll(' ', ''), senha.trim().replaceAll(' ', ''));
       if(_user != null){
         return _user;
       }else {
-        debugPrint(e.toString() + '  signInAuth');
+        debugPrint('$e  signInAuth');
         throw e;
       }
     }
@@ -63,5 +63,6 @@ class UserPontoService {
     }catch(e) {
       debugPrint(e.toString());
     }
+    return null;
   }
 }
