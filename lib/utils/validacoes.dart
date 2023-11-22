@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:flutter/material.dart';
+
 
 class Validacoes {
 
@@ -23,7 +25,7 @@ class Validacoes {
         }
       }
     }catch (e){
-      print(e);
+      debugPrint(e.toString());
     }
   }
 

@@ -15,8 +15,6 @@ class SenhaHoleriteService {
         "Email": email,
         "Cpf": _cpf
       };
-      print(body);
-      print(Config.conf.apiHoleriteEmail! + _metodo);
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
           body: body

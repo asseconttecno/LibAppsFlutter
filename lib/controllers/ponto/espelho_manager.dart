@@ -28,7 +28,6 @@ class EspelhoManager extends ChangeNotifier {
   }
 
   setMesAtual(Apontamento? v){
-    print(v);
     _apontamento = v;
     _dropdowndata = v?.descricao ?? '';
   }

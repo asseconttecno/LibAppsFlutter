@@ -136,8 +136,6 @@ class _AlertSenhaState extends State<AlertSenha> {
                 if (_formKey.currentState!.validate()) {
                   carregar(context);
                   if(Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet){
-                    print(_formKey.currentState?.validate());
-                    print(UserPontoManager.susuario?.funcionario?.email);
 
                     await context.read<SenhaPontoManager>().alteracaoPass(
                       context, UserPontoManager.susuario!, senhaAtual.text, senhaNova.text,

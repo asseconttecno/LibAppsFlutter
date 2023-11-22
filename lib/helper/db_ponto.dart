@@ -66,7 +66,7 @@ class DBPonto{
       String sql4 = "CREATE TABLE empresa (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, email VARCHAR, senha VARCHAR, cnpj VARCHAR, ativado VARCHAR, status int, database int ); ";
       try{
         await db.execute(sql4).onError((error, stackTrace) {
-          print(error);
+          debugPrint(error.toString());
         });
       }catch(e){
       }
@@ -74,7 +74,7 @@ class DBPonto{
       String sql5 = "CREATE TABLE config (id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR, status int, hora VARCHAR, local VARCHAR);";
       try{
         await db.execute(sql5).onError((error, stackTrace) {
-          print(error);
+          debugPrint(error.toString());
         });
       }catch(e){
       }

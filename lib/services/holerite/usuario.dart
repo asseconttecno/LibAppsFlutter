@@ -17,8 +17,6 @@ class UserHoleriteService {
       String _email = CPFValidator.isValid(email) ?
         email.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '') : email;
 
-      print(Config.conf.apiHoleriteEmail! + _metodo);
-
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
