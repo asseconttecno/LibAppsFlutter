@@ -16,30 +16,32 @@ class UserPontoService {
     UsuarioPonto? _user;
     try {
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAssepontoNova! + _api,
-            body: {
-              "Email": email.trim().replaceAll(' ', ''),
-              "Senha": senha.trim().replaceAll(' ', ''),
-              "Token": null
-            }
-        );
+        url: Config.conf.apiAssepontoNova! + _api,
+          body: {
+            "Email": email.trim().replaceAll(' ', ''),
+            "Senha": senha.trim().replaceAll(' ', ''),
+            "Token": null
+          }
+      );
 
-        if(response.isSucess){
-          Map<String, dynamic> json = response.data;
-          if(json['StatusLogin']['Status'] == 0){
-            UsuarioPonto user = UsuarioPonto.fromMap(json, false);
-            return user;
-          }else{
-            throw json['StatusLogin']['Descricao'];
-          }
-        }else {
-          _user = await authOffiline(
-              email.trim().replaceAll(' ', ''),
-              senha.trim().replaceAll(' ', ''));
-          if (_user != null) {
-            return _user;
-          }
+      print(response.isSucess);
+      if(response.isSucess){
+        Map<String, dynamic> json = response.data;
+        if(json['StatusLogin']['Status'] == 0){
+          UsuarioPonto user = UsuarioPonto.fromMap(json, false);
+          return user;
+        }else{
+          throw json['StatusLogin']['Descricao'];
         }
+      }else {
+        _user = await authOffiline(
+            email.trim().replaceAll(' ', ''),
+            senha.trim().replaceAll(' ', '')
+        );
+        if (_user != null) {
+          return _user;
+        }
+      }
       debugPrint('${response.codigo}  signInAuth');
       throw "Login ou Senha Invalido";
     } catch (e) {
@@ -48,7 +50,7 @@ class UserPontoService {
         return _user;
       }else {
         debugPrint('$e  signInAuth');
-        throw e;
+        throw e.toString();
       }
     }
   }

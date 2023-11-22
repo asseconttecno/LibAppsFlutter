@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,7 +11,7 @@ import '../config.dart';
 
 class DBPonto{
   static final  DBPonto _dbhelper = DBPonto._internal();
-  Database? _db ;
+
 
   factory DBPonto() {
     return _dbhelper;
@@ -26,6 +25,7 @@ class DBPonto{
   int versaoNew = 6;
   int versao = 1;
 
+  Database? _db;
   Future<Database> get db async {
     if(_db == null) {
       _db = await inicializarDB(versao);
@@ -109,18 +109,6 @@ class DBPonto{
       }catch(e){
       }
 
-      String sql_drop = "DROP TABLE IF EXISTS users;";
-      try{
-        db.execute(sql_drop).onError((error, stackTrace) {
-        });
-      }catch(e){
-      }
-      String sql_drop2 = "DROP TABLE IF EXISTS usuario;";
-      try{
-        db.execute(sql_drop2).onError((error, stackTrace) {
-        });
-      }catch(e){
-      }
       String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
       try{
         await db.execute(sql1);
@@ -145,15 +133,16 @@ class DBPonto{
   }
 
 
-  inicializarDB(int v) async {
+  Future<Database> inicializarDB(int v) async {
     if(kIsWeb){
       var factory = databaseFactoryFfiWeb;
       Database db = await factory.openDatabase(Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db",
           options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));
       return db;
     }else {
-      final camilhodb = kIsWeb ? '' : Config.isWin ? await win.databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
+      final camilhodb = Config.isWin ? await win.databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
       final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db");
+
 
       if(Config.isWin){
         DatabaseFactory databaseFactory = win.databaseFactoryFfi;

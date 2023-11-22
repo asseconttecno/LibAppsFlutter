@@ -8,20 +8,30 @@ import '../helper/db_ponto.dart';
 import '../model/model.dart';
 
 class SqlitePontoService {
+  final DBPonto _service = DBPonto();
 
-  salvarNovoUsuario(Map<String, dynamic> toMap) async {
+
+  Future<void> salvarNovoUsuario(Map<String, dynamic> toMap) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
+
+      List _users = await bancoDados.query('users');
+      print(_users);
+
       await bancoDados.delete("users");
-      await bancoDados.insert("users", toMap);
+
+      final result = await bancoDados.insert("users", toMap);
+
+      print(result);
     }catch(e){
       debugPrint(e.toString());
     }
   }
 
-  salvarUsers(List<UserPontoOffine> dados) async {
+  Future<void> salvarUsers(List<UserPontoOffine> dados) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
+
       await bancoDados.delete('users');
       await bancoDados.execute('INSERT INTO users(iduser, nome, pis, registro) VALUES ' +
           dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')  );
@@ -39,12 +49,19 @@ class SqlitePontoService {
 
   Future<List?> getUser({String? email}) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       String where = '';
       if(email != null) where = "where email = '$email' ";
       String sql = "SELECT * FROM users $where ";
-
+      print(sql);
       List users = await bancoDados.rawQuery(sql);
+      print(users);
+
+
+      sql = "SELECT * FROM users ";
+
+      List _users = await bancoDados.query('users');
+      print(_users);
       return users;
     }catch(e){
       debugPrint(e.toString());
@@ -53,7 +70,7 @@ class SqlitePontoService {
 
   Future<List?> getEmpresa() async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       String sql = "SELECT * FROM empresa";
 
       List users = await bancoDados.rawQuery(sql);
@@ -65,7 +82,7 @@ class SqlitePontoService {
 
   Future<int> insertEmpresa(Map<String, dynamic> toMap) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       int config = await bancoDados.insert("empresa", toMap);
       return config;
     }catch(e){
@@ -76,7 +93,7 @@ class SqlitePontoService {
 
   Future<List<Map<String, dynamic>>> getMarcacoes(int? user) async {
     try {
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       String sql = "SELECT * FROM marcacao where iduser = ?";
       List _sql = await bancoDados.rawQuery(sql, [user]);
       if(_sql.isNotEmpty) {
@@ -91,7 +108,7 @@ class SqlitePontoService {
 
   Future<bool> salvarMarcacao(Marcacao dados, {bool hist = true}) async {
     try{
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       int result = await bancoDados.insert("marcacao", dados.toMap());
 
       try {
@@ -109,7 +126,7 @@ class SqlitePontoService {
 
   deleteSalvarMarcacoes(List<Marcacao> del, int? user) async {
     try {
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       String sql = "delete FROM marcacao where iduser = ?";
       await bancoDados.rawDelete(sql, [user]);
       await del.map((e) async {
@@ -122,7 +139,7 @@ class SqlitePontoService {
 
   Future<int> deleteMarcacoes(int? user) async {
     try {
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       String sql = "delete FROM marcacao where iduser = ?";
       int _result = await bancoDados.rawDelete(sql, [user]);
       return _result;
@@ -134,7 +151,7 @@ class SqlitePontoService {
 
   Future<List?> getHistorico(int? user) async {
     try {
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       if(user == null){
         String sql =  "select * FROM historico" ;
         List _sql = await bancoDados.rawQuery(sql);
@@ -164,7 +181,7 @@ class SqlitePontoService {
   deleteHistorico(int? user) async {
     if(Config.conf.nomeApp == VersaoApp.PontoApp){
       try{
-        var bancoDados = await DBPonto().db;
+        var bancoDados = await _service.db;
         String sql = "SELECT * FROM historico where iduser = ?";
         List _select = await bancoDados.rawQuery(sql, [user]);
         if(_select.isNotEmpty){
@@ -185,7 +202,7 @@ class SqlitePontoService {
 
   Future<bool> salvarHisMarcacao(Marcacao dados) async {
     try{
-      var bancoDados = await DBPonto().db;
+      var bancoDados = await _service.db;
       int result = await bancoDados.insert("historico", dados.toHistMap());
       return result > 0;
     }catch(e){
@@ -196,7 +213,7 @@ class SqlitePontoService {
 
   Future<List?> initConfig() async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       String sql = "SELECT * FROM config";
       List config = await bancoDados.rawQuery(sql);
       return config;
@@ -208,7 +225,7 @@ class SqlitePontoService {
 
   Future<int> insertConfig(Map<String, dynamic> toMap) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       int config = await bancoDados.insert("config", toMap);
       return config;
     }catch(e){
@@ -219,7 +236,7 @@ class SqlitePontoService {
 
   Future<int> updateConfig(Map<String, dynamic> toMap) async {
     try{
-      Database bancoDados = await DBPonto().db;
+      Database bancoDados = await _service.db;
       int config = await bancoDados.update("config", toMap);
       return config;
     }catch(e){
