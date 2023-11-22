@@ -79,7 +79,7 @@ class ConfigTabletManager extends ChangeNotifier {
 
   static int difeDiaSemana(DateTime data) {
     int dia;
-    print(DateFormat('EEE', 'pt_BR').format(data));
+
     switch (DateFormat('EEE', 'pt_BR').format(data).toUpperCase() ) {
       case 'SAB' :
         dia = 6;
@@ -152,7 +152,7 @@ class ConfigTabletManager extends ChangeNotifier {
           }, _data);
         });
       }
-    } on Exception catch (e) {
+    } catch (e) {
       if (kDebugMode) {
         print(e);
       }

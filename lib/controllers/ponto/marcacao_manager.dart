@@ -15,7 +15,6 @@ class MarcacoesManager extends ChangeNotifier {
   DateTime get data => _data;
   set data(DateTime v){
     _data = DateTime(v.year, v.month, v.day);
-    print(_data);
     notifyListeners();
   }
 
@@ -56,7 +55,7 @@ class MarcacoesManager extends ChangeNotifier {
         });
       }
     }catch (e){
-      print(e);
+      debugPrint(e.toString());
     }
     return _marcacao;
   }

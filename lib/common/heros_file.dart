@@ -97,7 +97,7 @@ class _FileHeroState extends State<FileHero> {
                     if(appDocDir != null){
                       File down = await File((appDocDir + '/${widget.name}.pdf').replaceAll(' ', '-')).
                       writeAsBytes(widget.file.readAsBytesSync());
-                      print(down.path);
+
                       OpenFile.open(down.path);
                     }
                   }

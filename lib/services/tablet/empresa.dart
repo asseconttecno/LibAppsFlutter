@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -16,7 +18,7 @@ class EmpresaPontoService {
         return true;
       }
     }catch(e){
-      print("erro salvar Empresa sql $e");
+      debugPrint("erro salvar Empresa sql $e");
     }
     return false;
   }
@@ -44,10 +46,10 @@ class EmpresaPontoService {
           }
         }
       }else{
-        print(response.codigo);
+        debugPrint(response.codigo.toString());
       }
     } catch (e){
-      print("Erro Try verificarcodigo $e");
+      debugPrint("Erro Try verificarcodigo $e");
     }
   }
 }

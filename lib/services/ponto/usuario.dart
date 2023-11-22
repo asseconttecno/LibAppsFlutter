@@ -24,7 +24,6 @@ class UserPontoService {
           }
       );
 
-      print(response.isSucess);
       if(response.isSucess){
         Map<String, dynamic> json = response.data;
         if(json['StatusLogin']['Status'] == 0){
@@ -57,7 +56,7 @@ class UserPontoService {
 
   Future<UsuarioPonto?> authOffiline(String _email, String _senha) async {
     try{
-      List? _user = await _pontoService.getUser(email: _email);
+      List? _user = await _pontoService.getUser(email: _email, senha: _senha);
       if(_user != null && _user.isNotEmpty){
         UsuarioPonto user = UsuarioPonto.fromMap(_user.first, true);
         return user;

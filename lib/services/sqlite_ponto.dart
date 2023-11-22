@@ -16,6 +16,7 @@ class SqlitePontoService {
       Database bancoDados = await _service.db;
       await bancoDados.delete("users");
       await bancoDados.insert("users", toMap);
+
     }catch(e){
       debugPrint(e.toString());
     }
@@ -47,7 +48,6 @@ class SqlitePontoService {
       if(email != null) where = "where email = '$email' and senha = '$senha' ";
       String sql = "SELECT * FROM users $where ";
       List users = await bancoDados.rawQuery(sql);
-
       return users;
     }catch(e){
       debugPrint(e.toString());

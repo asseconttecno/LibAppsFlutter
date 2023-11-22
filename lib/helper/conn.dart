@@ -27,7 +27,7 @@ class ConnectionStatusSingleton {
     if(!kIsWeb) {
       _connectivity.onConnectivityChanged.listen(_connectionChange);
       checkConnection();
-      print('Connectivity initialize');
+
       if (Config.conf.nomeApp == VersaoApp.PontoApp ||
           Config.conf.nomeApp == VersaoApp.PontoTablet) {
         Timer.periodic(const Duration(minutes: 1), (T) async {

@@ -82,10 +82,8 @@ class MemorandosServices {
 
       if(response.isSucess){
         Map dadosJson = response.data["Result"] ;
-        print(dadosJson);
         if(dadosJson.containsKey("IsSuccess")){
           List temp = dadosJson["Result"]["Memorandos"];
-          print(temp.length);
           if(temp.isNotEmpty){
             List<Memorandos> listaTemporaria;
             listaTemporaria = temp.map((e) => Memorandos.fromMap(e)).toList();

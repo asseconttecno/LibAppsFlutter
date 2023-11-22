@@ -58,7 +58,7 @@ class EmpresaPontoManager extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e){
-      print("Erro Try verificarcodigo $e");
+      debugPrint("Erro Try verificarcodigo $e");
     }
   }
 
@@ -67,7 +67,7 @@ class EmpresaPontoManager extends ChangeNotifier {
       empresa = null;
       notifyListeners();
     }catch(e){
-      print(e);
+      debugPrint(e.toString());
     }
   }
 }

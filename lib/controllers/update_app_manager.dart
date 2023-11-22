@@ -33,7 +33,6 @@ class UpdateAppManager {
         }else{
           final bool appStatus = await _service.postUpdateApp();
 
-          print(appStatus);
           if(appStatus && kReleaseMode) {
             CustomAlert.custom(
                 context: context,
@@ -62,7 +61,7 @@ class UpdateAppManager {
           }
         }
       } catch(e){
-        print(e);
+        debugPrint(e.toString());
         Future.delayed(Duration(seconds: 2), (){
           Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         });
