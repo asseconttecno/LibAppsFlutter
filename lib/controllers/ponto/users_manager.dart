@@ -72,13 +72,13 @@ class UserPontoManager extends ChangeNotifier {
     await prefs.setBool("autologin", status);
   }
 
-  Future<bool?> auth(BuildContext context , String email, String senha, bool bio) async {
+  Future<bool?> auth(BuildContext context, String email, String senha, bool bio) async {
     bool result = false;
     try {
       if(bio){
         bool _resultBio = await _serviceBio.authbiometria();
         if(_resultBio){
-          result = await signInAuth(email: email,  senha: senha);
+          result = await signInAuth(email: email,  senha: usenha);
         }
       }else{
         result = await signInAuth(email: email,  senha: senha);

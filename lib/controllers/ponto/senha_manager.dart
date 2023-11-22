@@ -26,6 +26,10 @@ class SenhaPontoManager extends ChangeNotifier {
       Config.usenha = nova;
       context.read<UserPontoManager>().senha.text = nova;
       context.read<UserPontoManager>().memorizar();
+
+      final SqlitePontoService _sqlService = SqlitePontoService();
+
+      _sqlService.salvarNovoUsuario( usuario.toMap() );
     }
     return result;
   }
