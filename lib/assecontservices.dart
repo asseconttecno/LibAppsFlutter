@@ -36,6 +36,7 @@ export 'package:intl/intl.dart';
 export 'package:flutter_calendar_week/flutter_calendar_week.dart';
 export 'package:tutorial/tutorial.dart';
 export 'package:responsive_framework/responsive_framework.dart';
+export 'package:safe_device/safe_device.dart';
 
 
 class Assecontservices {
