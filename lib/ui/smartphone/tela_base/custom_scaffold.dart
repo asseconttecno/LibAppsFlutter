@@ -150,7 +150,7 @@ class CustomScaffold {
                         child: foto == null ? const Icon(
                           CupertinoIcons.person,
                           color: Colors.white,
-                          size: 105,
+                          size: 90,
                         ) : null,
                       ),
                     ),

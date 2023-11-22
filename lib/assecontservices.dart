@@ -67,6 +67,12 @@ class Assecontservices {
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
 
     List<SingleChildWidget> _providers = [
+      if(ponto)
+        Provider(
+          lazy: false,
+          create: (_)=> DBPonto(),
+        ),
+
       ChangeNotifierProvider(
         lazy: false,
         create: (_)=> Config(),

@@ -24,8 +24,8 @@ class UsuarioPonto {
         databaseId: json['database'],
         app: json['master'].toString() == 'true',
         periodo: Periodo(
-          dataFinal: json['datatermino'],
-          dataInicial: json['datainicio'],
+          dataFinal: DateTime.tryParse(json['datatermino'].toString()),
+          dataInicial: DateTime.tryParse(json['datainicio'].toString()),
           descricao: json['apontamento']
         ),
         funcionario: Funcionario(
