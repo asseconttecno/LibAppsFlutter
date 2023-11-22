@@ -35,6 +35,7 @@ class UsuarioPonto {
           cpf: json['funcionarioCpf'],
           cnpj: json['cnpj'],
           cargo: json['cargo'],
+          email: json['email'],
           permitirMarcarPonto: json['permitirMarcarPonto'].toString() == 'true',
           permitirMarcarPontoOffline: json['permitirMarcarPontoOffline'].toString()== 'true',
           capturarGps: json['permitirLocalizacao'].toString() == 'true',
