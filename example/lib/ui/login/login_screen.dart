@@ -319,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (context.read<BiometriaManager>().bio) {
         if (email == context.read<UserPontoManager>().uemail) {
           bool? result = await context.read<UserPontoManager>().auth(context,
-            email, context.read<UserPontoManager>().senha.text, true,
+            email, '', true,
           ).onError((error, stackTrace) {
             setState(() {
               loadAcessar = false;
