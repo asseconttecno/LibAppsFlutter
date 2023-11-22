@@ -95,8 +95,8 @@ class UserPontoManager extends ChangeNotifier {
     if(usuario?.app ?? false){
       UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
     }
-    _sqlService.salvarNovoUsuario( usuario!.toMap() );
     Config.usenha = senha;
+    _sqlService.salvarNovoUsuario( usuario!.toMap() );
     return true;
   }
 

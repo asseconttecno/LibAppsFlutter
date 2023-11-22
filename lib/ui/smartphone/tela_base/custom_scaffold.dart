@@ -65,7 +65,7 @@ class CustomScaffold {
               child: foto == null ? const Icon(
                 CupertinoIcons.person,
                 color: Colors.white,
-                size: 105,
+                size: 90,
               ) : null,
             ),
           ),
@@ -109,11 +109,10 @@ class CustomScaffold {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 15, right: 5),
-                    child: dados
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: dados ?? Container(),
                   ),
                 ),
                 Padding(
