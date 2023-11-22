@@ -68,7 +68,7 @@ class UserPontoManager extends ChangeNotifier {
   Future<void> memorizar() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("login", email.text);
-    await prefs.setString("usenha", senha.text);
+    await prefs.setString("usenha", usenha);
     await prefs.setBool("autologin", status);
   }
 
@@ -96,7 +96,9 @@ class UserPontoManager extends ChangeNotifier {
       UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
     }
     Config.usenha = senha;
+    usenha = senha;
     _sqlService.salvarNovoUsuario( usuario!.toMap() );
+    memorizar();
     return true;
   }
 

@@ -138,9 +138,6 @@ class _AlertSenhaState extends State<AlertSenha> {
                       );
 
                       if(result){
-                        Config.usenha = senhaNova.text;
-                        context.read<UserPontoManager>().senha.text = senhaNova.text;
-                        context.read<UserPontoManager>().memorizar();
                         Navigator.pop(context);
                         Navigator.pop(context);
                         CustomAlert.sucess(

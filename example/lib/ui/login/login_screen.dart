@@ -306,9 +306,6 @@ class _LoginScreenState extends State<LoginScreen> {
       bool? result = await context.read<UserPontoManager>().auth(context, email, senha, false);
 
       if(result ?? false){
-        Config.usenha = context.read<UserPontoManager>().senha.text;
-        context.read<UserPontoManager>().memorizar();
-
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
     }

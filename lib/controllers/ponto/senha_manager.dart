@@ -24,6 +24,7 @@ class SenhaPontoManager extends ChangeNotifier {
     bool result = await _service.alteracaoPass(usuario.funcionario!.email!, usuario.databaseId!, nova);
     if(result){
       Config.usenha = nova;
+      context.read<UserPontoManager>().usenha = nova;
       context.read<UserPontoManager>().senha.text = nova;
       context.read<UserPontoManager>().memorizar();
 
