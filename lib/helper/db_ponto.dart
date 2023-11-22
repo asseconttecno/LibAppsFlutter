@@ -22,7 +22,7 @@ class DBPonto{
     db;
   }
 
-  int versaoNew = 6;
+  int versaoNew = 7;
   int versao = 1;
 
   Database? _db;
@@ -46,7 +46,7 @@ class DBPonto{
 
 
   _criardb(Database db, int version) async {
-    String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
+    String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, senha VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
     try{
       await db.execute(sql1);
     }catch(e){
@@ -109,7 +109,7 @@ class DBPonto{
       }catch(e){
       }
 
-      String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
+      String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, senha VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
       try{
         await db.execute(sql1);
       }catch(e){
@@ -130,6 +130,13 @@ class DBPonto{
       }catch(e){
       }
     }
+
+      String sql_update4 = "ALTER TABLE users ADD COLUMN senha VARCHAR;";
+      try{
+        db.execute(sql_update4).onError((error, stackTrace) {
+        });
+      }catch(e){
+      }
   }
 
 

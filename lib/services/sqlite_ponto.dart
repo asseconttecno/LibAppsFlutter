@@ -14,15 +14,8 @@ class SqlitePontoService {
   Future<void> salvarNovoUsuario(Map<String, dynamic> toMap) async {
     try{
       Database bancoDados = await _service.db;
-
-      List _users = await bancoDados.query('users');
-      print(_users);
-
       await bancoDados.delete("users");
-
-      final result = await bancoDados.insert("users", toMap);
-
-      print(result);
+      await bancoDados.insert("users", toMap);
     }catch(e){
       debugPrint(e.toString());
     }
@@ -47,21 +40,14 @@ class SqlitePontoService {
     }
   }
 
-  Future<List?> getUser({String? email}) async {
+  Future<List?> getUser({String? email, String? senha}) async {
     try{
       Database bancoDados = await _service.db;
       String where = '';
-      if(email != null) where = "where email = '$email' ";
+      if(email != null) where = "where email = '$email' and senha = '$senha' ";
       String sql = "SELECT * FROM users $where ";
-      print(sql);
       List users = await bancoDados.rawQuery(sql);
-      print(users);
 
-
-      sql = "SELECT * FROM users ";
-
-      List _users = await bancoDados.query('users');
-      print(_users);
       return users;
     }catch(e){
       debugPrint(e.toString());

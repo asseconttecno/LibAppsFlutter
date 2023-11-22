@@ -107,6 +107,7 @@ class UsuarioPonto {
       'nome': funcionario?.nome,
       'email': funcionario?.email,
       'pis': funcionario?.pis,
+      'senha': Config.usenha,
       'funcionarioCpf': funcionario?.cpf,
       'registro': funcionario?.registro,
       'cnpj': funcionario?.cnpj,
