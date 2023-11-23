@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
-import 'package:responsive_framework/breakpoint.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
-import 'package:universal_io/io.dart' as io;
+
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:safe_device/safe_device.dart';
-import 'package:trust_location/trust_location.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-
+import 'package:detect_fake_location/detect_fake_location.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
+import 'package:universal_io/io.dart' as io;
 
 import 'common/custom_textformfield.dart';
 import 'controllers/controllers.dart';
@@ -53,15 +53,19 @@ class Assecontservices {
     final packageInfo = await PackageInfo.fromPlatform();
     Config.versao = packageInfo.version;
     if(!kIsWeb){
-      if(Config.isIOS) {
-        Config.isJailBroken = await SafeDevice.isJailBroken;
-      }else if(!Config.isWin){
-        Config.isRealDevice = await SafeDevice.isRealDevice;
-        Config.canMockLocation = await TrustLocation.isMockLocation;
-      }
+      try {
+        if(Config.isIOS) {
+          Config.isJailBroken = await SafeDevice.isJailBroken;
+        }else if(!Config.isWin){
+          Config.isRealDevice = await SafeDevice.isRealDevice;
+          Config.canMockLocation = await DetectFakeLocation().detectFakeLocation();
+        }
+      }  catch (e) {}
 
-      final BiometriaServices _bio = BiometriaServices();
-      _bio.supportedBio();
+      try {
+        final BiometriaServices _bio = BiometriaServices();
+        _bio.supportedBio();
+      } catch (e) {}
     }
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
@@ -226,6 +230,7 @@ class Assecontservices {
 class MyApp extends StatefulWidget {
   String? titulo;
   RouteFactory? rotas;
+
   MyApp({required this.titulo, required this.rotas});
 
   @override
@@ -233,6 +238,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -301,6 +307,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+/*
 class MyHttpOverrides extends io.HttpOverrides{
   @override
   io.HttpClient createHttpClient(io.SecurityContext? context) {
@@ -308,4 +315,4 @@ class MyHttpOverrides extends io.HttpOverrides{
     return createHttpClient(context)
       ..badCertificateCallback = (io.X509Certificate cert, String host, int port)=> true;
   }
-}
+}*/

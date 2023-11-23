@@ -38,6 +38,8 @@ dependencies:
 
   geocoding: ^2.1.1
   location: ^5.0.3
+  detect_fake_location: ^1.0.1
+
   #$google_maps_flutter: ^2.2.5
 
   url_launcher: ^6.1.14
