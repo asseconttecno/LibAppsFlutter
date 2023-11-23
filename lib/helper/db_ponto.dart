@@ -20,7 +20,9 @@ class DBPonto{
 
   Future<void> init() async {
     versao = await getVersion();
-    db;
+    try {
+      db;
+    } catch (e) {}
   }
 
   static int versaoNew = 8;
@@ -42,7 +44,6 @@ class DBPonto{
         await setVersion(versaoNew);
       }
     }
-
     return _db!;
   }
 
@@ -114,28 +115,25 @@ class DBPonto{
     if(versao < 6){
       String sql_update = "CREATE TABLE IF NOT EXISTS historico (id INTEGER PRIMARY KEY AUTOINCREMENT, iduser int, registro VARCHAR, pis VARCHAR, datahora VARCHAR, status int, latitude VARCHAR, longitude VARCHAR, Endereco VARCHAR, obs VARCHAR, imgId VARCHAR, img BLOB);";
       try{
-        db.execute(sql_update).onError((error, stackTrace) {
-        });
+        db.execute(sql_update).onError((error, stackTrace) {});
       }catch(e){
       }
       String sql_update3 = "ALTER TABLE historico ADD COLUMN cargo VARCHAR;";
       try{
-        db.execute(sql_update3).onError((error, stackTrace) {
-        });
+        db.execute(sql_update3).onError((error, stackTrace) {});
       }catch(e){
       }
 
 
       String sql_update2 = "ALTER TABLE historico ADD COLUMN nome VARCHAR;";
       try{
-        db.execute(sql_update2).onError((error, stackTrace) {
-        });
+        db.execute(sql_update2).onError((error, stackTrace) {});
       }catch(e){
       }
 
       String sql1 = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, database int, nome VARCHAR, senha VARCHAR, email VARCHAR, pis VARCHAR, funcionarioCpf VARCHAR, registro VARCHAR, cnpj VARCHAR,  master VARCHAR, connected VARCHAR, cargo VARCHAR, apontamento VARCHAR, datainicio DATETIME, datatermino DATETIME, permitirMarcarPonto VARCHAR, permitirMarcarPontoOffline VARCHAR, permitirLocalizacao VARCHAR); ";
       try{
-        await db.execute(sql1);
+        await db.execute(sql1).onError((error, stackTrace) {});
       }catch(e){
       }
     }
@@ -143,15 +141,13 @@ class DBPonto{
     if(versao <= 6){
       String sql_update3 = "ALTER TABLE historico ADD COLUMN Endereco VARCHAR;";
       try{
-        db.execute(sql_update3).onError((error, stackTrace) {
-        });
+        db.execute(sql_update3).onError((error, stackTrace) {});
       }catch(e){
       }
 
       String sql_update2 = "ALTER TABLE marcacao ADD COLUMN Endereco VARCHAR;";
       try{
-        db.execute(sql_update2).onError((error, stackTrace) {
-        });
+        db.execute(sql_update2).onError((error, stackTrace) {});
       }catch(e){
       }
     }
@@ -159,8 +155,7 @@ class DBPonto{
     if(versao <= 7){
       String sql_update4 = "ALTER TABLE users ADD COLUMN senha VARCHAR;";
       try{
-        db.execute(sql_update4).onError((error, stackTrace) {
-        });
+        db.execute(sql_update4).onError((error, stackTrace) {});
       }catch(e){
       }
     }
