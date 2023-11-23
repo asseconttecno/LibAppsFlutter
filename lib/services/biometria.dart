@@ -12,10 +12,14 @@ class BiometriaServices {
 
   void supportedBio() {
     if(!Config.isWin){
-      localAuth.isDeviceSupported().then((isSupported) {
-        debugPrint('Biometria suportado: $isSupported');
-        Config.bioState = isSupported ? BioSupportState.supported : BioSupportState.unsupported;
-      });
+      try{
+        localAuth.isDeviceSupported().then((isSupported) {
+          debugPrint('Biometria suportado: $isSupported');
+          Config.bioState = isSupported ? BioSupportState.supported : BioSupportState.unsupported;
+        });
+      }catch (e){
+        debugPrint(e.toString());
+      }
     }
   }
 
