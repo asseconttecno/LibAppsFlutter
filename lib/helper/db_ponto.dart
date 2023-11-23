@@ -32,7 +32,7 @@ class DBPonto{
   Future<Database> get db async {
     if(_db == null) {
       versao = versaoNew;
-      _db = await inicializarDB(versao);
+      _db = await inicializarDB(versao, init: true);
       _updateTable(_db!);
       setVersion(versaoNew);
     } else if(versao < versaoNew) {
@@ -162,7 +162,7 @@ class DBPonto{
   }
 
 
-  Future<Database> inicializarDB(int v) async {
+  Future<Database> inicializarDB(int v, {bool init = false}) async {
     if(kIsWeb){
       var factory = databaseFactoryFfiWeb;
       Database db = await factory.openDatabase(Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db",
@@ -176,10 +176,10 @@ class DBPonto{
       if(Config.isWin){
         DatabaseFactory databaseFactory = win.databaseFactoryFfi;
         Database db = await databaseFactory.openDatabase(localdb,
-            options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));
+            options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: init ? null : _onUpgrade));
         return db;
       } else{
-        Database db = await openDatabase(localdb, version: v, onCreate: _criardb , onUpgrade: _onUpgrade);
+        Database db = await openDatabase(localdb, version: v, onCreate: _criardb , onUpgrade: init ? null : _onUpgrade);
         return db;
       }
     }
