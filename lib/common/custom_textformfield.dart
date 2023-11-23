@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 
 
 import '../../utils/validacoes.dart';
