@@ -8,7 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:detect_fake_location/detect_fake_location.dart';
 import 'package:responsive_framework/breakpoint.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:universal_io/io.dart' as io;
@@ -56,9 +55,10 @@ class Assecontservices {
       try {
         if(Config.isIOS) {
           Config.isJailBroken = await SafeDevice.isJailBroken;
-        }else if(!Config.isWin){
+        }
+        if(!Config.isWin){
           Config.isRealDevice = await SafeDevice.isRealDevice;
-          Config.canMockLocation = await DetectFakeLocation().detectFakeLocation();
+          Config.canMockLocation = await SafeDevice.canMockLocation;
         }
       }  catch (e) {}
 

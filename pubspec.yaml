@@ -19,7 +19,7 @@ dependencies:
   top_snackbar_flutter: ^3.1.0
 
   sqflite: ^2.3.0 #^2.0.2
-  sqflite_common_ffi: ^2.3.0+3
+  sqflite_common_ffi: ^2.3.0+4
   sqflite_common_ffi_web: ^0.4.0
 
   responsive_framework: ^1.1.1
@@ -30,7 +30,7 @@ dependencies:
   intl: any #^0.18.1
 
   image_picker: ^1.0.4
-  filesystem_picker: ^3.1.0 #^2.0.2
+  filesystem_picker: ^4.0.0 #^2.0.2
 
   local_auth: ^2.1.7
 
@@ -38,11 +38,11 @@ dependencies:
 
   geocoding: ^2.1.1
   location: ^5.0.3
-  detect_fake_location: ^1.0.1
+
 
   #$google_maps_flutter: ^2.2.5
 
-  url_launcher: ^6.1.14
+  url_launcher: ^6.2.1
 
   flutter_carousel_slider: ^1.1.0
 
@@ -72,7 +72,7 @@ dependencies:
       ref: main
 
   path_provider: ^2.1.1
-  shared_preferences: ^2.2.1
+  shared_preferences: ^2.2.2
   external_path: ^1.0.3
 
   cpf_cnpj_validator: ^2.0.0
@@ -87,7 +87,11 @@ dependencies:
   connectivity_plus: any
   package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0
-  safe_device: ^1.1.4
+
+  safe_device: #^1.1.4
+    git:
+      url: https://github.com/pretolio/safe_device.git
+      ref: main
 
   brasil_fields: ^1.14.0
   datetime_picker_formfield_new: ^2.1.0
