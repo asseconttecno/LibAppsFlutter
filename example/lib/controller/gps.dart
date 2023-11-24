@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:trust_location/trust_location.dart';
 import 'package:assecontservices/assecontservices.dart';
 
 
@@ -24,7 +23,7 @@ class Gps extends ChangeNotifier {
   }
 
   Future<bool> get isMockLocation async {
-    return await TrustLocation.isMockLocation;
+    return await SafeDevice.canMockLocation;;
   }
 
   localizacao() async {
