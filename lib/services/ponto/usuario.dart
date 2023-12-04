@@ -11,7 +11,7 @@ class UserPontoService {
   final HttpCli _http = HttpCli();
   final SqlitePontoService _pontoService = SqlitePontoService();
 
-  Future<UsuarioPonto?> signInAuth({required String email,required String senha,}) async {
+  Future<UsuarioPonto?> signInAuth({required String email,required String senha,String? token}) async {
     String _api = "/api/login";
     UsuarioPonto? _user;
     try {
@@ -20,7 +20,7 @@ class UserPontoService {
           body: {
             "Email": email.trim().replaceAll(' ', ''),
             "Senha": senha.trim().replaceAll(' ', ''),
-            "Token": null
+            "Token": token
           }
       );
 
