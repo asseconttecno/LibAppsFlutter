@@ -14,8 +14,8 @@ import 'func_sair.dart';
 import 'func_review.dart';
 
 
-actions(BuildContext context, {bool aponta = false, bool registro = false, GlobalKey? keyMenu,
-    GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
+actions(BuildContext context, {bool aponta = false, bool registro = false, bool config = false,
+  GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
   return Padding(
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
@@ -51,12 +51,12 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, Globa
             value: 6,
             child: CustomText.text("Reenviar Marcações"),
           ),
-        if(!registro)
-        PopupMenuItem(
-          key: key3 ,
-          value: 3,
-          child: CustomText.text("Configurações"),
-        ),
+        if(!config)
+          PopupMenuItem(
+            key: key3 ,
+            value: 3,
+            child: CustomText.text("Configurações"),
+          ),
         if(!kIsWeb && !Config.isWin && !registro)
           PopupMenuItem(
             key:  key4  ,
