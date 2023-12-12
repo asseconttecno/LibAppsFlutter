@@ -243,7 +243,7 @@ class CustomScaffold {
     );
   }
 
-  static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height,
+  static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height, bool conf = false,
     Widget? appbar, required Widget body, bool home = false, Widget? expanAppbar, String? appTitle, Widget? buttom}){
 
     return Scaffold(
@@ -253,7 +253,7 @@ class CustomScaffold {
         title: CustomText.text(appTitle, style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
         centerTitle: true,
         actions: [
-          actions(context, aponta: home),
+          actions(context, aponta: home, config: conf),
         ],
       ),
       body: SizedBox(
