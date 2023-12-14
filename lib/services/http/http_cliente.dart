@@ -78,7 +78,7 @@ class HttpCli {
 
 
   Future<MyHttpResponse> post({required String url, Map<String, String>? headers,
-      Map<String, dynamic>? body, bool decoder = true, bool isbyte = false}) async {
+      Map<String, dynamic>? body, bool decoder = true, bool isbyte = false, int timeout = 55}) async {
 
     if(!connectionStatus.hasConnection){
       return MyHttpResponse(
@@ -96,7 +96,7 @@ class HttpCli {
           'charset': 'UTF-8',
         },
         body: jsonEncode(body)
-      ).timeout(const Duration(seconds: 55), onTimeout : () {
+      ).timeout(Duration(seconds: timeout), onTimeout : () {
         debugPrint('post timeout');
         throw HttpError.timeout;
       });
