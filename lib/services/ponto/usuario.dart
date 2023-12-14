@@ -16,7 +16,7 @@ class UserPontoService {
     UsuarioPonto? _user;
     try {
       final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAssepontoNova! + _api,
+        url: Config.conf.apiAssepontoNova! + _api, timeout: 5,
           body: {
             "Email": email.trim().replaceAll(' ', ''),
             "Senha": senha.trim().replaceAll(' ', ''),
