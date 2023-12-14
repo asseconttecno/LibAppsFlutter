@@ -32,7 +32,7 @@ class RegistroService {
 
     DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAssepontoNova! + _api, decoder: false,
+        url: Config.conf.apiAssepontoNova! + _api, decoder: false, timeout: 8,
         body: {
           "UserId": user.funcionario?.funcionarioId.toString(),
           "Database": user.databaseId.toString(),
