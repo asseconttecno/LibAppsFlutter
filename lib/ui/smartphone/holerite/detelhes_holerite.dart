@@ -417,19 +417,21 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             String? html;
             try {
               carregar(context);
-              if(kIsWeb){
-                b = await context.read<HoleriteManager>().holeriteresumoBytes(
-                    UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+              b = await context.read<HoleriteManager>().holeriteresumoBytes(
+                  UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+
+              /*if(kIsWeb){
+
               }else{
                 a = await context.read<HoleriteManager>().holeriteresumo(
                     UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
-              }
+              }*/
             } catch(e){
               debugPrint(e.toString());
             } finally {
               Navigator.pop(context);
             }
-            if(a != null || b != null || html != null){
+            if(b != null){
               await Navigator.push(context, MaterialPageRoute(
                   builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}',
                     file: a, memori: b, html: html,)));

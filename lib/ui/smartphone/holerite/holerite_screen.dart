@@ -40,6 +40,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
 
     return Consumer2<UserHoleriteManager,HoleriteManager>(
         builder: (_, use, holerite, __){
+
           Future<List<HoleriteModel>?> dadosHolerite() async {
             List<HoleriteModel>? _holerite;
             try{

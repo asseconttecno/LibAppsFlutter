@@ -53,7 +53,7 @@ class HoleriteModel {
 
   factory HoleriteModel.fromMap(Map<String, dynamic> json) => HoleriteModel(
     holeriteTipo: json["holeriteTipo"],
-    holeriteTipoCod: competenciaCodigo(json["holeriteTipo"]),
+    holeriteTipoCod: json["HoleriteTipoId"] ?? competenciaCodigo(json["holeriteTipo"]),
     vencimentos: json["vencimentos"] == null ? null : double.tryParse(json["vencimentos"].toString().replaceAll('.', '').replaceAll(',', '.')),
     descontos: json["descontos"] == null ? null : double.tryParse(json["descontos"].toString().replaceAll('.', '').replaceAll(',', '.')),
     liquido: json["liquido"] == null ? null : double.tryParse(json["liquido"].toString().replaceAll('.', '').replaceAll(',', '.')),
@@ -89,8 +89,12 @@ class HoleriteModel {
         return 6;
       case "Abono":
         return 7;
-      case "Domestica":
+      case "Salário Domestica":
         return 8;
+      case "1ª Parcela 13º Domestica":
+        return 9;
+      case "2ª Parcela 13º Domestica":
+        return 10;
       default:
         return 1;
     }
