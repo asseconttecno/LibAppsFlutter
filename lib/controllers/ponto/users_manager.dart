@@ -154,10 +154,6 @@ class UserPontoManager extends ChangeNotifier {
   cleanPreferences() async {
     try{
       final prefs = await SharedPreferences.getInstance();
-      prefs.remove("user");
-      prefs.remove("login");
-      prefs.remove("usenha");
-      prefs.remove("senha");
       prefs.remove("autologin");
     } catch(e) {
       debugPrint(e.toString());
