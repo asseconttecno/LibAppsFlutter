@@ -94,7 +94,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
               Row(
                 mainAxisAlignment: !ResponsiveBreakpoints.of(context).isMobile
                     && !ResponsiveBreakpoints.of(context).isPhone ?
-                    width >= 1500 ?  MainAxisAlignment.center : MainAxisAlignment.end : MainAxisAlignment.center,
+                    width >= 1500 ?  MainAxisAlignment.center :
+                    MainAxisAlignment.end : MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 35,
@@ -142,41 +143,42 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                 SizedBox(height: 20,),
 
               if(!kIsWeb)
-              Container(
-                height: 35,
-                margin: const EdgeInsets.symmetric(horizontal: 40,),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.grey, width: 1)
+                Container(
+                  height: 35,
+                  margin: const EdgeInsets.symmetric(horizontal: 40,),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.grey, width: 1)
+                  ),
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: context.watch<HoleriteManager>().dropdowntipo,
+                    iconSize: 20,
+                    elevation: 0,
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
+                    style: TextStyle(color: Colors.black),
+                    underline: Container(),
+                    onChanged: (newValue) async {
+                      setState(() {
+                        context.read<HoleriteManager>().dropdowntipo = newValue!;
+                        holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
+                      });
+                    },
+                    items: widget.holerite.map((e) => e.holeriteTipo).toList()
+                        .map<DropdownMenuItem<String>>(( value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Padding(
+                          padding:  const EdgeInsets.symmetric(vertical: 8),
+                          child: CustomText.text(value ?? ''),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: context.watch<HoleriteManager>().dropdowntipo,
-                  iconSize: 20,
-                  elevation: 0,
-                  icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                  style: TextStyle(color: Colors.black),
-                  underline: Container(),
-                  onChanged: (newValue) async {
-                    setState(() {
-                      context.read<HoleriteManager>().dropdowntipo = newValue!;
-                      holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
-                    });
-                  },
-                  items: widget.holerite.map((e) => e.holeriteTipo).toList()
-                      .map<DropdownMenuItem<String>>(( value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Padding(
-                        padding:  const EdgeInsets.symmetric(vertical: 8),
-                        child: CustomText.text(value ?? ''),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+
               Container(
                 height: 195, width: width,
                 padding: EdgeInsets.symmetric(
@@ -190,14 +192,15 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 10,
+                      width: 110,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10,
                           horizontal: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
                               && !ResponsiveBreakpoints.of(context).isPhone ? 40 : 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: 110,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.blue[900],
@@ -212,7 +215,6 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           ),
                           const SizedBox(height: 10,),
                           Container(
-                            width: 110,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.red[900],
@@ -227,7 +229,6 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           ),
                           const SizedBox(height: 10,),
                           Container(
-                            width: 110,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.orange,
@@ -247,6 +248,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                     Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                        width: width * 0.59  > width - 110 ? width - 110 : width * 0.59,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
@@ -256,7 +258,6 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                             const SizedBox(height: 4,),
                             Container(
                               height: 138,
-                              width: width * 0.59 ,
                               constraints: kIsWeb
                                   && !ResponsiveBreakpoints.of(context).isMobile
                                   && !ResponsiveBreakpoints.of(context).isPhone ? BoxConstraints(maxWidth: width >= 852 ? 400 : 300) : null,
