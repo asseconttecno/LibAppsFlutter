@@ -44,8 +44,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
         holerite = _temp.first;
       }
     }
-    holerite ??= widget.holerite.first;
-    context.read<HoleriteManager>().dropdowntipoInit(holerite?.holeriteTipo ?? '');
+    if(widget.holerite.isNotEmpty){
+      holerite ??= widget.holerite.first;
+      context.read<HoleriteManager>().dropdowntipoInit(holerite?.holeriteTipo ?? '');
+    }
   }
 
   @override
