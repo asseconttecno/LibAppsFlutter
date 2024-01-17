@@ -13,9 +13,9 @@ class HttpCli {
   final ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
 
   Future<MyHttpResponse> get(
-      {required String url, Map<String, String>? headers, bool decoder = true, bool bits = false,}) async {
+      {required String url, Map<String, String>? headers, bool decoder = true, bool bits = false, bool isCon = true,}) async {
 
-      if(!connectionStatus.hasConnection){
+      if(isCon && !connectionStatus.hasConnection){
         return MyHttpResponse(
           isSucess: false,
           httpError: HttpError.conection,

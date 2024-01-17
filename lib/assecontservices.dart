@@ -51,16 +51,22 @@ class Assecontservices {
     Config.conf = config;
     final packageInfo = await PackageInfo.fromPlatform();
     Config.versao = packageInfo.version;
+    bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
+
+
     if(!kIsWeb){
-      try {
-        if(Config.isIOS) {
-          Config.isJailBroken = await SafeDevice.isJailBroken;
-        }
-        if(!Config.isWin){
-          Config.isRealDevice = await SafeDevice.isRealDevice;
-          Config.canMockLocation = await SafeDevice.canMockLocation;
-        }
-      }  catch (e) {}
+      if(ponto){
+        try {
+          if(Config.isIOS) {
+            Config.isJailBroken = await SafeDevice.isJailBroken;
+          }
+          if(!Config.isWin){
+            Config.isRealDevice = await SafeDevice.isRealDevice;
+            Config.canMockLocation = await SafeDevice.canMockLocation;
+          }
+        }  catch (e) {}
+      }
+
 
       try {
         final BiometriaServices _bio = BiometriaServices();
@@ -68,7 +74,6 @@ class Assecontservices {
       } catch (e) {}
     }
 
-    bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
 
     List<SingleChildWidget> _providers = [
       if(ponto)

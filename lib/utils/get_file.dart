@@ -14,14 +14,15 @@ import '../services/http/http_cliente.dart';
 class CustomFile {
 
   static Future<File> getFileUrl(String url) async {
-    final responseData = await HttpCli().get(url: url, bits: true);
+    final responseData = await HttpCli().get(url: url, bits: true, isCon: false);
 
     var buffer = responseData.data.buffer;
     ByteData byteData = ByteData.view(buffer);
     String name = DateTime.now().microsecondsSinceEpoch.toString();
 
     var tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/${name}').writeAsBytes(
+
+    File file = await File('${tempDir.path}/${name}.${responseData.extencao ?? 'jpg'}').writeAsBytes(
         buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     return file;
   }
