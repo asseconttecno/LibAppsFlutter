@@ -66,4 +66,17 @@ class UserPontoService {
     }
     return null;
   }
+
+  Future<UsuarioPonto?> authNotificacao() async {
+    try{
+      List? _user = await _pontoService.getUser();
+      if(_user != null && _user.isNotEmpty){
+        UsuarioPonto user = UsuarioPonto.fromMap(_user.first, true);
+        return user;
+      }
+    }catch(e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
 }
