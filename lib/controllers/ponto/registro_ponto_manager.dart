@@ -114,6 +114,27 @@ class RegistroManger {
     }
   }
 
+  enviarMarcacoesNotificacao() async {
+    try{
+      final _user = await UserPontoService().authNotificacao();
+
+      List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(_user?.funcionario?.funcionarioId);
+      if(marcacao != null && marcacao.isNotEmpty) {
+        final result =  await _service.postPontoMarcacoesOffline(
+            UserPontoManager.susuario, marcacao,
+            delete: false
+        );
+        if(result == MarcacaoOffStatus.Sucess){
+          debugPrint('enviarMarcacoesNotificacao sucess');
+        }else{
+          debugPrint('enviarMarcacoesNotificacao erro');
+        }
+      }
+    }catch(e){
+      debugPrint("erro enviarMarcacoes offline ${e.toString()}");
+    }
+  }
+
   deleteHistorico() async {
     if(!Config.isReenvioMarc){
       _sqlitePonto.deleteHistorico(UserPontoManager.susuario?.funcionario?.funcionarioId);
