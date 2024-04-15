@@ -11,7 +11,7 @@ class UserHoleriteService {
   final HttpCli _http = HttpCli();
 
 
-  Future<List<UsuarioHolerite>?> signInAuth({required String email, required String senha}) async {
+  Future<List<UsuarioHolerite>?> signInAuth({required String email, required String senha, String? token}) async {
     String _metodo = '/holerite/login';
     try{
       String _email = CPFValidator.isValid(email) ?
@@ -21,7 +21,8 @@ class UserHoleriteService {
           url: Config.conf.apiHoleriteEmail! + _metodo,
           body: <String, dynamic>{
             "Email": _email,
-            "Senha": senha
+            "Senha": senha,
+            "Token": token
           }
       );
 

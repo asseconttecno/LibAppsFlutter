@@ -21,6 +21,7 @@ class UserHoleriteManager extends ChangeNotifier {
 
   List<UsuarioHolerite>? listuser;
 
+  static String? token;
   static UsuarioHolerite? sUser;
   UsuarioHolerite? get user => sUser;
   set user(UsuarioHolerite? v){
@@ -72,7 +73,7 @@ class UserHoleriteManager extends ChangeNotifier {
   }
 
   Future<bool> signInAuth({required String email, required String senha}) async {
-    listuser = await _service.signInAuth(email: email, senha: senha);
+    listuser = await _service.signInAuth(email: email, senha: senha, token: token);
     user = listuser!.last;
     memorizar();
     return true;
