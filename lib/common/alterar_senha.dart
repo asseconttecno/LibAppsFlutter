@@ -123,7 +123,7 @@ class _AlertSenhaState extends State<AlertSenha> {
             padding: const EdgeInsets.symmetric(horizontal: 10,),
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: Config.corPri,
               ),
               child: Center(

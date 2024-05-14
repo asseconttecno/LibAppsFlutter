@@ -22,7 +22,7 @@ dependencies:
   sqflite_common_ffi: ^2.3.0+4
   sqflite_common_ffi_web: ^0.4.0
 
-  responsive_framework: ^1.1.1
+  responsive_framework: 1.1.1
   ###^0.2.0
 
   http: ^1.1.0
@@ -32,7 +32,7 @@ dependencies:
   image_picker: ^1.0.4
   filesystem_picker: ^4.0.0 #^2.0.2
 
-  local_auth: ^2.1.7
+  local_auth: 2.1.7
 
   photo_view: ^0.14.0
 
@@ -84,7 +84,7 @@ dependencies:
   universal_io: ^2.2.2
   universal_html: ^2.2.4
 
-  connectivity_plus: any
+  connectivity_plus: 5.0.2
   package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0
 
