@@ -6,7 +6,7 @@ import '../../config.dart';
 import '../../controllers/controllers.dart';
 
 
-alterUser(BuildContext context){
+alterUser(BuildContext context, Function()? onAlterFunc){
   Widget child = Consumer<UserHoleriteManager>(
       builder: (_,user,__){
         return Container(
@@ -36,25 +36,30 @@ alterUser(BuildContext context){
                 Container(
                     height: 200,
                     child: ListView.builder(
-                      itemCount: user.listuser?.length ?? 0,
+                      itemCount: user.listFunc.length,
                       itemBuilder: (context, index){
                         return InkWell(
-                            child: Card(elevation: 0.2,
+                            child: Card(
+                              elevation: 0.2,
                               child: ListTile(
                                 leading: Icon(CupertinoIcons.person_crop_circle, size: 40,
-                                  color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null,),
+                                  color: user.listFunc[index] == UserHoleriteManager.funcSelect
+                                      ? Config.corPri : null,),
                                 title: CustomText.text(
-                                  user.listuser![index].empresa?.toUpperCase() ?? "",
+                                  user.listFunc[index].attributes?.office?.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 16,
-                                      color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null
+                                      color: user.listFunc[index] == UserHoleriteManager.funcSelect
+                                          ? Config.corPri : null
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
                                 ),
-                                subtitle: CustomText.text('Registro: ${user.listuser![index].registro ?? ""}',
+                                subtitle: CustomText.text('Registro: ${
+                                    user.listFunc[index].attributes?.reg ?? ""}',
                                   style: TextStyle(fontSize: 13,
-                                      color: user.listuser![index] == context.watch<UserHoleriteManager>().user ? Config.corPri : null),
+                                      color: user.listFunc[index] == UserHoleriteManager.funcSelect
+                                          ? Config.corPri : null),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
@@ -62,8 +67,8 @@ alterUser(BuildContext context){
                               ),
                             ),
                             onTap: () async {
-                              context.read<UserHoleriteManager>().user = user.listuser![index];
-                              context.read<HoleriteManager>().listcompetencias = await context.read<HoleriteManager>().competencias(UserHoleriteManager.sUser);
+                              UserHoleriteManager.funcSelect = user.listFunc[index];
+                              if(onAlterFunc != null) await onAlterFunc();
                               Navigator.pop(context);
                             }
                         );

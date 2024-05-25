@@ -2,65 +2,174 @@
 
 import '../../model.dart';
 
-class UsuarioHolerite {
-  int? id;
-  String? nome;
-  String? empresa;
-  String? cnpj;
-  String? registro;
-  String? cpf;
-  String? email;
-  String? ddd;
-  String? celular;
 
-  UsuarioHolerite({this.id, this.nome, this.empresa, this.email, this.cnpj, this.cpf, this.registro, this.ddd, this.celular});
+class UsuarioHoleriteModel {
+  String? jwt;
+  UserHolerite? user;
 
-  UsuarioHolerite copyWith({
-    String? email, String? nome, String? empresa, String? cpf, String? cnpj, String? registro, String? celular
-  }) => UsuarioHolerite(
-      id: id ?? this.id,
-      nome: nome ?? this.nome,
-      empresa: empresa ?? this.empresa,
-      email: email ?? this.email,
-      cpf: cpf ?? this.cpf,
-      cnpj: cnpj ?? this.cnpj,
-      registro: registro ?? this.registro,
-      ddd: ddd ?? this.ddd,
-      celular: celular ?? this.celular
+  UsuarioHoleriteModel({
+    this.jwt,
+    this.user,
+  });
+
+  UsuarioHoleriteModel copyWith({
+    UsuarioHoleriteModel? user,
+  }) =>
+      UsuarioHoleriteModel(
+        jwt: user?.jwt ?? this.jwt,
+        user: this.user == null ? user?.user : this.user?.copyWith(
+          id: user?.user?.id,
+          username: user?.user?.username,
+          email: user?.user?.email,
+          provider: user?.user?.provider,
+          confirmed: user?.user?.confirmed,
+          blocked: user?.user?.blocked,
+          cpf: user?.user?.cpf,
+          fantasyName: user?.user?.fantasyName,
+          enterpriseName: user?.user?.enterpriseName,
+          phone: user?.user?.phone,
+          stateRegistration: user?.user?.stateRegistration,
+          createdAt: user?.user?.createdAt,
+          updatedAt: user?.user?.updatedAt,
+          name: user?.user?.name,
+          office: user?.user?.office,
+          department: user?.user?.department,
+          isManager: user?.user?.isManager,
+        ),
+      );
+
+  factory UsuarioHoleriteModel.fromMap(Map<String, dynamic> json) => UsuarioHoleriteModel(
+    jwt: json["jwt"],
+    user: json["user"] == null ? null : UserHolerite.fromMap(json["user"]),
   );
 
-  UsuarioHolerite.fromMap(Map map){
-    this.id =   map["id"];
-    this.email = map["email"];
-    this.empresa = map["empresa"];
-    this.nome = map["nome"];
-    this.cpf = map["cpf"];
-    this.cnpj = map["cnpj"];
-    this.registro = map["registro"];
-    this.ddd = map["ddd"];
-    this.celular = map["celular"];
-  }
+  Map<String, dynamic> toMap() => {
+    "jwt": jwt,
+    "user": user?.toMap(),
+  };
+}
 
-  UsuarioHolerite.fromPonto(UsuarioPonto user){
-    this.id = user.funcionario?.funcionarioId;
+class UserHolerite {
+  int? id;
+  String? username;
+  String? email;
+  String? provider;
+  bool? confirmed;
+  bool? blocked;
+  String? cpf;
+  String? fantasyName;
+  String? enterpriseName;
+  String? phone;
+  String? stateRegistration;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? name;
+  String? office;
+  String? department;
+  bool? isManager;
+
+  UserHolerite({
+    this.id,
+    this.username,
+    this.email,
+    this.provider,
+    this.confirmed,
+    this.blocked,
+    this.cpf,
+    this.fantasyName,
+    this.enterpriseName,
+    this.phone,
+    this.stateRegistration,
+    this.createdAt,
+    this.updatedAt,
+    this.name,
+    this.office,
+    this.department,
+    this.isManager,
+  });
+
+  UserHolerite copyWith({
+    int? id,
+    String? username,
+    String? email,
+    String? provider,
+    bool? confirmed,
+    bool? blocked,
+    String? cpf,
+    String? fantasyName,
+    String? enterpriseName,
+    String? phone,
+    String? stateRegistration,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    String? office,
+    String? department,
+    bool? isManager,
+  }) =>
+      UserHolerite(
+        id: id ?? this.id,
+        username: username ?? this.username,
+        email: email ?? this.email,
+        provider: provider ?? this.provider,
+        confirmed: confirmed ?? this.confirmed,
+        blocked: blocked ?? this.blocked,
+        cpf: cpf ?? this.cpf,
+        fantasyName: fantasyName ?? this.fantasyName,
+        enterpriseName: enterpriseName ?? this.enterpriseName,
+        phone: phone ?? this.phone,
+        stateRegistration: stateRegistration ?? this.stateRegistration,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        name: name ?? this.name,
+        office: office ?? this.office,
+        department: department ?? this.department,
+        isManager: isManager ?? this.isManager,
+      );
+
+  factory UserHolerite.fromMap(Map<String, dynamic> json) => UserHolerite(
+    id: json["id"],
+    username: json["username"],
+    email: json["email"],
+    provider: json["provider"],
+    confirmed: json["confirmed"],
+    blocked: json["blocked"],
+    cpf: json["cpf"] ?? '373.771.848-25',
+    fantasyName: json["fantasyName"],
+    enterpriseName: json["enterpriseName"],
+    phone: json["phone"],
+    stateRegistration: json["stateRegistration"],
+    createdAt: json["createdAt"] == null ? null : DateTime.tryParse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.tryParse(json["updatedAt"]),
+    name: json["name"],
+    office: json["office"],
+    department: json["department"],
+    isManager: json["isManager"],
+  );
+
+  UserHolerite.fromPonto(UsuarioPonto user){
     this.email = user.funcionario?.email;
-    this.nome = user.funcionario?.nome;
+    this.name = user.funcionario?.nome;
     this.cpf = user.funcionario?.cpf;
-    this.cnpj = user.funcionario?.cnpj;
-    this.registro = user.funcionario?.registro;
   }
 
-  Map<String, dynamic> toMap(){
-    return {
-      'id': id,
-      'email': email,
-      'empresa': empresa,
-      'nome': nome,
-      'cpf': cpf,
-      'cnpj': cnpj,
-      'registro': registro,
-      'ddd': ddd,
-      'celular': celular,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "username": username,
+    "email": email,
+    "provider": provider,
+    "confirmed": confirmed,
+    "blocked": blocked,
+    "cpf": cpf,
+    "fantasyName": fantasyName,
+    "enterpriseName": enterpriseName,
+    "phone": phone,
+    "stateRegistration": stateRegistration,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "name": name,
+    "office": office,
+    "department": department,
+    "isManager": isManager,
+  };
 }

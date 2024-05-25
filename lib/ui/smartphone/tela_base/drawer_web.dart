@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class DrawerWebView extends StatefulWidget {
-  Widget foto;
+  Widget? foto;
   String? titulo;
   List<Widget> children;
 
@@ -25,14 +25,17 @@ class _DrawerWebViewState extends State<DrawerWebView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: widget.foto,
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Divider(),
-        ),
+        if(widget.foto != null)...[
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: widget.foto,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Divider(),
+          ),
+        ],
+
         Expanded(
           child: ListView(
             children: widget.children

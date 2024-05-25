@@ -93,7 +93,7 @@ class UserPontoManager extends ChangeNotifier {
   Future<bool> signInAuth({required String email,required String senha, String? token}) async {
     usuario = await _service.signInAuth(email: email, senha: senha, token: token);
     if(usuario?.app ?? false){
-      UserHoleriteManager.sUser = UsuarioHolerite.fromPonto(usuario!);
+      UserHoleriteManager.user?.user = UserHolerite.fromPonto(usuario!);
     }
     Config.usenha = senha;
     usenha = senha;

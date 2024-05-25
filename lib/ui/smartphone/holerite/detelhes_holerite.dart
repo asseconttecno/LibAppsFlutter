@@ -1,12 +1,12 @@
 import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
-import 'package:universal_io/io.dart';
+import 'package:assecontservices/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
+import 'package:universal_io/io.dart';
 import 'package:intl/intl.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as common;
@@ -21,42 +21,14 @@ import '../../../model/model.dart';
 
 
 class DetalhesHolerite extends StatefulWidget {
-  final List<HoleriteModel> holerite;
-  final int idComp;
-  final int mes;
-  final int ano;
-  DetalhesHolerite(this.holerite, this.idComp, this.mes, this.ano);
+  DatumHolerite holerite;
+  DetalhesHolerite(this.holerite);
 
   @override
-  _DetalhesHoleriteState createState() => _DetalhesHoleriteState();
+  State<DetalhesHolerite> createState() => _DetalhesHoleriteState();
 }
 
 class _DetalhesHoleriteState extends State<DetalhesHolerite> {
-  bool load = false;
-  HoleriteModel? holerite;
-  var mask = NumberFormat.currency(locale: 'pt_Br', customPattern: 'R\$#,##0.00');
-
-  init(){
-    if(context.read<HoleriteManager>().dropdowntipo != ''){
-      List<HoleriteModel>? _temp  = widget.holerite.where((e) =>
-        e.holeriteTipo == context.read<HoleriteManager>().dropdowntipo).toList();
-      if(_temp.isNotEmpty){
-        holerite = _temp.first;
-      }
-    }
-    if(widget.holerite.isNotEmpty){
-      holerite ??= widget.holerite.first;
-      context.read<HoleriteManager>().dropdowntipoInit(holerite?.holeriteTipo ?? '');
-    }
-  }
-
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
-
-
   double getPorcentagem(double valor, double total){
     if(total == 0){
       return 0.0;
@@ -76,6 +48,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(title: Text('${widget.holerite.attributes?.type ?? ''} ${widget.holerite.attributes?.competence ?? ''}'),),
       body: Container(
         decoration: BoxDecoration(
             border: Border(bottom: BorderSide(width: 70,
@@ -90,95 +63,6 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
-              if(kIsWeb)
-              Row(
-                mainAxisAlignment: !ResponsiveBreakpoints.of(context).isMobile
-                    && !ResponsiveBreakpoints.of(context).isPhone ?
-                    width >= 1500 ?  MainAxisAlignment.center :
-                    MainAxisAlignment.end : MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 40,),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    constraints: BoxConstraints(
-                        maxWidth: !ResponsiveBreakpoints.of(context).isMobile
-                            && !ResponsiveBreakpoints.of(context).isPhone
-                            ? width >= 1052 ? 400 : 200 : 250 ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Colors.grey, width: 1)
-                    ),
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      value: context.watch<HoleriteManager>().dropdowntipo,
-                      iconSize: 20,
-                      elevation: 0,
-                      dropdownColor: Colors.white,
-                      icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                      style: TextStyle(color: Colors.black),
-                      underline: Container(),
-                      onChanged: (newValue) async {
-                        setState(() {
-                          context.read<HoleriteManager>().dropdowntipo = newValue!;
-                          holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
-                        });
-                      },
-                      items: widget.holerite.map((e) => e.holeriteTipo).toList()
-                          .map<DropdownMenuItem<String>>(( value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Padding(
-                            padding:  const EdgeInsets.symmetric(vertical: 8),
-                            child: CustomText.text(value ?? ''),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-              if(kIsWeb)
-                SizedBox(height: 20,),
-
-              if(!kIsWeb)
-                Container(
-                  height: 35,
-                  margin: const EdgeInsets.symmetric(horizontal: 40,),
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.grey, width: 1)
-                  ),
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: context.watch<HoleriteManager>().dropdowntipo,
-                    iconSize: 20,
-                    elevation: 0,
-                    icon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                    style: TextStyle(color: Colors.black),
-                    underline: Container(),
-                    onChanged: (newValue) async {
-                      setState(() {
-                        context.read<HoleriteManager>().dropdowntipo = newValue!;
-                        holerite = widget.holerite.firstWhere((e) => e.holeriteTipo == newValue);
-                      });
-                    },
-                    items: widget.holerite.map((e) => e.holeriteTipo).toList()
-                        .map<DropdownMenuItem<String>>(( value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Padding(
-                          padding:  const EdgeInsets.symmetric(vertical: 8),
-                          child: CustomText.text(value ?? ''),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-
               Container(
                 height: 195, width: width,
                 padding: EdgeInsets.symmetric(
@@ -207,7 +91,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: CustomText.text("Proventos\n${mask.format(holerite?.vencimentos ?? 0)}",
+                              child: CustomText.text("Proventos\n${
+                                  widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos.real()}",
                                 textAlign: TextAlign.center, autoSize: true,
                                 style: const TextStyle(color: Colors.white),
                               ),
@@ -221,7 +106,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: CustomText.text("Descontos\n${mask.format(holerite?.descontos ?? 0)}",
+                              child: CustomText.text("Descontos\n${
+                                  widget.holerite.attributes?.data?.funcionarioResumo?.totalDescontos.real()}",
                                 textAlign: TextAlign.center, autoSize: true,
                                 style: const TextStyle(color: Colors.white),
                               ),
@@ -235,7 +121,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 borderRadius: BorderRadius.circular(30)
                             ),
                             child: Center(
-                              child: CustomText.text("Liquido\n${mask.format(holerite?.liquido ?? 0)}",
+                              child: CustomText.text("Liquido\n${
+                                  widget.holerite.attributes?.data?.funcionarioResumo?.liquido.real()}",
                                 textAlign: TextAlign.center, autoSize: true,
                                 style: const TextStyle(color: Colors.white),
                               ),
@@ -249,6 +136,12 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                         width: width * 0.59  > width - 110 ? width - 110 : width * 0.59,
+                        decoration: BoxDecoration(
+                            color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                                && !ResponsiveBreakpoints.of(context).isPhone
+                                ? Colors.white : Colors.grey[100],
+                            borderRadius: BorderRadius.circular(15)
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
@@ -260,7 +153,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                               height: 138,
                               constraints: kIsWeb
                                   && !ResponsiveBreakpoints.of(context).isMobile
-                                  && !ResponsiveBreakpoints.of(context).isPhone ? BoxConstraints(maxWidth: width >= 852 ? 400 : 300) : null,
+                                  && !ResponsiveBreakpoints.of(context).isPhone
+                                  ? BoxConstraints(maxWidth: width >= 852 ? 400 : 300) : null,
                               child: charts.PieChart<String>([charts.Series<ChartPizza, String>(
                                   id: 'Pizza',
                                   domainFn: (ChartPizza sales, _) => sales.desc,
@@ -274,18 +168,26 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                   },
                                   data: [
                                     ChartPizza('Proventos',
-                                      getPorcentagem(holerite?.vencimentos ?? 10.0,
-                                          holerite?.vencimentos != null && holerite?.liquido != null
-                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
-                                          holerite?.vencimentos != null || holerite?.liquido != null
-                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),
+                                      getPorcentagem(widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos ?? 10.0,
+                                          widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos != null
+                                              && widget.holerite.attributes?.data?.funcionarioResumo?.liquido != null
+                                              ? (widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos ?? 0)
+                                              + (widget.holerite.attributes?.data?.funcionarioResumo?.liquido ?? 0) :
+                                          widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos != null
+                                              || widget.holerite.attributes?.data?.funcionarioResumo?.liquido != null
+                                              ? (widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos ?? 0)
+                                              + (widget.holerite.attributes?.data?.funcionarioResumo?.liquido ?? 0) : 100.0),
                                     ),
                                     ChartPizza('Liquido',
-                                      getPorcentagem(holerite?.liquido ?? 0.0,
-                                          holerite?.vencimentos != null && holerite?.liquido != null
-                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) :
-                                          holerite?.vencimentos != null || holerite?.liquido != null
-                                              ? (holerite?.vencimentos ?? 0) + (holerite?.liquido ?? 0) : 100.0),)
+                                      getPorcentagem(widget.holerite.attributes?.data?.funcionarioResumo?.liquido ?? 0.0,
+                                          widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos != null
+                                              && widget.holerite.attributes?.data?.funcionarioResumo?.liquido != null
+                                              ? (widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos ?? 0)
+                                              + (widget.holerite.attributes?.data?.funcionarioResumo?.liquido ?? 0) :
+                                          widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos != null
+                                              || widget.holerite.attributes?.data?.funcionarioResumo?.liquido != null
+                                              ? (widget.holerite.attributes?.data?.funcionarioResumo?.totalVencimentos ?? 0)
+                                              + (widget.holerite.attributes?.data?.funcionarioResumo?.liquido ?? 0) : 100.0),)
                                   ],
                                   labelAccessorFn: (ChartPizza sales, _) => '${sales.valor.toString()}%')
                               ],
@@ -302,7 +204,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                       horizontalFirst: true,
                                       cellPadding: EdgeInsets.only(left: width * 0.06, bottom: 2),
                                       entryTextStyle: common.TextStyleSpec(
-                                        fontSize: (11).toInt(), color: charts.MaterialPalette.black,
+                                        fontSize: (11).toInt(),
+                                        color: charts.MaterialPalette.black,
                                       ),
                                       showMeasures: false,
                                       legendDefaultMeasure: charts.LegendDefaultMeasure.none,
@@ -312,10 +215,12 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                       arcRendererDecorators: [
                                         charts.ArcLabelDecorator(
                                           insideLabelStyleSpec: charts.TextStyleSpec(
-                                            fontSize: (12).toInt(), color: charts.MaterialPalette.white,
+                                            fontSize: (12).toInt(),
+                                            color: charts.MaterialPalette.white,
                                           ),
                                           outsideLabelStyleSpec: charts.TextStyleSpec(
-                                            fontSize: (11).toInt(), color: charts.MaterialPalette.black,
+                                            fontSize: (11).toInt(),
+                                            color: charts.MaterialPalette.black,
                                           ),
                                           labelPosition: charts.ArcLabelPosition.auto,
                                         )
@@ -333,17 +238,23 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Colors.white : Colors.grey[100],
+                      color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                          && !ResponsiveBreakpoints.of(context).isPhone
+                          ? Colors.white : Colors.grey[100],
                       borderRadius: BorderRadius.circular(15)
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      CustomText.text('Líquido nos ultimos ${kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-                      && !ResponsiveBreakpoints.of(context).isPhone  ? '6' : '3'} meses', style: const TextStyle(color: Colors.black),),
+                      CustomText.text('Líquido nos ultimos ${kIsWeb
+                          && !ResponsiveBreakpoints.of(context).isMobile
+                          && !ResponsiveBreakpoints.of(context).isPhone
+                          ? '6' : '3'} meses',
+                        style: const TextStyle(color: Colors.black),),
                       const SizedBox(height: 10,),
-                      Container(height: height * 0.25,
+                      SizedBox(
+                        height: height * 0.25,
                         child: charts.BarChart(
                           [charts.Series<ChartColum, String>(
                             id: 'Holerites',
@@ -352,7 +263,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                             domainFn: (ChartColum sales, _) => sales.data,
                             measureFn: (ChartColum sales, _) => sales.valor,
                             colorFn: (_, __) => colors.Color.fromHex( code: 'f0D47A1'),
-                            data: HoleriteModel().toColum(holerite!.historicos!.toList(), context),
+                            data: context.read<HoleriteManager>().filtroHolerite(widget.holerite, kIsWeb
+                                && !ResponsiveBreakpoints.of(context).isMobile
+                                && !ResponsiveBreakpoints.of(context).isPhone
+                                ? 6 : 3),
                             labelAccessorFn: (ChartColum sales, _) =>
                             'R\$${sales.valor.toInt()}',
                           ),
@@ -361,9 +275,11 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                             charts.SelectionModelConfig<String>(
                               type: charts.SelectionModelType.info,
                               updatedListener: (v){
-                                if(v.selectedDatum.length > 0){
-                                  context.read<HoleriteManager>().dropdowndata = v.selectedDatum.first.datum.data;
-
+                                if(v.selectedDatum.isNotEmpty){
+                                  setState(() {
+                                    widget.holerite = context.read<HoleriteManager>()
+                                        .selectHolerite(v.selectedDatum.first.datum.ind);
+                                  });
                                 }
                               }
                             )
@@ -372,10 +288,10 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                           vertical: true,
                           domainAxis: charts.OrdinalAxisSpec(
                               renderSpec: charts.SmallTickRendererSpec(
-
-                                // Tick and Label styling here.
                                   labelStyle: charts.TextStyleSpec(
-                                      fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), // size in Pts.
+                                      fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                                          && !ResponsiveBreakpoints.of(context).isPhone
+                                          ? 12 : (width * 0.03).toInt(), // size in Pts.
                                       color: charts.MaterialPalette.black),
 
                                   // Change the line colors to match text color.
@@ -386,10 +302,16 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                                 labelPadding: (height * 0.020).toInt(),
                                 labelPlacement: common.BarLabelPlacement.opposeAxisBaseline,
                                 insideLabelStyleSpec: charts.TextStyleSpec(
-                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), color: charts.MaterialPalette.white,
+                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                                      && !ResponsiveBreakpoints.of(context).isPhone
+                                      ? 12 : (width * 0.03).toInt(),
+                                  color: charts.MaterialPalette.white,
                                 ),
                                 outsideLabelStyleSpec: charts.TextStyleSpec(
-                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? 12 : (width * 0.03).toInt(), color: charts.MaterialPalette.black,
+                                  fontSize: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                                      && !ResponsiveBreakpoints.of(context).isPhone
+                                      ? 12 : (width * 0.03).toInt(),
+                                  color: charts.MaterialPalette.black,
                                 )
                             ),
                             cornerStrategy: const charts.ConstCornerStrategy(20),
@@ -400,7 +322,8 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
                   )
               ),
               const SizedBox(height: 15,),
-              CustomText.text("Disponibilizado\n${holerite?.dataCriacao ?? ''}", textAlign: TextAlign.center,),
+              CustomText.text("Disponibilizado\n${widget.holerite.attributes?.createDate ?? ''}",
+                textAlign: TextAlign.center,),
             ],
           ),
         ),
@@ -420,14 +343,14 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             String? html;
             try {
               carregar(context);
-              b = await context.read<HoleriteManager>().holeriteresumoBytes(
-                  UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+              //b = await context.read<HoleriteManager>().holeriteresumoBytes(
+              //    UserHoleriteManager.user, idComp, mes, ano, holerite?.holeriteTipoCod );
 
               /*if(kIsWeb){
 
               }else{
                 a = await context.read<HoleriteManager>().holeriteresumo(
-                    UserHoleriteManager.sUser, widget.idComp, widget.mes, widget.ano, holerite?.holeriteTipoCod );
+                    UserHoleriteManager.sUser, idComp, mes, ano, holerite?.holeriteTipoCod );
               }*/
             } catch(e){
               debugPrint(e.toString());
@@ -436,7 +359,7 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
             }
             if(b != null){
               await Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=> FileHero( 'holerite-${widget.ano}-${widget.mes}',
+                  builder: (context)=> FileHero( 'holerite-${widget.holerite.attributes?.year}-${widget.holerite.attributes?.month}',
                     file: a, memori: b, html: html,)));
             }else{
               InfoAlertBox(

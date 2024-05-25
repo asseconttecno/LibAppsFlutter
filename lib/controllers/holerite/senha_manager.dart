@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:assecontservices/assecontservices.dart';
+import '../../config.dart';
+import '../../services/holerite/senha.dart';
+import '../controllers.dart';
 
 
 class SenhaHoleriteManager extends ChangeNotifier {
@@ -20,19 +22,20 @@ class SenhaHoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> sendPass({String? email, String? cpf, }) async {
-    String? result = await _service.sendPass(email: email, cpf: cpf);
+  Future<bool?> sendPass({String? email, String? cpf, }) async {
+    bool? result = await _service.sendPass(email: email, cpf: cpf);
     return result;
   }
 
   Future<bool> alteracaoPass(BuildContext context, {required String senha, required String senhaNova,}) async {
-    bool? result = await _service.alteracaoPass(id: UserHoleriteManager.sUser!.id!, senha: senha, senhaNova: senhaNova);
-    if(result ?? false){
+    final result = await _service.alteracaoPass(senha: senha, senhaNova: senhaNova);
+    if(result != null){
       Config.usenha = senhaNova;
       context.read<UserHoleriteManager>().senha.text = senhaNova;
+      UserHoleriteManager.user?.copyWith(user: result);
       context.read<UserHoleriteManager>().memorizar();
     }
-    return result ?? false;
+    return result != null;
   }
 
   ofuscarEmail(String e){

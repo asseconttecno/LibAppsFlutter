@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 
 
+import '../../controllers/holerite/user_manager.dart';
 import '../../enums/versao_app.dart';
 import '../http/http.dart';
 import '../../model/model.dart';
@@ -18,51 +19,36 @@ import '../../config.dart';
 class HoleriteService  {
   final HttpCli _http = HttpCli();
 
-  Future<List<HoleriteModel>> resumoscreen(int idholerite, int mes, int ano) async {
-    String _api = "/holeriteresumo/resumoscreen";
+  Future<HoleriteModel?> listHolerite(int page, int pageSize) async {
+    String _api = "/holerites?sort=desc&pagination[page]=$page&pagination[pageSize]=${pageSize == 0 ? 25 : pageSize}";
+        "&filters[employee]=${UserHoleriteManager.funcSelect?.id}";
 
-    final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiHolerite! + _api,
-        body: {
-          "Id": idholerite, //'13369340000136',
-          "month": mes,
-          "year": ano,
-        }
+    final MyHttpResponse response = await _http.get(
+      url: Config.conf.apiHoleriteEmail! + _api,
+      headers: {
+        'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}'
+      },
     );
 
     try{
       if(response.isSucess) {
-        List list = response.data;
-        if(list.length > 0) {
-          List<HoleriteModel> comp = list.map((e) => HoleriteModel.fromMap(e)).toList();
-          return comp;
+        final data = response.data;
+        if(data != null) {
+          HoleriteModel? model = HoleriteModel.fromMap(data);
+          return model;
         }
       }
 
     } catch(e) {
       debugPrint(e.toString());
     }
-    return [];
-
   }
 
-  Future<List<CompetenciasModel>> competencias(UsuarioHolerite user) async {
-    String _api = "/holeriteresumo/competenciasid";
-
-    final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiHolerite! + _api,
-        body: {
-          "cnpj": user.cnpj.toString(),
-          "register": user.registro.toString(),
-          "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null : user.cpf,
-        }
-    );
-
+  Future<List<DatumHolerite>> newPageHolerite(int page, int pageSize) async {
     try{
-      if(response.isSucess) {
-        List list = response.data;
-        List<CompetenciasModel> comp = CompetenciasModel().fromList(list);
-        return comp;
+      final result = await listHolerite(page, pageSize);
+      if(result != null && result.data != null && result.data!.isNotEmpty) {
+        return result.data!;
       }
     } catch(e){
       debugPrint(e.toString());
@@ -70,16 +56,20 @@ class HoleriteService  {
     return [];
   }
 
-  Future<File?> holeriteresumo(UsuarioHolerite? user, int idholerite, int mes, int ano, int? tipo) async {
+  Future<File?> holeriteresumo(UsuarioHoleriteModel? user, int idholerite, int mes, int ano, int? tipo) async {
     String _api = "/holeriteresumo";
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiHolerite! + _api, decoder: false,
+          url: Config.conf.apiHolerite! + _api,
+          headers: {
+            'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}'
+          },
+          decoder: false,
           body: {
             "Id": idholerite,
-            "cnpj": user?.cnpj,
-            "register": user?.registro,
-            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null :  user?.cpf,
+            //"cnpj": user?.cnpj,
+            //"register": user?.registro,
+            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null : user?.user?.cpf,
             "month": mes,
             "year": ano,
             "holeriteType": tipo
@@ -106,16 +96,16 @@ class HoleriteService  {
     }
   }
 
-  Future<Uint8List?> holeriteresumoBytes(UsuarioHolerite? user, int idholerite, int mes, int ano, int? tipo) async {
+  Future<Uint8List?> holeriteresumoBytes(UsuarioHoleriteModel? user, int idholerite, int mes, int ano, int? tipo) async {
     String _api = "/holeriteresumo/holeriteresumoBytes";
     try{
       final MyHttpResponse response = await _http.post(
           url: Config.conf.apiHolerite! + _api,
           body: {
             "Id": idholerite,
-            "cnpj": user?.cnpj,
-            "register": user?.registro,
-            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null :  user?.cpf,
+            //"cnpj": user?.cnpj,
+            //"register": user?.registro,
+            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null :  user?.user?.cpf,
             "month": mes,
             "year": ano,
             "holeriteType": tipo

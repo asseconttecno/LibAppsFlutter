@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
+import '../../model/holerite/usuario/funcionarios.dart';
 import '../../model/model.dart';
+import '../../services/holerite/funcionarios.dart';
 import '../../services/services.dart';
 import '../../config.dart';
 
@@ -13,21 +15,18 @@ import '../../config.dart';
 
 class UserHoleriteManager extends ChangeNotifier {
   final UserHoleriteService _service = UserHoleriteService();
+  final FuncionariosHoleriteService _serviceFunc = FuncionariosHoleriteService();
   final BiometriaServices _serviceBio = BiometriaServices();
   
   UserHoleriteManager(){
     loadBio();
   }
 
-  List<UsuarioHolerite>? listuser;
+  List<DatumFuncionarios> listFunc = [];
+  static DatumFuncionarios? funcSelect;
 
   static String? token;
-  static UsuarioHolerite? sUser;
-  UsuarioHolerite? get user => sUser;
-  set user(UsuarioHolerite? v){
-    sUser = v;
-    notifyListeners();
-  }
+  static UsuarioHoleriteModel? user;
 
   final TextEditingController email = TextEditingController();
   final TextEditingController cpf = TextEditingController();
@@ -46,6 +45,8 @@ class UserHoleriteManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("user", email.text);
     await prefs.setString("usenha", senha.text);
+    if(usenha == '') usenha = senha.text;
+    if(uemail == '') uemail = email.text;
     Config.usenha = usenha;
     if(status){
       await prefs.setString("senha", senha.text);
@@ -73,9 +74,11 @@ class UserHoleriteManager extends ChangeNotifier {
   }
 
   Future<bool> signInAuth({required String email, required String senha}) async {
-    listuser = await _service.signInAuth(email: email, senha: senha, token: token);
-    user = listuser!.last;
+    user = await _service.signInAuth(email: email, senha: senha, token: token);
+    listFunc = await _serviceFunc.listFuncionarios();
     memorizar();
+    if(listFunc.isNotEmpty) funcSelect = listFunc.last;
+    notifyListeners();
     return true;
   }
 
@@ -92,8 +95,25 @@ class UserHoleriteManager extends ChangeNotifier {
     return result;
   }
 
+  Future<bool> updateFunc({String? accountBank, String? pixKeyBank, String? email,
+    String? phone, String? agencyBank, String? typeBank, String? codeBank, }) async {
+
+   final result = await _serviceFunc.updateFuncionario(
+     id: funcSelect?.id, phone: phone, email: email, accountBank: accountBank,
+     typeBank: typeBank, codeBank: codeBank,  pixKeyBank: pixKeyBank, agencyBank: agencyBank,
+   );
+   if(result != null){
+     funcSelect = result;
+     listFunc = listFunc.map((e) => e.id == result.id ? result : e).toList();
+     notifyListeners();
+     return true;
+   }else{
+     return false;
+   }
+  }
+
   Future<bool> deleteUser() async {
-    bool result = await _service.deleteUser(user?.id);
+    bool result = true;//await _service.deleteUser(user?.id);
     if(result){
       signOut();
     }
@@ -103,7 +123,8 @@ class UserHoleriteManager extends ChangeNotifier {
   signOut(){
     cleanPreferebces();
     user = null;
-    listuser = null;
+    listFunc.clear();
+    funcSelect = null;
     _status = false;
     uemail = '';
     usenha = '';

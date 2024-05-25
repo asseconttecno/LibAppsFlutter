@@ -109,12 +109,6 @@ class Assecontservices {
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
           lazy: true,
-          create: (_)=> InformeManager(),
-        ),
-
-      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-        ChangeNotifierProvider(
-          lazy: true,
           create: (_)=> PrimeiroAcessoHoleriteManager(),
         ),
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
@@ -255,14 +249,14 @@ class _MyAppState extends State<MyApp> {
           foregroundColor: Colors.white,
           backgroundColor: Config.corPri,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 0, scrolledUnderElevation: 0,
-          backgroundColor: ThemeData.dark().primaryColor,
-          titleTextStyle: const TextStyle(color: Config.corPri,),
-          toolbarTextStyle: const TextStyle(color: Config.corPri,fontSize: 18),
-          iconTheme: const IconThemeData(color: Colors.white),
-          actionsIconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Colors.black87,
+          titleTextStyle: TextStyle(color: Config.corPri,),
+          toolbarTextStyle: TextStyle(color: Config.corPri,fontSize: 18),
+          iconTheme: IconThemeData(color: Colors.white),
+          actionsIconTheme: IconThemeData(color: Colors.white),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ) : ThemeData.light(useMaterial3: true).copyWith(
@@ -286,7 +280,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         final MediaQueryData data = MediaQuery.of(context);
         return MediaQuery(
-          data: data.copyWith(textScaleFactor: 1.0),
+          data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
           child: ResponsiveBreakpoints.builder(
             child: child ?? Container(),
             breakpoints: const [

@@ -21,7 +21,7 @@ class CustomScaffold {
   static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height, Widget? buttom,
     required BuildContext context,required Widget body, bool isListView = true, String? foto, Widget? dados,
     GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5,
-    required String appTitle,String? nome, String? cargo}){
+    required String appTitle,String? nome, String? cargo, bool onFoto = true}){
 
     double h = 180 + MediaQuery.of(context).padding.top;
 
@@ -33,7 +33,7 @@ class CustomScaffold {
         cargo:cargo ,
         buttom: buttom,
         listMenus: listMenu,
-        foto: Hero(
+        foto: onFoto ? Hero(
           tag: "foto",
           child: GestureDetector(
             onTap: () async {
@@ -69,7 +69,7 @@ class CustomScaffold {
               ) : null,
             ),
           ),
-        ),
+        ) : null,
         dados: dados,
         appTitle: appTitle
 
@@ -112,9 +112,21 @@ class CustomScaffold {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: dados ?? Container(),
+                    child: dados ??  Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomText.text(nome,
+                            style: const TextStyle(fontSize: 20, color: Colors.white),
+                            textAlign: TextAlign.center,),
+                        CustomText.text(cargo,
+                            style: const TextStyle(fontSize: 14, color: Colors.white),
+                            textAlign: TextAlign.center),
+                      ],
+                    ),
                   ),
                 ),
+                if(onFoto)
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Hero(
@@ -171,7 +183,7 @@ class CustomScaffold {
         child: isListView ?
           ListView(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             children: listMenu,
           ) :
           Row(
@@ -207,12 +219,12 @@ class CustomScaffold {
           minDate: dataMin ?? DateTime(2020),
           maxDate: dataMax ?? DateTime(DateTime.now().year + 1),
           dateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
-          dayOfWeekStyle: TextStyle(color: Config.corPri),
+          dayOfWeekStyle: const TextStyle(color: Config.corPri),
           todayDateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
-          monthStyle: TextStyle(color:  Colors.white),
+          monthStyle: const TextStyle(color:  Colors.white),
           pressedDateBackgroundColor: Colors.white30,
           pressedDateStyle: const TextStyle(color:  Colors.white),
-          weekendsStyle: TextStyle(color: Config.corPri),
+          weekendsStyle: const TextStyle(color: Config.corPri),
           onDatePressed: funcData,
           dayOfWeek: const [
             "Seg",
@@ -250,7 +262,7 @@ class CustomScaffold {
       key: key,
       appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
           && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
-        title: CustomText.text(appTitle, style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
+        title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
         centerTitle: true,
         actions: [
           actions(context, aponta: home, config: conf),
@@ -293,7 +305,7 @@ class CustomScaffold {
 
 
   static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context, Widget? buttom,
-    required Widget body, required List<Widget> listMenus, required Widget foto,
+    required Widget body, required List<Widget> listMenus, Widget? foto,
     Widget? dados, required String appTitle,required String? nome,required String? cargo, }){
 
 
@@ -338,9 +350,9 @@ class CustomScaffold {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText.text(nome,
-                                  style: TextStyle(fontSize: 20), textAlign: TextAlign.center),
+                                  style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
                               CustomText.text(cargo,
-                                  style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                                  style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
                             ],
                           ),
 

@@ -11,57 +11,82 @@ import '../../services/services.dart';
 class HoleriteManager extends ChangeNotifier {
   final HoleriteService _service = HoleriteService();
 
-  List<CompetenciasModel> _listcompetencias = [];
-  List<CompetenciasModel> get listcompetencias => _listcompetencias;
-  set listcompetencias(List<CompetenciasModel> v){
-    _listcompetencias = v;
+  HoleriteModel? holerites;
+  List<DatumHolerite> get listHolerites => holerites?.data ?? [];
+
+
+  bool _load = false;
+  bool get load => _load;
+  set load(bool v){
+    _load = v;
     notifyListeners();
   }
 
-  Future<List<HoleriteModel>> resumoscreen(int? idholerite, int mes, int ano) async {
-    if(idholerite == null ) return [];
-    List<HoleriteModel> result = await _service.resumoscreen(idholerite, mes, ano);
-    return result;
+  int _page = 0;
+  int get page => _page;
+  set page(int v){
+    _page = v;
+    notifyListeners();
   }
-
-  Future<List<CompetenciasModel>> competencias(UsuarioHolerite? user) async {
-    if(user == null ) return [];
-    List<CompetenciasModel> result = await _service.competencias(user);
-    if(result.isNotEmpty){
-      listcompetencias = result;
-      //listcompetencias = listcompetencias.reversed.toList();
-      dropdowndata = result.first.descricao ?? 'Holerites';
+  
+  int _pageSize = 3;
+  int get pageSize => _pageSize;
+  set pageSize(int v){
+    if(_pageSize != v){
+      _page = 0;
+      _pageSize = v;
+      listHolerite();
+      notifyListeners();
     }
-    return result;
   }
 
-  Future<File?> holeriteresumo(UsuarioHolerite? user,  int idholerite, int mes, int ano, int? tipo) async {
-    File? result = await _service.holeriteresumo(user, idholerite, mes, ano, tipo);
-    return result;
+  Future<void> init() async {
+    _page = 0;
+    _pageSize = 3;
+    _load = true;
+    await listHolerite(isLoad: false);
   }
 
-  Future<Uint8List?> holeriteresumoBytes(UsuarioHolerite? user,  int idholerite, int mes, int ano, int? tipo) async {
-    Uint8List? result = await _service.holeriteresumoBytes(user, idholerite, mes, ano, tipo);
-    return result;
+  List<ChartColum> filtroHolerite(DatumHolerite holerite, int filtro){
+    final l = listHolerites.where((e) => e.attributes?.type == holerite.attributes?.type).toList();
+    int end = l.indexWhere((e) => e.id == holerite.id);
+    int start = 0;
+    if(end+1 - filtro > 0){
+      start = end+1 - filtro;
+    }
+    final list = l.getRange(start, end+1).toList();
+    return list.map((e)
+    => ChartColum(e.id ?? 0, '${e.attributes?.competence ?? ''}\n${e.id ?? 0}',
+        e.attributes?.data?.funcionarioResumo?.liquido ?? 0)).toList();
   }
 
+  DatumHolerite selectHolerite(int id) => listHolerites.firstWhere((e) => e.id == id);
 
-  String _dropdowndata = "Holerites";
-  String get dropdowndata => _dropdowndata;
-  set dropdowndata(String v){
-    _dropdowndata = v;
+
+  Future<void> listHolerite({bool isLoad = true}) async {
+    if(isLoad) load = true;
+    final result = await _service.listHolerite(_page, _pageSize);
+    holerites = result;
+    load = false;
     notifyListeners();
   }
 
-  dropdowntipoInit(String v){
-    _dropdowntipo = v;
+  Future<void> newPageHolerite() async {
+    _page += 1;
+    final result = await _service.newPageHolerite(_page, _pageSize);
+    if(result.isNotEmpty){
+      holerites?.data?.addAll(result);
+      notifyListeners();
+    }
   }
 
-  String _dropdowntipo = "";
-  String get dropdowntipo => _dropdowntipo;
-  set dropdowntipo(String v){
-    _dropdowntipo = v;
-    notifyListeners();
+  Future<File?> holeriteresumo(int idholerite, int mes, int ano, int? tipo) async {
+    //File? result = await _service.holeriteresumo(idholerite, mes, ano, tipo);
+    //return result;
   }
 
+  Future<Uint8List?> holeriteresumoBytes(int idholerite, int mes, int ano, int? tipo) async {
+    //Uint8List? result = await _service.holeriteresumoBytes(user, idholerite, mes, ano, tipo);
+    //return result;
+  }
 }

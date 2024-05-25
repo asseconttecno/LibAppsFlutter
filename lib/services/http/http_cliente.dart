@@ -52,11 +52,14 @@ class HttpCli {
               response.headers['content-disposition']!.contains('json') ? 'json' : null
             );
           } else {
+
             throw HttpError.statusCode;
           }
 
         } catch(e){
-          debugPrint('catch ' + e.toString());
+          debugPrint('catch $e');
+          debugPrint(response.statusCode.toString());
+          debugPrint(response.body);
           bool r = e == HttpError.statusCode;
           return MyHttpResponse(
               isSucess: false,

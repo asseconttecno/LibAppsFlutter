@@ -6,16 +6,15 @@ import '../../controllers/controllers.dart';
 import '../../config.dart';
 import '../../common/common.dart';
 import '../../enums/enums.dart';
-import 'func_alter_empresa.dart';
-import 'func_alter_user.dart';
 import 'func_aponta.dart';
 import 'func_config.dart';
 import 'func_sair.dart';
 import 'func_review.dart';
 
 
-actions(BuildContext context, {bool aponta = false, bool registro = false, bool config = false,
-  GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
+actions(BuildContext context, {bool aponta = false, bool registro = false,
+  bool config = false, Function()? onAlter, GlobalKey? keyMenu, GlobalKey? key1,
+  GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5}){
   return Padding(
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
@@ -77,7 +76,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false, bool 
         switch( value ){
           case 0 :
             if(Config.conf.nomeApp == VersaoApp.HoleriteApp) {
-              alterUser(context);
+              alterUser(context, onAlter);
             } else if(Config.conf.nomeApp == VersaoApp.AssewebApp) {
               alterEmpresa(context);
             }

@@ -13,7 +13,6 @@ export 'ponto/registro_ponto.dart';
 export 'ponto/comprovante.dart';
 
 export 'holerite/holerite.dart';
-export 'holerite/informe.dart';
 export 'holerite/primeiro_acesso.dart';
 export 'holerite/usuario.dart';
 export 'holerite/senha.dart';
@@ -32,6 +31,8 @@ export 'biometria.dart';
 export 'sendmail.dart';
 export 'update_app.dart';
 export 'sqlite_ponto.dart';
+
+export 'http/http.dart';
 
 
 abstract class Services {
