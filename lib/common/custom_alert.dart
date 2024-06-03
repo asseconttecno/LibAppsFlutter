@@ -13,7 +13,7 @@ class CustomAlert {
     return SuccessAlertBox(
         context: context,
         title: 'Sucesso!',
-        messageText: mensage + '\n',
+        messageText: '$mensage\n',
         buttonText: 'OK'
     );
   }
@@ -22,7 +22,7 @@ class CustomAlert {
     return InfoAlertBox(
         context: context,
         title: 'Atenção!',
-        infoMessage: mensage + '\n',
+        infoMessage: '$mensage\n',
         buttonText: 'OK'
     );
   }
@@ -31,7 +31,7 @@ class CustomAlert {
     return WarningAlertBox(
         context: context,
         title: 'Falha!',
-        messageText: mensage + '\n',
+        messageText: '$mensage\n',
         buttonText: 'OK'
     );
   }
@@ -43,15 +43,15 @@ class CustomAlert {
     Widget? widgeTitulo,
     String? txtBotaoSucess,
     String? txtBotaoCancel,
-    VoidCallback? funcSucess,
-    VoidCallback? funcCancel}){
+    Function? funcSucess,
+    Function? funcCancel}){
 
     bool isDark = context.read<Config>().darkTemas;
     return showDialog(
         context: context,
         builder: (context){
           return  AlertDialog(
-            titlePadding:  EdgeInsets.all(5),
+            titlePadding:  const EdgeInsets.all(5),
             title: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -61,41 +61,40 @@ class CustomAlert {
                       icon: Icon(Icons.clear, color: isDark ? Colors.white60 : Colors.black54,)
                   ),
                 ),
-                widgeTitulo != null ? widgeTitulo :
-                Padding(
+                widgeTitulo ?? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomText.text(titulo?.toUpperCase() ?? '', style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+                  child: CustomText.text(titulo?.toUpperCase() ?? '', style: const TextStyle(fontSize: 20),textAlign: TextAlign.center,),
                 ),
               ],
             ),
             content: corpo,
-            contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
             buttonPadding: EdgeInsets.zero,
             actions: [
-              if(txtBotaoCancel != null)
-                TextButton(
-                    onPressed: (){
-                      funcCancel!();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      //width: 100, alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: CustomText.text(txtBotaoCancel, style: TextStyle(color: isDark ? Colors.white54 : Colors.black45),))
+              if(txtBotaoCancel != null) ...[
+                CustomButtom.custom(
+                  expand: true,
+                  onPressed: () async {
+                    if(funcCancel != null) await funcCancel();
+                    Navigator.pop(context);
+                  },
+                  title: txtBotaoCancel,
+                  color: Colors.red,
                 ),
-              if(txtBotaoCancel != null) SizedBox(width: 10,),
-              if(txtBotaoSucess != null)
-                TextButton(
-                    onPressed: (){
-                      funcSucess!();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      //width: 100, alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: CustomText.text(txtBotaoSucess, style: TextStyle(color: Colors.blue),))
+                const SizedBox(width: 10,),
+              ],
+              if(txtBotaoSucess != null) ...[
+                CustomButtom.custom(
+                  expand: true,
+                  onPressed: () async {
+                    if(funcSucess != null) await funcSucess();
+                    Navigator.pop(context);
+                  },
+                  title: txtBotaoSucess,
+                  color: Config.corPri,
                 ),
-              SizedBox(width: 10,),
+                const SizedBox(width: 10,),
+              ]
             ],
           );
         }

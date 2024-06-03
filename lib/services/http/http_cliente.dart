@@ -69,7 +69,7 @@ class HttpCli {
           );
         }
       } catch (error) {
-        debugPrint('onError ' + error.toString());
+        debugPrint('onError $error');
         return MyHttpResponse(
             isSucess: false,
             httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
@@ -127,7 +127,7 @@ class HttpCli {
         }
 
       } catch(e){
-        debugPrint('post catch ' + e.toString());
+        debugPrint('post catch $e');
         bool r = e == HttpError.statusCode;
         return MyHttpResponse(
             isSucess: false,
@@ -137,7 +137,7 @@ class HttpCli {
         );
       }
     }  catch (error) {
-      debugPrint('post onError ' + error.toString());
+      debugPrint('post onError $error');
       return MyHttpResponse(
           isSucess: false,
           httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
@@ -192,7 +192,7 @@ class HttpCli {
         }
 
       } catch(e){
-        debugPrint('catch ' + e.toString());
+        debugPrint('catch $e');
         bool r = e == HttpError.statusCode;
         return MyHttpResponse(
             isSucess: false,
@@ -202,8 +202,67 @@ class HttpCli {
         );
       }
     } catch (error) {
-      debugPrint('onError ' + error.toString());
+      debugPrint('onError $error');
 
+      return MyHttpResponse(
+          isSucess: false,
+          httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,
+          data: error == HttpError.timeout ?
+          'Tempo limite de conexão excedido' :  'Erro inesperado, tente novamente mais tarde'
+      );
+    }
+  }
+
+
+  Future<MyHttpResponse> delete({required String url, Map<String, String>? headers,
+    Map<String, dynamic>? body, bool decoder = false}) async {
+
+    if(!connectionStatus.hasConnection){
+      return MyHttpResponse(
+          isSucess: false,
+          httpError: HttpError.conection,
+          data: 'Falha de conexão com internet'
+      );
+    }
+
+    try {
+      final http.Response response = await http.delete(
+          Uri.parse(url),
+          headers: headers ?? <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'charset': 'UTF-8',
+          },
+          body: jsonEncode(body)
+      ).timeout(Duration(seconds: 60), onTimeout : () {
+        debugPrint('delete timeout');
+        throw HttpError.timeout;
+      });
+
+      try{
+        if(response.statusCode >= 200 && response.statusCode < 300){
+          final result = decoder ? json.decode(response.body) : response.body;
+          return MyHttpResponse(
+              isSucess: true,
+              codigo: 200,
+              data: result,
+          );
+        } else {
+          debugPrint(response.body);
+          throw HttpError.statusCode;
+        }
+
+      } catch(e){
+        debugPrint('delete catch $e');
+        bool r = e == HttpError.statusCode;
+        return MyHttpResponse(
+            isSucess: false,
+            httpError: r ? HttpError.statusCode : HttpError.unexpected,
+            codigo: response.statusCode,
+            data: r ? response.body :  'Erro inesperado, tente novamente mais tarde'
+        );
+      }
+    }  catch (error) {
+      debugPrint('delete onError $error');
       return MyHttpResponse(
           isSucess: false,
           httpError: error == HttpError.timeout ? HttpError.timeout : HttpError.unexpected,

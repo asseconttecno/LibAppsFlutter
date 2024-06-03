@@ -40,7 +40,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
           return CustomScaffold.custom(
               key: _scaffoldKey,
               context: context,
-              height: 40,
+              height: 30,
               appTitle: 'Meus Holerites',
               body: Column(
                 children: [
@@ -62,7 +62,7 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
                             return ListTile(
                               leading: Text('${item.attributes?.month ?? ''}\n${item.attributes?.year ?? ''}',
                                 textAlign: TextAlign.center,),
-                              title: Text(item.attributes?.type ?? ''),
+                              title: Text(item.attributes?.type.toName ?? ''),
                               subtitle: Text(item.attributes?.data?.funcionarioResumo?.liquido?.real() ?? '0'),
                             );
                           },

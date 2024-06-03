@@ -109,11 +109,6 @@ class Assecontservices {
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
           lazy: true,
-          create: (_)=> PrimeiroAcessoHoleriteManager(),
-        ),
-      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-        ChangeNotifierProvider(
-          lazy: true,
           create: (_)=> SenhaHoleriteManager(),
         ),
       if(Config.conf.nomeApp == VersaoApp.PontoTablet)

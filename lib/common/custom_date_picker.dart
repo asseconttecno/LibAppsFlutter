@@ -534,7 +534,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> with RestorationMix
                 CustomTextFormField.custom(
                   //controller: _controller,
                     //isClean: true,
-                  onDateSubmitted: (v){
+                  onFieldSubmitted: (v){
                     final date = v.split('/');
                     _handleDateChanged(DateTime(int.parse(date.last),int.parse(date[1]),int.parse(date.first) ));
                   },

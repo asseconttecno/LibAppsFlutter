@@ -46,7 +46,7 @@ alterUser(BuildContext context, Function()? onAlterFunc){
                                   color: user.listFunc[index] == UserHoleriteManager.funcSelect
                                       ? Config.corPri : null,),
                                 title: CustomText.text(
-                                  user.listFunc[index].attributes?.office?.toUpperCase() ?? "",
+                                  user.listFunc[index].attributes?.nome?.toUpperCase() ?? "",
                                   style: TextStyle(fontSize: 16,
                                       color: user.listFunc[index] == UserHoleriteManager.funcSelect
                                           ? Config.corPri : null
@@ -55,8 +55,9 @@ alterUser(BuildContext context, Function()? onAlterFunc){
                                   textAlign: TextAlign.center,
                                   softWrap: true, maxLines: 1,
                                 ),
-                                subtitle: CustomText.text('Registro: ${
-                                    user.listFunc[index].attributes?.reg ?? ""}',
+                                subtitle: CustomText.text(user.listFunc[index].attributes?.reg == null ?
+                                    user.listFunc[index].attributes?.office ?? ""
+                                    : 'Registro: ${user.listFunc[index].attributes?.reg ?? ""}',
                                   style: TextStyle(fontSize: 13,
                                       color: user.listFunc[index] == UserHoleriteManager.funcSelect
                                           ? Config.corPri : null),

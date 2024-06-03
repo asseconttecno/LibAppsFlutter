@@ -13,7 +13,6 @@ export 'ponto/registro_ponto.dart';
 export 'ponto/comprovante.dart';
 
 export 'holerite/holerite.dart';
-export 'holerite/primeiro_acesso.dart';
 export 'holerite/usuario.dart';
 export 'holerite/senha.dart';
 

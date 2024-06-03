@@ -41,12 +41,34 @@ class UserHoleriteManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  loadBio() async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      uemail = prefs.getString("user") ?? '';
+      usenha = prefs.getString("usenha") ?? '';
+      senha.text = prefs.getString("senha") ?? '';
+      email.text = uemail;
+      Config.usenha = usenha;
+      await autoLogin();
+    } catch(e) {
+      debugPrint(e.toString());
+    }
+  }
+
   memorizar() async {
     final prefs = await SharedPreferences.getInstance();
+    await memorizarEmail(prefs);
+    await memorizarSenha(prefs);
+  }
+
+  memorizarEmail(SharedPreferences prefs) async {
     await prefs.setString("user", email.text);
+    if(uemail == '') uemail = email.text;
+  }
+
+  memorizarSenha(SharedPreferences prefs) async {
     await prefs.setString("usenha", senha.text);
     if(usenha == '') usenha = senha.text;
-    if(uemail == '') uemail = email.text;
     Config.usenha = usenha;
     if(status){
       await prefs.setString("senha", senha.text);
@@ -73,16 +95,6 @@ class UserHoleriteManager extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInAuth({required String email, required String senha}) async {
-    user = await _service.signInAuth(email: email, senha: senha, token: token);
-    listFunc = await _serviceFunc.listFuncionarios();
-    memorizar();
-    if(listFunc.isNotEmpty) funcSelect = listFunc.last;
-    notifyListeners();
-    return true;
-  }
-
-
   Future<bool> autoLogin() async {
     bool result = false;
     try {
@@ -95,25 +107,52 @@ class UserHoleriteManager extends ChangeNotifier {
     return result;
   }
 
-  Future<bool> updateFunc({String? accountBank, String? pixKeyBank, String? email,
-    String? phone, String? agencyBank, String? typeBank, String? codeBank, }) async {
+  Future<bool> signInAuth({required String email, required String senha}) async {
+    user = await _service.signInAuth(email: email, senha: senha, token: token);
+    if(user?.user?.cpf != null && user?.user?.cpf != ''){
+      listFunc = await _serviceFunc.listFuncionarios();
+      if(listFunc.isNotEmpty) funcSelect = listFunc.last;
+    }
+    memorizar();
+    notifyListeners();
+    return true;
+  }
 
-   final result = await _serviceFunc.updateFuncionario(
-     id: funcSelect?.id, phone: phone, email: email, accountBank: accountBank,
-     typeBank: typeBank, codeBank: codeBank,  pixKeyBank: pixKeyBank, agencyBank: agencyBank,
-   );
-   if(result != null){
-     funcSelect = result;
-     listFunc = listFunc.map((e) => e.id == result.id ? result : e).toList();
-     notifyListeners();
-     return true;
-   }else{
-     return false;
-   }
+  Future<bool> registerUser({required String email,
+    required String senha,required String nome, required String cpf}) async {
+    user = await _service.registerUser(email: email, senha: senha, nome: nome, cpf: cpf);
+    listFunc = await _serviceFunc.listFuncionarios();
+    if(listFunc.isNotEmpty) funcSelect = listFunc.last;
+    memorizar();
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> updateUser({String? cpf, String? email, String? username}) async {
+    bool result = await _service.updateUser(cpf: cpf,
+        //email: email ?? user?.user?.email,
+        //username: username ?? user?.user?.username,
+       // senha: usenha
+    );
+    if(result){
+      if(cpf != null){
+        user!.user!.cpf = cpf;
+        listFunc = await _serviceFunc.listFuncionarios();
+        if(listFunc.isNotEmpty) funcSelect = listFunc.last;
+      }
+      if(username != null) user!.user!.username = username;
+      if(email != null){
+        user!.user!.username = email;
+        final prefs = await SharedPreferences.getInstance();
+        await memorizarEmail(prefs);
+      }
+      notifyListeners();
+    }
+    return result;
   }
 
   Future<bool> deleteUser() async {
-    bool result = true;//await _service.deleteUser(user?.id);
+    bool result = await _service.deleteUser();
     if(result){
       signOut();
     }
@@ -141,17 +180,22 @@ class UserHoleriteManager extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
-  loadBio() async {
-    try{
-      final prefs = await SharedPreferences.getInstance();
-      uemail = prefs.getString("user") ?? '';
-      usenha = prefs.getString("usenha") ?? '';
-      senha.text = prefs.getString("senha") ?? '';
-      email.text = uemail;
-      Config.usenha = usenha;
-      await autoLogin();
-    } catch(e) {
-      debugPrint(e.toString());
+
+
+  Future<bool> updateFunc({String? accountBank, String? pixKeyBank, String? email,
+    String? phone, String? agencyBank, String? typeBank, String? codeBank, }) async {
+
+    final result = await _serviceFunc.updateFuncionario(
+      id: funcSelect?.id, phone: phone, email: email, accountBank: accountBank,
+      typeBank: typeBank, codeBank: codeBank,  pixKeyBank: pixKeyBank, agencyBank: agencyBank,
+    );
+    if(result != null){
+      funcSelect = result;
+      listFunc = listFunc.map((e) => e.id == result.id ? result : e).toList();
+      notifyListeners();
+      return true;
+    }else{
+      return false;
     }
   }
 }

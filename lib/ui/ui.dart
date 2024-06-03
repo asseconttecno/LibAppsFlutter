@@ -7,3 +7,4 @@ export 'smartphone/config/config_screen.dart';
 
 export 'smartphone/holerite/detelhes_holerite.dart';
 export 'smartphone/holerite/holerite_screen.dart';
+export 'smartphone/holerite/graficos_holerite.dart';

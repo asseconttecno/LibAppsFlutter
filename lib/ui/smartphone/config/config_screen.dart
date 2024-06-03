@@ -22,91 +22,89 @@ class _ScreenConfigState extends State<ConfigScreen> {
 
     return CustomScaffold.custom(
         context: context,
-        height: 40, conf: true,
+        height: 30, conf: true,
         appTitle: 'Configurações',
-        body: Container(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        SwitchListTile(
-                            title: CustomText.text("Modo Escuro"),
-                            value: color,
-                            onChanged: (bool valor){
-                              context.read<Config>().darkTemas = valor;
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children:[
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                        title: CustomText.text("Modo Escuro"),
+                        value: color,
+                        onChanged: (bool valor){
+                          context.read<Config>().darkTemas = valor;
+                        }
+                    ),
+                    if(!kIsWeb)
+                    Divider(height: 2,),
+                    if(!kIsWeb)
+                    Consumer<BiometriaManager>(
+                      builder: (_, bio, __) {
+                        return SwitchListTile(
+                            title: CustomText.text("Login com Bio/Face"),
+                            value: bio.bio,
+                            onChanged: (bool valor) {
+                              if(bio.checkbio){
+                                bio.perguntar = !valor;
+                                bio.bio = valor;
+                              }
                             }
-                        ),
-                        if(!kIsWeb)
-                        Divider(height: 2,),
-                        if(!kIsWeb)
-                        Consumer<BiometriaManager>(
-                          builder: (_, bio, __) {
-                            return SwitchListTile(
-                                title: CustomText.text("Login com Bio/Face"),
-                                value: bio.bio,
-                                onChanged: (bool valor) {
-                                  if(bio.checkbio){
-                                    bio.perguntar = !valor;
-                                    bio.bio = valor;
-                                  }
-                                }
-                            );
-                          },
-                        ),
-                        Divider(height: 2,),
+                        );
+                      },
+                    ),
+                    Divider(height: 2,),
+                  ],
+                ),
+              ),
+
+              Column(
+                children: [
+                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.red),
+                          borderRadius: const BorderRadius.all(Radius.circular(8))
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Deletar sua conta!",
+                              style: TextStyle(color: Colors.redAccent)),
+                          const Text("Esta ação excluirá permanentemente sua conta e não poderá ser desfeita.",
+                              style: TextStyle(color: Colors.redAccent)),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                            ),
+                            onPressed: () async {
+                              _showDeleteDialog(context);
+                            },
+                            child: const Center(child: Text("Excluir",
+                              style: TextStyle(color: Colors.white),),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
+                    SizedBox(height: 20,),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15, right: 25),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomText.text('Versao '+ Config.versao),
                       ],
                     ),
-                  ),
-
-                  Column(
-                    children: [
-                      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red),
-                              borderRadius: const BorderRadius.all(Radius.circular(8))
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Deletar sua conta!",
-                                  style: TextStyle(color: Colors.redAccent)),
-                              const Text("Esta ação excluirá permanentemente sua conta e não poderá ser desfeita.",
-                                  style: TextStyle(color: Colors.redAccent)),
-                              const SizedBox(height: 8),
-                              ElevatedButton(
-                                style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-                                ),
-                                onPressed: () async {
-                                  _showDeleteDialog(context);
-                                },
-                                child: const Center(child: Text("Excluir",
-                                  style: TextStyle(color: Colors.white),),),
-                              ),
-                            ],
-                          ),
-                        ),
-                      if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-                        SizedBox(height: 20,),
-
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15, right: 25),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CustomText.text('Versao '+ Config.versao),
-                          ],
-                        ),
-                      )
-                    ],
                   )
-                ]
-            )
+                ],
+              )
+            ]
         )
     );
   }

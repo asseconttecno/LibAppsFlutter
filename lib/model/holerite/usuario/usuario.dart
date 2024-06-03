@@ -61,12 +61,12 @@ class UserHolerite {
   String? enterpriseName;
   String? phone;
   String? stateRegistration;
-  DateTime? createdAt;
-  DateTime? updatedAt;
   String? name;
   String? office;
   String? department;
   bool? isManager;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   UserHolerite({
     this.id,
@@ -80,32 +80,58 @@ class UserHolerite {
     this.enterpriseName,
     this.phone,
     this.stateRegistration,
-    this.createdAt,
-    this.updatedAt,
     this.name,
     this.office,
     this.department,
     this.isManager,
+    this.createdAt,
+    this.updatedAt,
   });
+
+  factory UserHolerite.fromMap(Map<String, dynamic> json) => UserHolerite(
+    id: json["id"],
+    username: json["username"],
+    email: json["email"],
+    provider: json["provider"],
+    confirmed: json["confirmed"],
+    blocked: json["blocked"],
+    cpf: json["cpf"],
+    fantasyName: json["fantasyName"],
+    enterpriseName: json["enterpriseName"],
+    phone: json["phone"],
+    stateRegistration: json["stateRegistration"],
+    name: json["name"],
+    office: json["office"],
+    department: json["department"],
+    isManager: json["isManager"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+  );
+
+  UserHolerite.fromPonto(UsuarioPonto user){
+    this.email = user.funcionario?.email;
+    this.name = user.funcionario?.nome;
+    this.cpf = user.funcionario?.cpf;
+  }
 
   UserHolerite copyWith({
     int? id,
     String? username,
     String? email,
-    String? provider,
+    dynamic provider,
     bool? confirmed,
     bool? blocked,
     String? cpf,
-    String? fantasyName,
-    String? enterpriseName,
-    String? phone,
-    String? stateRegistration,
+    dynamic fantasyName,
+    dynamic enterpriseName,
+    dynamic phone,
+    dynamic stateRegistration,
+    dynamic name,
+    dynamic office,
+    dynamic department,
+    bool? isManager,
     DateTime? createdAt,
     DateTime? updatedAt,
-    String? name,
-    String? office,
-    String? department,
-    bool? isManager,
   }) =>
       UserHolerite(
         id: id ?? this.id,
@@ -119,39 +145,13 @@ class UserHolerite {
         enterpriseName: enterpriseName ?? this.enterpriseName,
         phone: phone ?? this.phone,
         stateRegistration: stateRegistration ?? this.stateRegistration,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
         name: name ?? this.name,
         office: office ?? this.office,
         department: department ?? this.department,
         isManager: isManager ?? this.isManager,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
-
-  factory UserHolerite.fromMap(Map<String, dynamic> json) => UserHolerite(
-    id: json["id"],
-    username: json["username"],
-    email: json["email"],
-    provider: json["provider"],
-    confirmed: json["confirmed"],
-    blocked: json["blocked"],
-    cpf: json["cpf"] ?? '373.771.848-25',
-    fantasyName: json["fantasyName"],
-    enterpriseName: json["enterpriseName"],
-    phone: json["phone"],
-    stateRegistration: json["stateRegistration"],
-    createdAt: json["createdAt"] == null ? null : DateTime.tryParse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.tryParse(json["updatedAt"]),
-    name: json["name"],
-    office: json["office"],
-    department: json["department"],
-    isManager: json["isManager"],
-  );
-
-  UserHolerite.fromPonto(UsuarioPonto user){
-    this.email = user.funcionario?.email;
-    this.name = user.funcionario?.nome;
-    this.cpf = user.funcionario?.cpf;
-  }
 
   Map<String, dynamic> toMap() => {
     "id": id,

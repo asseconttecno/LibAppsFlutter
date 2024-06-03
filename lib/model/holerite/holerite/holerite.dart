@@ -1,18 +1,12 @@
-// To parse this JSON data, do
-//
-//     final holeriteModel = holeriteModelFromMap(jsonString);
-
-import 'dart:convert';
 
 import 'package:assecontservices/assecontservices.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
+
+import '../../../enums/holerite_tipo.dart';
 
 
 class HoleriteModel {
   List<DatumHolerite>? data;
-  Meta? meta;
+  MetaHolerite? meta;
 
   HoleriteModel({
     this.data,
@@ -21,7 +15,7 @@ class HoleriteModel {
 
   factory HoleriteModel.fromMap(Map<String, dynamic> json) => HoleriteModel(
     data: json["data"] == null ? [] : List<DatumHolerite>.from(json["data"]!.map((x) => DatumHolerite.fromMap(x))),
-    meta: json["meta"] == null ? null : Meta.fromMap(json["meta"]),
+    meta: json["meta"] == null ? null : MetaHolerite.fromMap(json["meta"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -32,7 +26,7 @@ class HoleriteModel {
 
 class DatumHolerite {
   int? id;
-  Attributes? attributes;
+  DatumAttributesHolerite? attributes;
 
   DatumHolerite({
     this.id,
@@ -41,23 +35,32 @@ class DatumHolerite {
 
   factory DatumHolerite.fromMap(Map<String, dynamic> json) => DatumHolerite(
     id: json["id"],
-    attributes: json["attributes"] == null ? null : Attributes.fromMap(json["attributes"]),
+    attributes: json["attributes"] == null ? null : DatumAttributesHolerite.fromMap(json["attributes"]),
   );
 
   Map<String, dynamic> toMap() => {
     "id": id,
     "attributes": attributes?.toMap(),
   };
+
+  ChartColum chartColum(){
+    return ChartColum(id ?? 0,
+        '${attributes?.competence ?? ''}\n${attributes?.type.toName
+            .replaceAll('Recibo de ', '').replaceAll('13º Salário', '13º')
+            .replaceAll('Participação Remunerada nos Resultados', 'PLR') ?? ''}',
+        attributes?.data?.funcionarioResumo?.liquido ?? 0
+    );
+  }
 }
 
-class Attributes {
+class DatumAttributesHolerite {
   String? cpf;
   String? name;
   String? office;
-  Data? data;
+  AttributesDataHolerite? data;
   DateTime? createdAt;
   DateTime? updatedAt;
-  String? type;
+  HoleriteTipo type;
   String? month;
   String? year;
   DateTime? createDate;
@@ -65,7 +68,7 @@ class Attributes {
   String? competence;
   String? rg;
   String? phone;
-  double? baseSalary;
+  int? baseSalary;
   String? agencyAccount;
   String? email;
   String? sindicate;
@@ -76,16 +79,18 @@ class Attributes {
   String? importingUser;
   String? sheetType;
   bool? isSigned;
-  DateTime? signedAt;
+  dynamic signedAt;
+  EmployeeHolerite? employee;
+  String? file;
 
-  Attributes({
+  DatumAttributesHolerite({
     this.cpf,
     this.name,
     this.office,
     this.data,
     this.createdAt,
     this.updatedAt,
-    this.type,
+    this.type = HoleriteTipo.Nenhum,
     this.month,
     this.year,
     this.createDate,
@@ -105,16 +110,18 @@ class Attributes {
     this.sheetType,
     this.isSigned,
     this.signedAt,
+    this.employee,
+    this.file,
   });
 
-  factory Attributes.fromMap(Map<String, dynamic> json) => Attributes(
+  factory DatumAttributesHolerite.fromMap(Map<String, dynamic> json) => DatumAttributesHolerite(
     cpf: json["cpf"],
     name: json["name"],
     office: json["office"],
-    data: json["data"] == null ? null : Data.fromMap(json["data"]),
+    data: json["data"] == null ? null : AttributesDataHolerite.fromMap(json["data"]),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    type: json["type"],
+    type: HoleriteTipo.getEnum(int.tryParse(json["type"])),
     month: json["month"],
     year: json["year"],
     createDate: json["create_date"] == null ? null : DateTime.parse(json["create_date"]),
@@ -122,7 +129,7 @@ class Attributes {
     competence: json["competence"],
     rg: json["rg"],
     phone: json["phone"],
-    baseSalary: json["baseSalary"]?.toDouble(),
+    baseSalary: json["baseSalary"],
     agencyAccount: json["agencyAccount"],
     email: json["email"],
     sindicate: json["sindicate"],
@@ -133,7 +140,9 @@ class Attributes {
     importingUser: json["importingUser"],
     sheetType: json["sheetType"],
     isSigned: json["isSigned"],
-    signedAt: json["signedAt"] == null ? null : DateTime.parse(json["signedAt"]),
+    signedAt: json["signedAt"],
+    employee: json["employee"] == null ? null : EmployeeHolerite.fromMap(json["employee"]),
+    file: json["file"] == null ? null : json["file"]['data'],
   );
 
   Map<String, dynamic> toMap() => {
@@ -162,11 +171,12 @@ class Attributes {
     "importingUser": importingUser,
     "sheetType": sheetType,
     "isSigned": isSigned,
-    "signedAt": signedAt?.toIso8601String(),
+    "signedAt": signedAt,
+    "employee": employee?.toMap(),
   };
 }
 
-class Data {
+class AttributesDataHolerite {
   int? cbo;
   String? cpf;
   String? reg;
@@ -174,7 +184,7 @@ class Data {
   String? nome;
   dynamic chapa;
   String? cnpjcpf;
-  dynamic admissao;
+  DateTime? admissao;
   List<dynamic>? rawLines;
   int? setorLocal;
   List<dynamic>? errorFields;
@@ -182,7 +192,7 @@ class Data {
   FuncionarioResumo? funcionarioResumo;
   List<FuncionarioEvento>? funcionarioEventos;
 
-  Data({
+  AttributesDataHolerite({
     this.cbo,
     this.cpf,
     this.reg,
@@ -199,7 +209,7 @@ class Data {
     this.funcionarioEventos,
   });
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
+  factory AttributesDataHolerite.fromMap(Map<String, dynamic> json) => AttributesDataHolerite(
     cbo: json["cbo"],
     cpf: json["cpf"],
     reg: json["reg"],
@@ -207,7 +217,7 @@ class Data {
     nome: json["nome"],
     chapa: json["chapa"],
     cnpjcpf: json["cnpjcpf"],
-    admissao: json["admissao"],
+    admissao: json["admissao"] == null ? null : DateTime.parse(json["admissao"]),
     rawLines: json["rawLines"] == null ? [] : List<dynamic>.from(json["rawLines"]!.map((x) => x)),
     setorLocal: json["setorLocal"],
     errorFields: json["errorFields"] == null ? [] : List<dynamic>.from(json["errorFields"]!.map((x) => x)),
@@ -338,15 +348,135 @@ class FuncionarioResumo {
   };
 }
 
-class Meta {
-  Pagination? pagination;
+class EmployeeHolerite {
+  EmployeeData? data;
 
-  Meta({
+  EmployeeHolerite({
+    this.data,
+  });
+
+  factory EmployeeHolerite.fromMap(Map<String, dynamic> json) => EmployeeHolerite(
+    data: json["data"] == null ? null : EmployeeData.fromMap(json["data"]),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "data": data?.toMap(),
+  };
+}
+
+class EmployeeData {
+  int? id;
+  DataAttributes? attributes;
+
+  EmployeeData({
+    this.id,
+    this.attributes,
+  });
+
+  factory EmployeeData.fromMap(Map<String, dynamic> json) => EmployeeData(
+    id: json["id"],
+    attributes: json["attributes"] == null ? null : DataAttributes.fromMap(json["attributes"]),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "attributes": attributes?.toMap(),
+  };
+}
+
+class DataAttributes {
+  String? nome;
+  String? cpf;
+  String? phone;
+  String? email;
+  int? baseSalary;
+  String? office;
+  String? sector;
+  String? ctps;
+  String? syndicate;
+  String? codeBank;
+  String? accountBank;
+  String? typeBank;
+  String? pixKeyBank;
+  String? agencyBank;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? reg;
+  bool? isPreRegistered;
+
+  DataAttributes({
+    this.nome,
+    this.cpf,
+    this.phone,
+    this.email,
+    this.baseSalary,
+    this.office,
+    this.sector,
+    this.ctps,
+    this.syndicate,
+    this.codeBank,
+    this.accountBank,
+    this.typeBank,
+    this.pixKeyBank,
+    this.agencyBank,
+    this.createdAt,
+    this.updatedAt,
+    this.reg,
+    this.isPreRegistered,
+  });
+
+  factory DataAttributes.fromMap(Map<String, dynamic> json) => DataAttributes(
+    nome: json["nome"],
+    cpf: json["cpf"],
+    phone: json["phone"],
+    email: json["email"],
+    baseSalary: json["baseSalary"],
+    office: json["office"],
+    sector: json["sector"],
+    ctps: json["ctps"],
+    syndicate: json["syndicate"],
+    codeBank: json["codeBank"],
+    accountBank: json["accountBank"],
+    typeBank: json["typeBank"],
+    pixKeyBank: json["pixKeyBank"],
+    agencyBank: json["agencyBank"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    reg: json["reg"],
+    isPreRegistered: json["isPreRegistered"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "nome": nome,
+    "cpf": cpf,
+    "phone": phone,
+    "email": email,
+    "baseSalary": baseSalary,
+    "office": office,
+    "sector": sector,
+    "ctps": ctps,
+    "syndicate": syndicate,
+    "codeBank": codeBank,
+    "accountBank": accountBank,
+    "typeBank": typeBank,
+    "pixKeyBank": pixKeyBank,
+    "agencyBank": agencyBank,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "reg": reg,
+    "isPreRegistered": isPreRegistered,
+  };
+}
+
+class MetaHolerite {
+  PaginationHolerite? pagination;
+
+  MetaHolerite({
     this.pagination,
   });
 
-  factory Meta.fromMap(Map<String, dynamic> json) => Meta(
-    pagination: json["pagination"] == null ? null : Pagination.fromMap(json["pagination"]),
+  factory MetaHolerite.fromMap(Map<String, dynamic> json) => MetaHolerite(
+    pagination: json["pagination"] == null ? null : PaginationHolerite.fromMap(json["pagination"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -354,20 +484,20 @@ class Meta {
   };
 }
 
-class Pagination {
+class PaginationHolerite {
   int? page;
   int? pageSize;
   int? pageCount;
   int? total;
 
-  Pagination({
+  PaginationHolerite({
     this.page,
     this.pageSize,
     this.pageCount,
     this.total,
   });
 
-  factory Pagination.fromMap(Map<String, dynamic> json) => Pagination(
+  factory PaginationHolerite.fromMap(Map<String, dynamic> json) => PaginationHolerite(
     page: json["page"],
     pageSize: json["pageSize"],
     pageCount: json["pageCount"],
@@ -381,6 +511,7 @@ class Pagination {
     "total": total,
   };
 }
+
 
 class ChartPizza {
   final String desc;

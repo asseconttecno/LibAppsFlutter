@@ -20,8 +20,7 @@ class HoleriteService  {
   final HttpCli _http = HttpCli();
 
   Future<HoleriteModel?> listHolerite(int page, int pageSize) async {
-    String _api = "/holerites?sort=desc&pagination[page]=$page&pagination[pageSize]=${pageSize == 0 ? 25 : pageSize}";
-        "&filters[employee]=${UserHoleriteManager.funcSelect?.id}";
+    String _api = "/holerites?sort=desc&pagination[page]=$page&pagination[pageSize]=${pageSize == 0 ? 25 : pageSize}&filters[employee]=${UserHoleriteManager.funcSelect?.id}";
 
     final MyHttpResponse response = await _http.get(
       url: Config.conf.apiHoleriteEmail! + _api,
@@ -33,6 +32,7 @@ class HoleriteService  {
     try{
       if(response.isSucess) {
         final data = response.data;
+        print(data);
         if(data != null) {
           HoleriteModel? model = HoleriteModel.fromMap(data);
           return model;
@@ -56,65 +56,22 @@ class HoleriteService  {
     return [];
   }
 
-  Future<File?> holeriteresumo(UsuarioHoleriteModel? user, int idholerite, int mes, int ano, int? tipo) async {
-    String _api = "/holeriteresumo";
+  Future<Uint8List?> holeriteresumoBytes() async {
+    String _api = "/holerites?filters[employee]=${UserHoleriteManager.funcSelect?.id}&populate[]=employee&populate[]=file";
     try{
-      final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiHolerite! + _api,
-          headers: {
-            'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}'
-          },
-          decoder: false,
-          body: {
-            "Id": idholerite,
-            //"cnpj": user?.cnpj,
-            //"register": user?.registro,
-            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null : user?.user?.cpf,
-            "month": mes,
-            "year": ano,
-            "holeriteType": tipo
-          }
-      );
-      if(response.isSucess) {
-        var htmlContent = '''<!DOCTYPE html>
-        <html>
-        <head></head>
-        <body>${response.data.toString().replaceAll(' &#x0D;', '').replaceAll(' &#x0D', '')}</body>
-        </html>
-        ''';
-
-        Directory tempDir = await getTemporaryDirectory();
-        String savedPath = "holerite" + DateTime.now().microsecondsSinceEpoch.toString();
-        File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
-            htmlContent, tempDir.path, savedPath
-        );
-
-        return file;
-      }
-    } catch(e){
-      debugPrint(e.toString());
-    }
-  }
-
-  Future<Uint8List?> holeriteresumoBytes(UsuarioHoleriteModel? user, int idholerite, int mes, int ano, int? tipo) async {
-    String _api = "/holeriteresumo/holeriteresumoBytes";
-    try{
-      final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiHolerite! + _api,
-          body: {
-            "Id": idholerite,
-            //"cnpj": user?.cnpj,
-            //"register": user?.registro,
-            "cpf": Config.conf.nomeApp == VersaoApp.HoleriteApp ? null :  user?.user?.cpf,
-            "month": mes,
-            "year": ano,
-            "holeriteType": tipo
-          }
+      final MyHttpResponse response = await _http.get(
+        url: Config.conf.apiHoleriteEmail! + _api,
+        headers: {
+          'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}'
+        },
       );
 
       if(response.isSucess) {
         final dados = response.data;
-        return base64.decode(dados);
+        HoleriteModel model = HoleriteModel.fromMap(dados);
+        if(model.data != null && model.data!.isNotEmpty && model.data!.first.attributes?.file != null){
+          return base64.decode(model.data!.first.attributes!.file!);
+        }
       }
     } catch(e){
       debugPrint(e.toString());

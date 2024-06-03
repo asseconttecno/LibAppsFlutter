@@ -1,3 +1,4 @@
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 import '../../config.dart';
 import '../../controllers/holerite/user_manager.dart';
@@ -12,9 +13,8 @@ class SenhaHoleriteService {
     String _metodo = '/auth/forgot-password';
 
     try{
-      String? _cpf = cpf != null ? cpf.replaceAll('.', '').replaceAll('-', '') : null;
       Map<String, dynamic> body = {
-        "email": email,
+        "email": email ?? Validacoes.numeric(cpf),
         //"Cpf": _cpf
       };
       MyHttpResponse response = await _http.post(

@@ -7,18 +7,20 @@ import 'package:provider/provider.dart';
 import '../config.dart';
 import 'column_or_row.dart';
 import 'custom_list_tile.dart';
+import 'custom_load_shimmer.dart';
 
 
 
 class CustomLiveList<T> extends StatefulWidget {
   const CustomLiveList({super.key, required this.list, this.isLoad = false, this.padding, this.endScroll,
-    required this.onTap, this.isList = true, this.scrollController, required this.content});
+    required this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia});
   final List list;
   final Widget Function(T item) content;
   final Function(T item) onTap;
   final Function()? endScroll;
   final ScrollController? scrollController;
   final bool isList;
+  final String? txtListVazia;
   final bool isLoad;
   final EdgeInsets? padding;
 
@@ -63,9 +65,8 @@ class _CustomLiveListState<T> extends State<CustomLiveList<T>> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: widget.isLoad ? Shimmer.fromColors(
-        baseColor: context.watch<Config>().darkTemas ?  Colors.grey[800]! : Colors.grey.shade200,
-        highlightColor: context.watch<Config>().darkTemas ?  Colors.grey[600]! : Colors.grey,
+      child: widget.isLoad ? CustomShimmerLoad(
+        isLoad: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ColumnOrRow(
@@ -83,6 +84,10 @@ class _CustomLiveListState<T> extends State<CustomLiveList<T>> {
         ),
       ) : LayoutBuilder(
           builder: (_, constraints){
+            if(widget.list.isEmpty){
+              return Center(child: Text(widget.txtListVazia ?? 'Nenhum dado carregado'),);
+            }
+
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(

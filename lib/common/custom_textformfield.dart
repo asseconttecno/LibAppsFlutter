@@ -11,7 +11,8 @@ import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 
 import '../../utils/validacoes.dart';
 import '../config.dart';
-import '../cpf_rg_formatter.dart';
+import '../utils/cpf_email_formatter.dart';
+import '../utils/cpf_rg_formatter.dart';
 import 'custom_date_picker.dart';
 
 
@@ -20,7 +21,7 @@ class CustomTextFormField {
     TextEditingController? controller,
     String? title,
     Widget? icon,
-    void Function(String)? onDateSubmitted,
+    void Function(String)? onFieldSubmitted,
     void Function(DateTime)? onDateSaved,
     bool textAlign = false,
     bool isNext = false,
@@ -31,7 +32,8 @@ class CustomTextFormField {
     FormType type = FormType.text,
     double radius = 12,
     double? width,
-    Color? txtColor,
+    Color? txtColor = Colors.white,
+    FocusNode? focusNode,
   }) {
     return Consumer<FormProvider>(
         builder: (context, form, __) {
@@ -45,8 +47,7 @@ class CustomTextFormField {
           children: [
             if (title != null)
               Padding(
-                padding: EdgeInsets.only(
-                    left: 5, top: 5, bottom: textAlign ? 5 : 0),
+                padding: const EdgeInsets.only(left: 5, top: 5, bottom: 5),
                 child: Text(
                   title,
                   style: TextStyle(
@@ -57,8 +58,9 @@ class CustomTextFormField {
               ),
             TextFormField(
               controller: controller,
-              style: TextStyle(fontSize: 12, color: Colors.black),
+              style: const TextStyle(fontSize: 12, color: Colors.black),
               scrollPadding: EdgeInsets.zero,
+              focusNode: focusNode,
               onSaved: (v) {
                 if (onDateSaved != null && v != null) {
                   final date = v.split('/');
@@ -66,13 +68,13 @@ class CustomTextFormField {
                       int.parse(date[1]), int.parse(date.first)));
                 }
               },
-              onFieldSubmitted: onDateSubmitted,
+              onFieldSubmitted: onFieldSubmitted,
               textInputAction:
                   isNext ? TextInputAction.next : TextInputAction.done,
               obscureText: type == FormType.pass,
               keyboardType: type == FormType.text || type == FormType.pass
                   ? TextInputType.text
-                  : type == FormType.email
+                  : type == FormType.email || type == FormType.emailcpf
                       ? TextInputType.emailAddress
                       : TextInputType.number,
               decoration: InputDecoration(
@@ -83,7 +85,7 @@ class CustomTextFormField {
                             onPressed: () {
                               controller?.clear();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.clear,
                               color: Config.corPribar,
                             ))),
@@ -121,6 +123,8 @@ class CustomTextFormField {
                         ? '000.000.000-00'
                         : type == FormType.rgcpf
                             ? 'RG/CPF'
+                        : type == FormType.emailcpf
+                        ? 'CPF/Email'
                             : type == FormType.pass
                                 ? '********'
                                 : type == FormType.phone
@@ -133,18 +137,22 @@ class CustomTextFormField {
                                                 ? '00.000.000/0001-00'
                                                 : type == FormType.cep
                                                     ? '00000-000'
-                                                    : null),
-                hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
+                                                    : 'Digite ${title ?? 'valor'}'),
+                hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
               inputFormatters: type == FormType.cpf
-                  ? [
-                      FilteringTextInputFormatter.digitsOnly,
-                      CpfInputFormatter(),
-                    ]
-                  : type == FormType.rgcpf
+                ? [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CpfInputFormatter(),
+                  ]
+                : type == FormType.rgcpf
+                    ? [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CpfOrRGFormatter(),
+                      ]
+                    : type == FormType.emailcpf
                       ? [
-                          FilteringTextInputFormatter.digitsOnly,
-                          CpfOrRGFormatter(),
+                          CpfOrEmailFormatter(),
                         ]
                       : type == FormType.cep
                           ? [
@@ -163,13 +171,23 @@ class CustomTextFormField {
                                     ]
                                   : type == FormType.date
                                       ? [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
+                                          FilteringTextInputFormatter.digitsOnly,
                                           DataInputFormatter(),
                                         ]
                                       : null,
               validator: validator ??
-                  (type == FormType.cpf
+                  (type == FormType.emailcpf
+                  ? (v) {
+                    if (v == null || v == '') {
+                      form.isError = true;
+                      return 'Digite o seu CPF/Email';
+                    } else if (!Validacoes.isCPF(v) && !Validacoes.emailValid(v)) {
+                      form.isError = true;
+                      return 'Digite CPF/Email valido';
+                    }
+                    form.isError = false;
+                    return null;
+                  } : type == FormType.cpf
                       ? (v) {
                           if (v == null || v == '') {
                             form.isError = true;
@@ -335,7 +353,7 @@ class CustomTextFormField {
                 filled: true,
                 border: OutlineInputBorder(
                     borderSide: isBorder
-                        ? BorderSide(color: Config.corPribar,)
+                        ? const BorderSide(color: Config.corPribar,)
                         : BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(radius))),
                 errorBorder: OutlineInputBorder(
@@ -345,7 +363,7 @@ class CustomTextFormField {
                     fontWeight: FontWeight.w500,
                     fontSize: 11,
                     color: Colors.redAccent.shade100),
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.calendar_month,
                   color: Config.corPribar,
                 ),
@@ -394,6 +412,7 @@ enum FormType {
   rgcpf,
   phone,
   email,
+  emailcpf,
   pass,
   date,
   text;

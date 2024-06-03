@@ -11,6 +11,7 @@ extension FormatesDateTime on DateTime? {
 
 extension FormatesDouble on double? {
   String real() {
+    if(this == 0) return 'R\$0,00';
     var _mask = NumberFormat.currency(locale: 'pt_Br', customPattern: 'R\$#,##0.00');
     return _mask.format(this ?? 0);
   }
