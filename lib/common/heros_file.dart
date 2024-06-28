@@ -26,7 +26,7 @@ class FileHero extends StatefulWidget {
   final String? html;
   final String name;
   final Widget? menu;
-  FileHero(this.name, {this.menu, this.file,this.memori, this.html});
+  const FileHero(this.name, {super.key, this.menu, this.file,this.memori, this.html});
 
   @override
   _FileHeroState createState() => _FileHeroState();
@@ -102,7 +102,7 @@ class _FileHeroState extends State<FileHero> {
                   }
                 ),*/
               IconButton(
-                icon: Icon(Icons.send, color: Colors.white,),
+                icon: const Icon(Icons.send, color: Colors.white,),
                 onPressed: () async {
                   if(kIsWeb){
                     if(widget.memori != null){
@@ -123,7 +123,6 @@ class _FileHeroState extends State<FileHero> {
                           subject: "${widget.name}.pdf");
                     }
                   }
-
                 }
               ),
             ],
@@ -134,7 +133,6 @@ class _FileHeroState extends State<FileHero> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-
                     height: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
                         && !ResponsiveBreakpoints.of(context).isPhone
                         ? MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height : null,
@@ -144,19 +142,16 @@ class _FileHeroState extends State<FileHero> {
                     child: widget.memori != null ? SfPdfViewer.memory(widget.memori!, ) :
                     widget.file == null ? Container() : SfPdfViewer.file(widget.file!),
                   ),
-                  menus()
+
+                  if(widget.menu != null) ...[
+                    SizedBox(
+                        height: 120,
+                        child: widget.menu!
+                    )
+                  ]
                 ],
               )
           )
     );
-  }
-
-  Widget menus(){
-    if(widget.menu != null){
-      return Container(
-        height: 120,
-        child: widget.menu!);
-    }
-    return Container();
   }
 }

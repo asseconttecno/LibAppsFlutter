@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:shimmer/shimmer.dart';
 import 'package:auto_animated/auto_animated.dart';
-import 'package:provider/provider.dart';
 
-import '../config.dart';
 import 'column_or_row.dart';
 import 'custom_list_tile.dart';
 import 'custom_load_shimmer.dart';

@@ -36,6 +36,9 @@
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/build" />
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/example/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

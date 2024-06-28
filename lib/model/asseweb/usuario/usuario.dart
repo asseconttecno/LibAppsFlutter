@@ -4,14 +4,16 @@
 
 import 'dart:convert';
 
+import '../../../enums/regime_empresa.dart';
+
 class UsuarioAsseweb {
-  UsuarioAsseweb({
+  const UsuarioAsseweb({
     this.login,
     this.token,
   });
 
-  Login? login;
-  String? token;
+  final Login? login;
+  final String? token;
 
   factory UsuarioAsseweb.fromJson(String str) => UsuarioAsseweb.fromMap(json.decode(str));
 
@@ -29,7 +31,7 @@ class UsuarioAsseweb {
 }
 
 class Login {
-  Login({
+  const Login({
     this.id,
     this.name,
     this.email,
@@ -44,22 +46,24 @@ class Login {
     this.master,
     this.lastCompanyId,
     this.companies,
+
   });
 
-  int? id;
-  String? name;
-  String? email;
-  String? phoneNumber;
-  String? ddd;
-  String? password;
-  DateTime? lastAcess;
-  DateTime? birthday;
-  String? version;
-  dynamic resignation;
-  String? uid;
-  bool? master;
-  int? lastCompanyId;
-  List<Company>? companies;
+  final int? id;
+
+  final String? name;
+  final String? email;
+  final String? phoneNumber;
+  final String? ddd;
+  final String? password;
+  final DateTime? lastAcess;
+  final DateTime? birthday;
+  final String? version;
+  final dynamic resignation;
+  final String? uid;
+  final bool? master;
+  final int? lastCompanyId;
+  final List<Company>? companies;
 
   factory Login.fromJson(String str) => Login.fromMap(json.decode(str));
 
@@ -101,21 +105,23 @@ class Login {
 }
 
 class Company {
-  Company({
+  const Company({
     this.id,
     this.number,
     this.name,
     this.fantasyName,
     this.cnpj,
     this.conntacts,
+    this.regime = RegimeEmpresa.Outras
   });
 
-  int? id;
-  int? number;
-  String? name;
-  String? fantasyName;
-  String? cnpj;
-  dynamic conntacts;
+  final int? id;
+  final int? number;
+  final String? name;
+  final String? fantasyName;
+  final String? cnpj;
+  final dynamic conntacts;
+  final RegimeEmpresa regime;
 
   factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
 
@@ -123,6 +129,7 @@ class Company {
 
   factory Company.fromMap(Map<String, dynamic> json) => Company(
     id: json["id"],
+    regime: RegimeEmpresa.getEnum(json["regime"]),
     number: json["number"],
     name: json["name"],
     fantasyName: json["fantasyName"],

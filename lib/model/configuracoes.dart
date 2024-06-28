@@ -2,25 +2,27 @@
 import '../enums/enums.dart';
 
 class ConfiguracoesModel {
-  String? apiAsseweb;
-  String? apiHolerite;
-  String? apiHoleriteEmail;
-  String? apiAsseponto;
-  String? apiAssepontoNova;
-  String? apiEspelho;
-  String? apiBoletos;
-  String? androidAppId ;
-  String? iosAppId;
-  String? iosAppIdNum ;
+  final String? apiAsseweb;
+  final String? apiHolerite;
+  final String? apiHoleriteEmail;
+  final String? apiAsseponto;
+  final String? apiAssepontoNova;
+  final String? apiEspelho;
+  final String? apiBoletos;
+  final String? apiRelatorioFechamento;
+  final String? androidAppId ;
+  final String? iosAppId;
+  final String? iosAppIdNum ;
 
-  VersaoApp? nomeApp;
+  final VersaoApp? nomeApp;
 
-  ConfiguracoesModel(
+  const ConfiguracoesModel(
       {this.apiAsseweb,
       this.apiHolerite,
       this.apiHoleriteEmail,
       this.apiAsseponto,
       this.apiAssepontoNova,
+      this.apiRelatorioFechamento,
       this.apiBoletos,
       this.apiEspelho,
       this.androidAppId,

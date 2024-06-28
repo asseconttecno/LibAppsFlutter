@@ -2,9 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Apps/AssepontoApp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Apps/AssewebApp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Apps/HoleriteApp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Apps/TabletApp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/AssewebApp" vcs="Git" />
   </component>
 </project>

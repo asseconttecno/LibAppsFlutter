@@ -15,7 +15,8 @@ class UserAssewebService {
           url: Config.conf.apiAsseweb! + _metodo,
           body: <String, dynamic>{
             "email": email,
-            "password": senha
+            "password": senha,
+            "token" : UserAssewebManager.fcmToken
           }
       );
 
@@ -29,7 +30,7 @@ class UserAssewebService {
         throw response.codigo.toString();
       }
     } catch (e){
-      debugPrint('UserAssewebService signInAuth: ' +  e.toString());
+      debugPrint('UserAssewebService signInAuth: $e');
       switch(e){
         case HttpError.unexpected :
           throw 'Erro inesperado, tente novamente!';

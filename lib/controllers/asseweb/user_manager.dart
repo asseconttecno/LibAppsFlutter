@@ -27,6 +27,8 @@ class UserAssewebManager extends ChangeNotifier {
   }
 
 
+  static String? fcmToken;
+
   static UsuarioAsseweb? sUser;
   UsuarioAsseweb? get user => sUser;
   set user(UsuarioAsseweb? v){
@@ -87,7 +89,7 @@ class UserAssewebManager extends ChangeNotifier {
     bool result = false;
     try {
       if (uemail != '' && usenha != '') {
-        result = await signInAuth(email: uemail, senha: usenha);
+        result = await signInAuth(email: uemail, senha: usenha, );
       }
     } catch (e) {
       debugPrint(e.toString());
