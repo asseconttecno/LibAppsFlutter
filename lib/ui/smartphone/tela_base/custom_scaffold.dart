@@ -21,7 +21,7 @@ class CustomScaffold {
   static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height, Widget? buttom,
     required BuildContext context,required Widget body, bool isListView = true, String? foto, Widget? dados,
     GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5,
-    required String appTitle,String? nome, String? cargo, bool onFoto = true}){
+    required String appTitle,String? nome, String? cargo, bool onFoto = true, Function()? onAlter}){
 
     double h = 180 + MediaQuery.of(context).padding.top;
 
@@ -33,6 +33,7 @@ class CustomScaffold {
         cargo:cargo ,
         buttom: buttom,
         listMenus: listMenu,
+        onAlter: onAlter,
         foto: onFoto ? Hero(
           tag: "foto",
           child: GestureDetector(
@@ -77,6 +78,7 @@ class CustomScaffold {
       key: Config.scaffoldKey,
       body: body,
       height: height ?? h,
+      onAlter: onAlter,
       appbar: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +102,9 @@ class CustomScaffold {
                     key2: key2,
                     key3: key3,
                     key4: key4,
-                    key5: key5),
+                    key5: key5,
+                    onAlter: onAlter
+                ),
               ],
             ),
             const SizedBox(
@@ -255,8 +259,10 @@ class CustomScaffold {
     );
   }
 
-  static custom({GlobalKey<ScaffoldState>? key, required BuildContext context, required double height, bool conf = false,
-    Widget? appbar, required Widget body, bool home = false, Widget? expanAppbar, String? appTitle, Widget? buttom}){
+  static custom({GlobalKey<ScaffoldState>? key, required BuildContext context,
+    required double height, bool conf = false, Function()? onAlter,
+    Widget? appbar, required Widget body, bool home = false,
+    Widget? expanAppbar, String? appTitle, Widget? buttom}){
 
     return Scaffold(
       key: key,
@@ -265,7 +271,7 @@ class CustomScaffold {
         title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
         centerTitle: true,
         actions: [
-          actions(context, aponta: home, config: conf),
+          actions(context, aponta: home, config: conf, onAlter: onAlter),
         ],
       ),
       body: SizedBox(
@@ -305,7 +311,7 @@ class CustomScaffold {
 
 
   static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context, Widget? buttom,
-    required Widget body, required List<Widget> listMenus, Widget? foto,
+    required Widget body, required List<Widget> listMenus, Widget? foto,  Function()? onAlter,
     Widget? dados, required String appTitle,required String? nome,required String? cargo, }){
 
 
@@ -356,7 +362,7 @@ class CustomScaffold {
                             ],
                           ),
 
-                          actions(context, aponta: true),
+                          actions(context, aponta: true, onAlter: onAlter),
                         ],
                       ),
                     ),

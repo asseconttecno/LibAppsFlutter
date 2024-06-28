@@ -13,36 +13,36 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  provider: ^6.1.1
+  provider: ^6.1.2
 
   flutter_awesome_alert_box: ^2.1.1
   top_snackbar_flutter: ^3.1.0
 
-  sqflite: ^2.3.0 #^2.0.2
-  sqflite_common_ffi: ^2.3.0+4
-  sqflite_common_ffi_web: ^0.4.0
+  sqflite: ^2.3.3+1 #^2.0.2
+  sqflite_common_ffi: ^2.3.3
+  sqflite_common_ffi_web: ^0.4.3+1
 
-  responsive_framework: 1.1.1
+  responsive_framework: ^1.4.0
   ###^0.2.0
 
-  http: ^1.1.0
+  http: ^1.2.1
 
   intl: any #^0.18.1
 
-  image_picker: ^1.0.4
-  filesystem_picker: ^4.0.0 #^2.0.2
+  image_picker: ^1.1.2
+  filesystem_picker: ^4.1.0 #^2.0.2
 
-  local_auth: 2.1.7
+  local_auth: ^2.2.0
 
-  photo_view: ^0.14.0
+  photo_view: ^0.15.0
 
-  geocoding: ^2.1.1
-  location: ^5.0.3
+  geocoding: ^3.0.0
+  location: ^6.0.2
 
 
   #$google_maps_flutter: ^2.2.5
 
-  url_launcher: ^6.2.1
+  url_launcher: ^6.3.0
 
   flutter_carousel_slider: ^1.1.0
 
@@ -66,13 +66,10 @@ dependencies:
   flutter_html_to_pdf: ^0.7.0
 
   #syncfusion_flutter_pdfviewer: ^23.1.39
-  syncfusion_flutter_pdfviewer:
-    git:
-      url: https://github.com/pretolio/syncfusion_flutter_pdfviewer.git
-      ref: main
+  syncfusion_flutter_pdfviewer: ^26.1.35
 
-  path_provider: ^2.1.1
-  shared_preferences: ^2.2.2
+  path_provider: ^2.1.3
+  shared_preferences: ^2.2.3
   external_path: ^1.0.3
 
   cpf_cnpj_validator: ^2.0.0
@@ -84,7 +81,7 @@ dependencies:
   universal_io: ^2.2.2
   universal_html: ^2.2.4
 
-  connectivity_plus: 5.0.2
+  connectivity_plus: ^6.0.3
   package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0
 
@@ -93,10 +90,10 @@ dependencies:
       url: https://github.com/pretolio/safe_device.git
       ref: main
 
-  brasil_fields: ^1.14.0
+  brasil_fields: ^1.14.3
   datetime_picker_formfield_new: ^2.1.0
 
-  in_app_review: ^2.0.8
+  in_app_review: ^2.0.9
   launch_review: ^3.0.1
 
   #store_launcher: ^1.0.1
@@ -107,7 +104,7 @@ dependencies:
 
   schedulers: ^1.0.1
 
-  device_preview: ^1.1.0
+  device_preview: ^1.2.0
 
 dependency_overrides:
   #intl: ^0.17.0

@@ -1,9 +1,6 @@
-
 import 'package:assecontservices/assecontservices.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 
 
 import '../../../common/common.dart';
@@ -12,6 +9,7 @@ import '../../../common/custom_livelist.dart';
 import '../../../helper/helper.dart';
 import '../../../controllers/controllers.dart';
 import '../../../model/holerite/holerite/holerite.dart';
+import '../../../utils/custom_navigator.dart';
 import '../../ui.dart';
 import 'detelhes_holerite.dart';
 

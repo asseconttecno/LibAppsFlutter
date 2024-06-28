@@ -22,7 +22,7 @@ export 'tablet/historico_manager.dart';
 export 'tablet/user_manager_offiline.dart';
 export 'asseweb/user_manager.dart';
 export 'asseweb/senha_manager.dart';
-export 'asseweb/home_manager.dart';
+
 
 
 export 'update_app_manager.dart';

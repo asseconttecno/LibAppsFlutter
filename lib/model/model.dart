@@ -1,6 +1,6 @@
 export 'holerite/holerite/holerite.dart';
 export 'holerite/usuario/usuario.dart';
-export 'holerite/primeiro_acesso/primeiro_acesso_model.dart';
+
 
 export 'tablet/config/config.dart';
 export 'tablet/empresa/empresa.dart';

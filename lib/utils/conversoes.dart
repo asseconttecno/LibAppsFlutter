@@ -1,4 +1,5 @@
 
+import 'dart:async';
 
 import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,15 @@ import 'package:geocoding/geocoding.dart' as geo;
 
 
 class Conversoes {
+  Conversoes(){
+    setLocale();
+  }
+
+  Future<void> setLocale() async {
+    try{
+      await geo.GeocodingPlatform.instance?.setLocaleIdentifier('pt_BR');
+    }catch(e){}
+  }
 
   static Future<File?> htmlToPdf({required String html, String? nome}) async {
    try{
@@ -20,7 +30,7 @@ class Conversoes {
         ''';
 
      Directory tempDir = await getTemporaryDirectory();
-     String savedPath = nome ?? ("contrato - " + DateTime.now().microsecondsSinceEpoch.toString());
+     String savedPath = nome ?? ("contrato - ${DateTime.now().microsecondsSinceEpoch}");
      File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
          htmlContent, tempDir.path, savedPath
      );
@@ -48,7 +58,7 @@ class Conversoes {
 
   static Future<String?> getEndereco(double? latitude, double? longitude) async {
     if(latitude == null || longitude == null) return null;
-    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(latitude, longitude, localeIdentifier: 'pt_BR');
+    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(latitude, longitude);
     if(placemarks.isNotEmpty){
       geo.Placemark place = placemarks.first;
 

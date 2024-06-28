@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 
-import 'package:responsive_framework/responsive_breakpoints.dart';
-import 'package:universal_io/io.dart';
 
+import 'package:responsive_framework/responsive_framework.dart';
+
+
+import '../../../common/custom_snackbar.dart';
 import '../../../common/heros_file.dart';
 import '../../../common/load_screen.dart';
 import '../../../controllers/controllers.dart';
@@ -56,37 +57,22 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
         }
       },
       onPressfloatingButton: () async {
-        File? a;
-        Uint8List? b;
-        String? html;
         try {
           carregar(context);
-          //b = await context.read<HoleriteManager>().holeriteresumoBytes(
-          //    UserHoleriteManager.user, idComp, mes, ano, holerite?.holeriteTipoCod );
-
-          /*if(kIsWeb){
-
-              }else{
-                a = await context.read<HoleriteManager>().holeriteresumo(
-                    UserHoleriteManager.sUser, idComp, mes, ano, holerite?.holeriteTipoCod );
-              }*/
+          final file = await context.read<HoleriteManager>().holeriteresumoBytes(widget.holerite.id);
+          Navigator.pop(context);
+          if(file != null){
+            await Navigator.push(context, MaterialPageRoute(
+                builder: (context)=> FileHero(
+                  'holerite-${widget.holerite.attributes?.year}-${widget.holerite.attributes?.month}',
+                   memori: file, )));
+          }else{
+            CustomSnackbar.error(text: 'Não foi possivel carregar o holerite, verifique sua conexão com internet!', context: context);
+          }
         } catch(e){
           debugPrint(e.toString());
-        } finally {
-          Navigator.pop(context);
         }
-        if(b != null){
-          await Navigator.push(context, MaterialPageRoute(
-              builder: (context)=> FileHero('holerite-${widget.holerite.attributes?.year}-${widget.holerite.attributes?.month}',
-                file: a, memori: b, html: html,)));
-        }else{
-          InfoAlertBox(
-              context: context,
-              title: 'Atenção',
-              infoMessage: 'Não foi possivel carregar o holerite\nverifique sua conexão com internet!',
-              buttonText: 'ok'
-          );
-        }
+
       }
     );
   }

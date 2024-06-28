@@ -28,7 +28,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:[
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     SwitchListTile(
@@ -39,7 +39,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                         }
                     ),
                     if(!kIsWeb)
-                    Divider(height: 2,),
+                    const Divider(height: 2,),
                     if(!kIsWeb)
                     Consumer<BiometriaManager>(
                       builder: (_, bio, __) {
@@ -55,7 +55,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                         );
                       },
                     ),
-                    Divider(height: 2,),
+                    const Divider(height: 2,),
                   ],
                 ),
               ),
@@ -68,7 +68,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                           border: Border.all(color: Colors.red),
                           borderRadius: const BorderRadius.all(Radius.circular(8))
                       ),
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +92,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                       ),
                     ),
                   if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
 
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15, right: 25),
@@ -121,17 +121,17 @@ class _ScreenConfigState extends State<ConfigScreen> {
               style: TextStyle(color: Colors.redAccent),
             ),
           ),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text("Depois de excluir esta conta, não há como voltar atrás.",),
                 SizedBox(height: 25),
                 Text("Deseja excluir sua conta?",),
               ],
             ),
           ),
-          actionsPadding: EdgeInsets.symmetric(horizontal: 15),
+          actionsPadding: const EdgeInsets.symmetric(horizontal: 15),
           actions: <Widget>[
             TextButton(
               child: const Text("Cancelar", ),

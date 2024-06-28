@@ -120,7 +120,7 @@ class UserHoleriteManager extends ChangeNotifier {
 
   Future<bool> registerUser({required String email,
     required String senha,required String nome, required String cpf}) async {
-    user = await _service.registerUser(email: email, senha: senha, nome: nome, cpf: cpf);
+    user = await _service.registerUser(email: email, senha: senha, nome: nome, cpf: cpf, );
     listFunc = await _serviceFunc.listFuncionarios();
     if(listFunc.isNotEmpty) funcSelect = listFunc.last;
     memorizar();

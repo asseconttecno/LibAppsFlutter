@@ -26,7 +26,7 @@ class CustomButtom {
                           ? (color ?? Config.corPri).withOpacity(0.8) : color ?? Config.corPri,
                 ),
                 padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry?>(
-                      (Set<MaterialState> states) => padding ?? EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      (Set<MaterialState> states) => padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 ),
                 shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder?>(
                       (Set<MaterialState> states) => RoundedRectangleBorder(

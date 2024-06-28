@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
 
 import '../../controllers/controllers.dart';
 import '../../config.dart';
@@ -78,7 +79,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false,
             if(Config.conf.nomeApp == VersaoApp.HoleriteApp) {
               alterUser(context, onAlter);
             } else if(Config.conf.nomeApp == VersaoApp.AssewebApp) {
-              alterEmpresa(context);
+              alterEmpresa(context, onAlter);
             }
             break;
           case 1 :

@@ -6,7 +6,7 @@ import '../../config.dart';
 import '../../controllers/controllers.dart';
 
 
-alterEmpresa(BuildContext context){
+alterEmpresa(BuildContext context, Function()? onAlterEmp){
   Widget child = Consumer<UserAssewebManager>(
       builder: (_,user,__){
         return Container(
@@ -33,7 +33,7 @@ alterEmpresa(BuildContext context){
                     decoration: TextDecoration.none
                 ),),
                 const SizedBox(height: 20,),
-                Container(
+                SizedBox(
                     height: 200,
                     child: ListView.builder(
                       itemCount: user.user?.login?.companies?.length ?? 0,
@@ -66,8 +66,7 @@ alterEmpresa(BuildContext context){
                             ),
                             onTap: () async {
                               user.companies = user.user?.login?.companies![index];
-                              context.read<HomeAssewebManager>().getObrigacoesusuarios();
-                              context.read<HomeAssewebManager>().getContatos();
+                              if(onAlterEmp != null) await onAlterEmp();
                               Navigator.pop(context);
                             }
                         );

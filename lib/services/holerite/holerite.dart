@@ -56,22 +56,21 @@ class HoleriteService  {
     return [];
   }
 
-  Future<Uint8List?> holeriteresumoBytes() async {
-    String _api = "/holerites?filters[employee]=${UserHoleriteManager.funcSelect?.id}&populate[]=employee&populate[]=file";
+  Future<Uint8List?> holeriteresumoBytes(int? id) async {
+    String _api = "/holerites/$id/generate-pdf";
+    print(_api);
     try{
       final MyHttpResponse response = await _http.get(
-        url: Config.conf.apiHoleriteEmail! + _api,
+        url: Config.conf.apiHoleriteEmail! + _api, bits: true,
         headers: {
-          'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}'
+          'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}',
+          'Content-Type': 'application/pdf'
         },
       );
 
       if(response.isSucess) {
         final dados = response.data;
-        HoleriteModel model = HoleriteModel.fromMap(dados);
-        if(model.data != null && model.data!.isNotEmpty && model.data!.first.attributes?.file != null){
-          return base64.decode(model.data!.first.attributes!.file!);
-        }
+        return dados;
       }
     } catch(e){
       debugPrint(e.toString());

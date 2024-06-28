@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as common;
 import 'package:charts_common/src/common/color.dart' as colors;
+import 'package:responsive_framework/responsive_framework.dart';
 
 
 import '../../../common/common.dart';

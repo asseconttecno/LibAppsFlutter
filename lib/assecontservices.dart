@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:responsive_framework/breakpoint.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:universal_io/io.dart' as io;
 
 import 'common/custom_textformfield.dart';
@@ -187,11 +184,7 @@ class Assecontservices {
         ),
 
       ///-----------asseweb--------------///
-      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
-        ChangeNotifierProvider(
-          lazy: true,
-          create: (_) => HomeAssewebManager(),
-        ),
+
       if(Config.conf.nomeApp == VersaoApp.AssewebApp)
         ChangeNotifierProvider(
           lazy: false,
@@ -221,22 +214,16 @@ class Assecontservices {
 
 }
 
-class MyApp extends StatefulWidget {
-  String? titulo;
-  RouteFactory? rotas;
+class MyApp extends StatelessWidget {
+  final String? titulo;
+  final RouteFactory? rotas;
 
-  MyApp({required this.titulo, required this.rotas});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+  const MyApp({super.key, required this.titulo, required this.rotas});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: widget.titulo ?? '',
+      title: titulo ?? '',
       debugShowCheckedModeBanner: false,
       theme: context.watch<Config>().darkTemas ?
       ThemeData.dark(useMaterial3: true).copyWith(
@@ -295,7 +282,7 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: '/',
-      onGenerateRoute: widget.rotas,
+      onGenerateRoute: rotas,
 
     );
   }

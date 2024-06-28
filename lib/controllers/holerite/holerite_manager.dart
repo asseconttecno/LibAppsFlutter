@@ -80,13 +80,13 @@ class HoleriteManager extends ChangeNotifier {
     }
   }
 
-  Future<File?> holeriteresumo(int idholerite, int mes, int ano, int? tipo) async {
-    //File? result = await _service.holeriteresumo(idholerite, mes, ano, tipo);
-    //return result;
-  }
-
-  Future<Uint8List?> holeriteresumoBytes(int idholerite, int mes, int ano, int? tipo) async {
-    //Uint8List? result = await _service.holeriteresumoBytes(user, idholerite, mes, ano, tipo);
-    //return result;
+  Future<Uint8List?> holeriteresumoBytes(int? idholerite) async {
+    try {
+      Uint8List? result = await _service.holeriteresumoBytes(idholerite);
+      return result;
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
   }
 }
