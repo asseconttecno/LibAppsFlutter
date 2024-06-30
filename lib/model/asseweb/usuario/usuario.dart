@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import '../../../enums/regime_empresa.dart';
+import '../contatos/contatos.dart';
 
 class UsuarioAsseweb {
   const UsuarioAsseweb({
@@ -17,17 +18,10 @@ class UsuarioAsseweb {
 
   factory UsuarioAsseweb.fromJson(String str) => UsuarioAsseweb.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory UsuarioAsseweb.fromMap(Map<String, dynamic> json) => UsuarioAsseweb(
     login: json["login"] == null ? null : Login.fromMap(json["login"]),
     token: json["token"],
   );
-
-  Map<String, dynamic> toMap() => {
-    "login": login?.toMap(),
-    "token": token,
-  };
 }
 
 class Login {
@@ -46,11 +40,9 @@ class Login {
     this.master,
     this.lastCompanyId,
     this.companies,
-
   });
 
   final int? id;
-
   final String? name;
   final String? email;
   final String? phoneNumber;
@@ -59,15 +51,13 @@ class Login {
   final DateTime? lastAcess;
   final DateTime? birthday;
   final String? version;
-  final dynamic resignation;
+  final DateTime? resignation;
   final String? uid;
   final bool? master;
   final int? lastCompanyId;
   final List<Company>? companies;
 
   factory Login.fromJson(String str) => Login.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
 
   factory Login.fromMap(Map<String, dynamic> json) => Login(
     id: json["id"],
@@ -86,22 +76,6 @@ class Login {
     companies: json["companies"] == null ? [] : List<Company>.from(json["companies"]!.map((x) => Company.fromMap(x))),
   );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "phoneNumber": phoneNumber,
-    "ddd": ddd,
-    "password": password,
-    "lastAcess": lastAcess?.toIso8601String(),
-    "birthday": birthday,
-    "version": version,
-    "resignation": resignation,
-    "uid": uid,
-    "master": master,
-    "lastCompanyId": lastCompanyId,
-    "companies": companies == null ? [] : List<dynamic>.from(companies!.map((x) => x.toMap())),
-  };
 }
 
 class Company {
@@ -110,6 +84,7 @@ class Company {
     this.number,
     this.name,
     this.fantasyName,
+    this.inicio,
     this.cnpj,
     this.conntacts,
     this.regime = RegimeEmpresa.Outras
@@ -120,29 +95,20 @@ class Company {
   final String? name;
   final String? fantasyName;
   final String? cnpj;
-  final dynamic conntacts;
+  final DateTime? inicio;
+  final List<ContatosAsseweb>? conntacts;
   final RegimeEmpresa regime;
 
   factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory Company.fromMap(Map<String, dynamic> json) => Company(
     id: json["id"],
-    regime: RegimeEmpresa.getEnum(json["regime"]),
+    regime: RegimeEmpresa.getEnum(json["classificacao"]),
+    inicio: json["inicio"] == null ? null : DateTime.parse(json["inicio"]),
     number: json["number"],
     name: json["name"],
     fantasyName: json["fantasyName"],
     cnpj: json["cnpj"],
-    conntacts: json["conntacts"],
+    conntacts: json["conntacts"] == null ? [] : List<ContatosAsseweb>.from(json["conntacts"]!.map((x) => ContatosAsseweb.fromMap(x))),
   );
-
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "number": number,
-    "name": name,
-    "fantasyName": fantasyName,
-    "cnpj": cnpj,
-    "conntacts": conntacts,
-  };
 }
