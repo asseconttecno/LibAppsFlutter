@@ -5,7 +5,7 @@ carregar(BuildContext context){
       barrierDismissible: false,
       context: context,
       builder: (context){
-        return  Center(child: CircularProgressIndicator(backgroundColor: Colors.transparent,),
+        return  const Center(child: CircularProgressIndicator(backgroundColor: Colors.transparent,),
         );
       }
   );

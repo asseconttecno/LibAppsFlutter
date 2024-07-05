@@ -32,6 +32,7 @@ class CustomScaffold {
         nome:nome ,
         cargo:cargo ,
         buttom: buttom,
+
         listMenus: listMenu,
         onAlter: onAlter,
         foto: onFoto ? Hero(

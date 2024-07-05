@@ -56,7 +56,7 @@ class UserAssewebService {
       );
       return response.isSucess;
     } catch (e){
-      debugPrint('UserAssewebService lastcompanyupdate: ' +  e.toString());
+      debugPrint('UserAssewebService lastcompanyupdate: $e');
     }
     return false;
   }

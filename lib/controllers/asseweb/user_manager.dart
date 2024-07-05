@@ -15,7 +15,7 @@ class UserAssewebManager extends ChangeNotifier {
   final BiometriaServices _serviceBio = BiometriaServices();
 
   UserAssewebManager(){
-    loadBio();
+    init();
   }
 
   static Company? sCompanies;
@@ -85,6 +85,10 @@ class UserAssewebManager extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> updateEmpresa() async {
+    return await _service.lastcompanyupdate(companyId: companies?.id);
+  }
+
   Future<bool> autoLogin() async {
     bool result = false;
     try {
@@ -118,12 +122,16 @@ class UserAssewebManager extends ChangeNotifier {
     }
   }
 
-  loadBio() async {
+  init() async {
+    final prefs = await SharedPreferences.getInstance();
+    status = prefs.getBool("autologin") ?? false;
+  }
+
+  Future<void> loadBio() async {
     try{
       final prefs = await SharedPreferences.getInstance();
       uemail = kReleaseMode ? prefs.getString("user") ?? '' : email.text;
       usenha = kReleaseMode ? prefs.getString("usenha") ?? '' : senha.text;
-      status = prefs.getBool("autologin") ?? false;
 
       if(kReleaseMode){
         senha.text = '';

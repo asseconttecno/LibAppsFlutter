@@ -13,7 +13,7 @@ class HttpCli {
   final ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
 
   Future<MyHttpResponse> get(
-      {required String url, Map<String, String>? headers, bool decoder = true, bool bits = false, bool isCon = true,}) async {
+      {required String url, Map<String, String>? headers, bool decoder = true, int timeout = 15, bool bits = false, bool isCon = true,}) async {
 
       if(isCon && !connectionStatus.hasConnection){
         return MyHttpResponse(
@@ -29,7 +29,7 @@ class HttpCli {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin':'*'
           }
-        ).timeout(const Duration(seconds: 15), onTimeout : () {
+        ).timeout(Duration(seconds: timeout), onTimeout : () {
           debugPrint('get timeout');
           throw HttpError.timeout;
         });
