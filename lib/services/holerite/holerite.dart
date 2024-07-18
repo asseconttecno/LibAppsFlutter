@@ -57,15 +57,18 @@ class HoleriteService  {
   }
 
   Future<Uint8List?> holeriteresumoBytes(int? id) async {
-    String _api = "/holerites/$id/generate-pdf";
-    print(_api);
+    String _api = "/holerites/generate-pdf";
+
     try{
-      final MyHttpResponse response = await _http.get(
-        url: Config.conf.apiHoleriteEmail! + _api, bits: true,
+      final MyHttpResponse response = await _http.post(
+        url: Config.conf.apiHoleriteEmail! + _api, isbyte: true,
         headers: {
           'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}',
           'Content-Type': 'application/pdf'
         },
+        body:{
+          "ids": [id]
+        }
       );
 
       if(response.isSucess) {
