@@ -80,8 +80,9 @@ class HttpCli {
   }
 
 
-  Future<MyHttpResponse> post({required String url, Map<String, String>? headers,
-      Map<String, dynamic>? body, bool decoder = true, bool isbyte = false, int timeout = 55}) async {
+  Future<MyHttpResponse> post({Uri? uri, String? url, Map<String, String>? headers,
+    Map<String, dynamic>? body, bool decoder = true,
+    bool isbyte = false, int timeout = 55}) async {
 
     if(!connectionStatus.hasConnection){
       return MyHttpResponse(
@@ -93,7 +94,7 @@ class HttpCli {
 
     try {
       final http.Response response = await http.post(
-        Uri.parse(url),
+          uri ?? Uri.parse(url ?? ''),
         headers: headers ?? <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'charset': 'UTF-8',
