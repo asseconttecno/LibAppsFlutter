@@ -68,7 +68,7 @@ class Config extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       primeiroAcesso =  prefs.getBool("priacesso") ?? true;
       darkTemas = prefs.getBool("darkTemas") ?? false;
-      if(!kIsWeb){
+      if(Platform.isAndroid){
         documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
         if(documentos == ''){
           documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);

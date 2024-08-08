@@ -20,7 +20,7 @@ class HoleriteService  {
   final HttpCli _http = HttpCli();
 
   Future<HoleriteModel?> listHolerite(int page, int pageSize) async {
-    String _api = "/holerites?sort=desc&pagination[page]=$page&pagination[pageSize]=${pageSize == 0 ? 25 : pageSize}&filters[employee]=${UserHoleriteManager.funcSelect?.id}";
+    String _api = "/holerites/by-employee/${UserHoleriteManager.funcSelect?.id}";
 
     final MyHttpResponse response = await _http.get(
       url: Config.conf.apiHoleriteEmail! + _api,
