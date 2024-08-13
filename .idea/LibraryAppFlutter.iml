@@ -39,6 +39,21 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/apps/AssewebApp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/HoleriteApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/HoleriteApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/HoleriteApp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssepontoApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Apps/AssewebApp/windows/flutter/ephemeral/.plugin_symlinks/assecontservices/Apps/HoleriteApp/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

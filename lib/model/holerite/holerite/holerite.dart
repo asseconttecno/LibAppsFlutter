@@ -4,9 +4,24 @@ import 'package:assecontservices/assecontservices.dart';
 import '../../../enums/holerite_tipo.dart';
 
 
+class ChartPizza {
+  final String desc;
+  final double valor;
+
+  ChartPizza(this.desc, this.valor);
+}
+
+class ChartColum {
+  final int ind;
+  final String data;
+  final double valor;
+  ChartColum(this.ind, this.data, this.valor);
+}
+
+
 class HoleriteModel {
-  List<DatumHolerite>? data;
-  MetaHolerite? meta;
+  final List<DatumHolerite>? data;
+  final MetaHolerite? meta;
 
   HoleriteModel({
     this.data,
@@ -25,8 +40,8 @@ class HoleriteModel {
 }
 
 class DatumHolerite {
-  int? id;
-  DatumAttributesHolerite? attributes;
+  final int? id;
+  final DatumAttributes? attributes;
 
   DatumHolerite({
     this.id,
@@ -35,7 +50,7 @@ class DatumHolerite {
 
   factory DatumHolerite.fromMap(Map<String, dynamic> json) => DatumHolerite(
     id: json["id"],
-    attributes: json["attributes"] == null ? null : DatumAttributesHolerite.fromMap(json["attributes"]),
+    attributes: json["attributes"] == null ? null : DatumAttributes.fromMap(json["attributes"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -53,37 +68,36 @@ class DatumHolerite {
   }
 }
 
-class DatumAttributesHolerite {
-  String? cpf;
-  String? name;
-  String? office;
-  AttributesDataHolerite? data;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  HoleriteTipo type;
-  String? month;
-  String? year;
-  DateTime? createDate;
-  String? registration;
-  String? competence;
-  String? rg;
-  String? phone;
-  int? baseSalary;
-  String? agencyAccount;
-  String? email;
-  String? sindicate;
-  String? depIr;
-  String? depSf;
-  String? ctps;
-  String? uploadId;
-  String? importingUser;
-  String? sheetType;
-  bool? isSigned;
-  dynamic signedAt;
-  EmployeeHolerite? employee;
-  String? file;
+class DatumAttributes {
+  final String? cpf;
+  final String? name;
+  final String? office;
+  final AttributesData? data;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final HoleriteTipo type;
+  final String? month;
+  final String? year;
+  final DateTime? createDate;
+  final String? registration;
+  final String? competence;
+  final dynamic rg;
+  final dynamic phone;
+  final dynamic baseSalary;
+  final dynamic agencyAccount;
+  final dynamic email;
+  final dynamic sindicate;
+  final dynamic depIr;
+  final dynamic depSf;
+  final dynamic ctps;
+  final String? uploadId;
+  final String? importingUser;
+  final String? sheetType;
+  final bool? isSigned;
+  final DateTime? signedAt;
+  final FileClass? file;
 
-  DatumAttributesHolerite({
+  DatumAttributes({
     this.cpf,
     this.name,
     this.office,
@@ -110,15 +124,14 @@ class DatumAttributesHolerite {
     this.sheetType,
     this.isSigned,
     this.signedAt,
-    this.employee,
     this.file,
   });
 
-  factory DatumAttributesHolerite.fromMap(Map<String, dynamic> json) => DatumAttributesHolerite(
+  factory DatumAttributes.fromMap(Map<String, dynamic> json) => DatumAttributes(
     cpf: json["cpf"],
     name: json["name"],
     office: json["office"],
-    data: json["data"] == null ? null : AttributesDataHolerite.fromMap(json["data"]),
+    data: json["data"] == null ? null : AttributesData.fromMap(json["data"]),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     type: HoleriteTipo.getEnum(int.tryParse(json["type"])),
@@ -140,9 +153,8 @@ class DatumAttributesHolerite {
     importingUser: json["importingUser"],
     sheetType: json["sheetType"],
     isSigned: json["isSigned"],
-    signedAt: json["signedAt"],
-    employee: json["employee"] == null ? null : EmployeeHolerite.fromMap(json["employee"]),
-    file: json["file"] == null ? null : json["file"]['data'],
+    signedAt: json["signedAt"] == null ? null : DateTime.parse(json["signedAt"]),
+    file: json["file"] == null ? null : FileClass.fromMap(json["file"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -171,28 +183,28 @@ class DatumAttributesHolerite {
     "importingUser": importingUser,
     "sheetType": sheetType,
     "isSigned": isSigned,
-    "signedAt": signedAt,
-    "employee": employee?.toMap(),
+    "signedAt": signedAt?.toIso8601String(),
+    "file": file?.toMap(),
   };
 }
 
-class AttributesDataHolerite {
-  int? cbo;
-  String? cpf;
-  String? reg;
-  bool? erro;
-  String? nome;
-  dynamic chapa;
-  String? cnpjcpf;
-  DateTime? admissao;
-  List<dynamic>? rawLines;
-  int? setorLocal;
-  List<dynamic>? errorFields;
-  dynamic mensagemErro;
-  FuncionarioResumo? funcionarioResumo;
-  List<FuncionarioEvento>? funcionarioEventos;
+class AttributesData {
+  final int? cbo;
+  final String? cpf;
+  final String? reg;
+  final bool? erro;
+  final String? nome;
+  final dynamic chapa;
+  final String? cnpjcpf;
+  final String? admissao;
+  final List<dynamic>? rawLines;
+  final int? setorLocal;
+  final List<dynamic>? errorFields;
+  final dynamic mensagemErro;
+  final FuncionarioResumo? funcionarioResumo;
+  final List<FuncionarioEvento>? funcionarioEventos;
 
-  AttributesDataHolerite({
+  AttributesData({
     this.cbo,
     this.cpf,
     this.reg,
@@ -209,7 +221,7 @@ class AttributesDataHolerite {
     this.funcionarioEventos,
   });
 
-  factory AttributesDataHolerite.fromMap(Map<String, dynamic> json) => AttributesDataHolerite(
+  factory AttributesData.fromMap(Map<String, dynamic> json) => AttributesData(
     cbo: json["cbo"],
     cpf: json["cpf"],
     reg: json["reg"],
@@ -217,7 +229,7 @@ class AttributesDataHolerite {
     nome: json["nome"],
     chapa: json["chapa"],
     cnpjcpf: json["cnpjcpf"],
-    admissao: json["admissao"] == null ? null : DateTime.parse(json["admissao"]),
+    admissao: json["admissao"],
     rawLines: json["rawLines"] == null ? [] : List<dynamic>.from(json["rawLines"]!.map((x) => x)),
     setorLocal: json["setorLocal"],
     errorFields: json["errorFields"] == null ? [] : List<dynamic>.from(json["errorFields"]!.map((x) => x)),
@@ -245,11 +257,11 @@ class AttributesDataHolerite {
 }
 
 class FuncionarioEvento {
-  String? codigo;
-  String? desconto;
-  String? descricao;
-  String? referencia;
-  String? vencimento;
+  final String? codigo;
+  final String? desconto;
+  final String? descricao;
+  final String? referencia;
+  final String? vencimento;
 
   FuncionarioEvento({
     this.codigo,
@@ -277,21 +289,21 @@ class FuncionarioEvento {
 }
 
 class FuncionarioResumo {
-  String? banco;
-  String? conta;
-  String? frase;
-  double? baseIr;
-  String? funcao;
-  String? credito;
-  String? divisao;
-  double? liquido;
-  String? mesFgts;
-  double? baseFgts;
-  String? competencia;
-  double? salarioBase;
-  double? totalDescontos;
-  double? salContribuicao;
-  double? totalVencimentos;
+  final String? banco;
+  final String? conta;
+  final String? frase;
+  final String? baseIr;
+  final String? funcao;
+  final String? credito;
+  final String? divisao;
+  final double? liquido;
+  final String? mesFgts;
+  final String? baseFgts;
+  final String? competencia;
+  final double? salarioBase;
+  final double? totalDescontos;
+  final double? salContribuicao;
+  final double? totalVencimentos;
 
   FuncionarioResumo({
     this.banco,
@@ -315,18 +327,18 @@ class FuncionarioResumo {
     banco: json["banco"],
     conta: json["conta"],
     frase: json["frase"],
-    baseIr: json["baseIR"] == null ? 0 : json["baseIR"].toString().toDouble(),
+    baseIr: json["baseIR"],
     funcao: json["funcao"],
     credito: json["credito"],
     divisao: json["divisao"],
-    liquido: json["liquido"] == null ? 0 : json["liquido"].toString().toDouble(),
+    liquido: double.parse(json["liquido"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
     mesFgts: json["mesFGTS"],
-    baseFgts: json["baseFGTS"] == null ? 0 : json["baseFGTS"].toString().toDouble(),
+    baseFgts: json["baseFGTS"],
     competencia: json["competencia"],
-    salarioBase: json["salarioBase"] == null ? 0 : json["salarioBase"].toString().toDouble(),
-    totalDescontos: json["totalDescontos"] == null ? 0 : json["totalDescontos"].toString().toDouble(),
-    salContribuicao: json["salContribuicao"] == null ? 0 : json["salContribuicao"].toString().toDouble(),
-    totalVencimentos: json["totalVencimentos"] == null ? 0 : json["totalVencimentos"].toString().toDouble(),
+    salarioBase: double.parse(json["salarioBase"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
+    totalDescontos: double.parse(json["totalDescontos"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
+    salContribuicao: double.parse(json["salContribuicao"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
+    totalVencimentos: double.parse(json["totalVencimentos"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
   );
 
   Map<String, dynamic> toMap() => {
@@ -348,15 +360,15 @@ class FuncionarioResumo {
   };
 }
 
-class EmployeeHolerite {
-  EmployeeData? data;
+class FileClass {
+  final FileData? data;
 
-  EmployeeHolerite({
+  FileClass({
     this.data,
   });
 
-  factory EmployeeHolerite.fromMap(Map<String, dynamic> json) => EmployeeHolerite(
-    data: json["data"] == null ? null : EmployeeData.fromMap(json["data"]),
+  factory FileClass.fromMap(Map<String, dynamic> json) => FileClass(
+    data: json["data"] == null ? null : FileData.fromMap(json["data"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -364,16 +376,16 @@ class EmployeeHolerite {
   };
 }
 
-class EmployeeData {
-  int? id;
-  DataAttributes? attributes;
+class FileData {
+  final int? id;
+  final DataAttributes? attributes;
 
-  EmployeeData({
+  FileData({
     this.id,
     this.attributes,
   });
 
-  factory EmployeeData.fromMap(Map<String, dynamic> json) => EmployeeData(
+  factory FileData.fromMap(Map<String, dynamic> json) => FileData(
     id: json["id"],
     attributes: json["attributes"] == null ? null : DataAttributes.fromMap(json["attributes"]),
   );
@@ -385,86 +397,82 @@ class EmployeeData {
 }
 
 class DataAttributes {
-  String? nome;
-  String? cpf;
-  String? phone;
-  String? email;
-  int? baseSalary;
-  String? office;
-  String? sector;
-  String? ctps;
-  String? syndicate;
-  String? codeBank;
-  String? accountBank;
-  String? typeBank;
-  String? pixKeyBank;
-  String? agencyBank;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  String? reg;
-  bool? isPreRegistered;
+  final String? name;
+  final String? alternativeText;
+  final String? caption;
+  final dynamic width;
+  final dynamic height;
+  final dynamic formats;
+  final String? hash;
+  final String? ext;
+  final String? mime;
+  final double? size;
+  final String? url;
+  final dynamic previewUrl;
+  final String? provider;
+  final dynamic providerMetadata;
+  final String? folderPath;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   DataAttributes({
-    this.nome,
-    this.cpf,
-    this.phone,
-    this.email,
-    this.baseSalary,
-    this.office,
-    this.sector,
-    this.ctps,
-    this.syndicate,
-    this.codeBank,
-    this.accountBank,
-    this.typeBank,
-    this.pixKeyBank,
-    this.agencyBank,
+    this.name,
+    this.alternativeText,
+    this.caption,
+    this.width,
+    this.height,
+    this.formats,
+    this.hash,
+    this.ext,
+    this.mime,
+    this.size,
+    this.url,
+    this.previewUrl,
+    this.provider,
+    this.providerMetadata,
+    this.folderPath,
     this.createdAt,
     this.updatedAt,
-    this.reg,
-    this.isPreRegistered,
   });
 
   factory DataAttributes.fromMap(Map<String, dynamic> json) => DataAttributes(
-    nome: json["nome"],
-    cpf: json["cpf"],
-    phone: json["phone"],
-    email: json["email"],
-    baseSalary: json["baseSalary"],
-    office: json["office"],
-    sector: json["sector"],
-    ctps: json["ctps"],
-    syndicate: json["syndicate"],
-    codeBank: json["codeBank"],
-    accountBank: json["accountBank"],
-    typeBank: json["typeBank"],
-    pixKeyBank: json["pixKeyBank"],
-    agencyBank: json["agencyBank"],
+    name: json["name"],
+    alternativeText: json["alternativeText"],
+    caption: json["caption"],
+    width: json["width"],
+    height: json["height"],
+    formats: json["formats"],
+    hash: json["hash"],
+    ext: json["ext"],
+    mime: json["mime"],
+    size: json["size"]?.toDouble(),
+    url: json["url"],
+    previewUrl: json["previewUrl"],
+    provider: json["provider"],
+    providerMetadata: json["provider_metadata"],
+    folderPath: json["folderPath"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    reg: json["reg"],
-    isPreRegistered: json["isPreRegistered"],
   );
 
   Map<String, dynamic> toMap() => {
-    "nome": nome,
-    "cpf": cpf,
-    "phone": phone,
-    "email": email,
-    "baseSalary": baseSalary,
-    "office": office,
-    "sector": sector,
-    "ctps": ctps,
-    "syndicate": syndicate,
-    "codeBank": codeBank,
-    "accountBank": accountBank,
-    "typeBank": typeBank,
-    "pixKeyBank": pixKeyBank,
-    "agencyBank": agencyBank,
+    "name": name,
+    "alternativeText": alternativeText,
+    "caption": caption,
+    "width": width,
+    "height": height,
+    "formats": formats,
+    "hash": hash,
+    "ext": ext,
+    "mime": mime,
+    "size": size,
+    "url": url,
+    "previewUrl": previewUrl,
+    "provider": provider,
+    "provider_metadata": providerMetadata,
+    "folderPath": folderPath,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
-    "reg": reg,
-    "isPreRegistered": isPreRegistered,
   };
 }
 
@@ -510,19 +518,4 @@ class PaginationHolerite {
     "pageCount": pageCount,
     "total": total,
   };
-}
-
-
-class ChartPizza {
-  final String desc;
-  final double valor;
-
-  ChartPizza(this.desc, this.valor);
-}
-
-class ChartColum {
-  final int ind;
-  final String data;
-  final double valor;
-  ChartColum(this.ind, this.data, this.valor);
 }

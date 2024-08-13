@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
-import '../../controllers/controllers.dart';
 import '../../enums/enums.dart';
 import '../../model/model.dart';
 import '../../config.dart';
@@ -18,17 +16,10 @@ class RegistroService {
   final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
 
-  Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude) async {
+  Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude, String? endereco) async {
     String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
-    String? endereco;
-    if(latitude != null && longitude != null){
-      try {
-        endereco = await Conversoes.getEndereco(latitude, longitude);
-      } catch (e) {
-        debugPrint('erro endereco $e');
-      }
-    }
+
 
     DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(

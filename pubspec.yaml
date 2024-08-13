@@ -20,25 +20,21 @@ dependencies:
 
   sqflite: ^2.3.3+1 #^2.0.2
   sqflite_common_ffi: ^2.3.3
-  sqflite_common_ffi_web: ^0.4.3+1
+  sqflite_common_ffi_web: ^0.4.4
 
   responsive_framework: ^1.4.0
   ###^0.2.0
 
-  http: ^1.2.1
+  http: ^1.2.2
 
   intl: any #^0.18.1
 
   image_picker: ^1.1.2
   filesystem_picker: ^4.1.0 #^2.0.2
 
-  local_auth: ^2.2.0
+  local_auth: ^2.3.0
 
   photo_view: ^0.15.0
-
-  geocoding: ^3.0.0
-  location: ^6.0.2
-
 
   #$google_maps_flutter: ^2.2.5
 
@@ -66,10 +62,10 @@ dependencies:
   flutter_html_to_pdf: ^0.7.0
 
   #syncfusion_flutter_pdfviewer: ^23.1.39
-  syncfusion_flutter_pdfviewer: ^26.1.35
+  syncfusion_flutter_pdfviewer: ^26.2.9
 
-  path_provider: ^2.1.3
-  shared_preferences: ^2.2.3
+  path_provider: ^2.1.4
+  shared_preferences: ^2.3.1
   external_path: ^1.0.3
 
   cpf_cnpj_validator: ^2.0.0
@@ -81,7 +77,7 @@ dependencies:
   universal_io: ^2.2.2
   universal_html: ^2.2.4
 
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^6.0.5
   package_info_plus: any #^3.0.2 #^1.4.2
   #device_info_plus: ^9.0.0
 
@@ -90,7 +86,7 @@ dependencies:
       url: https://github.com/pretolio/safe_device.git
       ref: main
 
-  brasil_fields: ^1.14.3
+  brasil_fields: ^1.15.0
   datetime_picker_formfield_new: ^2.1.0
 
   in_app_review: ^2.0.9
@@ -106,9 +102,8 @@ dependencies:
 
   device_preview: ^1.2.0
 
-dependency_overrides:
-  #intl: ^0.17.0
 
+dependency_overrides:
 
 dev_dependencies:
 

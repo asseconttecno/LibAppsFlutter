@@ -32,7 +32,6 @@ class HoleriteService  {
     try{
       if(response.isSucess) {
         final data = response.data;
-        print(data);
         if(data != null) {
           HoleriteModel? model = HoleriteModel.fromMap(data);
           return model;
@@ -40,7 +39,7 @@ class HoleriteService  {
       }
 
     } catch(e) {
-      debugPrint(e.toString());
+      debugPrint('HoleriteService listHolerite $e');
     }
   }
 
