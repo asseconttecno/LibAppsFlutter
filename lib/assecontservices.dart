@@ -73,18 +73,11 @@ class Assecontservices {
 
 
     List<SingleChildWidget> _providers = [
-      if(ponto)
-        Provider(
-          lazy: false,
-          create: (_)=> DBPonto(),
-        ),
-
       ChangeNotifierProvider(
         lazy: false,
         create: (_)=> Config(),
       ),
       ChangeNotifierProvider(
-        lazy: false,
         create: (_)=> FormProvider(),
       ),
       if(Config.conf.nomeApp != VersaoApp.PontoTablet)
@@ -92,9 +85,10 @@ class Assecontservices {
           lazy: false,
           create: (_)=> BiometriaManager(),
         ),
+
+
       if(Config.conf.nomeApp != VersaoApp.AssewebApp)
         ChangeNotifierProvider(
-          lazy: true,
           create: (_)=> HoleriteManager(),
         ),
       if(Config.conf.nomeApp != VersaoApp.AssewebApp)
@@ -105,9 +99,10 @@ class Assecontservices {
 
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
-          lazy: true,
           create: (_)=> SenhaHoleriteManager(),
         ),
+
+
       if(Config.conf.nomeApp == VersaoApp.PontoTablet)
         ChangeNotifierProvider(
           lazy: false,
@@ -134,6 +129,13 @@ class Assecontservices {
           lazy: false,
           create: (_)=> UserPontoManager(),
         ),
+
+      if(ponto)
+        Provider(
+          lazy: false,
+          create: (_)=> DBPonto(),
+        ),
+
       if(ponto)
         ChangeNotifierProvider(
           create: (_)=> ComprovanteManagger(),
@@ -192,15 +194,19 @@ class Assecontservices {
         ),
       if(Config.conf.nomeApp == VersaoApp.AssewebApp)
         Provider(
-          lazy: false,
           create: (context) => SenhaAssewebManager(),
         ),
     ];
 
     if(providers != null){
-      _providers.addAll(providers);
+      try{
+        _providers.addAll(providers);
+      }catch(e){
+
+      }
     }
 
+    print('init app');
     runApp(
         MultiProvider(
           providers: _providers,
@@ -216,14 +222,14 @@ class Assecontservices {
 
 class MyApp extends StatelessWidget {
   final String? titulo;
-  final RouteFactory? rotas;
+  final RouteFactory rotas;
 
   const MyApp({super.key, required this.titulo, required this.rotas});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: titulo ?? '',
+      title: titulo ?? 'Assecont',
       debugShowCheckedModeBanner: false,
       theme: context.watch<Config>().darkTemas ?
       ThemeData.dark(useMaterial3: true).copyWith(
@@ -261,6 +267,7 @@ class MyApp extends StatelessWidget {
       ),
       builder: (context, child) {
         final MediaQueryData data = MediaQuery.of(context);
+        print('builder MediaQueryData');
         return MediaQuery(
           data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
           child: ResponsiveBreakpoints.builder(

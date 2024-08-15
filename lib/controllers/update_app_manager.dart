@@ -12,7 +12,7 @@ import '../config.dart';
 
 
 class UpdateAppManager {
-  UpdateAppService _service = UpdateAppService();
+  final UpdateAppService _service = UpdateAppService();
 
   checkVersion(BuildContext context) async {
     if(kIsWeb){
@@ -21,14 +21,16 @@ class UpdateAppManager {
       try{
         if(Config.isWin) throw 'executando no windowns';
 
-        if(kReleaseMode && ((Config.isIOS && Config.isJailBroken) || (!Config.isIOS && !Config.isRealDevice))){
+        if(kReleaseMode && ( (!Config.isIOS && !Config.isRealDevice))){
           CustomAlert.custom(
               context: context,
               titulo: 'Atenção!',
               corpo: CustomText.text('Não é possivel executar este app neste dispositivo!',
                 maxLines: 2, softWrap: true, textAlign: TextAlign.center,),
               txtBotaoSucess: 'OK',
-              funcSucess: _funcExit()
+              funcSucess: (){
+                _funcExit();
+              }
           );
         }else{
           final bool appStatus = await _service.postUpdateApp();
@@ -55,14 +57,14 @@ class UpdateAppManager {
                 }
             );
           }else{
-            Future.delayed(Duration(seconds: 2), (){
+            Future.delayed(const Duration(seconds: 2), (){
               Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
             });
           }
         }
       } catch(e){
         debugPrint(e.toString());
-        Future.delayed(Duration(seconds: 2), (){
+        Future.delayed(const Duration(seconds: 2), (){
           Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         });
       }

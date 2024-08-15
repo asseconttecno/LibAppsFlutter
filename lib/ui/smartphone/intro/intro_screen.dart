@@ -18,9 +18,14 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 800), (){
+    Future.delayed(const Duration(milliseconds: 900), (){
       if(mounted){
-        UpdateAppManager().checkVersion(context);
+        final UpdateAppManager service = UpdateAppManager();
+        try {
+          service.checkVersion(context);
+        }  catch (e) {
+          // TODO
+        }
       }
     });
   }
@@ -29,8 +34,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
@@ -38,7 +42,7 @@ class _IntroScreenState extends State<IntroScreen> {
           )
       ),
       child: Container(
-        constraints: BoxConstraints(maxWidth: 500),
+        constraints: const BoxConstraints(maxWidth: 500),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -47,7 +51,7 @@ class _IntroScreenState extends State<IntroScreen> {
               child: Image.asset('assets/imagens/LOGO_ASSECONT.png',
                   fit: BoxFit.fitWidth,  package: 'assecontservices'),
             ),
-            Container(
+            const SizedBox(
                 width: 50,
                 child: LinearProgressIndicator(minHeight: 10, backgroundColor: Colors.transparent,)
             )

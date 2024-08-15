@@ -32,16 +32,13 @@ class BiometriaServices {
         debugPrint('Tem biometria cadastrada: $canCheckBiometrics');
         if (canCheckBiometrics) {
           List<BiometricType> availableBiometrics = await localAuth.getAvailableBiometrics();
-          debugPrint('Lista de biometria cadastrada: $availableBiometrics.isNotEmpty');
-          if (availableBiometrics.isNotEmpty) {
-            return true;
-          } 
+          debugPrint('Lista de biometria cadastrada: ${availableBiometrics.isNotEmpty}');
+          return availableBiometrics.isNotEmpty;
         } 
       } catch (e) {
         debugPrint(e.toString());
       }
     }
-
     return false;
   }
 
