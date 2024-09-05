@@ -20,8 +20,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
   Widget build(BuildContext context) {
     bool color = context.watch<Config>().darkTemas;
 
-    return CustomScaffold.custom(
-        context: context,
+    return HomeIoWidget(
         height: 30, conf: true,
         appTitle: 'Configurações',
         body: Column(

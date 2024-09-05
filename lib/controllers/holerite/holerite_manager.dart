@@ -40,7 +40,8 @@ class HoleriteManager extends ChangeNotifier {
     }
   }
 
-  Future<void> init() async {
+  Future<void> init({bool update = false}) async {
+    if(listHolerites.isNotEmpty && !update) return;
     _page = 0;
     _pageSize = 3;
     _load = true;
@@ -67,6 +68,18 @@ class HoleriteManager extends ChangeNotifier {
     if(isLoad) load = true;
     final result = await _service.listHolerite(_page, _pageSize);
     holerites = result;
+    holerites!.data?.sort((a, b) {
+      try {
+        if (a.attributes!.year != b.attributes!.year) {
+          return b.attributes!.year!.compareTo(a.attributes!.year!);
+        } else {
+          return b.attributes!.month!.compareTo(a.attributes!.month!);
+        }
+      } catch (e) {
+        return 999;
+      }
+    });
+
     load = false;
     notifyListeners();
   }

@@ -1,27 +1,19 @@
-import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:async';
 
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
-
-
 import '../../controllers/holerite/user_manager.dart';
-import '../../enums/versao_app.dart';
 import '../../model/holerite/usuario/funcionarios.dart';
 import '../http/http.dart';
-import '../../model/model.dart';
 import '../../config.dart';
 
 class FuncionariosHoleriteService  {
   final HttpCli _http = HttpCli();
 
   Future<List<DatumFuncionarios>> listFuncionarios() async {
-    final String _api = "/employees?pagination[limit]=50&filters[cpf]=${UserHoleriteManager.user?.user?.cpf}";
+    final String _api = "/employees?pagination[limit]=50&filters[cpf]=${Validacoes.numeric(UserHoleriteManager.user?.user?.cpf)}";
 
     final MyHttpResponse response = await _http.get(
       url: Config.conf.apiHoleriteEmail! + _api,

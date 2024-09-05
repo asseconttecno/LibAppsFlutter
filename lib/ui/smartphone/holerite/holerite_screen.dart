@@ -35,20 +35,19 @@ class _HoleriteScreenState extends State<HoleriteScreen> {
 
     return Consumer<HoleriteManager>(
         builder: (_, holerite, __){
-          return CustomScaffold.custom(
+          return HomeIoWidget(
               key: _scaffoldKey,
-              context: context,
               height: 30,
               appTitle: 'Meus Holerites',
               body: Column(
                 children: [
-                  FilterWidget(
+                  /*FilterWidget(
                     onFiltro: (filtro ) {
                       holerite.pageSize = filtro;
                     },
                     filtro: holerite.pageSize,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  ),
+                  ),*/
                   Container(
                       child: !connectionStatus.hasConnection ?
                         Center(child: CustomText.text('Verifique sua Conexão com Internet')) :

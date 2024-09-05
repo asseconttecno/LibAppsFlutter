@@ -17,7 +17,8 @@ class CameraService {
       await _picker.pickImage(
         source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front,
-        maxHeight: 600,
+        imageQuality: 70,
+        maxHeight: 1080,
         //imageQuality: 70,
       ).then((value) async {
           if(value != null){
@@ -34,7 +35,7 @@ class CameraService {
       });
       return img;
     }catch (e){
-      debugPrint('Erro camera ' + e.toString());
+      debugPrint('Erro camera $e');
       return null;
     }
   }
@@ -45,8 +46,8 @@ class CameraService {
     try{
       await _picker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 60,
-        maxHeight: 600,
+        imageQuality: 70,
+        maxHeight: 1080,
       ).then((value) async {
             if(value != null){
               if(kIsWeb){
@@ -63,7 +64,7 @@ class CameraService {
       });
       return img;
     }catch (e){
-      debugPrint('Erro getGallery ' + e.toString());
+      debugPrint('Erro getGallery $e');
       return null;
     }
   }

@@ -77,9 +77,6 @@ class Assecontservices {
         lazy: false,
         create: (_)=> Config(),
       ),
-      ChangeNotifierProvider(
-        create: (_)=> FormProvider(),
-      ),
       if(Config.conf.nomeApp != VersaoApp.PontoTablet)
         ChangeNotifierProvider(
           lazy: false,

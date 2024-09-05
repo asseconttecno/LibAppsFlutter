@@ -5,13 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:async';
 
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
-
 
 import '../../controllers/holerite/user_manager.dart';
-import '../../enums/versao_app.dart';
 import '../http/http.dart';
 import '../../model/model.dart';
 import '../../config.dart';

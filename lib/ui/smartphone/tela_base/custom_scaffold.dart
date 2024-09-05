@@ -15,24 +15,43 @@ import 'custom_menu_item.dart';
 import 'drawer_web.dart';
 
 
+class HomeWidget extends StatelessWidget {
+  const HomeWidget({super.key, this.keyListMenu, required this.listMenu,
+    this.height, required this.body, this.foto, this.dados, this.keyMenu, this.buttom,
+    this.key1, this.key2, this.key3, this.key4, this.key5, required this.appTitle,
+    this.nome, this.cargo, this.onAlter, this.isListView = true, this.onFoto = true});
 
-class CustomScaffold {
+  final GlobalKey? keyListMenu;
+  final List<CustomMenuItem> listMenu;
+  final double? height;
+  final Widget? buttom;
+  final Widget body;
+  final bool isListView;
+  final String? foto;
+  final Widget? dados;
+  final GlobalKey? keyMenu;
+  final GlobalKey? key1;
+  final GlobalKey? key2;
+  final GlobalKey? key3;
+  final GlobalKey? key4;
+  final GlobalKey? key5;
+  final String appTitle;
+  final String? nome;
+  final String? cargo;
+  final bool onFoto;
+  final Function()? onAlter;
 
-  static home({GlobalKey? keyListMenu, required List<CustomMenuItem> listMenu, double? height, Widget? buttom,
-    required BuildContext context,required Widget body, bool isListView = true, String? foto, Widget? dados,
-    GlobalKey? keyMenu, GlobalKey? key1, GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5,
-    required String appTitle,String? nome, String? cargo, bool onFoto = true, Function()? onAlter}){
-
+  @override
+  Widget build(BuildContext context) {
     double h = 180 + MediaQuery.of(context).padding.top;
 
-    return kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
-      ? homeWeb(
-        context: context,
+    return kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+        && !ResponsiveBreakpoints.of(context).isPhone
+        ? HomeWebWidget(
         body: body,
         nome:nome ,
         cargo:cargo ,
         buttom: buttom,
-
         listMenus: listMenu,
         onAlter: onAlter,
         foto: onFoto ? Hero(
@@ -42,7 +61,7 @@ class CustomScaffold {
               await Navigator.push(context,
                   MaterialPageRoute(
                       builder: (context) => ImageHero(
-                          foto == null ? null : base64Decode(foto)
+                          foto == null ? null : base64Decode(foto!)
                       ))
               );
               //setState(() {});
@@ -61,7 +80,7 @@ class CustomScaffold {
                   color: Config.corPri,
                   image: foto != null
                       ? DecorationImage(
-                      image: MemoryImage(base64Decode(foto)),
+                      image: MemoryImage(base64Decode(foto!)),
                       fit: BoxFit.cover)
                       : null),
               child: foto == null ? const Icon(
@@ -74,8 +93,7 @@ class CustomScaffold {
         ) : null,
         dados: dados,
         appTitle: appTitle
-
-    ) : custom(
+    ) : HomeIoWidget(
       key: Config.scaffoldKey,
       body: body,
       height: height ?? h,
@@ -122,8 +140,8 @@ class CustomScaffold {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText.text(nome,
-                            style: const TextStyle(fontSize: 20, color: Colors.white),
-                            textAlign: TextAlign.center,),
+                          style: const TextStyle(fontSize: 20, color: Colors.white),
+                          textAlign: TextAlign.center,),
                         CustomText.text(cargo,
                             style: const TextStyle(fontSize: 14, color: Colors.white),
                             textAlign: TextAlign.center),
@@ -132,52 +150,51 @@ class CustomScaffold {
                   ),
                 ),
                 if(onFoto)
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Hero(
-                    tag: "foto",
-                    child: GestureDetector(
-                      onTap: () async {
-                        await Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => ImageHero(
-                                    foto == null ? null : base64Decode(foto)
-                                ))
-                        );
-                        //setState(() {});
-                      },
-                      child: Container(
-                        alignment: Alignment.topCenter,
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: foto != null
-                                ? Border.all(
-                                color: Config.corPri, width: 2)
-                                : Border.all(
-                                color: Colors.white, width: 5),
-                            borderRadius: BorderRadius.circular(100),
-                            color: Config.corPri,
-                            image: foto != null
-                                ? DecorationImage(
-                                image: MemoryImage(base64Decode(foto)),
-                                fit: BoxFit.cover)
-                                : null),
-                        child: foto == null ? const Icon(
-                          CupertinoIcons.person,
-                          color: Colors.white,
-                          size: 90,
-                        ) : null,
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Hero(
+                      tag: "foto",
+                      child: GestureDetector(
+                        onTap: () async {
+                          await Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context) => ImageHero(
+                                      foto == null ? null : base64Decode(foto!)
+                                  ))
+                          );
+                          //setState(() {});
+                        },
+                        child: Container(
+                          alignment: Alignment.topCenter,
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              border: foto != null
+                                  ? Border.all(
+                                  color: Config.corPri, width: 2)
+                                  : Border.all(
+                                  color: Colors.white, width: 5),
+                              borderRadius: BorderRadius.circular(100),
+                              color: Config.corPri,
+                              image: foto != null
+                                  ? DecorationImage(
+                                  image: MemoryImage(base64Decode(foto!)),
+                                  fit: BoxFit.cover)
+                                  : null),
+                          child: foto == null ? const Icon(
+                            CupertinoIcons.person,
+                            color: Colors.white,
+                            size: 90,
+                          ) : null,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ],
         ),
       ),
-      context: context,
       buttom: buttom,
       home: true ,
       expanAppbar: Container(
@@ -186,51 +203,80 @@ class CustomScaffold {
         height: 120,
         alignment: Alignment.center,
         child: isListView ?
-          ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            children: listMenu,
-          ) :
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: listMenu,
-          ),
+        ListView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          children: listMenu,
+        ) :
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: listMenu,
+        ),
       ),
     );
   }
+}
 
-  static calendario({GlobalKey<ScaffoldState>? key, required Function(DateTime) funcData,
-    required CalendarWeekController controller, required Widget body,
-    required List<DecorationItem> listdecoration, required String appTitle, Widget? buttom,
-    required BuildContext context,  DateTime? dataInit, DateTime? dataMin, DateTime? dataMax}){
 
-    if(dataInit != null){
-      controller.jumpToDate(dataInit);
+class HomeCalendarioWidget extends StatefulWidget {
+  const HomeCalendarioWidget({super.key, this.globalKey, required this.funcData,
+    required this.controller, required this.body, required this.listdecoration,
+    required this.appTitle, this.buttom, this.dataInit, this.dataMin, this.dataMax});
+
+  final GlobalKey<ScaffoldState>? globalKey;
+  final Function(DateTime) funcData;
+  final CalendarWeekController controller;
+  final Widget body;
+  final List<DecorationItem> listdecoration;
+  final String appTitle;
+  final Widget? buttom;
+  final DateTime? dataInit;
+  final DateTime? dataMin;
+  final DateTime? dataMax;
+
+  @override
+  State<HomeCalendarioWidget> createState() => _HomeCalendarioWidgetState();
+}
+
+class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
+
+  @override
+  void initState() {
+    if(widget.dataInit != null){
+      widget.controller.jumpToDate(widget.dataInit!);
     }
+    super.initState();
+  }
 
-    return custom(
-      key: key,
-      body: body,
-      appTitle: appTitle,
+  @override
+  Widget build(BuildContext context) {
+    return HomeIoWidget(
+      key: widget.globalKey,
+      body: widget.body,
+      appTitle: widget.appTitle,
       height: 110,
-      buttom: buttom,
+      buttom: widget.buttom,
       appbar: CalendarWeek(
-          controller: controller,
+          controller: widget.controller,
           height: 100,
           showMonth: true,
-          activeIcon: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone,
-          backgroundColor: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
+          activeIcon: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+              && !ResponsiveBreakpoints.of(context).isPhone,
+          backgroundColor: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+              && !ResponsiveBreakpoints.of(context).isPhone
               ? Config.corPribar : Colors.transparent,
-          minDate: dataMin ?? DateTime(2020),
-          maxDate: dataMax ?? DateTime(DateTime.now().year + 1),
-          dateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
+          minDate: widget.dataMin ?? DateTime(2020),
+          maxDate: widget.dataMax ?? DateTime(DateTime.now().year + 1),
+          dateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+              && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
           dayOfWeekStyle: const TextStyle(color: Config.corPri),
-          todayDateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
+          todayDateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+              && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
           monthStyle: const TextStyle(color:  Colors.white),
           pressedDateBackgroundColor: Colors.white30,
           pressedDateStyle: const TextStyle(color:  Colors.white),
           weekendsStyle: const TextStyle(color: Config.corPri),
-          onDatePressed: funcData,
+          onDatePressed: widget.funcData,
           dayOfWeek: const [
             "Seg",
             "Tec",
@@ -254,70 +300,99 @@ class CustomScaffold {
             "Novembro",
             "Dezembro"
           ],
-          decorations: listdecoration
+          decorations: widget.listdecoration
       ),
-      context: context,
     );
   }
+}
 
-  static custom({GlobalKey<ScaffoldState>? key, required BuildContext context,
-    required double height, bool conf = false, Function()? onAlter,
-    Widget? appbar, required Widget body, bool home = false,
-    Widget? expanAppbar, String? appTitle, Widget? buttom}){
 
+
+class HomeIoWidget extends StatelessWidget {
+  const HomeIoWidget({super.key, this.globalKey, required this.height,
+    this.onAlter, this.appbar, required this.body, this.expanAppbar,
+    this.appTitle, this.buttom, this.conf = false, this.home = false});
+  final GlobalKey<ScaffoldState>? globalKey;
+  final double height;
+  final bool conf;
+  final Function()? onAlter;
+  final Widget? appbar;
+  final Widget body;
+  final bool home;
+  final Widget? expanAppbar;
+  final String? appTitle;
+  final Widget? buttom;
+
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
-      appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-          && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
-        title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
-        centerTitle: true,
-        actions: [
-          actions(context, aponta: home, config: conf, onAlter: onAlter),
-        ],
-      ),
-      body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                      height: height,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone ? null : BoxDecoration(
-                          color: context.watch<Config>().darkTemas ?
-                          Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(45),
-                            bottomLeft: Radius.circular(45),
-                          )
-                      ),
-                      child: appbar
-                  ),
-                  if(expanAppbar != null)
-                    expanAppbar
-                ],
-              ),
-              Expanded(
-                  child: body
-              ),
-            ],
-          )
-      ),
-      floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: buttom
+        key: globalKey,
+        appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+            && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
+          title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+          centerTitle: true,
+          actions: [
+            actions(context, aponta: home, config: conf, onAlter: onAlter),
+          ],
+        ),
+        body: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                        height: height,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                            && !ResponsiveBreakpoints.of(context).isPhone ? null
+                            : BoxDecoration(
+                            color: context.watch<Config>().darkTemas ?
+                            Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+                            borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(45),
+                              bottomLeft: Radius.circular(45),
+                            )
+                        ),
+                        child: appbar
+                    ),
+                    if(expanAppbar != null)
+                      expanAppbar!
+                  ],
+                ),
+                Expanded(
+                    child: body
+                ),
+              ],
+            )
+        ),
+        floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: buttom
     );
   }
+}
+
+class HomeWebWidget extends StatelessWidget {
+  const HomeWebWidget({super.key, this.globalKey, this.buttom, required this.body, this.onAlter,
+    required this.listMenus, this.foto, this.dados, required this.appTitle, this.nome, this.cargo});
+  final GlobalKey<ScaffoldState>? globalKey;
+  final Widget? buttom;
+  final Widget body;
+  final List<Widget> listMenus;
+  final Widget? foto;
+  final Function()? onAlter;
+  final Widget? dados;
+  final String appTitle;
+  final String? nome;
+  final String? cargo;
 
 
-  static homeWeb({GlobalKey<ScaffoldState>? key, required BuildContext context, Widget? buttom,
-    required Widget body, required List<Widget> listMenus, Widget? foto,  Function()? onAlter,
-    Widget? dados, required String appTitle,required String? nome,required String? cargo, }){
-
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
+      key: globalKey,
       body: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -332,54 +407,53 @@ class CustomScaffold {
           ),
           Expanded(
             child: Scaffold(
-              body: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: context.watch<Config>().darkTemas
-                          ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(5.5, 0), // Ajuste a sombra vertical aqui
-                          blurRadius: 4, // Ajuste a intensidade da sombra aqui
-                        ),
-                      ],
-                    ),
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText.text(nome,
-                                  style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
-                              CustomText.text(cargo,
-                                  style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
-                            ],
+                body: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: context.watch<Config>().darkTemas
+                            ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(5.5, 0), // Ajuste a sombra vertical aqui
+                            blurRadius: 4, // Ajuste a intensidade da sombra aqui
                           ),
-
-                          actions(context, aponta: true, onAlter: onAlter),
                         ],
                       ),
+                      margin: EdgeInsets.zero,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText.text(nome,
+                                    style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+                                CustomText.text(cargo,
+                                    style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                              ],
+                            ),
+
+                            actions(context, aponta: true, onAlter: onAlter),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                      child: body
-                  ),
-                ],
-              ),
-              floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: buttom
+                    Expanded(
+                        child: body
+                    ),
+                  ],
+                ),
+                floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: buttom
             ),
           ),
         ],
       ),
-
     );
   }
 }
