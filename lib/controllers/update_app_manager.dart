@@ -3,8 +3,8 @@ import 'package:universal_io/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:launch_app_store/launch_app_store.dart';
 
-import 'package:launch_review/launch_review.dart';
 
 import '../common/common.dart';
 import '../services/services.dart';

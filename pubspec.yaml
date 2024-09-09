@@ -91,7 +91,7 @@ dependencies:
   datetime_picker_formfield_new: ^2.1.0
 
   in_app_review: ^2.0.9
-  launch_review: ^3.0.1
+  launch_app_store: ^1.1.2
 
   #store_launcher: ^1.0.1
 
