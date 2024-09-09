@@ -5,10 +5,10 @@ import 'package:universal_io/io.dart';
 import 'dart:typed_data';
 import 'package:universal_html/html.dart' as webFile;
 
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../services/http/http_cliente.dart';
+import 'conversoes.dart';
 
 
 class CustomFile {
@@ -38,7 +38,7 @@ class CustomFile {
     return file;
   }
 
-  static Future<File> contentHtml(String nomeFile, {String? html})  async {
+  static Future<File?> contentHtml(String nomeFile, {String? html})  async {
     var htmlContent = '''<!DOCTYPE html>
         <html>
         <head></head>
@@ -46,19 +46,15 @@ class CustomFile {
         </html>
         ''';
 
-    Directory tempDir = await getTemporaryDirectory();
-    File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
-        htmlContent, tempDir.path, nomeFile
-    );
+    File? file = await Conversoes.htmlToPdf(html: htmlContent, nome: nomeFile);
     return file;
   }
 
-  static Future<File> fileHtml( File html,{String? nomeFile,})  async {
+  static Future<File?> fileHtml( File html,{String? nomeFile,})  async {
     String name = nomeFile ?? DateTime.now().microsecondsSinceEpoch.toString();
 
-    Directory tempDir = await getTemporaryDirectory();
-    File? file = await FlutterHtmlToPdf.convertFromHtmlFile(
-        html, tempDir.path, name
+    File? file = await Conversoes.fileHtmlToPdf(
+        html: html, nome: name
     );
     return file;
   }

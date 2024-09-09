@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
+import 'package:flutter_html_to_pdf_plus/flutter_html_to_pdf_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -23,13 +23,33 @@ class Conversoes {
      Directory tempDir = await getTemporaryDirectory();
      String savedPath = nome ?? ("contrato - ${DateTime.now().microsecondsSinceEpoch}");
      File? file = await FlutterHtmlToPdf.convertFromHtmlContent(
-         htmlContent, tempDir.path, savedPath
+         content: htmlContent, configuration: PrintPdfConfiguration(
+            targetDirectory: tempDir.path, targetName: savedPath
+          )
      );
 
      return file;
    }catch(e){
      debugPrint(e.toString());
    }
+  }
+
+
+  static Future<File?> fileHtmlToPdf({required File html, String? nome}) async {
+    try{
+      Directory tempDir = await getTemporaryDirectory();
+      String savedPath = nome ?? DateTime.now().microsecondsSinceEpoch.toString();
+
+      File? file = await FlutterHtmlToPdf.convertFromHtmlFile(
+          htmlFile: html, configuration: PrintPdfConfiguration(
+              targetDirectory: tempDir.path, targetName: savedPath
+          )
+      );
+
+      return file;
+    }catch(e){
+      debugPrint(e.toString());
+    }
   }
 
 

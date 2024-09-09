@@ -1,18 +1,15 @@
 
 import 'dart:convert';
 
-import 'package:universal_io/io.dart';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
+
 
 import '../../model/model.dart';
 import '../../config.dart';
-import '../../utils/get_file.dart';
 import '../http/http.dart';
 
 

@@ -59,7 +59,8 @@ dependencies:
       ref: main
 
   #webcontent_converter: ^0.0.7+1
-  flutter_html_to_pdf: ^0.7.0
+  #flutter_html_to_pdf: ^0.7.0
+  flutter_html_to_pdf_plus: ^0.1.0
 
   #syncfusion_flutter_pdfviewer: ^23.1.39
   syncfusion_flutter_pdfviewer: ^26.2.13
