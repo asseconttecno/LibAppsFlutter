@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/services.dart';
-import 'package:share_extend/share_extend.dart';
+import 'package:hyj_share_extend/hyj_share_extend.dart';
 
 import '../enums/enums.dart';
 
