@@ -1,9 +1,10 @@
 
 
-import 'package:flutter/services.dart';
 import 'package:hyj_share_extend/hyj_share_extend.dart';
 
 import '../enums/enums.dart';
+
+export '../enums/enums.dart';
 
 class ExternalShare {
 

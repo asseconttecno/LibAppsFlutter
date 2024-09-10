@@ -9,12 +9,12 @@ import 'package:flutter/rendering.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:share_extend/share_extend.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:universal_io/io.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../config.dart';
+import '../utils/external_share.dart';
 import '../utils/get_file.dart';
 import 'load_screen.dart';
 
@@ -29,7 +29,7 @@ class FileHero extends StatefulWidget {
   const FileHero(this.name, {super.key, this.menu, this.file,this.memori, this.html});
 
   @override
-  _FileHeroState createState() => _FileHeroState();
+  State<FileHero> createState() => _FileHeroState();
 }
 
 class _FileHeroState extends State<FileHero> {
@@ -109,18 +109,24 @@ class _FileHeroState extends State<FileHero> {
                       salvarArquivo(widget.memori!, "${widget.name}.pdf");
                     }
                   }else if(widget.file != null){
-                    ShareExtend.share(widget.file!.path, "file",
-                        sharePanelTitle: "Enviar PDF",
-                        subject: "${widget.name}.pdf");
+                    ExternalShare.shareFile(
+                        path: widget.file!.path,
+                        titulo: "Enviar PDF",
+                        nomeFile: "${widget.name}.pdf",
+                      tipo: SheredType.pdf,
+                    );
                   }else{
                     carregar(context);
                     Uint8List? rawPath = widget.memori ?? await _capturePng();
                     Navigator.pop(context);
                     if(rawPath != null){
                       final file = await CustomFile.fileTemp('pdf', memori: rawPath, nome: widget.name);
-                      ShareExtend.share(file.path, "file",
-                          sharePanelTitle: "Enviar PDF",
-                          subject: "${widget.name}.pdf");
+                      ExternalShare.shareFile(
+                        path: file.path,
+                        titulo: "Enviar PDF",
+                        nomeFile: "${widget.name}.pdf",
+                        tipo: SheredType.pdf,
+                      );
                     }
                   }
                 }
