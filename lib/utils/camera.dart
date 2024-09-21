@@ -17,8 +17,8 @@ class CameraService {
       await _picker.pickImage(
         source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front,
-        imageQuality: 70,
-        maxHeight: 1080,
+        imageQuality: 90,
+        maxHeight: 1280,
         //imageQuality: 70,
       ).then((value) async {
           if(value != null){
@@ -46,8 +46,8 @@ class CameraService {
     try{
       await _picker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 70,
-        maxHeight: 1080,
+        imageQuality: 90,
+        maxHeight: 1280,
       ).then((value) async {
             if(value != null){
               if(kIsWeb){
