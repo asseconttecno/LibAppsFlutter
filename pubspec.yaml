@@ -60,7 +60,8 @@ dependencies:
 
   #webcontent_converter: ^0.0.7+1
   #flutter_html_to_pdf: ^0.7.0
-  flutter_html_to_pdf_plus: ^0.1.0
+  flutter_html_to_pdf_plus:
+    path: packages/flutter_html_to_pdf_plus
 
   #syncfusion_flutter_pdfviewer: ^23.1.39
   syncfusion_flutter_pdfviewer: ^26.2.13
@@ -92,7 +93,7 @@ dependencies:
   datetime_picker_formfield_new: ^2.1.0
 
   in_app_review: ^2.0.9
-  launch_app_store: ^1.1.2
+  launch_app_store: ^1.1.1
 
   #store_launcher: ^1.0.1
 
