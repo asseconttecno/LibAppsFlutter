@@ -16,11 +16,12 @@ class DBPonto{
   DBPonto._internal() {
     if(Config.isWin) win.sqfliteFfiInit();
     init();
+    print('DBPonto');
   }
 
   Future<void> init() async {
-    versao = await getVersion();
     try {
+      versao = await getVersion();
       db;
     } catch (e) {}
   }
