@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../../../enums/enums.dart';
+import '../../../enums/obrigacao_status.dart';
 import '../../../utils/utils.dart';
 
 
@@ -20,6 +21,7 @@ class ObrigacoesDetalhesModel {
     this.emailEnviadoEm,
     this.smsEnviadoEm,
     this.ativo,
+    this.status = ObrigacaoStatus.Nenhum,
   });
 
   String? obrigacaoDescricao;
@@ -37,7 +39,7 @@ class ObrigacoesDetalhesModel {
   DateTime? smsEnviadoEm;
   StatusTimeLine? statusTimeLine;
   bool? ativo;
-
+  ObrigacaoStatus status;
 
   factory ObrigacoesDetalhesModel.fromJson(String str) => ObrigacoesDetalhesModel.fromMap(json.decode(str));
 
@@ -58,6 +60,7 @@ class ObrigacoesDetalhesModel {
     emailEnviadoEm: json["emailEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["emailEnviadoEm"].toString()),
     smsEnviadoEm: json["smsEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["smsEnviadoEm"].toString()),
     ativo: json["ativo"],
+    status: ObrigacaoStatus.fromInt(int.tryParse(json["ativo"].toString()) ?? -1) ,
   );
 
   Map<String, dynamic> toMap() => {
@@ -75,5 +78,6 @@ class ObrigacoesDetalhesModel {
     "emailEnviadoEm": emailEnviadoEm,
     "smsEnviadoEm": smsEnviadoEm,
     "ativo": ativo,
+    'status': status.value
   };
 }
