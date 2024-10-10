@@ -10,7 +10,7 @@ import 'custom_load_shimmer.dart';
 
 class CustomLiveList<T> extends StatefulWidget {
   const CustomLiveList({super.key, required this.list, this.isLoad = false, this.padding, this.endScroll,
-    required this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia});
+     this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia});
   final List list;
   final Widget Function(T item) content;
   final Function(T item)? onTap;
