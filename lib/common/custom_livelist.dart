@@ -13,7 +13,7 @@ class CustomLiveList<T> extends StatefulWidget {
     required this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia});
   final List list;
   final Widget Function(T item) content;
-  final Function(T item) onTap;
+  final Function(T item)? onTap;
   final Function()? endScroll;
   final ScrollController? scrollController;
   final bool isList;
@@ -107,8 +107,8 @@ class _CustomLiveListState<T> extends State<CustomLiveList<T>> {
                                 end: Offset.zero,
                               ).animate(animation),
                               child: GestureDetector(
-                                  onTap: (){
-                                    widget.onTap(item);
+                                  onTap: widget.onTap == null ? null : (){
+                                    widget.onTap!(item);
                                   },
                                   child: CustomListTile(
                                       padding: widget.padding,
