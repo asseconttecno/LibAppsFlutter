@@ -10,6 +10,7 @@ class ConfiguracoesModel {
   final String? apiEspelho;
   final String? apiBoletos;
   final String? apiRelatorioFechamento;
+  final String? apiLeituraArquivos;
   final String? androidAppId ;
   final String? iosAppId;
   final String? iosAppIdNum ;
@@ -23,6 +24,7 @@ class ConfiguracoesModel {
       this.apiAsseponto,
       this.apiAssepontoNova,
       this.apiRelatorioFechamento,
+      this.apiLeituraArquivos,
       this.apiBoletos,
       this.apiEspelho,
       this.androidAppId,
