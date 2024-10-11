@@ -51,7 +51,6 @@ class SenhaAssewebService {
           headers: {
             'Content-Type' : 'application/json',
             'Authorization' : 'Bearer ${UserAssewebManager.sUser?.token}'
-
           },
           body: <String, dynamic>{
             "email": UserAssewebManager.sUser?.login?.email,

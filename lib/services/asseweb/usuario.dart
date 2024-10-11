@@ -49,6 +49,10 @@ class UserAssewebService {
     try{
       MyHttpResponse response = await _http.post(
           url: Config.conf.apiAsseweb! + _metodo, decoder: false,
+          headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ${UserAssewebManager.sUser?.token}'
+          },
           body: <String, dynamic>{
             "id": UserAssewebManager.sUser?.login?.id,
             "lastCompanyId": companyId
