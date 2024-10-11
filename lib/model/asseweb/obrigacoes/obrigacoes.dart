@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import '../../../enums/enums.dart';
+import '../../../enums/obrigacao_status.dart';
 import '../../../utils/utils.dart';
 
 class ObrigacaoModel {
@@ -13,7 +14,7 @@ class ObrigacaoModel {
     this.descricao,
     this.responsavel,
     this.cliente,
-    this.status,
+    this.status = ObrigacaoStatus.Nenhum,
     this.vencimento,
     this.prazo,
     this.concluidoEm,
@@ -49,7 +50,7 @@ class ObrigacaoModel {
   String? descricao;
   String? responsavel;
   int? cliente;
-  int? status;
+  ObrigacaoStatus status;
   DateTime? vencimento;
   DateTime? prazo;
   DateTime? concluidoEm;
@@ -89,7 +90,7 @@ class ObrigacaoModel {
     descricao: json["descricao"],
     responsavel: json["responsavel"],
     cliente: json["cliente"],
-    status: json["status"],
+    status: ObrigacaoStatus.fromInt( int.tryParse(json["status"].toString()) ?? -1 ),
     vencimento: Validacoes.stringToDataBr(json["vencimento"].toString()),
     prazo: Validacoes.stringToDataBr(json["prazo"].toString()),
     concluidoEm: Validacoes.stringToDataBr(json["concluidoEm"].toString()),
@@ -126,7 +127,7 @@ class ObrigacaoModel {
     "descricao": descricao,
     "responsavel": responsavel,
     "cliente": cliente,
-    "status": status,
+    "status": status.value,
     "vencimento": vencimento,
     "prazo": prazo,
     "concluidoEm": concluidoEm,

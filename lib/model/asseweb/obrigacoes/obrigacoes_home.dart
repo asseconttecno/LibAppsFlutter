@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:assecontservices/assecontservices.dart';
+
+import '../../../enums/obrigacao_status.dart';
+import '../../../utils/validacoes.dart';
 
 class ObrigacoesHomeModel {
   ObrigacoesHomeModel({
@@ -55,12 +57,14 @@ class ObrigacaoClientePeriodo {
     this.deadLine,
     this.finishedIn,
     this.completedBy,
+    this.status = ObrigacaoStatus.Nenhum,
   });
 
   int? id;
   DateTime? deadLine;
   DateTime? finishedIn;
   int? completedBy;
+  ObrigacaoStatus status;
 
   factory ObrigacaoClientePeriodo.fromJson(String str) => ObrigacaoClientePeriodo.fromMap(json.decode(str));
 
@@ -69,6 +73,7 @@ class ObrigacaoClientePeriodo {
     deadLine: json["deadLine"] == null ? null : Validacoes.stringToDataBr( json["deadLine"].toString() ),
     finishedIn: json["finishedIn"] == null ? null : DateTime.parse(json["finishedIn"]),
     completedBy: json["completedBy"],
+    status: ObrigacaoStatus.fromInt( int.tryParse(json["completedBy"].toString()) ?? -1 ),
   );
 
 }
