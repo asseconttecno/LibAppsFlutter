@@ -3,11 +3,10 @@
 import '../model/model.dart';
 
 enum StatusTimeLine{
+  Nenhum(0),
   Disponibilizado(1),
-  Vizualizado(4),
   Email(2),
-  Sms(3),
-  Nenhum(0);
+  Vizualizado(3);
 
   String img(){
     switch(value){
@@ -15,9 +14,8 @@ enum StatusTimeLine{
         return 'assets/imagens/dispo.png';
       case 2:
         return 'assets/imagens/email.png';
+      //case 3: return 'assets/imagens/sms.png';
       case 3:
-        return 'assets/imagens/sms.png';
-      case 4:
         return 'assets/imagens/visualizado.png';
       default:
         return 'assets/imagens/dispo.png';
@@ -27,9 +25,7 @@ enum StatusTimeLine{
   static StatusTimeLine statusTimeLine(ObrigacoesDetalhesModel obrg) {
     if(obrg.visualizadoEm != null){
       return StatusTimeLine.Vizualizado;
-    }else if(obrg.smsEnviadoEm != null){
-      return StatusTimeLine.Sms;
-    }else if(obrg.emailEnviadoEm != null){
+    } else if(obrg.emailEnviadoEm != null){
       return StatusTimeLine.Email;
     }else if(obrg.disponivelEm != null){
       return StatusTimeLine.Disponibilizado;
