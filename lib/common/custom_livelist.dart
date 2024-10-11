@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_animated/auto_animated.dart';
@@ -10,7 +11,9 @@ import 'custom_load_shimmer.dart';
 
 class CustomLiveList<T> extends StatefulWidget {
   const CustomLiveList({super.key, required this.list, this.isLoad = false, this.padding, this.endScroll,
-     this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia});
+     this.onTap, this.isList = true, this.scrollController, required this.content, this.txtListVazia,
+    this.onDismissed,
+  });
   final List list;
   final Widget Function(T item) content;
   final Function(T item)? onTap;
@@ -20,6 +23,7 @@ class CustomLiveList<T> extends StatefulWidget {
   final String? txtListVazia;
   final bool isLoad;
   final EdgeInsets? padding;
+  final Future<bool> Function(T)? onDismissed;
 
   @override
   State<CustomLiveList<T>> createState() => _CustomLiveListState<T>();
@@ -66,23 +70,25 @@ class _CustomLiveListState<T> extends State<CustomLiveList<T>> {
         isLoad: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ColumnOrRow(
-            isColumn: widget.isList, isWrap: true,
-            children: List<Widget>.generate(6,
-              (index) => SizedBox(
-                width:  widget.isList ? null : 80,
-                child: CustomListTile(
-                    padding: widget.padding,
-                    child: Container()
-                ),
+          child: SingleChildScrollView(
+            child: ColumnOrRow(
+              isColumn: widget.isList, isWrap: true,
+              children: List<Widget>.generate(6,
+                (index) => SizedBox(
+                  width:  widget.isList ? null : 80,
+                  child: CustomListTile(
+                      padding: widget.padding,
+                      child: Container()
+                  ),
+                )
               )
-            )
+            ),
           ),
         ),
       ) : LayoutBuilder(
           builder: (_, constraints){
             if(widget.list.isEmpty){
-              return Center(child: Text(widget.txtListVazia ?? 'Nenhum dado carregado'),);
+              return Center(child: Text(widget.txtListVazia ?? 'Nenhum item carregado'),);
             }
 
             return Padding(
@@ -106,14 +112,28 @@ class _CustomLiveListState<T> extends State<CustomLiveList<T>> {
                                 begin: const Offset(0, -0.1),
                                 end: Offset.zero,
                               ).animate(animation),
-                              child: GestureDetector(
-                                  onTap: widget.onTap == null ? null : (){
-                                    widget.onTap!(item);
-                                  },
-                                  child: CustomListTile(
-                                      padding: widget.padding,
-                                      child: widget.content(item)
-                                  )
+                              child: Dismissible(
+                                key: Key(index.toString()),
+                                background: Container(color: Colors.red, alignment: Alignment.centerRight,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(CupertinoIcons.delete, color: Colors.white),
+                                    )),
+                                direction: widget.onDismissed == null
+                                    ? DismissDirection.none : DismissDirection.endToStart,
+                                confirmDismiss: widget.onDismissed == null ? null : (v) async {
+                                  return await widget.onDismissed!(item);
+                                },
+
+                                child: GestureDetector(
+                                    onTap: widget.onTap == null ? null : (){
+                                      widget.onTap!(item);
+                                    },
+                                    child: CustomListTile(
+                                        padding: widget.padding,
+                                        child: widget.content(item)
+                                    )
+                                ),
                               )
                           ),
                         );

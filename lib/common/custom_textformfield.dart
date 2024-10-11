@@ -13,6 +13,7 @@ import '../../utils/validacoes.dart';
 import '../config.dart';
 import '../utils/cpf_email_formatter.dart';
 import '../utils/cpf_rg_formatter.dart';
+import '../utils/num_inputformatter.dart';
 import 'custom_date_picker.dart';
 
 
@@ -53,7 +54,9 @@ class CustomTextFormField {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: txtColor,
+                        color: context.watch<Config>().darkTemas
+                            ? txtColor == Colors.black ? Colors.white : txtColor
+                            : txtColor == Colors.white ? Colors.black : txtColor,
                         fontSize: textAlign ? 18 : 14,
                         fontWeight: FontWeight.w600),
                   ),
@@ -123,6 +126,10 @@ class CustomTextFormField {
                   hintText: hintText ??
                       (type == FormType.cpf
                           ? '000.000.000-00'
+                          : type == FormType.dinheiro
+                          ? 'R\$0,00'
+                          : type == FormType.num || type == FormType.numVigula
+                          ? '0'
                           : type == FormType.rgcpf
                               ? 'RG/CPF'
                           : type == FormType.emailcpf
@@ -176,7 +183,15 @@ class CustomTextFormField {
                                             FilteringTextInputFormatter.digitsOnly,
                                             DataInputFormatter(),
                                           ]
-                                        : null,
+                    : type == FormType.dinheiro ? [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CentavosInputFormatter(),
+                      ] : type == FormType.num ? [
+                          FilteringTextInputFormatter.digitsOnly,
+                      ] : type == FormType.numVigula ? [
+                        NumInputFormatter.digitsOnly,
+                        NumInputFormatter(),
+                      ] : null,
                 validator: validator ??
                     (type == FormType.emailcpf
                     ? (v) {
@@ -201,7 +216,28 @@ class CustomTextFormField {
                             form.isError = false;
                             return null;
                           }
-                        : type == FormType.cnpj
+                        : type == FormType.dinheiro ? (v) {
+                            if (v == null || v == '') {
+                              form.isError = true;
+                              return 'Digite o valor';
+                            }
+                            form.isError = false;
+                            return null;
+                          } : type == FormType.num ? (v) {
+                            if (v == null || v == '' || !Validacoes.isNumeric(v)) {
+                              form.isError = true;
+                              return 'Digite numero';
+                            }
+                            form.isError = false;
+                            return null;
+                          } : type == FormType.numVigula ? (v) {
+                            if (v == null || v == '') {
+                              form.isError = true;
+                              return 'Digite o valor';
+                            }
+                            form.isError = false;
+                            return null;
+                          } : type == FormType.cnpj
                             ? (v) {
                                 if (v == null || v == '') {
                                   form.isError = true;
@@ -279,13 +315,10 @@ class CustomTextFormField {
                                                   }
                                                 : type == FormType.date
                                                     ? (v) {
-                                                        if (v == null ||
-                                                            v == '' ||
-                                                            v.length != 10) {
+                                                        if (v == null || v == '' || v.length != 10) {
                                                           form.isError = true;
                                                           return 'Digite a data';
-                                                        } else if (!Validacoes
-                                                            .isDate(v)) {
+                                                        } else if (!Validacoes.isDate(v)) {
                                                           form.isError = true;
                                                           return 'Digite uma data valida';
                                                         }
@@ -418,5 +451,8 @@ enum FormType {
   emailcpf,
   pass,
   date,
+  num,
+  numVigula,
+  dinheiro,
   text;
 }

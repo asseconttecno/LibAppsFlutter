@@ -60,7 +60,7 @@ class ObrigacoesDetalhesModel {
     emailEnviadoEm: json["emailEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["emailEnviadoEm"].toString()),
     smsEnviadoEm: json["smsEnviadoEm"] == null ? null : Validacoes.stringToDataBr(json["smsEnviadoEm"].toString()),
     ativo: json["ativo"],
-    status: ObrigacaoStatus.fromInt(int.tryParse(json["ativo"].toString()) ?? -1) ,
+    status: ObrigacaoStatus.fromInt(int.tryParse(json["status"].toString()) ?? -1) ,
   );
 
   Map<String, dynamic> toMap() => {

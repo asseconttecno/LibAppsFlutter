@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/material.dart';
 
 
@@ -522,7 +523,12 @@ class Validacoes {
       DateTime.parse(str);
       return true;
     } catch (e) {
-      return false;
+      try {
+        DateTime? date = str.toDate();
+        return date != null;
+      } catch (e) {
+        return false;
+      }
     }
   }
 

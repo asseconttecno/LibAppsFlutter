@@ -203,7 +203,6 @@ class Assecontservices {
       }
     }
 
-    print('init app');
     runApp(
         MultiProvider(
           providers: _providers,
@@ -264,7 +263,7 @@ class MyApp extends StatelessWidget {
       ),
       builder: (context, child) {
         final MediaQueryData data = MediaQuery.of(context);
-        print('builder MediaQueryData');
+
         return MediaQuery(
           data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
           child: ResponsiveBreakpoints.builder(

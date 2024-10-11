@@ -47,8 +47,8 @@ class UserAssewebService {
   Future<bool> lastcompanyupdate({required int? companyId}) async {
     String _metodo = '/api/ExternalLogin/lastcompanyupdate';
     try{
-      MyHttpResponse response = await _http.put(
-          url: Config.conf.apiAsseweb! + _metodo,
+      MyHttpResponse response = await _http.post(
+          url: Config.conf.apiAsseweb! + _metodo, decoder: false,
           body: <String, dynamic>{
             "id": UserAssewebManager.sUser?.login?.id,
             "lastCompanyId": companyId

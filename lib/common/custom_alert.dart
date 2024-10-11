@@ -44,7 +44,9 @@ class CustomAlert {
     String? txtBotaoSucess,
     String? txtBotaoCancel,
     Function? funcSucess,
-    Function? funcCancel}){
+    Function? funcCancel,
+    bool quit = true,
+  }){
 
     bool isDark = context.read<Config>().darkTemas;
     return showDialog(
@@ -71,30 +73,30 @@ class CustomAlert {
             contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
             buttonPadding: EdgeInsets.zero,
             actions: [
+              if(txtBotaoSucess != null) ...[
+                CustomButtom.custom(
+                  expand: true,
+                  onPressed: () async {
+                    if(funcSucess != null) await funcSucess();
+                    if(quit) Navigator.pop(context);
+                  },
+                  title: txtBotaoSucess,
+                  color: Config.corPri,
+                ),
+                const SizedBox(width: 10,),
+              ],
               if(txtBotaoCancel != null) ...[
                 CustomButtom.custom(
                   expand: true,
                   onPressed: () async {
                     if(funcCancel != null) await funcCancel();
-                    Navigator.pop(context);
+                    if(quit) Navigator.pop(context);
                   },
                   title: txtBotaoCancel,
                   color: Colors.red,
                 ),
                 const SizedBox(width: 10,),
               ],
-              if(txtBotaoSucess != null) ...[
-                CustomButtom.custom(
-                  expand: true,
-                  onPressed: () async {
-                    if(funcSucess != null) await funcSucess();
-                    Navigator.pop(context);
-                  },
-                  title: txtBotaoSucess,
-                  color: Config.corPri,
-                ),
-                const SizedBox(width: 10,),
-              ]
             ],
           );
         }

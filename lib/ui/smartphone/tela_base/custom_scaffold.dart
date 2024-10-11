@@ -19,7 +19,8 @@ class HomeWidget extends StatelessWidget {
   const HomeWidget({super.key, this.keyListMenu, required this.listMenu,
     this.height, required this.body, this.foto, this.dados, this.keyMenu, this.buttom,
     this.key1, this.key2, this.key3, this.key4, this.key5, required this.appTitle,
-    this.nome, this.cargo, this.onAlter, this.isListView = true, this.onFoto = true});
+    this.nome, this.cargo, this.onAlter, this.isListView = true, this.onFoto = true,
+  });
 
   final GlobalKey? keyListMenu;
   final List<CustomMenuItem> listMenu;
@@ -40,6 +41,7 @@ class HomeWidget extends StatelessWidget {
   final String? cargo;
   final bool onFoto;
   final Function()? onAlter;
+
 
   @override
   Widget build(BuildContext context) {
@@ -311,7 +313,8 @@ class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
 class HomeIoWidget extends StatelessWidget {
   const HomeIoWidget({super.key, this.globalKey, required this.height,
     this.onAlter, this.appbar, required this.body, this.expanAppbar,
-    this.appTitle, this.buttom, this.conf = false, this.home = false});
+    this.appTitle, this.buttom, this.conf = false, this.home = false, this.floatingActionButtonLocation,
+  });
   final GlobalKey<ScaffoldState>? globalKey;
   final double height;
   final bool conf;
@@ -322,6 +325,7 @@ class HomeIoWidget extends StatelessWidget {
   final Widget? expanAppbar;
   final String? appTitle;
   final Widget? buttom;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
 
   @override
@@ -368,7 +372,8 @@ class HomeIoWidget extends StatelessWidget {
               ],
             )
         ),
-        floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: buttom == null ? null
+            : floatingActionButtonLocation ?? FloatingActionButtonLocation.centerFloat,
         floatingActionButton: buttom
     );
   }
@@ -376,7 +381,8 @@ class HomeIoWidget extends StatelessWidget {
 
 class HomeWebWidget extends StatelessWidget {
   const HomeWebWidget({super.key, this.globalKey, this.buttom, required this.body, this.onAlter,
-    required this.listMenus, this.foto, this.dados, required this.appTitle, this.nome, this.cargo});
+    required this.listMenus, this.foto, this.dados, required this.appTitle, this.nome,
+    this.cargo, });
   final GlobalKey<ScaffoldState>? globalKey;
   final Widget? buttom;
   final Widget body;
@@ -448,7 +454,8 @@ class HomeWebWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                floatingActionButtonLocation: buttom == null ? null : FloatingActionButtonLocation.centerFloat,
+                floatingActionButtonLocation: buttom == null ? null
+                    :  FloatingActionButtonLocation.centerFloat,
                 floatingActionButton: buttom
             ),
           ),
