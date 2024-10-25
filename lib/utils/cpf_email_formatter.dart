@@ -17,10 +17,8 @@ class CpfOrEmailFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (CPFValidator.isValid(newValue.text)) {
-      print('cpfFormatter');
       return cpfFormatter.formatEditUpdate(oldValue, newValue);
     } else {
-      print('emailFormatter');
       return emailFormatter.formatEditUpdate(oldValue, newValue);
     }
   }

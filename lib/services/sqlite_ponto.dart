@@ -27,8 +27,7 @@ class SqlitePontoService {
       Database bancoDados = await _service.db;
 
       await bancoDados.delete('users');
-      await bancoDados.execute('INSERT INTO users(iduser, nome, pis, registro) VALUES ' +
-          dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')  );
+      await bancoDados.execute('INSERT INTO users(iduser, nome, pis, registro) VALUES ${dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')}'  );
       String sql = "SELECT * FROM users";
       List _emp = await bancoDados.rawQuery(sql);
       if(_emp.isNotEmpty){
@@ -110,7 +109,7 @@ class SqlitePontoService {
     }
   }
 
-  deleteSalvarMarcacoes(List<Marcacao> del, int? user) async {
+  Future<void> deleteSalvarMarcacoes(List<Marcacao> del, int? user) async {
     try {
       var bancoDados = await _service.db;
       String sql = "delete FROM marcacao where iduser = ?";
@@ -164,7 +163,7 @@ class SqlitePontoService {
     }
   }
 
-  deleteHistorico(int? user) async {
+  Future<void> deleteHistorico(int? user) async {
     if(Config.conf.nomeApp == VersaoApp.PontoApp){
       try{
         var bancoDados = await _service.db;

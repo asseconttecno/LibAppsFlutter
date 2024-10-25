@@ -1,15 +1,14 @@
 
-import 'package:assecontservices/assecontservices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 class DrawerWebView extends StatefulWidget {
-  Widget? foto;
-  String? titulo;
-  List<Widget> children;
+  final Widget? foto;
+  final String? titulo;
+  final List<Widget> children;
 
-  DrawerWebView(this.children, this.foto, this.titulo, {Key? key}) : super(key: key);
+  const DrawerWebView(this.children, this.foto, this.titulo, {super.key});
 
   @override
   State<DrawerWebView> createState() => _DrawerWebViewState();

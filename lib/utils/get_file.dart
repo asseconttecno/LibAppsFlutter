@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 import 'dart:typed_data';
-import 'package:universal_html/html.dart' as webFile;
 
 import 'package:path_provider/path_provider.dart';
 

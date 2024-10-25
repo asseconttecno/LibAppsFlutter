@@ -8,8 +8,10 @@ import '../../../controllers/controllers.dart';
 
 
 class IntroScreen extends StatefulWidget {
+  const IntroScreen({super.key});
+
   @override
-  _IntroScreenState createState() => _IntroScreenState();
+  State<IntroScreen> createState() => _IntroScreenState();
 }
 
 class _IntroScreenState extends State<IntroScreen> {
@@ -18,14 +20,12 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 900), (){
-      if(mounted){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
         final UpdateAppManager service = UpdateAppManager();
-        try {
-          service.checkVersion(context);
-        }  catch (e) {
-          // TODO
-        }
+        service.checkVersion(context);
+      }  catch (e) {
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
       }
     });
   }

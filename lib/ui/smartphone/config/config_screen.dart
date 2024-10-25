@@ -10,8 +10,10 @@ import '../../../controllers/controllers.dart';
 import '../../../../config.dart';
 
 class ConfigScreen extends StatefulWidget {
+  const ConfigScreen({super.key});
+
   @override
-  _ScreenConfigState createState() => _ScreenConfigState();
+  State<ConfigScreen> createState() => _ScreenConfigState();
 }
 
 class _ScreenConfigState extends State<ConfigScreen> {
@@ -79,7 +81,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                           const SizedBox(height: 8),
                           ElevatedButton(
                             style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                              backgroundColor: WidgetStatePropertyAll<Color>(Colors.red),
                             ),
                             onPressed: () async {
                               _showDeleteDialog(context);
@@ -97,7 +99,7 @@ class _ScreenConfigState extends State<ConfigScreen> {
                     padding: const EdgeInsets.only(bottom: 15, right: 25),
                     child: Row(mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomText.text('Versao '+ Config.versao),
+                        CustomText.text('Versao ${Config.versao}'),
                       ],
                     ),
                   )

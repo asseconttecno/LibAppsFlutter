@@ -1,6 +1,4 @@
 
-import 'package:assecontservices/assecontservices.dart';
-
 import '../../../enums/holerite_tipo.dart';
 
 
@@ -8,14 +6,14 @@ class ChartPizza {
   final String desc;
   final double valor;
 
-  ChartPizza(this.desc, this.valor);
+  const ChartPizza(this.desc, this.valor);
 }
 
 class ChartColum {
   final int ind;
   final String data;
   final double valor;
-  ChartColum(this.ind, this.data, this.valor);
+  const ChartColum(this.ind, this.data, this.valor);
 }
 
 
@@ -23,7 +21,7 @@ class HoleriteModel {
   final List<DatumHolerite>? data;
   final MetaHolerite? meta;
 
-  HoleriteModel({
+  const HoleriteModel({
     this.data,
     this.meta,
   });
@@ -43,7 +41,7 @@ class DatumHolerite {
   final int? id;
   final DatumAttributes? attributes;
 
-  DatumHolerite({
+  const DatumHolerite({
     this.id,
     this.attributes,
   });
@@ -97,7 +95,7 @@ class DatumAttributes {
   final DateTime? signedAt;
   final FileClass? file;
 
-  DatumAttributes({
+  const DatumAttributes({
     this.cpf,
     this.name,
     this.office,
@@ -204,7 +202,7 @@ class AttributesData {
   final FuncionarioResumo? funcionarioResumo;
   final List<FuncionarioEvento>? funcionarioEventos;
 
-  AttributesData({
+  const AttributesData({
     this.cbo,
     this.cpf,
     this.reg,
@@ -263,7 +261,7 @@ class FuncionarioEvento {
   final String? referencia;
   final String? vencimento;
 
-  FuncionarioEvento({
+  const FuncionarioEvento({
     this.codigo,
     this.desconto,
     this.descricao,
@@ -305,7 +303,7 @@ class FuncionarioResumo {
   final double? salContribuicao;
   final double? totalVencimentos;
 
-  FuncionarioResumo({
+  const FuncionarioResumo({
     this.banco,
     this.conta,
     this.frase,
@@ -363,7 +361,7 @@ class FuncionarioResumo {
 class FileClass {
   final FileData? data;
 
-  FileClass({
+  const FileClass({
     this.data,
   });
 
@@ -380,7 +378,7 @@ class FileData {
   final int? id;
   final DataAttributes? attributes;
 
-  FileData({
+  const FileData({
     this.id,
     this.attributes,
   });
@@ -415,7 +413,7 @@ class DataAttributes {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  DataAttributes({
+  const DataAttributes({
     this.name,
     this.alternativeText,
     this.caption,
@@ -477,9 +475,9 @@ class DataAttributes {
 }
 
 class MetaHolerite {
-  PaginationHolerite? pagination;
+  final PaginationHolerite? pagination;
 
-  MetaHolerite({
+  const MetaHolerite({
     this.pagination,
   });
 
@@ -493,12 +491,12 @@ class MetaHolerite {
 }
 
 class PaginationHolerite {
-  int? page;
-  int? pageSize;
-  int? pageCount;
-  int? total;
+  final int? page;
+  final int? pageSize;
+  final int? pageCount;
+  final int? total;
 
-  PaginationHolerite({
+  const PaginationHolerite({
     this.page,
     this.pageSize,
     this.pageCount,

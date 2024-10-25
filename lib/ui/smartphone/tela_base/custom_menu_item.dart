@@ -8,12 +8,12 @@ import '../../../config.dart';
 import '../../../common/common.dart';
 
 class CustomMenuItem extends StatelessWidget {
-  CustomMenuItem(this.icon, this.titulo, this.function, {this.isSelect = false});
+  const CustomMenuItem(this.icon, this.titulo, this.function, {super.key, this.isSelect = false});
 
-  Widget icon;
-  String titulo;
-  VoidCallback function;
-  bool isSelect;
+  final Widget icon;
+  final String titulo;
+  final VoidCallback function;
+  final bool isSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -43,31 +43,31 @@ class CustomMenuItem extends StatelessWidget {
           ),
         ),
       ),
-    ) : Container(
+    ) : SizedBox(
       width: 115,
       child: Column(
         children: [
           InkWell(
             onTap: function,
             child:  Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               height: 70, width: 70,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Config.corPri
               ),
               child: IconTheme(
-                  data: IconThemeData(color: Colors.white, size: 40),
+                  data: const IconThemeData(color: Colors.white, size: 40),
                   child: icon
               ),
             ),
           ),
           if(kIsWeb)
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
           Padding(
             padding: const EdgeInsets.all(2.0),
             child: CustomText.text(titulo, textAlign: TextAlign.center, autoSize: true,
-                style: TextStyle(height: 0)),
+                style: const TextStyle(height: 0)),
           )
         ],
       ),

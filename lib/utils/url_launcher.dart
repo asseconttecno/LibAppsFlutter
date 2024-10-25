@@ -10,7 +10,7 @@ class UrlLauncher {
     try{
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     }catch(e){
-      debugPrint('catch UrlLauncher - openUrl - ' + e.toString());
+      debugPrint('catch UrlLauncher - openUrl - $e');
     }
   }
 
@@ -35,15 +35,15 @@ class UrlLauncher {
       );
       await launchUrl(launchUri, mode: LaunchMode.externalApplication);
     }catch(e){
-      debugPrint('catch UrlLauncher - openUrlHttp - ' + e.toString());
+      debugPrint('catch UrlLauncher - openUrlHttp - $e');
     }
   }
 
   static openMail(String url) async {
     try {
-      await launchUrl(Uri.parse('mailto:' + url));
+      await launchUrl(Uri.parse('mailto:$url'));
     }catch(e){
-      debugPrint('catch UrlLauncher - openMail - ' + e.toString());
+      debugPrint('catch UrlLauncher - openMail - $e');
     }
   }
 
@@ -55,7 +55,7 @@ class UrlLauncher {
       );
       await launchUrl(telLaunchUri);
     }catch(e){
-      debugPrint('catch UrlLauncher - openTel - ' + e.toString());
+      debugPrint('catch UrlLauncher - openTel - $e');
     }
   }
 
@@ -67,7 +67,7 @@ class UrlLauncher {
       );
       await launchUrl(smsLaunchUri);
     }catch(e){
-      debugPrint('catch UrlLauncher - openSms - ' + e.toString());
+      debugPrint('catch UrlLauncher - openSms - $e');
     }
   }
 
@@ -75,7 +75,7 @@ class UrlLauncher {
     try {
       await launchUrl(Uri.file(filePath));
     } catch(e){
-      debugPrint('catch UrlLauncher - openFile - ' + e.toString());
+      debugPrint('catch UrlLauncher - openFile - $e');
     }
   }
 }

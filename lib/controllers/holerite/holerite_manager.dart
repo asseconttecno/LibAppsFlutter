@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
@@ -65,23 +64,27 @@ class HoleriteManager extends ChangeNotifier {
 
 
   Future<void> listHolerite({bool isLoad = true}) async {
-    if(isLoad) load = true;
-    final result = await _service.listHolerite(_page, _pageSize);
-    holerites = result;
-    holerites!.data?.sort((a, b) {
-      try {
-        if (a.attributes!.year != b.attributes!.year) {
-          return b.attributes!.year!.compareTo(a.attributes!.year!);
-        } else {
-          return b.attributes!.month!.compareTo(a.attributes!.month!);
+    try{
+      if(isLoad) load = true;
+      final result = await _service.listHolerite(_page, _pageSize);
+      holerites = result;
+      holerites!.data?.sort((a, b) {
+        try {
+          if (a.attributes!.year != b.attributes!.year) {
+            return b.attributes!.year!.compareTo(a.attributes!.year!);
+          } else {
+            return b.attributes!.month!.compareTo(a.attributes!.month!);
+          }
+        } catch (e) {
+          return 999;
         }
-      } catch (e) {
-        return 999;
-      }
-    });
-
-    load = false;
-    notifyListeners();
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }finally{
+      load = false;
+      notifyListeners();
+    }
   }
 
   Future<void> newPageHolerite() async {

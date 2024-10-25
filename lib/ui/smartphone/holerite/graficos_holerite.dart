@@ -15,18 +15,18 @@ import '../../../model/model.dart';
 
 
 class GraficosHolerite extends StatefulWidget {
-  String? titulo;
-  double? totalVencimentos;
-  double? liquido;
-  double? totalDescontos;
-  List<ChartColum>? listChartColum;
-  Function(charts.SelectionModel<String>)? updatedChartColum;
-  Function()? onPressfloatingButton;
-  String? createDate;
-  bool isLoad;
+  final String? titulo;
+  final double? totalVencimentos;
+  final double? liquido;
+  final double? totalDescontos;
+  final List<ChartColum>? listChartColum;
+  final Function(charts.SelectionModel<String>)? updatedChartColum;
+  final Function()? onPressfloatingButton;
+  final String? createDate;
+  final bool isLoad;
 
 
-  GraficosHolerite(
+  const GraficosHolerite(
       {this.titulo,
       this.totalVencimentos,
       this.liquido,

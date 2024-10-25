@@ -16,7 +16,7 @@ import 'graficos_holerite.dart';
 
 class DetalhesHolerite extends StatefulWidget {
   DatumHolerite holerite;
-  DetalhesHolerite(this.holerite);
+  DetalhesHolerite(this.holerite, {super.key});
 
   @override
   State<DetalhesHolerite> createState() => _DetalhesHoleriteState();

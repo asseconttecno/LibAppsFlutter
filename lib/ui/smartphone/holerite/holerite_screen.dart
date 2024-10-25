@@ -1,10 +1,9 @@
-import 'package:assecontservices/assecontservices.dart';
+import 'package:assecontservices/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 
 import '../../../common/common.dart';
-import '../../../common/custom_filter.dart';
 import '../../../common/custom_livelist.dart';
 import '../../../helper/helper.dart';
 import '../../../controllers/controllers.dart';
@@ -14,9 +13,10 @@ import '../../ui.dart';
 import 'detelhes_holerite.dart';
 
 class HoleriteScreen extends StatefulWidget {
+  const HoleriteScreen({super.key});
 
   @override
-  _HoleriteScreenState createState() => _HoleriteScreenState();
+  State<HoleriteScreen> createState() => _HoleriteScreenState();
 }
 
 class _HoleriteScreenState extends State<HoleriteScreen> {

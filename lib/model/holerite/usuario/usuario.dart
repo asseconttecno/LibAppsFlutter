@@ -4,7 +4,7 @@ import '../../model.dart';
 
 
 class UsuarioHoleriteModel {
-  String? jwt;
+  final String? jwt;
   UserHolerite? user;
 
   UsuarioHoleriteModel({

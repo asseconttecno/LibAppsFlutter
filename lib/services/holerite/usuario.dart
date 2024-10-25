@@ -117,7 +117,6 @@ class UserHoleriteService {
         },
         body: body
       );
-      print(response.data);
       return response.isSucess;
     } catch (e){
       debugPrint('Erro UserHoleriteService updateUser: $e');

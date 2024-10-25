@@ -13,7 +13,7 @@ import 'model/model.dart';
 class Config extends ChangeNotifier {
   Config() {_init();}
 
-  static ConfiguracoesModel conf = ConfiguracoesModel();
+  static ConfiguracoesModel conf = const ConfiguracoesModel();
 
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 

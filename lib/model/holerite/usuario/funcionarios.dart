@@ -1,10 +1,10 @@
 
 
 class FuncionariosHoleriteModel {
-  List<DatumFuncionarios>? data;
-  MetaFuncionarios? meta;
+  final List<DatumFuncionarios>? data;
+  final MetaFuncionarios? meta;
 
-  FuncionariosHoleriteModel({
+  const FuncionariosHoleriteModel({
     this.data,
     this.meta,
   });
@@ -30,10 +30,10 @@ class FuncionariosHoleriteModel {
 }
 
 class DatumFuncionarios {
-  int? id;
-  AttributesFuncionarios? attributes;
+  final int? id;
+  final AttributesFuncionarios? attributes;
 
-  DatumFuncionarios({
+  const DatumFuncionarios({
     this.id,
     this.attributes,
   });
@@ -59,26 +59,26 @@ class DatumFuncionarios {
 }
 
 class AttributesFuncionarios {
-  String? nome;
-  String? cpf;
-  String? phone;
-  String? email;
-  int? baseSalary;
-  String? office;
-  String? sector;
-  String? ctps;
-  String? syndicate;
-  String? codeBank;
-  String? accountBank;
-  String? typeBank;
-  String? pixKeyBank;
-  String? agencyBank;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  String? reg;
-  bool? isPreRegistered;
+  final String? nome;
+  final String? cpf;
+  final  String? phone;
+  final String? email;
+  final int? baseSalary;
+  final String? office;
+  final String? sector;
+  final String? ctps;
+  final String? syndicate;
+  final String? codeBank;
+  final String? accountBank;
+  final String? typeBank;
+  final String? pixKeyBank;
+  final String? agencyBank;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? reg;
+  final bool? isPreRegistered;
 
-  AttributesFuncionarios({
+  const AttributesFuncionarios({
     this.nome,
     this.cpf,
     this.phone,
@@ -184,9 +184,9 @@ class AttributesFuncionarios {
 }
 
 class MetaFuncionarios {
-  PaginationFuncionarios? pagination;
+  final PaginationFuncionarios? pagination;
 
-  MetaFuncionarios({
+  const MetaFuncionarios({
     this.pagination,
   });
 
@@ -207,11 +207,11 @@ class MetaFuncionarios {
 }
 
 class PaginationFuncionarios {
-  int? start;
-  int? limit;
-  int? total;
+  final int? start;
+  final int? limit;
+  final int? total;
 
-  PaginationFuncionarios({
+  const PaginationFuncionarios({
     this.start,
     this.limit,
     this.total,
