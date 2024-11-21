@@ -339,6 +339,7 @@ class HomeIoWidget extends StatelessWidget {
           actions: [
             actions(context, aponta: home, config: conf, onAlter: onAlter),
           ],
+          scrolledUnderElevation: 0
         ),
         body: SizedBox(
             height: MediaQuery.of(context).size.height,

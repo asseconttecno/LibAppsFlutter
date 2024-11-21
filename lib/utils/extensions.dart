@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 
@@ -51,16 +52,31 @@ extension FormatesDouble on double? {
   }
 }
 
-extension FormatesString on String? {
+extension FormatesDynamic on dynamic {
   double toDouble() {
-    if(this == null) return 0;
-    final d = double.tryParse(this!.replaceAll('.', '').replaceAll(',', '.'));
-    return d ?? 0;
+    try {
+      if(this == null) return 0;
+      final d = double.tryParse(this.toString().replaceAll('.', '').replaceAll(',', '.'));
+      return d ?? 0;
+    } catch (e) {
+      debugPrint('FormatesDynamic toDouble: $e');
+      return 0;
+    }
   }
 
   DateTime? toDate() {
-    if(this == null) return null;
-    final l = this!.split('/');
-    return DateTime(int.parse(l[2]), int.parse(l[1]), int.parse(l[0]));
+    try {
+      if(this == null) return null;
+      final l = this.toString().split('/');
+      return DateTime(int.parse(l[2]), int.parse(l[1]), int.parse(l[0]));
+    } catch (e) {
+      debugPrint('FormatesDynamic toDate: $e');
+      try{
+        return DateTime.tryParse(this.toString());
+      }catch(ex){
+        debugPrint('FormatesDynamic toDate2: $ex');
+      }
+    }
+    return null;
   }
 }

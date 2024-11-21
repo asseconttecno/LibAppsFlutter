@@ -1,4 +1,6 @@
 
+import 'package:assecontservices/assecontservices.dart';
+
 import '../../../enums/holerite_tipo.dart';
 
 
@@ -270,11 +272,11 @@ class FuncionarioEvento {
   });
 
   factory FuncionarioEvento.fromMap(Map<String, dynamic> json) => FuncionarioEvento(
-    codigo: json["codigo"],
-    desconto: json["desconto"],
-    descricao: json["descricao"],
-    referencia: json["referencia"],
-    vencimento: json["vencimento"],
+    codigo: json["codigo"]?.toString(),
+    desconto: json["desconto"]?.toString(),
+    descricao: json["descricao"]?.toString(),
+    referencia: json["referencia"]?.toString(),
+    vencimento: json["vencimento"]?.toString(),
   );
 
   Map<String, dynamic> toMap() => {
@@ -329,14 +331,14 @@ class FuncionarioResumo {
     funcao: json["funcao"],
     credito: json["credito"],
     divisao: json["divisao"],
-    liquido: double.parse(json["liquido"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
+    liquido: json["liquido"]?.toString().toDouble(),
     mesFgts: json["mesFGTS"],
     baseFgts: json["baseFGTS"],
     competencia: json["competencia"],
-    salarioBase: double.parse(json["salarioBase"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
-    totalDescontos: double.parse(json["totalDescontos"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
-    salContribuicao: double.parse(json["salContribuicao"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
-    totalVencimentos: double.parse(json["totalVencimentos"]?.replaceAll('.', '').replaceAll(',', '.') ?? '0'),
+    salarioBase: json["salarioBase"]?.toString().toDouble(),
+    totalDescontos: json["totalDescontos"]?.toString().toDouble(),
+    salContribuicao: json["salContribuicao"]?.toString().toDouble(),
+    totalVencimentos: json["totalVencimentos"]?.toString().toDouble(),
   );
 
   Map<String, dynamic> toMap() => {
@@ -443,7 +445,7 @@ class DataAttributes {
     hash: json["hash"],
     ext: json["ext"],
     mime: json["mime"],
-    size: json["size"]?.toDouble(),
+    size: json["size"]?.toString().toDouble(),
     url: json["url"],
     previewUrl: json["previewUrl"],
     provider: json["provider"],

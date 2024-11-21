@@ -27,6 +27,7 @@ class HoleriteService  {
     try{
       if(response.isSucess) {
         final data = response.data;
+
         if(data != null) {
           HoleriteModel? model = HoleriteModel.fromMap(data);
           return model;
