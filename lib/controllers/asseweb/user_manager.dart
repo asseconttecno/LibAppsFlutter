@@ -51,6 +51,7 @@ class UserAssewebManager extends ChangeNotifier {
 
   memorizar() async {
     final prefs = await SharedPreferences.getInstance();
+    Config.usenha = senha.text;
     await prefs.setString("user", email.text);
     await prefs.setString("usenha", senha.text);
     await prefs.setBool("autologin", status);

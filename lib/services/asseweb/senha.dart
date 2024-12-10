@@ -6,7 +6,7 @@ import '../http/http.dart';
 
 
 class SenhaAssewebService {
-  HttpCli _http = HttpCli();
+  final HttpCli _http = HttpCli();
 
   Future<String?> sendPass({String? email,}) async {
     String _metodo = '/api/ExternalLogin/passwordrecover';
