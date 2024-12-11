@@ -13,6 +13,7 @@ import '../../services/services.dart';
 class UserAssewebManager extends ChangeNotifier {
   final UserAssewebService _service = UserAssewebService();
   final BiometriaServices _serviceBio = BiometriaServices();
+  final SenhaAssewebService _servicePass = SenhaAssewebService();
 
   UserAssewebManager(){
     init();
@@ -49,12 +50,30 @@ class UserAssewebManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  memorizar() async {
+
+  Future<String?> sendPass() async {
+    String? result = await _servicePass.sendPass(email: email.text);
+    return result;
+  }
+
+
+  Future<bool> alteracaoPass({required String senhaNova,}) async {
+    bool? result = await _servicePass.alteracaoPass( senha: senhaNova,);
+    print(result);
+    if(result ?? false){
+      memorizar(senhaNova);
+    }
+    return result ?? false;
+  }
+
+  memorizar(String v) async {
     final prefs = await SharedPreferences.getInstance();
-    Config.usenha = senha.text;
+    senha.text = v;
+    Config.usenha = v;
     await prefs.setString("user", email.text);
-    await prefs.setString("usenha", senha.text);
+    await prefs.setString("usenha", v);
     await prefs.setBool("autologin", status);
+    notifyListeners();
   }
 
   Future<bool> auth(BuildContext context, {String? email, String? senha, bool bio = false}) async {
@@ -83,7 +102,7 @@ class UserAssewebManager extends ChangeNotifier {
         user!.login?.companies?.firstWhere((e) => e.id == user?.login?.lastCompanyId) :
         user!.login?.companies?.firstOrNull;
     }
-    memorizar();
+    memorizar(senha);
     notifyListeners();
     return true;
   }

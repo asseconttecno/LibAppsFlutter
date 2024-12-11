@@ -189,10 +189,6 @@ class Assecontservices {
           lazy: false,
           create: (_) => UserAssewebManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.AssewebApp)
-        Provider(
-          create: (context) => SenhaAssewebManager(),
-        ),
     ];
 
     if(providers != null){

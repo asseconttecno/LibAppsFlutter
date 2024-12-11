@@ -21,7 +21,6 @@ export 'tablet/config_manager.dart';
 export 'tablet/historico_manager.dart';
 export 'tablet/user_manager_offiline.dart';
 export 'asseweb/user_manager.dart';
-export 'asseweb/senha_manager.dart';
 
 
 

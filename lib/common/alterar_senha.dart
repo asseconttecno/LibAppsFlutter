@@ -175,8 +175,8 @@ class _AlertSenhaState extends State<AlertSenha> {
                       );
                     });
                   } else if(Config.conf.nomeApp == VersaoApp.AssewebApp){
-                    await context.read<SenhaAssewebManager>().alteracaoPass(
-                      context, senhaNova: senhaNova.text,
+                    await context.read<UserAssewebManager>().alteracaoPass(
+                      senhaNova: senhaNova.text,
                     ).then((value){
                       if(value){
                         Navigator.pop(context);
