@@ -20,6 +20,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false,
     padding: const EdgeInsets.only(right: 5),
     child: PopupMenuButton<int>(
       key: keyMenu,
+      color: context.watch<Config>().darkTemas ? null : Colors.white,
       itemBuilder: (context) => [
         if(Config.conf.nomeApp == VersaoApp.HoleriteApp && aponta)
           PopupMenuItem(
@@ -102,8 +103,12 @@ actions(BuildContext context, {bool aponta = false, bool registro = false,
             break;
         }
       },
-      child: Icon(Icons.more_vert, color: !context.watch<Config>().darkTemas && aponta && kIsWeb && !ResponsiveBreakpoints.of(context).isMobile  && !ResponsiveBreakpoints.of(context).isPhone
-          ? Colors.black : Colors.white,),
+      child: Icon(Icons.more_vert,
+        color: !context.watch<Config>().darkTemas && aponta && kIsWeb
+            && !ResponsiveBreakpoints.of(context).isMobile
+            && !ResponsiveBreakpoints.of(context).isPhone
+          ? Colors.black : Colors.white,
+      ),
     )
   );
 }
