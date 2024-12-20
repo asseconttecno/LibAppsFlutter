@@ -96,9 +96,9 @@ class HoleriteManager extends ChangeNotifier {
     }
   }
 
-  Future<Uint8List?> holeriteresumoBytes(int? idholerite) async {
+  Future<Uint8List?> holeriteresumoBytes(int? idholerite, bool isSign, String comp) async {
     try {
-      Uint8List? result = await _service.holeriteresumoBytes(idholerite);
+      Uint8List? result = await _service.holeriteresumoBytes(idholerite, isSign, comp);
       return result;
     } catch (e) {
       debugPrint(e.toString());

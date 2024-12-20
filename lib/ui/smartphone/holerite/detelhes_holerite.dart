@@ -59,7 +59,11 @@ class _DetalhesHoleriteState extends State<DetalhesHolerite> {
       onPressfloatingButton: () async {
         try {
           carregar(context);
-          final file = await context.read<HoleriteManager>().holeriteresumoBytes(widget.holerite.id);
+          final file = await context.read<HoleriteManager>().holeriteresumoBytes(
+            widget.holerite.id,
+            widget.holerite.attributes?.isSigned ?? false,
+            '${widget.holerite.attributes?.month}/${widget.holerite.attributes?.year}'
+          );
           Navigator.pop(context);
           if(file != null){
             await Navigator.push(context, MaterialPageRoute(

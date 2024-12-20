@@ -51,9 +51,11 @@ class HoleriteService  {
     return [];
   }
 
-  Future<Uint8List?> holeriteresumoBytes(int? id) async {
+  Future<Uint8List?> holeriteresumoBytes(int? id, bool isSign, String comp) async {
     String _api = "/holerites/generate-pdf";
     try{
+      if(!isSign) await holeriteAss(id, comp);
+
       final MyHttpResponse response = await _http.post(
         url: Config.conf.apiHoleriteEmail! + _api, isbyte: true,
         headers: {
@@ -77,4 +79,29 @@ class HoleriteService  {
     }
   }
 
+
+  Future<bool> holeriteAss(int? id, String comp) async {
+    String _api = "/holerites/sign-by-employee?employee=${UserHoleriteManager.funcSelect?.id}&competence=$comp";
+    try{
+      //print(Config.conf.apiHoleriteEmail! + _api);
+      //print('Bearer ${UserHoleriteManager.user?.jwt}');
+
+      final MyHttpResponse response = await _http.put(
+          url: Config.conf.apiHoleriteEmail! + _api, decoder: false,
+          headers: {
+            'Authorization': 'Bearer ${UserHoleriteManager.user?.jwt}',
+            'Content-Type': 'application/json',
+          },
+          body: {
+            "isSigned": true
+          }
+      );
+      //print(response.data);
+      //print(response.codigo);
+      return response.isSucess;
+    } catch(e){
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

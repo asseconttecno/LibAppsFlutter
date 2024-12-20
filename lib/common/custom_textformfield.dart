@@ -306,9 +306,6 @@ class CustomTextFormField {
                                                     if (v == null || v == '') {
                                                       form.isError = true;
                                                       return 'Digite sua senha';
-                                                    }else if (v.length < 6) {
-                                                      form.isError = true;
-                                                      return 'Senha deve conter no minimo 6 caracteres';
                                                     }
                                                     form.isError = false;
                                                     return null;

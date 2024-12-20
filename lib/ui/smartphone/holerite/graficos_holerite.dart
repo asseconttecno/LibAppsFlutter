@@ -27,7 +27,7 @@ class GraficosHolerite extends StatefulWidget {
 
 
   const GraficosHolerite(
-      {this.titulo,
+      {super.key, this.titulo,
       this.totalVencimentos,
       this.liquido,
       this.totalDescontos,
@@ -275,7 +275,7 @@ class _DetalhesHoleriteState extends State<GraficosHolerite> {
                                 domainFn: (ChartColum sales, _) => sales.data,
                                 measureFn: (ChartColum sales, _) => sales.valor,
                                 colorFn: (_, __) => colors.Color.fromHex( code: 'f0D47A1'),
-                                data: widget.listChartColum!,
+                                data: widget.listChartColum ?? [],
                                 labelAccessorFn: (ChartColum sales, _) =>
                                 'R\$${sales.valor.toInt()}',
                               ),
