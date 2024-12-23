@@ -81,7 +81,7 @@ class HttpCli {
 
 
   Future<MyHttpResponse> post({Uri? uri, String? url, Map<String, String>? headers,
-    Map<String, dynamic>? body, bool decoder = true,
+    Object? body, bool decoder = true,
     bool isbyte = false, int timeout = 55}) async {
 
     if(!connectionStatus.hasConnection){
