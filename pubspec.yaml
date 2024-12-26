@@ -64,7 +64,7 @@ dependencies:
     path: packages/flutter_html_to_pdf_plus
 
   #syncfusion_flutter_pdfviewer: ^23.1.39
-  syncfusion_flutter_pdfviewer: ^28.1.36
+  syncfusion_flutter_pdfviewer: ^26.2.13
 
   path_provider: ^2.1.5
   shared_preferences: ^2.3.3
