@@ -23,3 +23,4 @@ export 'actions/func_alter_user.dart';
 export 'actions/func_alter_empresa.dart';
 export 'custom_load_shimmer.dart';
 export 'custom_date_range_selector.dart';
+export 'custom_date_selector.dart';

@@ -246,7 +246,8 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Config.corPribar,
         scaffoldBackgroundColor: kIsWeb ? Colors.grey[100] : null,
-        colorScheme: ThemeData(useMaterial3: true).colorScheme.copyWith(surfaceTint: Colors.white),
+        colorScheme: const ColorScheme.light(surfaceTint: Colors.white),
+        cardColor: Colors.white,
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           titleTextStyle: TextStyle(color: kIsWeb ? Config.corPribar : Config.corPri,),
