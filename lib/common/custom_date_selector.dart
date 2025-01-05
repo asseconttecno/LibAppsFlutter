@@ -6,12 +6,14 @@ class DateSelector extends StatelessWidget {
   final DateTime? initialStartDate;
   final void Function(DateTime) onChanged;
   final String? title;
+  final Color? textColor;
 
   const DateSelector({
     super.key,
     required this.initialStartDate,
     required this.onChanged,
     this.title,
+    this.textColor = Colors.white,
   });
 
   void _showDateRangePicker(BuildContext context) {
@@ -35,8 +37,8 @@ class DateSelector extends StatelessWidget {
       onTap: () => _showDateRangePicker(context),
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Text(initialStartDate.dateFormat(format: 'MM/yyyy'),
-          style: const TextStyle(color: Colors.white),
+        child: Text(initialStartDate?.dateFormat(format: 'MM/yyyy') ?? 'Selecione a competência',
+          style: TextStyle(color: textColor),
         ),
       ),
     );

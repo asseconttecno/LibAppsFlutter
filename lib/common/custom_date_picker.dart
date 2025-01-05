@@ -531,7 +531,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> with RestorationMix
             child: Column(
               children: <Widget>[
                 const Spacer(),
-                CustomTextFormField.custom(
+                CustomTextFormField(
                   //controller: _controller,
                     //isClean: true,
                   onFieldSubmitted: (v){
