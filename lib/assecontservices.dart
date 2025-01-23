@@ -7,9 +7,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:universal_io/io.dart' as io;
 
-import 'common/custom_textformfield.dart';
 import 'controllers/controllers.dart';
 import 'services/services.dart';
 import 'enums/enums.dart';
@@ -37,7 +35,7 @@ export 'package:safe_device/safe_device.dart';
 
 class Assecontservices {
 
-  static init({required ConfiguracoesModel config, required RouteFactory rotas,
+  static init({required ConfiguracoesModel config, required RouteFactory rotas, NavigatorObserver? observer,
       List<SingleChildWidget>? providers, bool devicePreview = false, String? titulo, Widget? myApp}) async {
     
     //io.HttpOverrides.global = MyHttpOverrides();
@@ -204,7 +202,9 @@ class Assecontservices {
           providers: _providers,
           child: DevicePreview(
             enabled: devicePreview, //!kReleaseMode,
-            builder: (context) => myApp ?? MyApp(titulo: titulo, rotas: rotas,), // Wrap your app
+            builder: (context) => myApp ?? MyApp(
+                titulo: titulo, rotas: rotas,observer: observer
+            ), // Wrap your app
           ),
         )
     );
@@ -215,14 +215,15 @@ class Assecontservices {
 class MyApp extends StatelessWidget {
   final String? titulo;
   final RouteFactory rotas;
-
-  const MyApp({super.key, required this.titulo, required this.rotas});
+  final NavigatorObserver? observer;
+  const MyApp({super.key, required this.titulo, required this.rotas, this.observer});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: titulo ?? 'Assecont',
       debugShowCheckedModeBanner: false,
+      navigatorObservers: observer != null ? [observer!] : [],
       theme: context.watch<Config>().darkTemas ?
       ThemeData.dark(useMaterial3: true).copyWith(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
