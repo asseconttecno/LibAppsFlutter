@@ -11,7 +11,8 @@ class UserPontoService {
   final HttpCli _http = HttpCli();
   final SqlitePontoService _pontoService = SqlitePontoService();
 
-  Future<UsuarioPonto?> signInAuth({required String email,required String senha,String? token}) async {
+  Future<UsuarioPonto?> signInAuth({required String email,
+    required String senha,String? token, Function(String)? onError}) async {
     String _api = "/api/login";
     UsuarioPonto? _user;
     try {
@@ -48,6 +49,9 @@ class UserPontoService {
         }
       }
       debugPrint('${response.codigo}  signInAuth');
+      if(onError != null) {
+        onError('Email:$email, Senha:$senha - \nCodigo:${response.codigo} - \nDados:${response.data}');
+      }
       throw "Login ou Senha Invalido";
     } catch (e) {
       _user = await authOffiline(
@@ -57,6 +61,9 @@ class UserPontoService {
       if(_user != null){
         return _user;
       }else {
+        if(e != "Login ou Senha Invalido" && onError != null) {
+          onError('Email:$email, Senha:$senha - \nErro:$e');
+        }
         debugPrint('$e  signInAuth');
         throw e.toString();
       }

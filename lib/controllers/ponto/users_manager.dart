@@ -72,16 +72,16 @@ class UserPontoManager extends ChangeNotifier {
     await prefs.setBool("autologin", status);
   }
 
-  Future<bool?> auth(BuildContext context, String email, String senha, bool bio, String? token) async {
+  Future<bool?> auth(BuildContext context, String email, String senha, bool bio, String? token, Function(String)? onError) async {
     bool result = false;
     try {
       if(bio){
         bool _resultBio = await _serviceBio.authbiometria();
         if(_resultBio){
-          result = await signInAuth(email: email,  senha: usenha, token: token);
+          result = await signInAuth(email: email,  senha: usenha, token: token, onError: onError);
         }
       }else{
-        result = await signInAuth(email: email,  senha: senha, token: token);
+        result = await signInAuth(email: email,  senha: senha, token: token, onError: onError);
       }
       return result;
     } catch(e) {
@@ -90,8 +90,8 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInAuth({required String email,required String senha, String? token}) async {
-    usuario = await _service.signInAuth(email: email, senha: senha, token: token);
+  Future<bool> signInAuth({required String email,required String senha, String? token, Function(String)? onError}) async {
+    usuario = await _service.signInAuth(email: email, senha: senha, token: token, onError: onError);
     if(usuario?.app ?? false){
       UserHoleriteManager.user?.user = UserHolerite.fromPonto(usuario!);
     }
