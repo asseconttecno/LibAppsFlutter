@@ -16,7 +16,7 @@ class UserPontoService {
     UsuarioPonto? _user;
     try {
       final MyHttpResponse response = await _http.post(
-        url: Config.conf.apiAssepontoNova! + _api, timeout: 5,
+        url: Config.conf.apiAssepontoNova! + _api, timeout: 10,
           body: {
             "Email": email.trim().replaceAll(' ', ''),
             "Senha": senha.trim().replaceAll(' ', ''),
@@ -30,7 +30,13 @@ class UserPontoService {
           UsuarioPonto user = UsuarioPonto.fromMap(json, false);
           return user;
         }else{
-          throw json['StatusLogin']['Descricao'];
+          _user = await authOffiline(
+              email.trim().replaceAll(' ', ''),
+              senha.trim().replaceAll(' ', '')
+          );
+          if (_user != null) {
+            return _user;
+          }
         }
       }else {
         _user = await authOffiline(
@@ -44,7 +50,10 @@ class UserPontoService {
       debugPrint('${response.codigo}  signInAuth');
       throw "Login ou Senha Invalido";
     } catch (e) {
-      _user = await authOffiline(email.trim().replaceAll(' ', ''), senha.trim().replaceAll(' ', ''));
+      _user = await authOffiline(
+          email.trim().replaceAll(' ', ''),
+          senha.trim().replaceAll(' ', '')
+      );
       if(_user != null){
         return _user;
       }else {
