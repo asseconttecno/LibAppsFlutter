@@ -43,6 +43,8 @@ class UserHoleriteService {
           throw 'Tempo limite de login excedido, verifique sua internet!';
         case "404" :
           throw 'Usuário ou senha inválidos!';
+        case "400" :
+          throw 'Usuário ou senha inválidos!';
         default:
           throw 'Erro inesperado, tente novamente!';
       }
