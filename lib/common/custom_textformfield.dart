@@ -165,7 +165,7 @@ class CustomTextFormField extends StatelessWidget {
                           : type == FormType.emailcpf
                           ? 'CPF/Email'
                           : type == FormType.pass
-                          ? '********'
+                          ? 'Digite a senha'
                           : type == FormType.phone
                           ? '(11) 98888-8888'
                           : type == FormType.email
