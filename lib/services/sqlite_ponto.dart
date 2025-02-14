@@ -11,7 +11,7 @@ class SqlitePontoService {
   final DBPonto _service = DBPonto();
 
 
-  Future<void> salvarNovoUsuario(Map<String, dynamic> toMap) async {
+  /*Future<void> salvarNovoUsuario(Map<String, dynamic> toMap) async {
     try{
       Database bancoDados = await _service.db;
       await bancoDados.delete("users");
@@ -21,6 +21,21 @@ class SqlitePontoService {
       debugPrint(e.toString());
     }
   }
+*/
+
+  Future<List?> getUser({String? email, String? senha}) async {
+    try{
+      Database bancoDados = await _service.db;
+      String where = '';
+      if(email != null) where = "where email = '$email' and senha = '$senha' ";
+      String sql = "SELECT * FROM users $where ";
+      List users = await bancoDados.rawQuery(sql);
+      return users;
+    }catch(e){
+      debugPrint(e.toString());
+    }
+  }
+
 
   Future<void> salvarUsers(List<UserPontoOffine> dados) async {
     try{
@@ -37,19 +52,6 @@ class SqlitePontoService {
       }
     }catch(e){
       debugPrint("erro salvar users sql $e");
-    }
-  }
-
-  Future<List?> getUser({String? email, String? senha}) async {
-    try{
-      Database bancoDados = await _service.db;
-      String where = '';
-      if(email != null) where = "where email = '$email' and senha = '$senha' ";
-      String sql = "SELECT * FROM users $where ";
-      List users = await bancoDados.rawQuery(sql);
-      return users;
-    }catch(e){
-      debugPrint(e.toString());
     }
   }
 

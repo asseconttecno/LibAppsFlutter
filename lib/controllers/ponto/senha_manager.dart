@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
 import '../../config.dart';
+import '../../data/local/user_local_sources.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../controllers.dart';
@@ -28,9 +29,9 @@ class SenhaPontoManager extends ChangeNotifier {
       context.read<UserPontoManager>().senha.text = nova;
       context.read<UserPontoManager>().memorizar();
 
-      final SqlitePontoService _sqlService = SqlitePontoService();
+      final UserLocalSources _sqlService = UserLocalSources();
 
-      _sqlService.salvarNovoUsuario( usuario.toMap() );
+      _sqlService.saveUser(user: usuario);
     }
     return result;
   }

@@ -5,9 +5,10 @@ import 'package:nested/nested.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:device_preview/device_preview.dart';
-
+import 'package:hive_flutter/adapters.dart';
 
 import 'controllers/controllers.dart';
+import 'core/service/database_hive.dart';
 import 'services/services.dart';
 import 'enums/enums.dart';
 import 'helper/helper.dart';
@@ -45,6 +46,12 @@ class Assecontservices {
     Config.conf = config;
 
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
+
+    if(ponto){
+      await Hive.initFlutter();
+      final DatabaseHive db = DatabaseHive();
+      await db.initializeDatabase();
+    }
 
     if(!kIsWeb){
       try {

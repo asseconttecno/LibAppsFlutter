@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../data/local/user_local_sources.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -9,7 +10,7 @@ import '../sqlite_ponto.dart';
 
 class UserPontoService {
   final HttpCli _http = HttpCli();
-  final SqlitePontoService _pontoService = SqlitePontoService();
+  final UserLocalSources _pontoService = UserLocalSources();
 
   Future<UsuarioPonto?> signInAuth({required String email,
     required String senha,String? token, Function(String)? onError}) async {
@@ -76,24 +77,28 @@ class UserPontoService {
 
   Future<UsuarioPonto?> authOffiline(String _email, String _senha) async {
     try{
-      List? _user = await _pontoService.getUser(email: _email, senha: _senha);
-      if(_user != null && _user.isNotEmpty){
-        UsuarioPonto user = UsuarioPonto.fromMap(_user.first, true);
-        return user;
-      }
+      final user = await _pontoService.getUser(email: _email, senha: _senha);
+      return user;
     }catch(e) {
       debugPrint(e.toString());
     }
     return null;
   }
 
+  Future<bool?> deleteUser() async {
+    try{
+      await _pontoService.deleteUser();
+      return true;
+    }catch(e) {
+      debugPrint(e.toString());
+    }
+    return false;
+  }
+
   Future<UsuarioPonto?> authNotificacao() async {
     try{
-      List? _user = await _pontoService.getUser();
-      if(_user != null && _user.isNotEmpty){
-        UsuarioPonto user = UsuarioPonto.fromMap(_user.first, true);
-        return user;
-      }
+      final user = await _pontoService.getUser();
+      return user;
     }catch(e) {
       debugPrint(e.toString());
     }

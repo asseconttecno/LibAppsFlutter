@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
 import '../../config.dart';
+import '../../data/local/user_local_sources.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../controllers.dart';
@@ -12,7 +13,7 @@ class UserPontoManager extends ChangeNotifier {
   final UserPontoService _service = UserPontoService();
   final BiometriaServices _serviceBio = BiometriaServices();
   final HomePontoService _homeservice = HomePontoService();
-  //final SqlitePontoService _sqlService = SqlitePontoService();
+  final UserLocalSources _sqlService = UserLocalSources();
 
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
@@ -102,15 +103,17 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   Future<bool> signInAuth({required String email,required String senha, String? token, Function(String)? onError}) async {
-    usuario = await _service.signInAuth(email: email, senha: senha, token: token, onError: onError);
-    /*if(usuario?.app ?? false){
-      UserHoleriteManager.user?.user = UserHolerite.fromPonto(usuario!);
-    }*/
-    Config.usenha = senha;
-    usenha = senha;
-    _sqlService.salvarNovoUsuario( usuario!.toMap() );
-    memorizar();
-    return true;
+    final u = await _service.signInAuth(email: email, senha: senha, token: token, onError: onError);
+    if(u != null){
+      usuario = u;
+      Config.usenha = senha;
+      usenha = senha;
+      _sqlService.saveUser(user: usuario!);
+      memorizar();
+      return true;
+    }else{
+      return false;
+    }
   }
 
   Future<bool> signInAuthAuto({required String email,required String senha}) async {
@@ -129,9 +132,7 @@ class UserPontoManager extends ChangeNotifier {
   Future<bool> autoLogin() async {
     bool result = false;
     try {
-      if (uemail != '' && usenha != '') {
-        result = await signInAuthAuto(email: uemail, senha: usenha);
-      }
+      result = await signInAuthAuto(email: uemail, senha: usenha);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -166,6 +167,7 @@ class UserPontoManager extends ChangeNotifier {
 
   cleanPreferences() async {
     try{
+      await _service.deleteUser();
       final prefs = await SharedPreferences.getInstance();
       prefs.remove("autologin");
       prefs.remove("login");
