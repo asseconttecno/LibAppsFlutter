@@ -12,7 +12,7 @@ class UserPontoManager extends ChangeNotifier {
   final UserPontoService _service = UserPontoService();
   final BiometriaServices _serviceBio = BiometriaServices();
   final HomePontoService _homeservice = HomePontoService();
-  final SqlitePontoService _sqlService = SqlitePontoService();
+  //final SqlitePontoService _sqlService = SqlitePontoService();
 
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
@@ -123,7 +123,7 @@ class UserPontoManager extends ChangeNotifier {
     }
     Config.usenha = senha;
     usenha = senha;
-    return usuario != null;
+    return result;
   }
 
   Future<bool> autoLogin() async {

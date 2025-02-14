@@ -49,10 +49,14 @@ class UserPontoService {
         }
       }
       debugPrint('${response.codigo}  signInAuth');
+
+      if(response.codigo == 404){
+        throw "Login ou Senha Invalido";
+      }
       if(onError != null) {
         onError('Email:$email, Senha:$senha - \nCodigo:${response.codigo} - \nDados:${response.data}');
       }
-      throw "Login ou Senha Invalido";
+      throw "Falha no login, tente novamente mais tarde!";
     } catch (e) {
       _user = await authOffiline(
           email.trim().replaceAll(' ', ''),
@@ -65,7 +69,7 @@ class UserPontoService {
           onError('Email:$email, Senha:$senha - \nErro:$e');
         }
         debugPrint('$e  signInAuth');
-        throw e.toString();
+        rethrow;
       }
     }
   }

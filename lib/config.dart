@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:safe_device/safe_device.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:external_path/external_path.dart';
@@ -28,8 +30,8 @@ class Config extends ChangeNotifier {
 
   static bool isReenvioMarc = false;
   static bool primeiroAcesso = true;
-  static bool isJailBroken = true;
-  static bool canMockLocation = true;
+  static bool isJailBroken = false;
+  static bool canMockLocation = false;
   static bool isRealDevice = true;
 
   static String versao = '0.0.0';
@@ -73,6 +75,19 @@ class Config extends ChangeNotifier {
         if(documentos == ''){
           documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
         }
+      }
+      final packageInfo = await PackageInfo.fromPlatform();
+      versao = packageInfo.version;
+
+      if(!kIsWeb){
+        if(!Config.isWin){
+          isRealDevice = await SafeDevice.isRealDevice;
+          canMockLocation = await SafeDevice.canMockLocation;
+        }
+
+        /*if(Config.isIOS) {
+          Config.isJailBroken = await SafeDevice.isJailBroken;
+        }*/
       }
     }catch(e){
       debugPrint(e.toString());

@@ -4,9 +4,8 @@ import 'package:nested/nested.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:safe_device/safe_device.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 
 import 'controllers/controllers.dart';
 import 'services/services.dart';
@@ -44,25 +43,10 @@ class Assecontservices {
     Provider.debugCheckInvalidValueType = null;
 
     Config.conf = config;
-    final packageInfo = await PackageInfo.fromPlatform();
-    Config.versao = packageInfo.version;
+
     bool ponto = Config.conf.nomeApp == VersaoApp.PontoApp || Config.conf.nomeApp == VersaoApp.PontoTablet;
 
-
     if(!kIsWeb){
-      if(ponto){
-        try {
-          if(Config.isIOS) {
-            Config.isJailBroken = await SafeDevice.isJailBroken;
-          }
-          if(!Config.isWin){
-            Config.isRealDevice = await SafeDevice.isRealDevice;
-            Config.canMockLocation = await SafeDevice.canMockLocation;
-          }
-        }  catch (e) {}
-      }
-
-
       try {
         final BiometriaServices _bio = BiometriaServices();
         _bio.supportedBio();
