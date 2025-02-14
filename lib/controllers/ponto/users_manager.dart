@@ -69,7 +69,18 @@ class UserPontoManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("login", email.text);
     await prefs.setString("usenha", usenha);
-    await prefs.setBool("autologin", status);
+    //await prefs.setBool("autologin", status);
+  }
+
+  Future<void> getHome() async {
+    try {
+      HomePontoModel? _home = await _homeservice.getHome(usuario!);
+      homeModel = _home;
+
+    } catch (e) {
+      debugPrint('try erro getHome $e');
+      homeModel = null;
+    }
   }
 
   Future<bool?> auth(BuildContext context, String email, String senha, bool bio, String? token, Function(String)? onError) async {
@@ -92,9 +103,9 @@ class UserPontoManager extends ChangeNotifier {
 
   Future<bool> signInAuth({required String email,required String senha, String? token, Function(String)? onError}) async {
     usuario = await _service.signInAuth(email: email, senha: senha, token: token, onError: onError);
-    if(usuario?.app ?? false){
+    /*if(usuario?.app ?? false){
       UserHoleriteManager.user?.user = UserHolerite.fromPonto(usuario!);
-    }
+    }*/
     Config.usenha = senha;
     usenha = senha;
     _sqlService.salvarNovoUsuario( usuario!.toMap() );
@@ -102,22 +113,24 @@ class UserPontoManager extends ChangeNotifier {
     return true;
   }
 
-  Future<void> getHome() async {
-    try {
-      HomePontoModel? _home = await _homeservice.getHome(usuario!);
-      homeModel = _home;
-
-    } catch (e) {
-      debugPrint('try erro getHome ' + e.toString());
-      homeModel = null;
+  Future<bool> signInAuthAuto({required String email,required String senha}) async {
+    bool result = false;
+    usuario = await _service.authOffiline(email, senha);
+    if(usuario == null){
+      result = await signInAuth(email: uemail, senha: usenha);
+    }else{
+      signInAuth(email: uemail, senha: usenha);
     }
+    Config.usenha = senha;
+    usenha = senha;
+    return usuario != null;
   }
 
   Future<bool> autoLogin() async {
     bool result = false;
     try {
       if (uemail != '' && usenha != '') {
-        result = await signInAuth(email: uemail, senha: usenha);
+        result = await signInAuthAuto(email: uemail, senha: usenha);
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -130,12 +143,12 @@ class UserPontoManager extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       uemail = prefs.getString("login") ?? '';
       usenha = prefs.getString("usenha") ?? '';
-      _status = prefs.getBool("autologin") ?? false;
+      //_status = prefs.getBool("autologin") ?? false;
       email.text = uemail;
       Config.usenha = usenha;
-      if(_status){
+      //if(_status){
         await autoLogin();
-      }
+      //}
     } catch(e) {
       debugPrint(e.toString());
     }
@@ -155,6 +168,8 @@ class UserPontoManager extends ChangeNotifier {
     try{
       final prefs = await SharedPreferences.getInstance();
       prefs.remove("autologin");
+      prefs.remove("login");
+      prefs.remove("usenha");
     } catch(e) {
       debugPrint(e.toString());
     }

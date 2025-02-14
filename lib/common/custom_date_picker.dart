@@ -620,7 +620,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> with RestorationMix
     // layout issues.
     final double textScaleFactor = math.min(MediaQuery.textScaleFactorOf(context), 1.3);
     final Size dialogSize = _dialogSize(context) * textScaleFactor;
-    final DialogTheme dialogTheme = theme.dialogTheme;
+    final dialogTheme = theme.dialogTheme;
     return Dialog(
       backgroundColor: datePickerTheme.backgroundColor ?? defaults.backgroundColor,
       elevation: useMaterial3
@@ -1465,7 +1465,7 @@ class _DateRangePickerDialogState extends State<DateRangePickerDialog> with Rest
                   : localizations.dateRangePickerHelpText.toUpperCase()
           ),
         );
-        final DialogTheme dialogTheme = theme.dialogTheme;
+        final dialogTheme = theme.dialogTheme;
         size = orientation == Orientation.portrait
             ? (useMaterial3 ? _inputPortraitDialogSizeM3 : _inputPortraitDialogSizeM2)
             : _inputRangeLandscapeDialogSize;
