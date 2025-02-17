@@ -67,6 +67,9 @@ class Config extends ChangeNotifier {
 
   _init() async {
     try{
+      final packageInfo = await PackageInfo.fromPlatform();
+      versao = packageInfo.version;
+
       final prefs = await SharedPreferences.getInstance();
       primeiroAcesso =  prefs.getBool("priacesso") ?? true;
       darkTemas = prefs.getBool("darkTemas") ?? false;
@@ -76,8 +79,7 @@ class Config extends ChangeNotifier {
           documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
         }
       }
-      final packageInfo = await PackageInfo.fromPlatform();
-      versao = packageInfo.version;
+
 
       if(!kIsWeb){
         if(!Config.isWin){
