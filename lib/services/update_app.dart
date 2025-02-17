@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../config.dart';
 import 'http/http.dart';
@@ -9,6 +10,11 @@ class UpdateAppService {
 
   Future<bool> postUpdateApp() async {
     String _api = "/api/Versoes";
+
+    if(Config.versao == "99.0.0"){
+      final packageInfo = await PackageInfo.fromPlatform();
+      Config.versao = packageInfo.version;
+    }
 
     Map<String, dynamic> bod = {
       "App": Config.conf.nomeApp.toString().replaceAll('VersaoApp.', ''),

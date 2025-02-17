@@ -80,8 +80,7 @@ class Config extends ChangeNotifier {
         }
       }
 
-
-      if(!kIsWeb){
+      if(conf.nomeApp == VersaoApp.PontoApp && !kIsWeb){
         if(!Config.isWin){
           isRealDevice = await SafeDevice.isRealDevice;
           canMockLocation = await SafeDevice.canMockLocation;
@@ -94,6 +93,7 @@ class Config extends ChangeNotifier {
     }catch(e){
       debugPrint(e.toString());
     }
+    notifyListeners();
   }
 }
 
