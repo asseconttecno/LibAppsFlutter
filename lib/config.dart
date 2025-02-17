@@ -34,7 +34,7 @@ class Config extends ChangeNotifier {
   static bool canMockLocation = false;
   static bool isRealDevice = true;
 
-  static String versao = '0.0.0';
+  static String versao = '99.0.0';
   static String documentos = '';
   static String? usenha;
 
