@@ -21,8 +21,9 @@ class SenhaHoleriteService {
           url: Config.conf.apiHoleriteEmail! + _metodo,
           body: body
       );
+
       if(response.isSucess){
-        return response.data['ok'];
+        return true;
       }
       throw response.codigo.toString();
     } catch (e){
@@ -33,6 +34,8 @@ class SenhaHoleriteService {
         case HttpError.timeout :
           throw 'Tempo limite de login excedido, verifique sua internet!';
         case "404" :
+          throw 'Email não cadastrado!';
+        case "400" :
           throw 'Email não cadastrado!';
         default:
           throw 'Erro inesperado, tente novamente!';
