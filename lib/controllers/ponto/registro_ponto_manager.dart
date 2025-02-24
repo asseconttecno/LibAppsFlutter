@@ -58,10 +58,11 @@ class RegistroManger {
     }
   }
 
-  enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
+  static Future<void> enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
     try{
       if (usuario != null) {
-        List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(UserPontoManager.susuario?.funcionario?.funcionarioId) ;
+        List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(
+            UserPontoManager.susuario?.funcionario?.funcionarioId) ;
 
         if(marcacao != null && marcacao.isNotEmpty){
           debugPrint(marcacao.toString());
@@ -69,13 +70,13 @@ class RegistroManger {
         }else{
           CustomAlert.info(
             context: context,
-            mensage: 'Não foi possivel enviar suas marcações\n',
+            mensage: 'Você não possui marcações para ser enviadas\n',
           );
         }
       } else {
         CustomAlert.info(
           context: context,
-          mensage: 'Não foi possivel enviar suas marcações\n',
+          mensage: 'Falha na autenticacao, nao foi possivel enviar as marcações\n',
         );
       }
     }catch(e){
