@@ -58,7 +58,7 @@ class RegistroManger {
     }
   }
 
-  static Future<void> enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
+  enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
     try{
       if (usuario != null) {
         List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(
@@ -83,7 +83,7 @@ class RegistroManger {
       debugPrint("erro enviarMarcacoes offline $e");
       CustomAlert.erro(
         context: context,
-        mensage: 'Não foi possivel enviar suas marcações\n',
+        mensage: 'Não foi possivel enviar suas marcações\n$e',
       );
     }
   }

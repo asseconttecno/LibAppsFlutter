@@ -118,7 +118,8 @@ class RegistroService {
           "ListaMarcacoes": listOff
         };
         final MyHttpResponse response = await _http.post(
-            url: (Config.conf.apiAssepontoNova ?? 'https://www.asseponto.com.br/ApiAsseponto') + _api,
+            url: (Config.conf.apiAssepontoNova
+                ?? 'https://www.asseponto.com.br/ApiAsseponto') + _api,
             body: body, decoder: false
         );
 
