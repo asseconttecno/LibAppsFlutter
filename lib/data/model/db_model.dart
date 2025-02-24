@@ -72,6 +72,7 @@ class UserDB extends HiveObject {
 
   factory UserDB.fromPonto(UsuarioPonto values) => UserDB(
       databaseId: values.databaseId,
+      funcionarioId: values.funcionario?.funcionarioId,
       app: values.app,
       nome: values.funcionario?.nome,
       registro: values.funcionario?.registro,
@@ -105,6 +106,7 @@ class UserDB extends HiveObject {
         descricao: descricaoPeriodo
       ),
       funcionario: Funcionario(
+          funcionarioId: funcionarioId,
           nome: nome,
           registro: registro,
           cpf: cpf,

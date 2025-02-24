@@ -119,7 +119,7 @@ class UserPontoManager extends ChangeNotifier {
   Future<bool> signInAuthAuto({required String email,required String senha}) async {
     bool result = false;
     usuario = await _service.authOffiline(email, senha);
-    if(usuario == null){
+    if(usuario?.funcionario?.funcionarioId == null){
       result = await signInAuth(email: uemail, senha: usenha);
     }else{
       signInAuth(email: uemail, senha: usenha);
@@ -147,9 +147,9 @@ class UserPontoManager extends ChangeNotifier {
       //_status = prefs.getBool("autologin") ?? false;
       email.text = uemail;
       Config.usenha = usenha;
-      //if(_status){
+      if(uemail != ''){
         await autoLogin();
-      //}
+      }
     } catch(e) {
       debugPrint(e.toString());
     }

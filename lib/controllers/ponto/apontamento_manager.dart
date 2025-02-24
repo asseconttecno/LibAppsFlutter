@@ -7,7 +7,7 @@ import '../../services/services.dart';
 import '../../config.dart';
 
 class ApontamentoManager extends ChangeNotifier {
-  ApontamentoService _service = ApontamentoService();
+  final ApontamentoService _service = ApontamentoService();
   List<Apontamento> apontamento = [];
 
   int _indice = 0;
