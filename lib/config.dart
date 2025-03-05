@@ -73,12 +73,16 @@ class Config extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       primeiroAcesso =  prefs.getBool("priacesso") ?? true;
       darkTemas = prefs.getBool("darkTemas") ?? false;
-      if(Platform.isAndroid){
-        documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
-        if(documentos == ''){
-          documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+      /*if(Platform.isAndroid){
+        try {
+          documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOCUMENTS);
+          if(documentos == ''){
+            documentos =  await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+          }
+        } catch (e) {
+          // TODO
         }
-      }
+      }*/
 
       if(conf.nomeApp == VersaoApp.PontoApp && !kIsWeb){
         if(!Config.isWin){

@@ -1,10 +1,8 @@
-import 'package:assecontservices/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 
 
 import '../../model/model.dart';
 import '../../services/services.dart';
-import '../../config.dart';
 
 class ApontamentoManager extends ChangeNotifier {
   final ApontamentoService _service = ApontamentoService();

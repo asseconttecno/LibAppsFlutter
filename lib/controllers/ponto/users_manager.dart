@@ -52,11 +52,22 @@ class UserPontoManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  HomePontoModel? _homeModel;
-  HomePontoModel? get homeModel => _homeModel;
-  set homeModel(HomePontoModel? valor){
-    _homeModel = valor;
+  HomePontoModel? _expediente;
+  HomePontoModel? get expediente => _expediente;
+  set expediente(HomePontoModel? valor){
+    _expediente = valor;
     notifyListeners();
+  }
+
+  Future<void> geExpedientes() async {
+    _expediente = null;
+    try {
+      HomePontoModel? _home = await _homeservice.getExpedientes(usuario!);
+      expediente = _home;
+    } catch (e) {
+      debugPrint('try erro getHome $e');
+      expediente = null;
+    }
   }
 
   bool _regButtom = false;
@@ -71,17 +82,6 @@ class UserPontoManager extends ChangeNotifier {
     await prefs.setString("login", email.text);
     await prefs.setString("usenha", usenha);
     //await prefs.setBool("autologin", status);
-  }
-
-  Future<void> getHome() async {
-    try {
-      HomePontoModel? _home = await _homeservice.getHome(usuario!);
-      homeModel = _home;
-
-    } catch (e) {
-      debugPrint('try erro getHome $e');
-      homeModel = null;
-    }
   }
 
   Future<bool?> auth(BuildContext context, String email, String senha, bool bio, String? token, Function(String)? onError) async {
@@ -158,8 +158,8 @@ class UserPontoManager extends ChangeNotifier {
   signOut() {
     cleanPreferences();
     usuario = null;
-    homeModel = null;
     _status = false;
+    _expediente = null;
     uemail = '';
     usenha = '';
     Config.usenha = '';

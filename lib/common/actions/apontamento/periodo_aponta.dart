@@ -32,8 +32,6 @@ PeriodoApontamento(BuildContext context){
                           onPressed: (){
                             if(aponta.indice >= 0){
                               context.read<UserPontoManager>().updateAponta(aponta.apontamento[aponta.indice]);
-                              context.read<UserPontoManager>().getHome();
-                              context.read<MarcacoesManager>().getEspelho();
                               context.read<MemorandosManager>().memorandosUpdate();
                               context.read<BancoHorasManager>().getFuncionarioHistorico();
                               Navigator.pop(context);
@@ -52,7 +50,7 @@ PeriodoApontamento(BuildContext context){
                   decoration: TextDecoration.none
                 ),),
                 SizedBox(height: 20,),
-                Container(
+                SizedBox(
                   height: 200,
                   child: ListWheelScrollView(
                       itemExtent: 70,

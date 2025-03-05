@@ -18,9 +18,10 @@ class RegistroManger {
   File? image;
   int auth = 0;
 
-  Future<void> postPontoMarcar(BuildContext context, UsuarioPonto user, double? latitude, double? longitude, String? endereco) async {
+  Future<void> postPontoMarcar(BuildContext context, UsuarioPonto user,
+      double? latitude, double? longitude, String? endereco, String? token) async {
 
-    bool result = await _service.postPontoMarcar(user, latitude, longitude, endereco);
+    bool result = await _service.postPontoMarcar(user, latitude, longitude, endereco, token);
     if(result){
       CustomAlert.sucess(
         context: context,
@@ -42,9 +43,9 @@ class RegistroManger {
   }
 
   postPontoMarcacoesOffline(BuildContext context, UsuarioPonto usuario,
-      List<Map<String, dynamic>> listmarcacao, {bool delete = true}) async {
+      List<Map<String, dynamic>> listmarcacao, {bool delete = true, String? token}) async {
 
-    final result = await _service.postPontoMarcacoesOffline(usuario, listmarcacao, delete: delete);
+    final result = await _service.postPontoMarcacoesOffline(usuario, listmarcacao, delete: delete, token: token);
     if(result == MarcacaoOffStatus.Erro){
       CustomAlert.erro(
         context: context,
@@ -58,7 +59,7 @@ class RegistroManger {
     }
   }
 
-  enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario) async {
+  enviarMarcacoesHistorico(BuildContext context, UsuarioPonto? usuario, {String? token}) async {
     try{
       if (usuario != null) {
         List<Map<String, dynamic>>? marcacao = await _sqlitePonto.getHistoricoFormatado(
@@ -66,7 +67,7 @@ class RegistroManger {
 
         if(marcacao != null && marcacao.isNotEmpty){
           debugPrint(marcacao.toString());
-          postPontoMarcacoesOffline(context, usuario, marcacao, delete: false);
+          postPontoMarcacoesOffline(context, usuario, marcacao, delete: false, token: token );
         }else{
           CustomAlert.info(
             context: context,
@@ -88,8 +89,8 @@ class RegistroManger {
     }
   }
 
-  enviarMarcacoes() async {
-    debugPrint('enviarMarcacoes off ' + (Config.isReenvioMarc ? '45 dias' : '1 dia'));
+  enviarMarcacoes({String? token}) async {
+    debugPrint('enviarMarcacoes off ${Config.isReenvioMarc ? '45 dias' : '1 dia'}');
     try{
       List<Map<String, dynamic>>? marcacao = await ( Config.isReenvioMarc ?
           _sqlitePonto.getHistoricoFormatado(UserPontoManager.susuario?.funcionario?.funcionarioId)
@@ -98,7 +99,8 @@ class RegistroManger {
         final result =  await _service.postPontoMarcacoesOffline(
             UserPontoManager.susuario,
             marcacao,
-            delete: !Config.isReenvioMarc
+            delete: !Config.isReenvioMarc,
+            token: token
         );
         if(result == MarcacaoOffStatus.Sucess){
           debugPrint('sucess');
@@ -116,7 +118,7 @@ class RegistroManger {
     }
   }
 
-  enviarMarcacoesNotificacao() async {
+  enviarMarcacoesNotificacao({required String? token}) async {
     try{
       final _user = await UserPontoService().authNotificacao();
 
@@ -124,7 +126,7 @@ class RegistroManger {
       if(marcacao != null && marcacao.isNotEmpty) {
         final result =  await _service.postPontoMarcacoesOffline(
             UserPontoManager.susuario, marcacao,
-            delete: false
+            delete: false, token: token
         );
         if(result == MarcacaoOffStatus.Sucess){
           debugPrint('enviarMarcacoesNotificacao sucess');

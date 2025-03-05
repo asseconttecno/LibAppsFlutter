@@ -37,4 +37,33 @@ class HomePontoService {
       debugPrint("HomePontoService getHome erro ${e.toString()}");
     }
   }
+
+
+  Future<HomePontoModel?> getExpedientes(UsuarioPonto user) async {
+    String _api = "/api/apontamento/expedientes";
+    try{
+      final MyHttpResponse response = await _http.post(
+          url: Config.conf.apiAssepontoNova! + _api,
+          body: {
+            "User": {
+              "UserId": user.funcionario?.funcionarioId.toString(),
+              "Database": user.databaseId.toString()
+            },
+            "Periodo": {
+              "DataInicial": DateFormat('yyyy-MM-dd').format(user.periodo!.dataInicial!),
+              "DataFinal": DateFormat('yyyy-MM-dd').format(user.periodo!.dataFinal!)
+            }
+          }
+      );
+
+      if(response.isSucess){
+        Map<String, dynamic> dadosJson = response.data;
+        HomePontoModel homeModel = HomePontoModel.fromMap(dadosJson);
+        return homeModel;
+      }
+    } catch(e){
+      debugPrint("HomePontoService getHome erro ${e.toString()}");
+    }
+  }
+
 }

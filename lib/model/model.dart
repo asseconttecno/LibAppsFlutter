@@ -8,6 +8,7 @@ export 'tablet/historico_marcacoes/historico_marcacoes_model.dart';
 export 'tablet/usuario/user_offiline.dart';
 
 export 'ponto/apontamento/apontamento.dart';
+export 'ponto/apontamento/apontamento_dia.dart';
 export 'ponto/banco_horas/banco_horas.dart';
 export 'ponto/home/home_model.dart';
 export 'ponto/marcacao/marcacao.dart';

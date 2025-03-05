@@ -100,7 +100,7 @@ class Marcacao {
     datahora = DateTime.tryParse(map["datahora"].toString());
     latitude = map["latitude"] == null ? null : double.tryParse(map["latitude"]);
     longitude = map["longitude"] == null ? null : double.tryParse(map["longitude"]);
-    endereco = map["Endereco"] == null ? null : map["Endereco"].toString();
+    endereco = map["Endereco"]?.toString();
   }
 
   Marcacao.fromReSql(Map map) {
@@ -108,7 +108,7 @@ class Marcacao {
     datahora = DateTime.tryParse(map["Marcacao"].toString());
     latitude = map["Latitude"] == null ? null : double.tryParse(map["Latitude"]);
     longitude = map["Longitude"] == null ? null : double.tryParse(map["Longitude"]);
-    endereco = map["Endereco"] == null ? null : map["Endereco"].toString();
+    endereco = map["Endereco"]?.toString();
   }
 
   Map<String, Object?> toMap() {

@@ -31,7 +31,7 @@ class ConnectionStatusSingleton {
       if (Config.conf.nomeApp == VersaoApp.PontoApp ||
           Config.conf.nomeApp == VersaoApp.PontoTablet) {
         Timer.periodic(const Duration(minutes: 1), (T) async {
-          debugPrint('Timer ${T.tick} ' + hasConnection.toString());
+          debugPrint('Timer ${T.tick} $hasConnection');
           if (hasConnection) {
             await RegistroManger().enviarMarcacoes();
           }

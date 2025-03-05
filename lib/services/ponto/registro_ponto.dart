@@ -16,7 +16,7 @@ class RegistroService {
   final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
 
-  Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude, String? endereco) async {
+  Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude, String? endereco, String? token) async {
     String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
 
@@ -28,6 +28,9 @@ class RegistroService {
           "UserId": user.funcionario?.funcionarioId.toString(),
           "Database": user.databaseId.toString(),
           "Origem": kIsWeb ? 4 : 3,
+          "setorId": user.funcionario?.setorId,
+          "Email": user.funcionario?.email,
+          "Token": token,
           "ListaMarcacoes": [
             {
               "Latitude": latitude,
@@ -105,7 +108,7 @@ class RegistroService {
   }
 
   Future<MarcacaoOffStatus> postPontoMarcacoesOffline(UsuarioPonto? usuario,
-      List<Map<String, dynamic>> listOff, {bool delete = false}) async {
+      List<Map<String, dynamic>> listOff, {bool delete = false, String? token}) async {
     String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
     if(usuario?.databaseId != null){
@@ -115,11 +118,13 @@ class RegistroService {
           "Database": "${usuario!.databaseId}",
           "UserId": usuario.funcionario?.funcionarioId.toString(),
           "Origem": kIsWeb ? 4 : 7,
+          "setorId": usuario.funcionario?.setorId,
+          "Email": usuario.funcionario?.email,
+          "Token": token,
           "ListaMarcacoes": listOff
         };
         final MyHttpResponse response = await _http.post(
-            url: (Config.conf.apiAssepontoNova
-                ?? 'https://www.asseponto.com.br/ApiAsseponto') + _api,
+            url: Config.conf.apiAssepontoNova! + _api,
             body: body, decoder: false
         );
 

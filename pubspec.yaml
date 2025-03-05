@@ -95,7 +95,7 @@ dependencies:
   brasil_fields: ^1.15.0
   datetime_picker_formfield_new: ^2.1.0
 
-  in_app_review: ^2.0.9
+  in_app_review: ^2.0.10
   launch_app_store: ^1.1.1
 
   #store_launcher: ^1.0.1

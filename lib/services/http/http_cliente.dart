@@ -92,6 +92,7 @@ class HttpCli {
       );
     }
 
+    print(body);
     try {
       final http.Response response = await http.post(
           uri ?? Uri.parse(url ?? ''),

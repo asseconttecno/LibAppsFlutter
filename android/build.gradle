@@ -27,6 +27,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 34
+    namespace "com.assecont.servicos.assecontservices"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

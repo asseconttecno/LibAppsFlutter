@@ -244,8 +244,16 @@ class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
 
   @override
   void initState() {
+
     if(widget.dataInit != null){
-      widget.controller.jumpToDate(widget.dataInit!);
+      if(widget.dataMax != null){
+        DateTime data = widget.dataInit!.isBefore(widget.dataMax!) ? widget.dataInit! : widget.dataMax!;
+
+        print(data);
+        widget.controller.jumpToDate(data);
+      }else{
+        widget.controller.jumpToDate(widget.dataInit!);
+      }
     }
     super.initState();
   }
@@ -267,7 +275,7 @@ class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
           backgroundColor: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
               && !ResponsiveBreakpoints.of(context).isPhone
               ? Config.corPribar : Colors.transparent,
-          minDate: widget.dataMin ?? DateTime(2020),
+          minDate: widget.dataMin ?? DateTime(2019,12,29),
           maxDate: widget.dataMax ?? DateTime(DateTime.now().year + 1),
           dateStyle: TextStyle(color: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
               && !ResponsiveBreakpoints.of(context).isPhone ? Config.corPri : Colors.white,),
