@@ -17,9 +17,10 @@ import 'drawer_web.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({super.key, this.keyListMenu, required this.listMenu,
-    this.height, required this.body, this.foto, this.dados, this.keyMenu, this.buttom,
-    this.key1, this.key2, this.key3, this.key4, this.key5, required this.appTitle,
-    this.nome, this.cargo, this.onAlter, this.isListView = true, this.onFoto = true,
+    this.height, required this.body, this.foto, this.dados, this.keyMenu,
+    this.key1, this.key2, this.key3, this.key4, this.key5, this.key6,
+    required this.appTitle, this.nome, this.cargo, this.onAlter, this.buttom,
+    this.isListView = true, this.onFoto = true, this.showRegistro = false
   });
 
   final GlobalKey? keyListMenu;
@@ -36,10 +37,12 @@ class HomeWidget extends StatelessWidget {
   final GlobalKey? key3;
   final GlobalKey? key4;
   final GlobalKey? key5;
+  final GlobalKey? key6;
   final String appTitle;
   final String? nome;
   final String? cargo;
   final bool onFoto;
+  final bool showRegistro;
   final Function()? onAlter;
 
 
@@ -124,7 +127,9 @@ class HomeWidget extends StatelessWidget {
                     key3: key3,
                     key4: key4,
                     key5: key5,
-                    onAlter: onAlter
+                    key6: key6,
+                    onAlter: onAlter,
+                    registro: showRegistro
                 ),
               ],
             ),

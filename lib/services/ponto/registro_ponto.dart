@@ -19,8 +19,6 @@ class RegistroService {
   Future<bool> postPontoMarcar(UsuarioPonto user, double? latitude, double? longitude, String? endereco, String? token) async {
     String _api = "/api/marcacao/verificarMarcacoesFuncionario";
 
-
-
     DateTime now = DateTime.now();
     final MyHttpResponse response = await _http.post(
         url: Config.conf.apiAssepontoNova! + _api, decoder: false, timeout: 8,
