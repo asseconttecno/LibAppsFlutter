@@ -116,6 +116,8 @@ class RegistroManger {
     }catch(e){
       debugPrint("erro enviarMarcacoes offline ${e.toString()}");
     }
+
+    deleteHistorico();
   }
 
   enviarMarcacoesNotificacao({required String? token}) async {
@@ -140,8 +142,10 @@ class RegistroManger {
   }
 
   deleteHistorico() async {
-    if(!Config.isReenvioMarc){
-      _sqlitePonto.deleteHistorico(UserPontoManager.susuario?.funcionario?.funcionarioId);
-    }
+    try {
+      if(!Config.isReenvioMarc){
+        _sqlitePonto.deleteHistorico(UserPontoManager.susuario?.funcionario?.funcionarioId);
+      }
+    } catch (e) {}
   }
 }
