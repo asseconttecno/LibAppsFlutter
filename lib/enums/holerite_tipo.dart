@@ -10,7 +10,8 @@ enum HoleriteTipo
   SegundaDecimo(5),
   PLR(6),
   Abono(7),
-  Domestica(7);
+  Domestica(8),
+  ReciboComplementar(9);
 
   final int value;
 
@@ -34,6 +35,8 @@ enum HoleriteTipo
         return 'Recibo de Abono';
       case 8:
         return 'Recibo de Domestica';
+      case 9:
+        return 'Recibo Complementar';
       default:
         return 'Recibo de Salário';
     }
@@ -59,6 +62,8 @@ enum HoleriteTipo
         return Abono;
       case 8:
         return Domestica;
+      case 9:
+        return ReciboComplementar;
       default:
         return Nenhum;
     }
