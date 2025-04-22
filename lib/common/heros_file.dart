@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 
 
 import 'package:path_provider/path_provider.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:universal_io/io.dart';
@@ -26,7 +27,8 @@ class FileHero extends StatefulWidget {
   final String? html;
   final String name;
   final Widget? menu;
-  const FileHero(this.name, {super.key, this.menu, this.file,this.memori, this.html});
+  final bool isImage;
+  const FileHero(this.name, {super.key, this.isImage = false, this.menu, this.file,this.memori, this.html});
 
   @override
   State<FileHero> createState() => _FileHeroState();
@@ -106,26 +108,29 @@ class _FileHeroState extends State<FileHero> {
                 onPressed: () async {
                   if(kIsWeb){
                     if(widget.memori != null){
-                      salvarArquivo(widget.memori!, "${widget.name}.pdf");
+                      salvarArquivo(widget.memori!, "${widget.name}.${widget.isImage ? 'jpg' : 'pdf'}");
                     }
                   }else if(widget.file != null){
                     ExternalShare.shareFile(
                         path: widget.file!.path,
-                        titulo: "Enviar PDF",
-                        nomeFile: "${widget.name}.pdf",
-                      tipo: SheredType.pdf,
+                        titulo: "Enviar ${widget.isImage ? 'jpg' : 'pdf'}",
+                        nomeFile: "${widget.name}.${widget.isImage ? 'jpg' : 'pdf'}",
+                      tipo: widget.isImage ? SheredType.image : SheredType.pdf,
                     );
                   }else{
                     carregar(context);
                     Uint8List? rawPath = widget.memori ?? await _capturePng();
                     Navigator.pop(context);
                     if(rawPath != null){
-                      final file = await CustomFile.fileTemp('pdf', memori: rawPath, nome: widget.name);
+                      final file = await CustomFile.fileTemp(
+                          widget.isImage ? 'jpg' : 'pdf',
+                          memori: rawPath, nome: widget.name
+                      );
                       ExternalShare.shareFile(
                         path: file.path,
-                        titulo: "Enviar PDF",
-                        nomeFile: "${widget.name}.pdf",
-                        tipo: SheredType.pdf,
+                        titulo: "Enviar ${widget.isImage ? 'jpg' : 'pdf'}",
+                        nomeFile: "${widget.name}.${widget.isImage ? 'jpg' : 'pdf'}",
+                        tipo: widget.isImage ? SheredType.image : SheredType.pdf,
                       );
                     }
                   }
@@ -145,8 +150,12 @@ class _FileHeroState extends State<FileHero> {
                     margin: widget.menu != null ? const EdgeInsets.only(bottom: 120) : null,
                     alignment: Alignment.center,
                     color: Colors.black,
-                    child: widget.memori != null ? SfPdfViewer.memory(widget.memori!, ) :
-                    widget.file == null ? Container() : SfPdfViewer.file(widget.file!),
+                    child: widget.memori != null ? widget.isImage ? PhotoView(
+                        imageProvider: MemoryImage(widget.memori!)
+                    ) : SfPdfViewer.memory(widget.memori!, ) :
+                    widget.file == null ? Container() :  widget.isImage ? PhotoView(
+                        imageProvider: FileImage(widget.file!)
+                    ) : SfPdfViewer.file(widget.file!),
                   ),
 
                   if(widget.menu != null) ...[

@@ -21,7 +21,7 @@ class CustomFile {
 
     var tempDir = await getTemporaryDirectory();
 
-    File file = await File('${tempDir.path}/${name}.${responseData.extencao ?? 'jpg'}').writeAsBytes(
+    File file = await File('${tempDir.path}/${name}.${responseData.extencao ?? 'pdf'}').writeAsBytes(
         buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     return file;
   }

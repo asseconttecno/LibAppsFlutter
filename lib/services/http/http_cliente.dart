@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:assecontservices/services/http/http_response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import "package:http/http.dart" as http;
@@ -37,19 +38,26 @@ class HttpCli {
         try{
           if(response.statusCode >= 200 && response.statusCode < 300){
             var result = bits ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
+
+            final String? content = response.headers['content-disposition'] ??
+            response.request?.url.path.split(".").last;
+
             return MyHttpResponse(
               isSucess: true,
               codigo: 200,
               data: result,
-              extencao: !response.headers.containsKey('content-disposition') ? null :
-              response.headers['content-disposition']!.contains('html') ? 'html' :
-              response.headers['content-disposition']!.contains('pdf') ? 'pdf' :
-              response.headers['content-disposition']!.contains('txt') ? 'txt' :
-              response.headers['content-disposition']!.contains('xlsx') ? 'xlsx' :
-              response.headers['content-disposition']!.contains('xls') ? 'xls' :
-              response.headers['content-disposition']!.contains('docx') ? 'docx' :
-              response.headers['content-disposition']!.contains('doc') ? 'doc' :
-              response.headers['content-disposition']!.contains('json') ? 'json' : null
+              extencao: content == null ? null :
+              content.contains('html') ? 'html' :
+              content.contains('pdf') ? 'pdf' :
+              content.contains('txt') ? 'txt' :
+              content.contains('xlsx') ? 'xlsx' :
+              content.contains('xls') ? 'xls' :
+              content.contains('docx') ? 'docx' :
+              content.contains('doc') ? 'doc' :
+              content.contains('json') ? 'json' :
+              content.contains('jpg') ? 'jpg' :
+              content.contains('jpeg') ? 'jpg' :
+              content.contains('png') ? 'png' : content
             );
           } else {
 
@@ -92,7 +100,11 @@ class HttpCli {
       );
     }
 
-    print(body);
+    if (kDebugMode) {
+      print(uri ?? Uri.parse(url ?? ''));
+      print(jsonEncode(body));
+    }
+
     try {
       final http.Response response = await http.post(
           uri ?? Uri.parse(url ?? ''),
