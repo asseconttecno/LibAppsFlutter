@@ -20,7 +20,8 @@ class HomeWidget extends StatelessWidget {
     this.height, required this.body, this.foto, this.dados, this.keyMenu,
     this.key1, this.key2, this.key3, this.key4, this.key5, this.key6,
     required this.appTitle, this.nome, this.cargo, this.onAlter, this.buttom,
-    this.isListView = true, this.onFoto = true, this.showRegistro = false
+    this.isListView = true, this.onFoto = true, this.showRegistro = false,
+    this.modalPass
   });
 
   final GlobalKey? keyListMenu;
@@ -44,7 +45,7 @@ class HomeWidget extends StatelessWidget {
   final bool onFoto;
   final bool showRegistro;
   final Function()? onAlter;
-
+  final Function()? modalPass;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +130,8 @@ class HomeWidget extends StatelessWidget {
                     key5: key5,
                     key6: key6,
                     onAlter: onAlter,
-                    registro: showRegistro
+                    registro: showRegistro,
+                    modalPass: modalPass
                 ),
               ],
             ),

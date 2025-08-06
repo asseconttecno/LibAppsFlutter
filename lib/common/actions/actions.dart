@@ -14,7 +14,7 @@ import 'func_review.dart';
 
 
 actions(BuildContext context, {bool aponta = false, bool registro = false,
-  bool config = false, Function()? onAlter, GlobalKey? keyMenu, GlobalKey? key1,
+  bool config = false, Function()? onAlter, Function()? modalPass, GlobalKey? keyMenu, GlobalKey? key1,
   GlobalKey? key2,  GlobalKey? key3, GlobalKey? key4,  GlobalKey? key5,  GlobalKey? key6}){
 
   return Padding(
@@ -88,7 +88,11 @@ actions(BuildContext context, {bool aponta = false, bool registro = false,
             funcAponta(context);
             break;
           case 2 :
-            await AlterarSenhaModal(context);
+            if(modalPass != null) {
+              await modalPass();
+            } else {
+              await AlterarSenhaModal(context);
+            }
             break;
           case 3 :
             funcConfig(context);
