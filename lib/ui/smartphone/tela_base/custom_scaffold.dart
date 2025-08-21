@@ -362,37 +362,33 @@ class HomeIoWidget extends StatelessWidget {
             ],
             scrolledUnderElevation: 0
           ),
-          body: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: Column(
+          body: Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                          height: height,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-                              && !ResponsiveBreakpoints.of(context).isPhone ? null
-                              : BoxDecoration(
-                              color: context.watch<Config>().darkTemas ?
-                              Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
-                              borderRadius: const BorderRadius.only(
-                                bottomRight: Radius.circular(45),
-                                bottomLeft: Radius.circular(45),
-                              )
-                          ),
-                          child: appbar
+                  Container(
+                      height: height,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                          && !ResponsiveBreakpoints.of(context).isPhone ? null
+                          : BoxDecoration(
+                          color: context.watch<Config>().darkTemas ?
+                          Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(45),
+                            bottomLeft: Radius.circular(45),
+                          )
                       ),
-                      if(expanAppbar != null)
-                        expanAppbar!
-                    ],
+                      child: appbar
                   ),
-                  Expanded(
-                      child: body
-                  ),
+                  if(expanAppbar != null)
+                    expanAppbar!
                 ],
-              )
+              ),
+              Expanded(
+                  child: body
+              ),
+            ],
           ),
           floatingActionButtonLocation: buttom == null ? null
               : floatingActionButtonLocation ?? FloatingActionButtonLocation.centerFloat,
