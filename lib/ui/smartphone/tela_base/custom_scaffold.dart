@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -345,52 +346,58 @@ class HomeIoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: globalKey,
-        appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-            && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
-          title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
-          centerTitle: true,
-          actions: [
-            actions(context, aponta: home, config: conf, onAlter: onAlter),
-          ],
-          scrolledUnderElevation: 0
-        ),
-        body: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                        height: height,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
-                            && !ResponsiveBreakpoints.of(context).isPhone ? null
-                            : BoxDecoration(
-                            color: context.watch<Config>().darkTemas ?
-                            Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
-                            borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(45),
-                              bottomLeft: Radius.circular(45),
-                            )
-                        ),
-                        child: appbar
-                    ),
-                    if(expanAppbar != null)
-                      expanAppbar!
-                  ],
-                ),
-                Expanded(
-                    child: body
-                ),
-              ],
-            )
-        ),
-        floatingActionButtonLocation: buttom == null ? null
-            : floatingActionButtonLocation ?? FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: buttom
+    return SafeArea(
+      bottom: Platform.isAndroid,
+      left: false,
+      right: false,
+      top: false,
+      child: Scaffold(
+          key: globalKey,
+          appBar: appTitle == null || kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+              && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
+            title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+            centerTitle: true,
+            actions: [
+              actions(context, aponta: home, config: conf, onAlter: onAlter),
+            ],
+            scrolledUnderElevation: 0
+          ),
+          body: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                          height: height,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: kIsWeb && !ResponsiveBreakpoints.of(context).isMobile
+                              && !ResponsiveBreakpoints.of(context).isPhone ? null
+                              : BoxDecoration(
+                              color: context.watch<Config>().darkTemas ?
+                              Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(45),
+                                bottomLeft: Radius.circular(45),
+                              )
+                          ),
+                          child: appbar
+                      ),
+                      if(expanAppbar != null)
+                        expanAppbar!
+                    ],
+                  ),
+                  Expanded(
+                      child: body
+                  ),
+                ],
+              )
+          ),
+          floatingActionButtonLocation: buttom == null ? null
+              : floatingActionButtonLocation ?? FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: buttom
+      ),
     );
   }
 }
@@ -413,69 +420,75 @@ class HomeWebWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: globalKey,
-      body: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Card(
-            margin: EdgeInsets.zero,
-            elevation: 4,
-            child: Container(
-                width: 180, height: double.infinity,
-                color: Theme.of(context).appBarTheme.backgroundColor,
-                child: DrawerWebView(listMenus, foto, appTitle )
+    return SafeArea(
+      bottom: Platform.isAndroid,
+      left: false,
+      right: false,
+      top: false,
+      child: Scaffold(
+        key: globalKey,
+        body: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Card(
+              margin: EdgeInsets.zero,
+              elevation: 4,
+              child: Container(
+                  width: 180, height: double.infinity,
+                  color: Theme.of(context).appBarTheme.backgroundColor,
+                  child: DrawerWebView(listMenus, foto, appTitle )
+              ),
             ),
-          ),
-          Expanded(
-            child: Scaffold(
-                body: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: context.watch<Config>().darkTemas
-                            ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(5.5, 0), // Ajuste a sombra vertical aqui
-                            blurRadius: 4, // Ajuste a intensidade da sombra aqui
-                          ),
-                        ],
-                      ),
-                      margin: EdgeInsets.zero,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText.text(nome,
-                                    style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
-                                CustomText.text(cargo,
-                                    style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
-                              ],
+            Expanded(
+              child: Scaffold(
+                  body: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: context.watch<Config>().darkTemas
+                              ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(5.5, 0), // Ajuste a sombra vertical aqui
+                              blurRadius: 4, // Ajuste a intensidade da sombra aqui
                             ),
-
-                            actions(context, aponta: true, onAlter: onAlter),
                           ],
                         ),
+                        margin: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText.text(nome,
+                                      style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+                                  CustomText.text(cargo,
+                                      style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                                ],
+                              ),
+
+                              actions(context, aponta: true, onAlter: onAlter),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                        child: body
-                    ),
-                  ],
-                ),
-                floatingActionButtonLocation: buttom == null ? null
-                    :  FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: buttom
+                      Expanded(
+                          child: body
+                      ),
+                    ],
+                  ),
+                  floatingActionButtonLocation: buttom == null ? null
+                      :  FloatingActionButtonLocation.centerFloat,
+                  floatingActionButton: buttom
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
