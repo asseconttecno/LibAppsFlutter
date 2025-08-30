@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
+import '../../controllers/tablet/empresa_manager.dart';
 import '../../enums/enums.dart';
 import '../../model/model.dart';
 import '../../config.dart';
@@ -24,12 +25,12 @@ class RegistroService {
         url: Config.conf.apiAssepontoNova! + _api, decoder: false, timeout: 8,
         body: {
           "UserId": user.funcionario?.funcionarioId.toString(),
-          "Database": user.databaseId.toString(),
+          "Database": user.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
           "Origem": kIsWeb ? 4 : 3,
           "setorId": user.funcionario?.setorId,
           "Email": user.funcionario?.email,
-          "Token": token,
-          "ListaMarcacoes": [
+          if(token != null) "Token": token,
+          if(latitude != null) "ListaMarcacoes": [
             {
               "Latitude": latitude,
               "Longitude": longitude,
@@ -113,11 +114,11 @@ class RegistroService {
       try{
 
         final body = {
-          "Database": "${usuario!.databaseId}",
-          "UserId": usuario.funcionario?.funcionarioId.toString(),
+          "Database": "${usuario?.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database}",
+          "UserId": usuario?.funcionario?.funcionarioId.toString(),
           "Origem": kIsWeb ? 4 : 7,
-          "setorId": usuario.funcionario?.setorId,
-          "Email": usuario.funcionario?.email,
+          "setorId": usuario?.funcionario?.setorId,
+          "Email": usuario?.funcionario?.email,
           "Token": token,
           "ListaMarcacoes": listOff
         };

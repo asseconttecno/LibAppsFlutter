@@ -15,7 +15,7 @@ class UserPontoOffine {
   }
 
   UserPontoOffine.fromSQL(Map map) {
-    this.id =  (int.parse(map["iduser"].toString()));
+    this.id =  (int.parse(map["userId"].toString()));
     this.nome = map["nome"];
     this.pis = map["pis"];
     this.registro = map["registro"];

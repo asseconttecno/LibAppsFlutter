@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../controllers/tablet/empresa_manager.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -20,7 +21,7 @@ class MemorandosServices {
       body = {
         "user": {
           "UserId": usuario.funcionario?.funcionarioId.toString(),
-          "Database": usuario.databaseId.toString()
+          "Database": usuario.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
         },
         "data": "${data}",
         "tipo": tipo,
@@ -35,7 +36,7 @@ class MemorandosServices {
       body = {
         "user": {
           "UserId": usuario.funcionario?.funcionarioId.toString(),
-          "Database": usuario.databaseId.toString()
+          "Database": usuario.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
         },
         "data": "${data}",
         "tipo": tipo,
@@ -71,7 +72,7 @@ class MemorandosServices {
           body: {
             "User": {
               "UserId": usuario?.funcionario?.funcionarioId.toString(),
-              "Database": usuario?.databaseId.toString()
+              "Database": usuario?.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
             },
             "Periodo": {
               "DataInicial": DateFormat('yyyy-MM-dd').format(inicio),

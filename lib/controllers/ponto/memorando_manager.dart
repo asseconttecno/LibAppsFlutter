@@ -59,9 +59,9 @@ class MemorandosManager extends ChangeNotifier {
   TextEditingController(text: DateFormat("dd/MM/yyyy").format(DateTime.now()));
 
   memorandosUpdate(){
-    if(UserPontoManager().usuario != null){
+    if(UserPontoManager.susuario != null){
       getMemorandos(
-          UserPontoManager().usuario!,
+          UserPontoManager.susuario!,
           UserPontoManager.susuario!.periodo!.dataInicial!,
           UserPontoManager.susuario!.periodo!.dataFinal!
       );

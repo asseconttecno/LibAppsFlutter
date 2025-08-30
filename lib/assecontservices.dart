@@ -73,15 +73,15 @@ class Assecontservices {
         ),
 
 
-      if(Config.conf.nomeApp != VersaoApp.AssewebApp)
+      if(Config.conf.nomeApp != VersaoApp.AssewebApp) ...[
         ChangeNotifierProvider(
           create: (_)=> HoleriteManager(),
         ),
-      if(Config.conf.nomeApp != VersaoApp.AssewebApp)
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> UserHoleriteManager(),
         ),
+      ],
 
       if(Config.conf.nomeApp == VersaoApp.HoleriteApp)
         ChangeNotifierProvider(
@@ -89,87 +89,76 @@ class Assecontservices {
         ),
 
 
-      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
+      if(Config.conf.nomeApp == VersaoApp.PontoTablet) ...[
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> ConfigTabletManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> EmpresaPontoManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
         Provider(
           lazy: true,
           create: (_)=> UserPontoOffilineManager(),
         ),
-      if(Config.conf.nomeApp == VersaoApp.PontoTablet)
+
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> HistoricoManager(),
         ),
+      ],
+
       ///--------------------------------------------------------------------///
-      if(ponto)
+      if(ponto) ...[
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> UserPontoManager(),
         ),
-
-      if(ponto)
         Provider(
           lazy: false,
           create: (_)=> DBPonto(),
         ),
-
-      if(ponto)
         ChangeNotifierProvider(
           create: (_)=> ComprovanteManagger(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> BancoHorasManager(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> MemorandosManager(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           //lazy: true,
           create: (_)=> EspelhoManager(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> MarcacoesManager(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> ApontamentoManager(),
         ),
-      if(ponto)
         Provider(
           lazy: true,
           create: (_)=> RegistroManger(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           create: (_)=> GetHora(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: false,
           create: (_)=> CameraPontoManager(),
         ),
-      if(ponto)
         ChangeNotifierProvider(
           lazy: true,
           create: (_)=> SenhaPontoManager(),
         ),
+      ],
+
 
       ///-----------asseweb--------------///
 

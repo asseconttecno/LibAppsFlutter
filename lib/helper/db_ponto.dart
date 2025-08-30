@@ -16,7 +16,6 @@ class DBPonto{
   DBPonto._internal() {
     if(Config.isWin) win.sqfliteFfiInit();
     init();
-    print('DBPonto');
   }
 
   Future<void> init() async {
@@ -166,21 +165,34 @@ class DBPonto{
   Future<Database> inicializarDB(int v, {bool init = false}) async {
     if(kIsWeb){
       var factory = databaseFactoryFfiWeb;
-      Database db = await factory.openDatabase(Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db",
+      Database db = await factory.openDatabase(
+          Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db",
           options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: _onUpgrade));
       return db;
     }else {
-      final camilhodb = Config.isWin ? await win.databaseFactoryFfi.getDatabasesPath() : await getDatabasesPath();
-      final localdb = join(camilhodb, Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db");
+      final camilhodb = Config.isWin
+          ? await win.databaseFactoryFfi.getDatabasesPath()
+          : await getDatabasesPath();
+
+      final localdb = join(camilhodb,
+          Config.conf.nomeApp == VersaoApp.PontoApp ? "pontoapp2.db" : "pontotab.db"
+      );
 
 
       if(Config.isWin){
         DatabaseFactory databaseFactory = win.databaseFactoryFfi;
         Database db = await databaseFactory.openDatabase(localdb,
-            options: OpenDatabaseOptions(onCreate: _criardb, version: v, onUpgrade: init ? null : _onUpgrade));
+            options: OpenDatabaseOptions(
+                onCreate: _criardb, version: v,
+                onUpgrade: init ? null : _onUpgrade
+            )
+        );
         return db;
       } else{
-        Database db = await openDatabase(localdb, version: v, onCreate: _criardb , onUpgrade: init ? null : _onUpgrade);
+        Database db = await openDatabase(
+            localdb, version: v, onCreate: _criardb ,
+            onUpgrade: init ? null : _onUpgrade
+        );
         return db;
       }
     }

@@ -38,6 +38,18 @@ class UserLocalSources extends LocalServiceRepo {
     return result;
   }
 
+  Future<int> saveUserTablet({required UsuarioPonto user}) async {
+    if(user.funcionario?.funcionarioId != null){
+      final existUser = await getUser(id: user.funcionario!.funcionarioId);
+      if(existUser == null) {
+        final u = UserDB.fromPonto(user);
+        final result = await service.insert<UserDB>(DBTableName.users, u);
+        return result;
+      }
+    }
+    return 0;
+  }
+
   Future<bool> saveUserAll({required List<UsuarioPonto> users}) async {
     try {
       await deleteUser();

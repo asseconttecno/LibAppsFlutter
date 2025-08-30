@@ -25,6 +25,35 @@ class ConfigTabletManager extends ChangeNotifier {
     status: ConfigBackup.Semanal, hora: '23:00', local: Config.documentos);
   Timer? timer;
 
+
+  static int convertStatusInt(ConfigBackup? status){
+    switch (status) {
+      case ConfigBackup.Diario :
+        return 1;
+      case ConfigBackup.Semanal :
+        return 2;
+      case ConfigBackup.Mensal :
+        return 3;
+      default :
+        return 2;
+    }
+  }
+
+  static ConfigBackup convertStatusEnum(int? status){
+    switch (status) {
+      case 1 :
+        return ConfigBackup.Diario;
+      case 2 :
+        return ConfigBackup.Semanal;
+      case 3 :
+        return ConfigBackup.Mensal;
+      default :
+        return ConfigBackup.Semanal;
+    }
+  }
+
+
+
   initConfig(EmpresaPontoModel empresa) async {
     try{
       List? config = await _sqlitePonto.initConfig();

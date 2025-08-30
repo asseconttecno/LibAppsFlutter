@@ -5,7 +5,7 @@ import '../../services/services.dart';
 import '../controllers.dart';
 
 class UserPontoOffilineManager {
-  UserPontoOffilineServices _services = UserPontoOffilineServices();
+  final UserPontoOffilineServices _services = UserPontoOffilineServices();
   final SqlitePontoService _sqlitePonto = SqlitePontoService();
 
   UserOffilineManager(){

@@ -42,7 +42,7 @@ class SqlitePontoService {
       Database bancoDados = await _service.db;
 
       await bancoDados.delete('users');
-      await bancoDados.execute('INSERT INTO users(iduser, nome, pis, registro) VALUES ${dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')}'  );
+      await bancoDados.execute('INSERT INTO users(userId, nome, pis, registro) VALUES ${dados.map((e) => e.toMap()).toList().toString().replaceAll('[', '').replaceAll(']', '')}'  );
       String sql = "SELECT * FROM users";
       List _emp = await bancoDados.rawQuery(sql);
       if(_emp.isNotEmpty){

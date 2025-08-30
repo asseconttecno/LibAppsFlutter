@@ -18,6 +18,6 @@ class MarcacoesManager extends ChangeNotifier {
   }
 
   Future<ApontamentoDiaModel?> getMarcacaoDia() async {
-    return await _service.getEspelho(UserPontoManager.susuario, data);;
+    return await _service.getEspelho(UserPontoManager.susuario, data);
   }
 }

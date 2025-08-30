@@ -9,23 +9,22 @@ import '../http/http.dart';
 class UsuarioPontoCodigoService {
   final HttpCli _http = HttpCli();
 
-  verificarcodigo(EmpresaPontoModel empresa, String codigo, int tipo) async {
-    String _api = "/api/funcionario/RegistroLogin";
+  Future<UsuarioPonto?> verificarcodigo(int database, String cnpj, String codigo) async {
+    String _api = "/api/codigo";
     UsuarioPonto? user;
     try{
       final MyHttpResponse response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
-            "database": empresa.database.toString(),
-            "registro": codigo
+            "database": database,
+            "cnpj": cnpj,
+            "cod": codigo
           }
       );
 
       if(response.isSucess){
-        Map dadosJson = response.data ;
-        if(dadosJson.toString() != "Registro inálido" && dadosJson.containsKey('Id')){
-          user = UsuarioPonto.fromMapTab(dadosJson, codigo);
-        }
+        Map<String, dynamic> dadosJson = response.data ;
+        user = UsuarioPonto.fromMap(dadosJson, false);
       }else{
         user = await verificarCodigoOff(codigo);
       }

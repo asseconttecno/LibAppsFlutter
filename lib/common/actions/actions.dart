@@ -104,7 +104,7 @@ actions(BuildContext context, {bool aponta = false, bool registro = false,
             funcSair(context);
             break;
           case 6 :
-            RegistroManger().enviarMarcacoesHistorico(context, UserPontoManager().usuario);
+            RegistroManger().enviarMarcacoesHistorico(context, UserPontoManager.susuario);
             break;
         }
       },

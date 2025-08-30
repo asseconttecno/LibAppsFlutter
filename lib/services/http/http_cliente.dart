@@ -23,6 +23,10 @@ class HttpCli {
           data: 'Falha de conexão com internet'
         );
       }
+
+      if (kDebugMode) {
+        print(Uri.parse(url ?? ''));
+      }
       try {
         final http.Response response = await http.get(
           Uri.parse(url),
@@ -41,7 +45,7 @@ class HttpCli {
 
             final String? content = response.headers['content-disposition'] ??
             response.request?.url.path.split(".").last;
-
+            debugPrint('Sucesso no post');
             return MyHttpResponse(
               isSucess: true,
               codigo: 200,
@@ -121,6 +125,7 @@ class HttpCli {
       try{
         if(response.statusCode >= 200 && response.statusCode < 300){
           final result =  isbyte ? response.bodyBytes : decoder ? json.decode(response.body) : response.body;
+          debugPrint('Sucesso no post');
           return MyHttpResponse(
               isSucess: true,
               codigo: 200,

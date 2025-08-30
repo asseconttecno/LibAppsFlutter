@@ -12,8 +12,8 @@ class EmpresaPontoModel {
 
   EmpresaPontoModel.fromJson(Map map, String senha, String email) {
     this.nome = map["Nome"];
-    this.database = map["Database"];
-    this.cnpj = map["Cnpj"];
+    this.database = map["DatabaseId"];
+    this.cnpj = map["CNPJ"];
     this.ativado = map["Tablet"].toString() == 'true';
     this.email = email;
     this.senha = senha;

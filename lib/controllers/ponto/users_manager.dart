@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/common.dart';
 import '../../config.dart';
 import '../../data/local/user_local_sources.dart';
+import '../../enums/versao_app.dart';
 import '../../model/model.dart';
 import '../../services/services.dart';
 import '../controllers.dart';
@@ -14,6 +15,7 @@ class UserPontoManager extends ChangeNotifier {
   final BiometriaServices _serviceBio = BiometriaServices();
   final HomePontoService _homeservice = HomePontoService();
   final UserLocalSources _sqlService = UserLocalSources();
+  final UsuarioPontoCodigoService _serviceCodigo = UsuarioPontoCodigoService();
 
 
   static final  UserPontoManager _userManager = UserPontoManager._internal();
@@ -33,6 +35,13 @@ class UserPontoManager extends ChangeNotifier {
   bool get status => _status;
   set status(bool v){
     _status = v;
+    notifyListeners();
+  }
+
+  bool _load = false;
+  bool get load => _load;
+  set load(bool v){
+    _load = v;
     notifyListeners();
   }
 
@@ -116,6 +125,30 @@ class UserPontoManager extends ChangeNotifier {
     }
   }
 
+  Future<bool> signInAuthCodigo(int databaseId, String cnpj, String codigo,
+      Function? onSucess, Function(String)? onError) async {
+    try {
+      final u = await _serviceCodigo.verificarcodigo(
+          databaseId,
+          cnpj,
+          codigo
+      );
+      if(u != null){
+        usuario = u;
+        _sqlService.saveUserTablet(user: usuario!);
+        if(onSucess != null) onSucess();
+        return true;
+      }else{
+        usuario = null;
+        if(onError != null) onError('Código inválido!');
+        return false;
+      }
+    } catch (e) {
+      if(onError != null) onError(e.toString());
+      return false;
+    }
+  }
+
   Future<bool> signInAuthAuto({required String email,required String senha}) async {
     bool result = false;
     usuario = await _service.authOffiline(email, senha);
@@ -156,7 +189,7 @@ class UserPontoManager extends ChangeNotifier {
   }
 
   signOut() {
-    cleanPreferences();
+    if(Config.conf.nomeApp != VersaoApp.PontoTablet)  cleanPreferences();
     usuario = null;
     _status = false;
     _expediente = null;

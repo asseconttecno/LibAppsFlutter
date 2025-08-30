@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../controllers/tablet/empresa_manager.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -19,7 +20,7 @@ class HomePontoService {
           body: {
             "User": {
               "UserId": user.funcionario?.funcionarioId.toString(),
-              "Database": user.databaseId.toString()
+              "Database": user.databaseId?.toString()  ?? EmpresaPontoManager.empresa?.database,
             },
             "Periodo": {
               "DataInicial": DateFormat('yyyy-MM-dd').format(user.periodo!.dataInicial!),
@@ -47,7 +48,7 @@ class HomePontoService {
           body: {
             "User": {
               "UserId": user.funcionario?.funcionarioId.toString(),
-              "Database": user.databaseId.toString()
+              "Database": user.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
             },
             "Periodo": {
               "DataInicial": DateFormat('yyyy-MM-dd').format(user.periodo!.dataInicial!),

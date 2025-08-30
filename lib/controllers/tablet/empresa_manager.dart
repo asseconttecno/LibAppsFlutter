@@ -13,8 +13,8 @@ class EmpresaPontoManager extends ChangeNotifier {
   static EmpresaPontoModel? empresa;
   static bool autologin = false;
 
-  final TextEditingController email = TextEditingController(text: kReleaseMode ? '' : 'reginal@assecont.com.br');
-  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : '1');
+  final TextEditingController email = TextEditingController(text: kReleaseMode ? '' : 'rilda@assecont.com.br');
+  final TextEditingController senha = TextEditingController(text: kReleaseMode ? '' : 'ponto');
   bool _load = false;
   bool get load => _load;
   set load(bool v){
@@ -50,14 +50,20 @@ class EmpresaPontoManager extends ChangeNotifier {
     );
   }
 
-  Future<void> signIn(String email, String pass) async {
+  Future<void> signIn(String email, String pass, {Function? onSuccess, Function? onError}) async {
     try{
       empresa = await _service.signIn(email, pass);
       if(empresa != null){
         UserPontoOffilineManager().getFuncionariosTablet(empresa!);
+        if(onSuccess != null) onSuccess();
+      }else{
+        if(onError != null) onError('Nenhum usuário encontrado!');
+        return;
       }
       notifyListeners();
+
     } catch (e){
+      if(onError != null) onError(e);
       debugPrint("Erro Try verificarcodigo $e");
     }
   }

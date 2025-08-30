@@ -24,19 +24,19 @@ class EmpresaPontoService {
   }
 
   Future<EmpresaPontoModel?> signIn(String email, String pass) async {
-    String _api = "/api/database/GetDatabaseGestor";
+    String _api = "/api/emp/login";
     try{
       final response = await _http.post(
-          url: Config.conf.apiAsseponto! + _api,
+          url: Config.conf.apiAssepontoNova! + _api,
           body: {
-            "email": email,
-            "pass": pass
+            "Email": email,
+            "Senha": pass
           }
       );
 
       if(response.isSucess){
         Map dadosJson = response.data;
-        if(dadosJson.isNotEmpty && dadosJson.containsKey('Database')){
+        if(dadosJson.isNotEmpty){
           EmpresaPontoModel empresa = EmpresaPontoModel.fromJson(dadosJson, pass, email);
           if(empresa.ativado ?? false){
             bool result = await salvarEmpresa(empresa);

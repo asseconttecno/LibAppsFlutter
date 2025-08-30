@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
+import '../../controllers/tablet/empresa_manager.dart';
 import '../../model/model.dart';
 import '../../config.dart';
 import '../http/http.dart';
@@ -17,7 +18,7 @@ class CameraPontoService {
         body: {
           "user":{
             "UserId": user.funcionario?.funcionarioId.toString(),
-            "Database": user.databaseId.toString(),
+            "Database": user.databaseId?.toString()  ?? EmpresaPontoManager.empresa?.database,
             "Array": img
           },
         }

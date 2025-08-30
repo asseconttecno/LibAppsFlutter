@@ -1,3 +1,4 @@
+import 'package:assecontservices/controllers/tablet/empresa_manager.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,7 +19,7 @@ class ApontamentoService {
         body: {
           "User": {
             "UserId": user?.funcionario?.funcionarioId.toString(),
-            "Database": user?.databaseId.toString()
+            "Database": user?.databaseId?.toString() ?? EmpresaPontoManager.empresa?.database,
           }
         }
     );

@@ -230,7 +230,7 @@ class HomeWidget extends StatelessWidget {
 
 class HomeCalendarioWidget extends StatefulWidget {
   const HomeCalendarioWidget({super.key, this.globalKey, required this.funcData,
-    required this.controller, required this.body, required this.listdecoration,
+    required this.controller, required this.body, required this.listdecoration, this.showActions = true,
     required this.appTitle, this.buttom, this.dataInit, this.dataMin, this.dataMax});
 
   final GlobalKey<ScaffoldState>? globalKey;
@@ -243,6 +243,7 @@ class HomeCalendarioWidget extends StatefulWidget {
   final DateTime? dataInit;
   final DateTime? dataMin;
   final DateTime? dataMax;
+  final showActions;
 
   @override
   State<HomeCalendarioWidget> createState() => _HomeCalendarioWidgetState();
@@ -273,6 +274,7 @@ class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
       body: widget.body,
       appTitle: widget.appTitle,
       height: 110,
+      showActions: widget.showActions,
       buttom: widget.buttom,
       appbar: CalendarWeek(
           controller: widget.controller,
@@ -328,7 +330,7 @@ class _HomeCalendarioWidgetState extends State<HomeCalendarioWidget> {
 
 class HomeIoWidget extends StatelessWidget {
   const HomeIoWidget({super.key, this.globalKey, required this.height,
-    this.onAlter, this.appbar, required this.body, this.expanAppbar,
+    this.onAlter, this.appbar, required this.body, this.expanAppbar, this.showActions = true,
     this.appTitle, this.buttom, this.conf = false, this.home = false, this.floatingActionButtonLocation,
   });
   final GlobalKey<ScaffoldState>? globalKey;
@@ -341,6 +343,7 @@ class HomeIoWidget extends StatelessWidget {
   final Widget? expanAppbar;
   final String? appTitle;
   final Widget? buttom;
+  final bool showActions;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
 
@@ -357,10 +360,18 @@ class HomeIoWidget extends StatelessWidget {
               && !ResponsiveBreakpoints.of(context).isPhone && appTitle != 'Configurações' ? null : AppBar(
             title: CustomText.text(appTitle, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
             centerTitle: true,
-            actions: [
+            backgroundColor: context.watch<Config>().darkTemas
+                ? Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+            foregroundColor: context.watch<Config>().darkTemas
+                ? Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+            shadowColor: context.watch<Config>().darkTemas
+                ? Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+            surfaceTintColor: context.watch<Config>().darkTemas
+                ? Theme.of(context).appBarTheme.backgroundColor : Config.corPribar,
+            actions: showActions ? [
               actions(context, aponta: home, config: conf, onAlter: onAlter),
-            ],
-            scrolledUnderElevation: 0
+            ] : null,
+            scrolledUnderElevation: 0, elevation: 0,
           ),
           body: Column(
             children: [
